@@ -295,15 +295,139 @@
                 </div>
 
                 <!-- Grid de Notícias Gerado Dinamicamente do Firebase -->
-                <div id="grid-todas-noticias" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Conteúdo injetado via JS -->
+            <div id="grid-todas-noticias" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Conteúdo injetado via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- TELA: LOGIN ADMIN -->
+    <div id="view-admin-login" class="hidden flex-col flex-grow bg-gray-50 py-12 pb-24 items-center justify-center">
+        <div class="bg-white p-8 rounded-3xl shadow-xl w-full max-w-md border border-gray-100 mx-4">
+            <div class="text-center mb-8">
+                <img src="https://i.imgur.com/yv7TJkd.png" class="h-16 mx-auto mb-4" alt="Logo">
+                <h2 class="text-2xl font-bold text-pref-darkblue">Acesso Restrito</h2>
+                <p class="text-gray-500 text-sm">Painel de Administração do Portal</p>
+            </div>
+            <form id="form-admin-login" onsubmit="event.preventDefault(); fazerLoginAdmin();" class="space-y-5">
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">E-mail Administrativo</label>
+                    <input type="email" id="admin-email" required placeholder="admin@raboseco.ba.gov.br" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-4 focus:ring-pref-blue/20 focus:border-pref-blue outline-none transition-all">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Senha</label>
+                    <input type="password" id="admin-senha" required placeholder="••••••••" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-4 focus:ring-pref-blue/20 focus:border-pref-blue outline-none transition-all">
+                </div>
+                <div id="admin-login-error" class="hidden text-red-500 text-sm font-bold text-center bg-red-50 p-3 rounded-lg border border-red-100">Credenciais inválidas ou sem permissão de acesso.</div>
+                <button type="submit" id="btn-login-admin" class="w-full bg-pref-darkblue text-white font-bold py-3.5 px-6 rounded-xl hover:bg-pref-blue shadow-md transition-colors text-lg mt-2">
+                    Entrar no Painel
+                </button>
+            </form>
+            <div class="mt-6 text-center">
+                <button onclick="goHome()" class="text-sm text-gray-500 hover:text-pref-blue transition-colors underline"><i class="fa-solid fa-arrow-left mr-1"></i> Voltar ao portal público</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TELA: DASHBOARD ADMIN -->
+    <div id="view-admin-dashboard" class="hidden flex-col flex-grow bg-gray-50">
+        <!-- Barra de Topo do Admin -->
+        <div class="bg-pref-darkblue text-white py-4 px-4 md:px-8 flex flex-col md:flex-row justify-between items-center shadow-md gap-4 z-10 relative">
+            <div class="flex items-center gap-3">
+                <i class="fa-solid fa-shield-halved text-pref-yellow text-2xl"></i>
+                <div>
+                    <span class="font-bold text-lg md:text-xl block leading-none">Painel de Controle</span>
+                    <span class="text-xs text-blue-200">Prefeitura de Rabo Seco</span>
+                </div>
+            </div>
+            <div class="flex gap-3 w-full md:w-auto">
+                <button onclick="goHome()" class="flex-1 md:flex-none text-sm bg-white/10 hover:bg-white/20 px-4 py-2.5 rounded-lg transition-colors font-medium shadow-sm"><i class="fa-solid fa-home mr-1"></i> Ver Site</button>
+                <button onclick="sairAdmin()" class="flex-1 md:flex-none text-sm bg-red-500 hover:bg-red-600 px-4 py-2.5 rounded-lg transition-colors font-medium shadow-sm"><i class="fa-solid fa-right-from-bracket mr-1"></i> Sair do Painel</button>
+            </div>
+        </div>
+        
+        <div class="container mx-auto px-4 py-8 flex-grow flex flex-col lg:flex-row gap-8 max-w-7xl">
+            
+            <!-- LISTA DE NOTÍCIAS PUBLICADAS -->
+            <div class="w-full lg:w-5/12 bg-white rounded-2xl shadow-sm border border-gray-200 p-6 flex flex-col h-[700px]">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-bold text-gray-800 flex items-center gap-2"><i class="fa-solid fa-newspaper text-pref-blue"></i> Publicações</h3>
+                    <button onclick="prepararNovaNoticia()" class="bg-pref-blue text-white px-4 py-2.5 rounded-xl text-sm font-bold hover:bg-pref-darkblue shadow-sm transition-colors flex items-center gap-2">
+                        <i class="fa-solid fa-plus"></i> Nova
+                    </button>
+                </div>
+                <div id="lista-admin-noticias" class="overflow-y-auto pr-2 space-y-3 flex-grow">
+                    <!-- Injetado via JS -->
+                </div>
+            </div>
+
+            <!-- EDITOR DE NOTÍCIA -->
+            <div class="w-full lg:w-7/12 bg-white rounded-2xl shadow-sm border border-gray-200 p-6 flex flex-col h-[700px]">
+                <h3 id="titulo-editor-noticia" class="text-xl font-bold text-gray-800 mb-6 border-b border-gray-100 pb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-pen-to-square text-pref-yellow"></i> Adicionar Nova Notícia
+                </h3>
+                
+                <form id="form-admin-noticia" onsubmit="event.preventDefault(); salvarNoticiaAdmin();" class="space-y-5 flex-grow flex flex-col overflow-y-auto pr-2">
+                    <input type="hidden" id="admin-noticia-id">
+                    
+                    <div id="admin-form-error" class="hidden text-red-600 text-sm font-bold bg-red-50 p-3 rounded-lg border border-red-100"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Erro ao salvar. Verifique sua conexão.</div>
+                    <div id="admin-form-success" class="hidden text-green-600 text-sm font-bold bg-green-50 p-3 rounded-lg border border-green-100"><i class="fa-solid fa-check-circle mr-1"></i> Notícia salva e publicada com sucesso!</div>
+
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-1">Título da Notícia</label>
+                        <input type="text" id="admin-noticia-titulo" required class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:ring-4 focus:ring-pref-blue/20 focus:border-pref-blue outline-none transition-all">
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <div class="w-full sm:w-1/2">
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Categoria</label>
+                            <input type="text" id="admin-noticia-categoria" required placeholder="Ex: Saúde, Obras, Educação" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:ring-4 focus:ring-pref-blue/20 focus:border-pref-blue outline-none transition-all">
+                        </div>
+                        <div class="w-full sm:w-1/2">
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Data Publicação</label>
+                            <input type="text" id="admin-noticia-data" required placeholder="Ex: 24 de Set, 2026" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:ring-4 focus:ring-pref-blue/20 focus:border-pref-blue outline-none transition-all">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-1">URL da Imagem (Capa)</label>
+                        <input type="url" id="admin-noticia-imagem" required placeholder="Ex: https://imgur.com/suafoto.png" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:ring-4 focus:ring-pref-blue/20 focus:border-pref-blue outline-none transition-all">
+                        <p class="text-xs text-gray-500 mt-1">Cole o link direto da imagem hospedada na internet.</p>
+                    </div>
+                    <div class="flex-grow flex flex-col">
+                        <label class="block text-sm font-bold text-gray-700 mb-1">Conteúdo da Notícia</label>
+                        <textarea id="admin-noticia-conteudo" required placeholder="Escreva o texto da notícia aqui. Você pode usar tags HTML como <p> para parágrafos e <b> para negrito se quiser." class="w-full flex-grow min-h-[150px] px-4 py-3 rounded-xl border border-gray-300 focus:ring-4 focus:ring-pref-blue/20 focus:border-pref-blue outline-none transition-all resize-none"></textarea>
+                    </div>
+                    
+                    <div class="pt-4 flex flex-col sm:flex-row gap-3 mt-auto border-t border-gray-100">
+                        <button type="submit" id="btn-salvar-noticia" class="bg-green-600 text-white font-bold py-3.5 px-6 rounded-xl hover:bg-green-700 shadow-md transition-colors flex-grow">
+                            <i class="fa-solid fa-check mr-2"></i> Publicar Notícia
+                        </button>
+                        <button type="button" onclick="cancelarEdicaoNoticia()" class="bg-gray-100 text-gray-700 font-bold py-3.5 px-6 rounded-xl hover:bg-gray-200 transition-colors shadow-sm">
+                            Limpar / Cancelar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- MODAL DE CONFIRMAÇÃO DE EXCLUSÃO -->
+        <div id="modal-delete" class="hidden fixed inset-0 bg-black/50 z-[100] flex items-center justify-center backdrop-blur-sm px-4">
+            <div class="bg-white p-8 rounded-3xl shadow-2xl max-w-sm w-full text-center">
+                <div class="w-20 h-20 bg-red-50 text-red-500 rounded-full flex items-center justify-center text-4xl mx-auto mb-6">
+                    <i class="fa-solid fa-trash-can"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-2">Excluir Notícia?</h3>
+                <p class="text-gray-500 mb-8">Essa ação apagará o arquivo permanentemente do banco de dados.</p>
+                <div class="flex flex-col gap-3">
+                    <button id="btn-confirmar-delete" class="w-full bg-red-500 text-white font-bold py-3.5 rounded-xl hover:bg-red-600 transition-colors shadow-md">Sim, excluir agora</button>
+                    <button onclick="fecharModalDelete()" class="w-full bg-white text-gray-600 border border-gray-200 font-bold py-3.5 rounded-xl hover:bg-gray-50 transition-colors">Cancelar</button>
                 </div>
             </div>
         </div>
+    </div>
 
-    </div> <!-- FIM APP CONTAINER -->
+</div> <!-- FIM APP CONTAINER -->
 
-    <!-- RODAPÉ -->
+<!-- RODAPÉ -->
     <footer id="contato" class="bg-pref-darkblue text-white pt-16 pb-8 border-t-8 border-pref-yellow mt-auto">
         <div class="container mx-auto px-4 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
@@ -387,8 +511,8 @@
     <script type="module">
         // Importando módulos do Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDocs, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDocs, onSnapshot, collection, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Sua configuração do Firebase
         const firebaseConfig = {
@@ -411,6 +535,35 @@
 
         // Banco de Notícias na Memória (Será alimentado pelo Firestore)
         let bancoDeNoticias = {};
+        
+        // Controle de Estado do Admin
+        let isAdminView = false;
+        let noticiaParaExcluir = null;
+
+        // Verifica a URL secreta no carregamento
+        function checkInitialRoute() {
+            // Se acessar site.com/#adminprefeitura
+            if (window.location.hash.includes('adminprefeitura') || window.location.pathname.includes('adminprefeitura')) {
+                isAdminView = true;
+            }
+        }
+        checkInitialRoute();
+
+        // Monitor de Autenticação: Descobre se quem entrou é o prefeito ou cidadão comum
+        onAuthStateChanged(auth, (user) => {
+            if (user && !user.isAnonymous) {
+                // Prefeito / Admin Logado com E-mail
+                if (isAdminView) {
+                    window.switchView('view-admin-dashboard');
+                    renderizarListaAdmin(); // Desenha as notícias no painel
+                }
+            } else {
+                // Cidadão comum ou admin que deslogou
+                if (isAdminView) {
+                    window.switchView('view-admin-login'); // Pede a senha
+                }
+            }
+        });
 
         // Dados Iniciais (Caso o banco esteja vazio, ele se auto-preenche com isso)
         const noticiasSemente = [
@@ -480,6 +633,11 @@
                     if (!document.getElementById('view-todas-noticias').classList.contains('hidden')) {
                         showAllNewsView();
                     }
+                    
+                    // Se o painel admin estiver aberto, atualiza a lista dele na mesma hora!
+                    if (!document.getElementById('view-admin-dashboard').classList.contains('hidden')) {
+                        renderizarListaAdmin();
+                    }
                 }, (error) => {
                     console.error("Erro ao escutar Firestore:", error);
                 });
@@ -547,13 +705,26 @@
         // Expondo as funções para o HTML acessar globalmente
         window.switchView = function(viewId) {
             window.scrollTo(0, 0); // Rola para o topo
-            ['view-home', 'view-noticia', 'view-servico', 'view-todas-noticias'].forEach(id => {
-                document.getElementById(id).classList.add('hidden');
-                document.getElementById(id).classList.remove('flex');
+            ['view-home', 'view-noticia', 'view-servico', 'view-todas-noticias', 'view-admin-login', 'view-admin-dashboard'].forEach(id => {
+                const el = document.getElementById(id);
+                if(el) {
+                    el.classList.add('hidden');
+                    el.classList.remove('flex');
+                }
             });
             const targetView = document.getElementById(viewId);
-            targetView.classList.remove('hidden');
-            targetView.classList.add('flex');
+            if(targetView) {
+                targetView.classList.remove('hidden');
+                targetView.classList.add('flex');
+            }
+            
+            // Se o prefeito clicar em "Ver Site", tira ele do modo admin temporariamente e limpa a URL visualmente
+            if (viewId === 'view-home' || viewId === 'view-todas-noticias' || viewId === 'view-servico') {
+                isAdminView = false;
+                if(window.location.hash.includes('adminprefeitura')) {
+                    window.history.replaceState(null, null, ' '); // Deixa a URL limpinha
+                }
+            }
         };
 
         window.goHome = function() { window.switchView('view-home'); };
@@ -646,6 +817,201 @@
                 icon.classList.add('fa-bars');
             }
         };
+
+        // ==========================================
+        // FUNÇÕES DO PAINEL ADMINISTRATIVO (CMS)
+        // ==========================================
+        
+        // 1. Logar na Prefeitura
+        window.fazerLoginAdmin = async function() {
+            const email = document.getElementById('admin-email').value;
+            const senha = document.getElementById('admin-senha').value;
+            const errorMsg = document.getElementById('admin-login-error');
+            const btn = document.getElementById('btn-login-admin');
+            
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Autenticando...';
+            btn.disabled = true;
+            errorMsg.classList.add('hidden');
+
+            try {
+                // Se der certo, o Firebase avisa o onAuthStateChanged automaticamente!
+                await signInWithEmailAndPassword(auth, email, senha);
+                btn.innerHTML = 'Entrar no Painel';
+                btn.disabled = false;
+            } catch (error) {
+                console.error("Login falhou:", error);
+                errorMsg.classList.remove('hidden');
+                btn.innerHTML = 'Entrar no Painel';
+                btn.disabled = false;
+            }
+        };
+
+        // 2. Deslogar e voltar a ser leitor
+        window.sairAdmin = async function() {
+            try {
+                await signOut(auth);
+                await signInAnonymously(auth); // Reconecta em segredo para poder ler notícias públicas
+                window.location.hash = ''; // Remove o /#adminprefeitura
+                goHome(); 
+            } catch (error) {
+                console.error("Erro ao deslogar:", error);
+            }
+        };
+
+        // 3. Renderizar Lista de Controle
+        window.renderizarListaAdmin = function() {
+            const lista = document.getElementById('lista-admin-noticias');
+            if(!lista) return;
+            
+            // Ordena pela notícia mais nova
+            const arrayNoticias = Object.values(bancoDeNoticias).sort((a, b) => b.ordem - a.ordem);
+            lista.innerHTML = '';
+            
+            if (arrayNoticias.length === 0) {
+                lista.innerHTML = '<div class="text-center p-8 bg-gray-50 rounded-xl border border-dashed border-gray-300 text-gray-500"><i class="fa-regular fa-folder-open text-2xl mb-2 block"></i>Nenhuma notícia no banco.</div>';
+                return;
+            }
+
+            arrayNoticias.forEach(n => {
+                lista.innerHTML += `
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 bg-gray-50 rounded-xl hover:bg-blue-50 transition-colors border border-gray-100 gap-4 group">
+                        <div class="flex-grow overflow-hidden w-full">
+                            <span class="text-[10px] font-bold text-pref-blue uppercase mb-1 px-2 py-0.5 bg-blue-100 rounded-md inline-block">${n.categoria}</span>
+                            <h4 class="font-bold text-gray-800 text-sm truncate w-full">${n.titulo}</h4>
+                            <p class="text-xs text-gray-400 mt-1"><i class="fa-regular fa-calendar mr-1"></i> Publicado em: ${n.data}</p>
+                        </div>
+                        <div class="flex gap-2 w-full sm:w-auto justify-end pt-3 sm:pt-0 border-t sm:border-t-0 border-gray-200">
+                            <button onclick="editarNoticia('${n.id}')" class="px-4 py-2 bg-white border border-gray-200 text-pref-blue rounded-lg text-sm font-bold hover:bg-pref-blue hover:text-white transition-colors flex items-center gap-2 shadow-sm" title="Editar">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+                            <button onclick="abrirModalDelete('${n.id}')" class="px-4 py-2 bg-white border border-gray-200 text-red-500 rounded-lg text-sm font-bold hover:bg-red-500 hover:text-white transition-colors flex items-center gap-2 shadow-sm" title="Excluir">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+        };
+
+        // 4. Limpar o formulário
+        window.prepararNovaNoticia = function() {
+            document.getElementById('form-admin-noticia').reset();
+            document.getElementById('admin-noticia-id').value = '';
+            document.getElementById('titulo-editor-noticia').innerHTML = '<i class="fa-solid fa-pen-to-square text-pref-yellow"></i> Adicionar Nova Notícia';
+            document.getElementById('btn-salvar-noticia').innerHTML = '<i class="fa-solid fa-check mr-2"></i> Publicar Notícia';
+            document.getElementById('admin-form-error').classList.add('hidden');
+            document.getElementById('admin-form-success').classList.add('hidden');
+        };
+
+        window.cancelarEdicaoNoticia = function() {
+            prepararNovaNoticia();
+        };
+
+        // 5. Puxar dados para edição
+        window.editarNoticia = function(id) {
+            const n = bancoDeNoticias[id];
+            if(!n) return;
+            
+            document.getElementById('admin-noticia-id').value = n.id;
+            document.getElementById('admin-noticia-titulo').value = n.titulo;
+            document.getElementById('admin-noticia-categoria').value = n.categoria;
+            document.getElementById('admin-noticia-data').value = n.data;
+            document.getElementById('admin-noticia-imagem').value = n.imagem;
+            document.getElementById('admin-noticia-conteudo').value = n.conteudo;
+            
+            document.getElementById('titulo-editor-noticia').innerHTML = '<i class="fa-solid fa-arrows-rotate text-pref-blue"></i> Editando Publicação';
+            document.getElementById('btn-salvar-noticia').innerHTML = '<i class="fa-solid fa-arrows-rotate mr-2"></i> Atualizar Notícia';
+            document.getElementById('admin-form-error').classList.add('hidden');
+            document.getElementById('admin-form-success').classList.add('hidden');
+        };
+
+        // 6. Gravar de fato no Banco de Dados Google
+        window.salvarNoticiaAdmin = async function() {
+            const btn = document.getElementById('btn-salvar-noticia');
+            const msgErro = document.getElementById('admin-form-error');
+            const msgSucesso = document.getElementById('admin-form-success');
+            
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Salvando no Servidor...';
+            msgErro.classList.add('hidden');
+            msgSucesso.classList.add('hidden');
+
+            const idAtual = document.getElementById('admin-noticia-id').value;
+            const novoId = idAtual || 'noticia_' + Date.now(); // Gera ID único para novas notícias
+            
+            // Ajusta a ordem cronológica
+            let ordem = 1;
+            if (idAtual && bancoDeNoticias[idAtual]) {
+                ordem = bancoDeNoticias[idAtual].ordem; // Mantém no lugar original se for edição
+            } else {
+                const arrayNoticias = Object.values(bancoDeNoticias);
+                if(arrayNoticias.length > 0) {
+                    ordem = Math.max(...arrayNoticias.map(n => n.ordem || 0)) + 1; // Joga pro topo se for nova
+                }
+            }
+
+            const dados = {
+                id: novoId,
+                ordem: ordem,
+                titulo: document.getElementById('admin-noticia-titulo').value,
+                categoria: document.getElementById('admin-noticia-categoria').value,
+                data: document.getElementById('admin-noticia-data').value,
+                imagem: document.getElementById('admin-noticia-imagem').value,
+                conteudo: document.getElementById('admin-noticia-conteudo').value
+            };
+
+            try {
+                // Operação de salvamento no Firestore
+                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'noticias', novoId);
+                await setDoc(docRef, dados);
+                
+                msgSucesso.classList.remove('hidden');
+                setTimeout(() => msgSucesso.classList.add('hidden'), 4000); // Some após 4s
+                
+                if(!idAtual) prepararNovaNoticia(); // Só limpa se foi uma nova postagem
+                
+            } catch(e) {
+                console.error("Erro ao salvar no Firebase:", e);
+                msgErro.classList.remove('hidden');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = idAtual ? '<i class="fa-solid fa-arrows-rotate mr-2"></i> Atualizar Notícia' : '<i class="fa-solid fa-check mr-2"></i> Publicar Notícia';
+            }
+        };
+
+        // 7. Processo de Exclusão Segura
+        window.abrirModalDelete = function(id) {
+            noticiaParaExcluir = id;
+            document.getElementById('modal-delete').classList.remove('hidden');
+        };
+
+        window.fecharModalDelete = function() {
+            noticiaParaExcluir = null;
+            document.getElementById('modal-delete').classList.add('hidden');
+        };
+
+        document.getElementById('btn-confirmar-delete').addEventListener('click', async () => {
+            if(!noticiaParaExcluir) return;
+            
+            const btn = document.getElementById('btn-confirmar-delete');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Excluindo...';
+            
+            try {
+                await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'noticias', noticiaParaExcluir));
+                fecharModalDelete();
+            } catch(e) {
+                console.error("Falha ao deletar:", e);
+                // Retorna ao normal e mostra o erro
+                fecharModalDelete(); 
+                document.getElementById('admin-form-error').classList.remove('hidden');
+                document.getElementById('admin-form-error').innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-1"></i> Erro ao tentar excluir a notícia.';
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = 'Sim, excluir agora';
+            }
+        });
+
     </script>
 </body>
 </html>
