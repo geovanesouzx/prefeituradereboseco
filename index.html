@@ -807,6 +807,30 @@
             { id: "servico_4", ordem: 1, titulo: "Licitações", descricao: "Editais e transparência municipal.", icone: "fa-file-contract" }
         ];
 
+        window.semearDadosIniciais = async function() {
+            const btn = document.getElementById('btn-seed');
+            if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> Injetando...'; }
+            
+            try {
+                const noticiasRef = collection(db, 'artifacts', appId, 'public', 'data', 'noticias');
+                const servicosRef = collection(db, 'artifacts', appId, 'public', 'data', 'servicos');
+                
+                // Grava os Serviços
+                for (let s of servicosSemente) { await setDoc(doc(servicosRef, s.id), s); }
+                // Grava as Notícias
+                for (let n of noticiasSemente) { await setDoc(doc(noticiasRef, n.id), n); }
+                
+                // Troca para a aba de Serviços para ver os dados aparecerem!
+                mudarAbaAdmin('servicos');
+                
+            } catch (e) {
+                console.error("Erro ao gerar dados:", e);
+                alert("Houve um erro. Certifique-se de estar logado como Administrador.");
+            } finally {
+                if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Gerar Testes'; }
+            }
+        };
+
         async function iniciarBancoDeDados() {
             // Criando as referências
             const noticiasRef = collection(db, 'artifacts', appId, 'public', 'data', 'noticias');
