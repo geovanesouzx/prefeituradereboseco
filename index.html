@@ -5,29 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prefeitura Municipal de Rabo Seco</title>
     
-    <!-- Tailwind CSS para estilização rápida e responsiva -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Google Fonts: Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
     
     <!-- FontAwesome para os ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Configuração de cores personalizadas no Tailwind -->
+    <!-- Configuração Tailwind -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
                         pref: {
-                            blue: '#0047AB', // Azul institucional principal
-                            darkblue: '#002D6B', // Azul mais escuro
-                            yellow: '#FFC107', // Amarelo para destaques
-                            light: '#F8FAFC', // Branco/Cinza super claro para fundos
+                            blue: '#0047AB',
+                            darkblue: '#002D6B',
+                            yellow: '#FFC107',
+                            light: '#F8FAFC',
                         }
                     }
                 }
@@ -35,25 +33,27 @@
         }
     </script>
     <style>
-        /* Suavização de rolagem e transições globais */
         html { scroll-behavior: smooth; }
-        * { transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease; }
-        
-        /* Estilização da barra de rolagem */
+        * { transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease; }
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #F8FAFC; }
         ::-webkit-scrollbar-thumb { background: #0047AB; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #002D6B; }
+        
+        /* Efeito cartão de crédito para o CPF Virtual */
+        .cartao-cidadao {
+            background: linear-gradient(135deg, #002D6B 0%, #0047AB 100%);
+            box-shadow: 0 10px 25px -5px rgba(0, 71, 171, 0.4);
+        }
     </style>
 </head>
 <body class="bg-pref-light text-gray-800 font-sans antialiased flex flex-col min-h-screen">
 
-    <!-- CABEÇALHO -->
     <header class="bg-white shadow-md sticky top-0 z-50 border-b-4 border-pref-yellow relative">
         <div class="container mx-auto px-4 lg:px-8 py-3 md:py-4">
             <div class="flex justify-between items-center">
                 
-                <!-- Logo / Nome da Prefeitura -->
+                <!-- Logo -->
                 <div class="flex items-center gap-2 sm:gap-3 cursor-pointer" onclick="goHome();">
                     <img src="https://i.imgur.com/yv7TJkd.png" alt="Logo Prefeitura" class="h-10 sm:h-12 md:h-14 w-auto object-contain drop-shadow-sm">
                     <div>
@@ -62,408 +62,479 @@
                     </div>
                 </div>
 
-                <!-- Menu de Navegação (Desktop) -->
-                <nav class="hidden md:flex gap-6 items-center">
-                    <a href="#inicio" class="text-gray-600 hover:text-pref-blue font-medium transition-colors">Início</a>
-                    <a href="javascript:void(0)" onclick="goHomeAndScroll('servicos')" class="text-gray-600 hover:text-pref-blue font-medium transition-colors">Serviços</a>
-                    <a href="javascript:void(0)" onclick="goHomeAndScroll('noticias')" class="text-gray-600 hover:text-pref-blue font-medium transition-colors">Notícias</a>
-                    <a href="javascript:void(0)" onclick="showService('Portal da Transparência', 'Acesse dados financeiros, contratos e licitações em tempo real.')" class="text-gray-600 hover:text-pref-blue font-medium transition-colors">Transparência</a>
-                    <a href="javascript:void(0)" onclick="goHomeAndScroll('contato')" class="bg-pref-blue text-white px-5 py-2.5 rounded-full font-medium hover:bg-pref-darkblue shadow-sm transition-colors">Fale Conosco</a>
+                <!-- Navegação Desktop -->
+                <nav class="hidden lg:flex gap-5 items-center">
+                    <a href="#inicio" class="text-gray-600 hover:text-pref-blue font-bold text-sm transition-colors">Início</a>
+                    <a href="javascript:void(0)" onclick="goHomeAndScroll('servicos')" class="text-gray-600 hover:text-pref-blue font-bold text-sm transition-colors">Serviços</a>
+                    <a href="javascript:void(0)" onclick="goHomeAndScroll('noticias')" class="text-gray-600 hover:text-pref-blue font-bold text-sm transition-colors">Notícias</a>
+                    <div class="h-6 w-px bg-gray-200 mx-1"></div>
+                    
+                    <!-- Botão de Login Cidadão -->
+                    <a href="#cidadao" id="btn-header-cidadao" class="flex items-center gap-2 text-pref-blue font-bold text-sm hover:text-pref-darkblue transition-colors px-3 py-2 rounded-lg hover:bg-blue-50">
+                        <i class="fa-regular fa-id-card text-lg"></i> <span>Acesso Cidadão</span>
+                    </a>
+                    
+                    <a href="javascript:void(0)" onclick="goHomeAndScroll('contato')" class="bg-pref-blue text-white px-5 py-2.5 rounded-full text-sm font-bold hover:bg-pref-darkblue shadow-sm transition-colors ml-2">Fale Conosco</a>
                 </nav>
 
                 <!-- Botão Menu Mobile -->
-                <button class="md:hidden text-pref-blue text-2xl focus:outline-none p-2 -mr-2" id="mobile-menu-btn" aria-label="Abrir Menu">
+                <button class="lg:hidden text-pref-blue text-2xl focus:outline-none p-2 -mr-2" id="mobile-menu-btn" aria-label="Abrir Menu">
                     <i class="fa-solid fa-bars"></i>
                 </button>
             </div>
             
-            <!-- Menu Mobile Expandido (Renovado) -->
-            <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-white shadow-2xl border-t border-gray-100 pb-6 pt-2 z-50">
+            <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white shadow-2xl border-t border-gray-100 pb-6 pt-2 z-50">
                 <div class="flex flex-col px-6">
-                    <a href="#inicio" onclick="closeMenu();" class="text-gray-700 font-medium py-3.5 border-b border-gray-50 hover:text-pref-blue flex items-center gap-3"><i class="fa-solid fa-house w-5 text-gray-400"></i> Início</a>
-                    <a href="javascript:void(0)" onclick="goHomeAndScroll('servicos'); closeMenu();" class="text-gray-700 font-medium py-3.5 border-b border-gray-50 hover:text-pref-blue flex items-center gap-3"><i class="fa-solid fa-laptop-file w-5 text-gray-400"></i> Serviços</a>
-                    <a href="javascript:void(0)" onclick="goHomeAndScroll('noticias'); closeMenu();" class="text-gray-700 font-medium py-3.5 border-b border-gray-50 hover:text-pref-blue flex items-center gap-3"><i class="fa-solid fa-newspaper w-5 text-gray-400"></i> Notícias</a>
-                    <a href="javascript:void(0)" onclick="showService('Portal da Transparência', 'Acesso financeiro.'); closeMenu();" class="text-gray-700 font-medium py-3.5 border-b border-gray-50 hover:text-pref-blue flex items-center gap-3"><i class="fa-solid fa-magnifying-glass-chart w-5 text-gray-400"></i> Transparência</a>
-                    <a href="javascript:void(0)" onclick="goHomeAndScroll('contato'); closeMenu();" class="bg-pref-blue text-white text-center font-bold py-3.5 mt-4 rounded-xl hover:bg-pref-darkblue shadow-md transition-colors">Fale Conosco</a>
+                    <a href="#inicio" onclick="closeMenu();" class="text-gray-700 font-bold py-4 border-b border-gray-100 hover:text-pref-blue flex items-center justify-between group">
+                        <span class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-blue-50 transition-colors"><i class="fa-solid fa-house text-gray-400 group-hover:text-pref-blue"></i></div> Início</span> <i class="fa-solid fa-chevron-right text-xs text-gray-300"></i>
+                    </a>
+                    <a href="javascript:void(0)" onclick="goHomeAndScroll('servicos'); closeMenu();" class="text-gray-700 font-bold py-4 border-b border-gray-100 hover:text-pref-blue flex items-center justify-between group">
+                        <span class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-blue-50 transition-colors"><i class="fa-solid fa-laptop-file text-gray-400 group-hover:text-pref-blue"></i></div> Serviços Públicos</span> <i class="fa-solid fa-chevron-right text-xs text-gray-300"></i>
+                    </a>
+                    <a href="javascript:void(0)" onclick="goHomeAndScroll('noticias'); closeMenu();" class="text-gray-700 font-bold py-4 border-b border-gray-100 hover:text-pref-blue flex items-center justify-between group">
+                        <span class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-blue-50 transition-colors"><i class="fa-solid fa-newspaper text-gray-400 group-hover:text-pref-blue"></i></div> Últimas Notícias</span> <i class="fa-solid fa-chevron-right text-xs text-gray-300"></i>
+                    </a>
+                    
+                    <!-- Destaque para Acesso Cidadão no Mobile -->
+                    <a href="#cidadao" onclick="closeMenu();" class="mt-4 border-2 border-pref-blue text-pref-blue text-center font-black py-3.5 rounded-xl hover:bg-blue-50 shadow-sm transition-colors flex items-center justify-center gap-2">
+                        <i class="fa-regular fa-id-card text-lg"></i> Meu CPF Virtual
+                    </a>
+                    
+                    <a href="javascript:void(0)" onclick="goHomeAndScroll('contato'); closeMenu();" class="bg-pref-blue text-white text-center font-black py-3.5 mt-3 rounded-xl hover:bg-pref-darkblue shadow-md transition-colors">
+                        Fale Conosco
+                    </a>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- MAIN CONTAINER PARA SISTEMA DE "PÁGINAS" -->
+    <!-- MAIN CONTAINER -->
     <div id="app-container" class="flex-grow flex flex-col">
         
-        <!-- PÁGINA INICIAL -->
         <div id="view-home" class="flex-col flex flex-grow">
-
             <section class="bg-pref-blue text-white py-12 sm:py-16 md:py-24 relative overflow-hidden">
-                <!-- Elemento decorativo de fundo -->
                 <div class="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -mr-20 -mt-20 pointer-events-none"></div>
                 <div class="absolute bottom-0 left-0 w-96 h-96 bg-pref-darkblue opacity-50 rounded-full -ml-32 -mb-32 pointer-events-none"></div>
                 
                 <div class="container mx-auto px-4 lg:px-8 relative z-10 flex flex-col md:flex-row items-center gap-8 md:gap-12">
                     <div class="md:w-3/5 text-center md:text-left mt-2 md:mt-0">
-                        <span class="inline-block py-1.5 px-4 rounded-full bg-pref-yellow text-pref-darkblue text-xs sm:text-sm font-bold tracking-wider mb-4 sm:mb-6 uppercase shadow-sm">Portal do Cidadão</span>
-                        <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
+                        <span class="inline-block py-1.5 px-4 rounded-full bg-pref-yellow text-pref-darkblue text-xs sm:text-sm font-black tracking-wider mb-4 sm:mb-6 uppercase shadow-sm">Portal do Cidadão</span>
+                        <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 sm:mb-6 leading-tight">
                             Trabalhando por uma <span class="text-pref-yellow block sm:inline">Rabo Seco</span> melhor todos os dias.
                         </h2>
-                        <p class="text-base sm:text-lg text-blue-100 mb-6 sm:mb-8 md:pr-10 leading-relaxed">
-                            Acesse serviços digitais, acompanhe as notícias da cidade e participe ativamente da gestão municipal com total transparência.
+                        <p class="text-base sm:text-lg text-blue-100 mb-6 sm:mb-8 md:pr-10 leading-relaxed font-medium">
+                            Acesse serviços digitais com seu CPF Virtual, acompanhe as notícias da cidade e participe ativamente da gestão municipal com total transparência.
                         </p>
                         <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center md:justify-start">
-                            </a>
-                            <a href="#" onclick="showService('Portal da Transparência', 'Acesso livre e transparente aos dados de finanças e gestão do município.'); return false;" class="bg-white/10 text-white backdrop-blur-md px-8 py-3 rounded-full font-bold text-lg hover:bg-white/20 border border-white/30 text-center transition-all">
-                                Transparência
+                            <a href="#cidadao" class="bg-pref-yellow text-pref-darkblue px-8 py-3.5 rounded-full font-black text-lg hover:bg-yellow-400 shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 transform hover:-translate-y-1">
+                                <i class="fa-solid fa-fingerprint"></i> Gerar CPF Virtual
                             </a>
                         </div>
                     </div>
-                    
                     <div class="md:w-2/5 flex justify-center">
                         <img src="https://i.imgur.com/yv7TJkd.png" alt="Símbolo de Rabo Seco" class="w-64 h-auto lg:w-80 transform hover:scale-105 transition-transform duration-300 drop-shadow-2xl">
                     </div>
                 </div>
             </section>
 
-            <!-- SEÇÃO DE SERVIÇOS RÁPIDOS -->
             <section id="servicos" class="py-16 md:py-24 bg-gray-50">
                 <div class="container mx-auto px-4 lg:px-8">
                     <div class="text-center mb-16">
-                        <h3 class="text-3xl md:text-4xl font-bold text-pref-darkblue mb-4">Serviços ao Cidadão</h3>
+                        <h3 class="text-3xl md:text-4xl font-black text-pref-darkblue mb-4 tracking-tight">Serviços Digitais</h3>
                         <div class="h-1.5 w-24 bg-pref-yellow mx-auto rounded-full"></div>
-                        <p class="text-gray-500 mt-5 text-lg max-w-2xl mx-auto">Acesse os principais serviços digitais da prefeitura sem sair de casa, com agilidade e segurança.</p>
+                        <p class="text-gray-500 mt-5 text-lg max-w-2xl mx-auto font-medium">Acesse os serviços da prefeitura com agilidade. Login com CPF Virtual obrigatório.</p>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <a href="#" onclick="showService('Emissão de IPTU', 'Emita a 2ª via do seu IPTU, consulte débitos e parcelamentos de anos anteriores.'); return false;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl hover:border-pref-yellow hover:-translate-y-2 group transition-all block">
-                            <div class="w-16 h-16 bg-blue-50 text-pref-blue rounded-full flex items-center justify-center text-2xl mb-6 group-hover:bg-pref-blue group-hover:text-white transition-colors">
-                                <i class="fa-solid fa-file-invoice-dollar"></i>
-                            </div>
-                            <h4 class="text-xl font-bold text-gray-800 mb-3">Emissão de IPTU</h4>
-                            <p class="text-gray-500 text-sm leading-relaxed">Emita a 2ª via do seu IPTU, consulte débitos e parcelamentos.</p>
-                        </a>
-
-                        <a href="#" onclick="showService('Portal do Servidor', 'Acesso restrito a servidores da prefeitura para consulta de holerites, férias e informações de RH.'); return false;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl hover:border-pref-yellow hover:-translate-y-2 group transition-all block">
-                            <div class="w-16 h-16 bg-blue-50 text-pref-blue rounded-full flex items-center justify-center text-2xl mb-6 group-hover:bg-pref-blue group-hover:text-white transition-colors">
-                                <i class="fa-solid fa-users"></i>
-                            </div>
-                            <h4 class="text-xl font-bold text-gray-800 mb-3">Portal do Servidor</h4>
-                            <p class="text-gray-500 text-sm leading-relaxed">Acesso ao contracheque, informe de rendimentos e avisos internos.</p>
-                        </a>
-
-                        <a href="#" onclick="showService('Ouvidoria', 'Faça sua denúncia, reclamação, sugestão ou elogio formalmente aos órgãos da prefeitura.'); return false;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl hover:border-pref-yellow hover:-translate-y-2 group transition-all block">
-                            <div class="w-16 h-16 bg-blue-50 text-pref-blue rounded-full flex items-center justify-center text-2xl mb-6 group-hover:bg-pref-blue group-hover:text-white transition-colors">
-                                <i class="fa-solid fa-bullhorn"></i>
-                            </div>
-                            <h4 class="text-xl font-bold text-gray-800 mb-3">Ouvidoria</h4>
-                            <p class="text-gray-500 text-sm leading-relaxed">Faça sua denúncia, reclamação, sugestão ou elogio para a gestão.</p>
-                        </a>
-
-                        <a href="#" onclick="showService('Licitações', 'Acompanhe editais, pregões eletrônicos, concorrências e avisos de licitação do município.'); return false;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl hover:border-pref-yellow hover:-translate-y-2 group transition-all block">
-                            <div class="w-16 h-16 bg-blue-50 text-pref-blue rounded-full flex items-center justify-center text-2xl mb-6 group-hover:bg-pref-blue group-hover:text-white transition-colors">
-                                <i class="fa-solid fa-file-contract"></i>
-                            </div>
-                            <h4 class="text-xl font-bold text-gray-800 mb-3">Licitações</h4>
-                            <p class="text-gray-500 text-sm leading-relaxed">Acompanhe editais, pregões e avisos de licitação do município.</p>
-                        </a>
+                    <!-- Container onde os serviços do Banco de Dados vão aparecer -->
+                    <div id="servicos-grid-home" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="col-span-full text-center text-gray-400 font-bold py-10"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Carregando serviços do banco de dados...</div>
                     </div>
                 </div>
             </section>
 
-            <!-- SEÇÃO DE NOTÍCIAS -->
             <section id="noticias" class="py-12 sm:py-16 md:py-24 bg-white flex-grow border-t border-gray-100">
                 <div class="container mx-auto px-4 lg:px-8">
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 sm:mb-12 gap-5">
                         <div>
-                            <h3 class="text-2xl sm:text-3xl md:text-4xl font-bold text-pref-darkblue mb-3 sm:mb-4">Últimas Notícias</h3>
+                            <h3 class="text-2xl sm:text-3xl md:text-4xl font-black text-pref-darkblue mb-3 sm:mb-4 tracking-tight">Últimas Notícias</h3>
                             <div class="h-1.5 w-16 sm:w-24 bg-pref-yellow rounded-full"></div>
                         </div>
-                        <button onclick="showAllNewsView()" class="w-full md:w-auto bg-gray-100 text-gray-700 px-6 py-3.5 md:py-2.5 rounded-xl md:rounded-full font-bold hover:bg-gray-200 transition-colors shadow-sm flex items-center justify-center gap-2">
-                            Ver Todas <i class="fa-solid fa-list text-sm"></i>
+                        <button onclick="window.location.hash='todas-noticias'" class="w-full md:w-auto bg-gray-100 text-gray-700 px-6 py-3.5 md:py-2.5 rounded-xl md:rounded-full font-black hover:bg-gray-200 transition-colors shadow-sm flex items-center justify-center gap-2">
+                            Ver Todas <i class="fa-solid fa-list-ul text-sm"></i>
                         </button>
                     </div>
 
-                    <!-- Container onde as notícias do Firebase serão injetadas -->
                     <div id="noticias-grid-home" class="min-h-[400px] flex items-center justify-center">
-                        <div class="text-gray-400 font-medium flex items-center gap-3">
-                            <i class="fa-solid fa-circle-notch fa-spin text-pref-blue text-2xl"></i> 
-                            Carregando notícias do banco de dados...
+                        <div class="text-gray-400 font-bold flex items-center gap-3">
+                            <i class="fa-solid fa-circle-notch fa-spin text-pref-blue text-2xl"></i> Carregando sistema de notícias...
                         </div>
                     </div>
                 </div>
             </section>
+        </div>
 
-        </div> <!-- FIM PÁGINA INICIAL (#view-home) -->
-
-        <!-- NOVA TELA: LEITURA DE NOTÍCIA -->
-        <div id="view-noticia" class="hidden flex-col flex-grow bg-white py-12 pb-24">
-            <div class="container mx-auto px-4 lg:px-8 max-w-4xl">
-                <!-- Botão Voltar -->
-                <button onclick="goHomeAndScroll('noticias')" class="flex items-center text-pref-blue font-bold hover:text-pref-darkblue mb-8 transition-colors group cursor-pointer bg-blue-50 py-2 px-4 rounded-full w-fit">
-                    <i class="fa-solid fa-arrow-left mr-2 group-hover:-translate-x-1 transition-transform"></i> Voltar para Notícias
-                </button>
-
-                <!-- Cabeçalho da Notícia -->
-                <div class="mb-8">
-                    <span id="noticia-categoria" class="bg-pref-yellow text-pref-darkblue text-xs font-bold px-3 py-1 rounded-full uppercase mb-4 inline-block">...</span>
-                    <h1 id="noticia-titulo" class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mb-6">Carregando...</h1>
-                    <div class="flex items-center text-gray-500 font-medium">
-                        <i class="fa-regular fa-calendar text-pref-blue mr-2"></i>
-                        <span id="noticia-data">...</span>
+        <!-- TELA 1: LOGIN/CADASTRO CIDADÃO -->
+        <div id="view-cidadao-auth" class="hidden flex-col flex-grow bg-gray-50 py-12 md:py-20 items-center justify-center px-4">
+            <div class="bg-white p-8 md:p-10 rounded-[2rem] shadow-2xl w-full max-w-md border border-gray-100 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-3 bg-pref-blue"></div>
+                <div class="text-center mb-8">
+                    <div class="w-20 h-20 bg-blue-50 text-pref-blue rounded-full flex items-center justify-center text-4xl mx-auto mb-4 shadow-inner">
+                        <i class="fa-solid fa-fingerprint"></i>
                     </div>
-                </div>
-
-                <!-- Imagem Principal -->
-                <img id="noticia-imagem" src="" alt="Imagem da Notícia" class="w-full h-64 md:h-96 lg:h-[500px] object-cover rounded-2xl mb-10 shadow-lg bg-gray-100">
-
-                <!-- Conteúdo -->
-                <div id="noticia-conteudo" class="prose prose-lg max-w-none text-gray-700 leading-relaxed space-y-6">
-                    <!-- Conteúdo injetado via JS -->
+                    <h2 class="text-2xl md:text-3xl font-black text-pref-darkblue tracking-tight">Portal do Cidadão</h2>
+                    <p class="text-gray-500 text-sm mt-2 font-medium">Acesse ou gere seu CPF Virtual de Rabo Seco para utilizar os serviços.</p>
                 </div>
                 
-                <!-- Compartilhar -->
-                <div class="mt-16 pt-8 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-6">
-                    <div class="font-bold text-gray-800 text-lg">Gostou? Compartilhe esta notícia:</div>
-                    <div class="flex gap-4">
-                        <button class="w-12 h-12 rounded-full bg-[#1877F2] text-white flex items-center justify-center hover:bg-[#0C63D4] transition-colors shadow-md text-xl"><i class="fa-brands fa-facebook-f"></i></button>
-                        <button class="w-12 h-12 rounded-full bg-[#1DA1F2] text-white flex items-center justify-center hover:bg-[#0C85D0] transition-colors shadow-md text-xl"><i class="fa-brands fa-twitter"></i></button>
-                        <button class="w-12 h-12 rounded-full bg-[#25D366] text-white flex items-center justify-center hover:bg-[#12B949] transition-colors shadow-md text-xl"><i class="fa-brands fa-whatsapp"></i></button>
+                <div id="cidadao-msg-erro" class="hidden mb-6 text-red-600 text-sm font-bold bg-red-50 p-4 rounded-xl border border-red-100 flex items-start gap-2">
+                    <i class="fa-solid fa-circle-exclamation mt-0.5"></i> <span id="cidadao-msg-texto">Erro</span>
+                </div>
+
+                <!-- Formulário -->
+                <form id="form-cidadao" onsubmit="event.preventDefault(); processarAuthCidadao();" class="space-y-5">
+                    <div id="box-nome-cidadao" class="hidden">
+                        <label class="block text-sm font-black text-gray-700 mb-1.5">Nome Completo</label>
+                        <input type="text" id="cidadao-nome" placeholder="Digite seu nome..." class="w-full px-4 py-3.5 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- NOVA TELA: SERVIÇO INTERNO -->
-        <div id="view-servico" class="hidden flex-col flex-grow bg-gray-50 py-12 pb-24">
-            <div class="container mx-auto px-4 lg:px-8 max-w-3xl">
-                <!-- Botão Voltar -->
-                <button onclick="goHomeAndScroll('servicos')" class="flex items-center text-pref-blue font-bold hover:text-pref-darkblue mb-8 transition-colors group cursor-pointer bg-white border border-gray-200 shadow-sm py-2 px-4 rounded-full w-fit">
-                    <i class="fa-solid fa-arrow-left mr-2 group-hover:-translate-x-1 transition-transform"></i> Voltar para os Serviços
-                </button>
-
-                <!-- Box de Serviço -->
-                <div class="bg-white rounded-3xl shadow-lg border border-gray-100 p-8 md:p-12 text-center relative overflow-hidden">
-                    <!-- Detalhe visual de topo -->
-                    <div class="absolute top-0 left-0 w-full h-2 bg-pref-yellow"></div>
-
-                    <div class="w-24 h-24 bg-blue-50 text-pref-blue rounded-full flex items-center justify-center text-4xl mx-auto mb-6 shadow-inner">
-                        <i class="fa-solid fa-laptop-file"></i>
+                    <div>
+                        <label class="block text-sm font-black text-gray-700 mb-1.5">E-mail Pessoal</label>
+                        <input type="email" id="cidadao-email" required placeholder="seuemail@exemplo.com" class="w-full px-4 py-3.5 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
                     </div>
-                    <h2 id="servico-titulo" class="text-3xl font-bold text-pref-darkblue mb-4">Nome do Serviço</h2>
-                    <p id="servico-desc" class="text-lg text-gray-600 mb-10 max-w-xl mx-auto">Descrição do serviço entra aqui.</p>
-                    
-                    <div class="bg-gray-50 p-6 md:p-8 rounded-2xl border border-gray-200 text-left">
-                        <h3 class="font-bold text-gray-800 mb-6 border-b border-gray-200 pb-3 flex items-center gap-2">
-                            <i class="fa-solid fa-shield-halved text-pref-blue"></i> Acesso Restrito
-                        </h3>
-                        
-                        <!-- Formulário Fictício -->
-                        <form onsubmit="event.preventDefault(); document.getElementById('alerta-msg').classList.remove('hidden');" class="space-y-5">
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">Insira seu CPF, CNPJ ou Matrícula</label>
-                                <input type="text" placeholder="Digite apenas números..." class="w-full px-5 py-4 rounded-xl border border-gray-300 focus:ring-4 focus:ring-pref-blue/20 focus:border-pref-blue outline-none transition-all text-lg">
-                            </div>
-                            <button type="submit" class="w-full bg-pref-blue text-white font-bold py-4 px-6 rounded-xl hover:bg-pref-darkblue shadow-md transition-colors cursor-pointer text-lg">
-                                Consultar Sistema <i class="fa-solid fa-magnifying-glass ml-2"></i>
-                            </button>
-                            
-                            <!-- Mensagem de Alerta -->
-                            <div id="alerta-msg" class="hidden mt-6 bg-yellow-50 border-l-4 border-pref-yellow text-gray-800 p-5 rounded-r-xl text-sm flex gap-4 items-start shadow-sm">
-                                <i class="fa-solid fa-triangle-exclamation text-pref-yellow text-xl mt-0.5"></i>
-                                <div>
-                                    <h4 class="font-bold mb-1">Aviso do Sistema</h4>
-                                    <p>Este é apenas o ambiente de demonstração do portal da Prefeitura de Rabo Seco. Nenhuma base de dados oficial foi acessada.</p>
-                                </div>
-                            </div>
-                        </form>
+                    <div>
+                        <label class="block text-sm font-black text-gray-700 mb-1.5">Senha de Acesso</label>
+                        <input type="password" id="cidadao-senha" required placeholder="••••••••" class="w-full px-4 py-3.5 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
                     </div>
-                </div>
-            </div>
-        </div>
+                    <button type="submit" id="btn-submit-cidadao" class="w-full bg-pref-blue text-white font-black py-4 px-6 rounded-xl hover:bg-pref-darkblue shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 text-lg mt-2 flex justify-center items-center gap-2">
+                        <i class="fa-solid fa-right-to-bracket"></i> Entrar no Sistema
+                    </button>
+                </form>
 
-        <!-- NOVA TELA: TODAS AS NOTÍCIAS -->
-        <div id="view-todas-noticias" class="hidden flex-col flex-grow bg-gray-50 py-12 pb-24">
-            <div class="container mx-auto px-4 lg:px-8">
-                <!-- Botão Voltar -->
-                <button onclick="goHomeAndScroll('noticias')" class="flex items-center text-pref-blue font-bold hover:text-pref-darkblue mb-8 transition-colors group cursor-pointer bg-white border border-gray-200 shadow-sm py-2 px-4 rounded-full w-fit">
-                    <i class="fa-solid fa-arrow-left mr-2 group-hover:-translate-x-1 transition-transform"></i> Voltar para Início
-                </button>
-                
-                <div class="mb-10">
-                    <h2 class="text-3xl md:text-4xl font-bold text-pref-darkblue mb-4">Todas as Notícias</h2>
-                    <div class="h-1.5 w-24 bg-pref-yellow rounded-full mb-4"></div>
-                    <p class="text-gray-600">Acompanhe tudo o que acontece na nossa cidade em tempo real pelo nosso sistema online.</p>
-                </div>
-
-                <!-- Grid de Notícias Gerado Dinamicamente do Firebase -->
-            <div id="grid-todas-noticias" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Conteúdo injetado via JS -->
-            </div>
-        </div>
-    </div>
-
-    <!-- TELA: LOGIN ADMIN -->
-    <div id="view-admin-login" class="hidden flex-col flex-grow bg-gray-50 py-12 pb-24 items-center justify-center">
-        <div class="bg-white p-8 rounded-3xl shadow-xl w-full max-w-md border border-gray-100 mx-4">
-            <div class="text-center mb-8">
-                <img src="https://i.imgur.com/yv7TJkd.png" class="h-16 mx-auto mb-4" alt="Logo">
-                <h2 class="text-2xl font-bold text-pref-darkblue">Acesso Restrito</h2>
-                <p class="text-gray-500 text-sm">Painel de Administração do Portal</p>
-            </div>
-            <form id="form-admin-login" onsubmit="event.preventDefault(); fazerLoginAdmin();" class="space-y-5">
-                <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-2">E-mail Administrativo</label>
-                    <input type="email" id="admin-email" required placeholder="admin@raboseco.ba.gov.br" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-4 focus:ring-pref-blue/20 focus:border-pref-blue outline-none transition-all">
-                </div>
-                <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-2">Senha</label>
-                    <input type="password" id="admin-senha" required placeholder="••••••••" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-4 focus:ring-pref-blue/20 focus:border-pref-blue outline-none transition-all">
-                </div>
-                <div id="admin-login-error" class="hidden text-red-500 text-sm font-bold text-center bg-red-50 p-3 rounded-lg border border-red-100">Credenciais inválidas ou sem permissão de acesso.</div>
-                <button type="submit" id="btn-login-admin" class="w-full bg-pref-darkblue text-white font-bold py-3.5 px-6 rounded-xl hover:bg-pref-blue shadow-md transition-colors text-lg mt-2">
-                    Entrar no Painel
-                </button>
-            </form>
-            <div class="mt-6 text-center">
-                <button onclick="goHome()" class="text-sm text-gray-500 hover:text-pref-blue transition-colors underline"><i class="fa-solid fa-arrow-left mr-1"></i> Voltar ao portal público</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- TELA: DASHBOARD ADMIN -->
-    <div id="view-admin-dashboard" class="hidden flex-col flex-grow bg-gray-50">
-        <!-- Barra de Topo do Admin -->
-        <div class="bg-pref-darkblue text-white py-4 px-4 md:px-8 flex flex-col md:flex-row justify-between items-center shadow-md gap-4 z-10 relative">
-            <div class="flex items-center gap-3">
-                <i class="fa-solid fa-shield-halved text-pref-yellow text-2xl"></i>
-                <div>
-                    <span class="font-bold text-lg md:text-xl block leading-none">Painel de Controle</span>
-                    <span class="text-xs text-blue-200">Prefeitura de Rabo Seco</span>
-                </div>
-            </div>
-            <div class="flex gap-3 w-full md:w-auto">
-                <button onclick="goHome()" class="flex-1 md:flex-none text-sm bg-white/10 hover:bg-white/20 px-4 py-2.5 rounded-lg transition-colors font-medium shadow-sm"><i class="fa-solid fa-home mr-1"></i> Ver Site</button>
-                <button onclick="sairAdmin()" class="flex-1 md:flex-none text-sm bg-red-500 hover:bg-red-600 px-4 py-2.5 rounded-lg transition-colors font-medium shadow-sm"><i class="fa-solid fa-right-from-bracket mr-1"></i> Sair do Painel</button>
-            </div>
-        </div>
-        
-        <div class="container mx-auto px-4 py-8 flex-grow flex flex-col lg:flex-row gap-8 max-w-7xl">
-            
-            <!-- LISTA DE NOTÍCIAS PUBLICADAS -->
-            <div class="w-full lg:w-5/12 bg-white rounded-2xl shadow-sm border border-gray-200 p-6 flex flex-col h-[700px]">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-xl font-bold text-gray-800 flex items-center gap-2"><i class="fa-solid fa-newspaper text-pref-blue"></i> Publicações</h3>
-                    <button onclick="prepararNovaNoticia()" class="bg-pref-blue text-white px-4 py-2.5 rounded-xl text-sm font-bold hover:bg-pref-darkblue shadow-sm transition-colors flex items-center gap-2">
-                        <i class="fa-solid fa-plus"></i> Nova
+                <div class="mt-8 text-center border-t border-gray-100 pt-6">
+                    <p class="text-sm text-gray-500 font-medium" id="toggle-auth-text">Primeiro acesso ao portal?</p>
+                    <button onclick="alternarModoCidadao()" id="toggle-auth-btn" class="mt-2 text-pref-blue font-black hover:text-pref-darkblue transition-colors underline decoration-2 underline-offset-4">
+                        Gerar meu CPF Virtual agora
                     </button>
                 </div>
-                <div id="lista-admin-noticias" class="overflow-y-auto pr-2 space-y-3 flex-grow">
-                    <!-- Injetado via JS -->
-                </div>
             </div>
+        </div>
 
-            <!-- EDITOR DE NOTÍCIA -->
-            <div class="w-full lg:w-7/12 bg-white rounded-2xl shadow-sm border border-gray-200 p-6 flex flex-col h-[700px]">
-                <h3 id="titulo-editor-noticia" class="text-xl font-bold text-gray-800 mb-6 border-b border-gray-100 pb-4 flex items-center gap-2">
-                    <i class="fa-solid fa-pen-to-square text-pref-yellow"></i> Adicionar Nova Notícia
-                </h3>
+        <!-- TELA 2: PAINEL DO CIDADÃO (LOGADO) -->
+        <div id="view-cidadao-dashboard" class="hidden flex-col flex-grow bg-gray-50 py-12 pb-24">
+            <div class="container mx-auto px-4 lg:px-8 max-w-5xl">
                 
-                <form id="form-admin-noticia" onsubmit="event.preventDefault(); salvarNoticiaAdmin();" class="space-y-5 flex-grow flex flex-col overflow-y-auto pr-2">
-                    <input type="hidden" id="admin-noticia-id">
-                    
-                    <div id="admin-form-error" class="hidden text-red-600 text-sm font-bold bg-red-50 p-3 rounded-lg border border-red-100"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Erro ao salvar. Verifique sua conexão.</div>
-                    <div id="admin-form-success" class="hidden text-green-600 text-sm font-bold bg-green-50 p-3 rounded-lg border border-green-100"><i class="fa-solid fa-check-circle mr-1"></i> Notícia salva e publicada com sucesso!</div>
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
+                    <div>
+                        <h2 class="text-3xl md:text-4xl font-black text-pref-darkblue tracking-tight">Meu Perfil</h2>
+                        <p class="text-gray-500 font-medium mt-1">Bem-vindo(a) à área segura do portal.</p>
+                    </div>
+                    <button onclick="sairCidadao()" class="bg-red-50 text-red-600 border border-red-200 px-5 py-2.5 rounded-xl font-black hover:bg-red-100 transition-colors flex items-center gap-2 shadow-sm">
+                        <i class="fa-solid fa-right-from-bracket"></i> Sair da Conta
+                    </button>
+                </div>
 
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-1">Título da Notícia</label>
-                        <input type="text" id="admin-noticia-titulo" required class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:ring-4 focus:ring-pref-blue/20 focus:border-pref-blue outline-none transition-all">
-                    </div>
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <div class="w-full sm:w-1/2">
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Categoria</label>
-                            <input type="text" id="admin-noticia-categoria" required placeholder="Ex: Saúde, Obras, Educação" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:ring-4 focus:ring-pref-blue/20 focus:border-pref-blue outline-none transition-all">
-                        </div>
-                        <div class="w-full sm:w-1/2">
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Data Publicação</label>
-                            <input type="text" id="admin-noticia-data" required placeholder="Ex: 24 de Set, 2026" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:ring-4 focus:ring-pref-blue/20 focus:border-pref-blue outline-none transition-all">
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-1">Imagem de Capa</label>
-                        <div class="flex gap-2">
-                            <input type="url" id="admin-noticia-imagem" required placeholder="Cole o link direto ou faça upload..." class="flex-grow px-4 py-2.5 rounded-xl border border-gray-300 focus:ring-4 focus:ring-pref-blue/20 focus:border-pref-blue outline-none transition-all" oninput="document.getElementById('preview-img-admin').src = this.value; document.getElementById('preview-img-admin').classList.remove('hidden');" onerror="this.classList.add('hidden')">
-                            <label for="upload-capa" class="bg-pref-blue text-white px-4 py-2.5 rounded-xl cursor-pointer hover:bg-pref-darkblue transition-colors shadow-sm flex items-center gap-2 font-bold whitespace-nowrap">
-                                <i class="fa-solid fa-cloud-arrow-up"></i> Enviar Foto
-                            </label>
-                            <input type="file" id="upload-capa" accept="image/*" class="hidden" onchange="fazerUploadMedia(this, 'capa')">
-                        </div>
-                        <p class="text-xs text-gray-500 mt-1">Envie uma foto do computador/celular ou cole o link.</p>
-                        <img id="preview-img-admin" src="" class="hidden mt-3 h-32 w-auto object-cover rounded-lg border border-gray-200 shadow-sm" onerror="this.classList.add('hidden')">
-                    </div>
-                    <div class="flex-grow flex flex-col mt-4">
-                        <div class="flex justify-between items-end mb-1">
-                            <label class="block text-sm font-bold text-gray-700">Conteúdo da Notícia</label>
-                            <div class="text-[11px] text-gray-600 bg-gray-100 px-3 py-2 rounded-lg border border-gray-200 shadow-sm">
-                                <b class="block mb-1 text-pref-blue"><i class="fa-brands fa-whatsapp"></i> Formatação WhatsApp:</b>
-                                <div class="grid grid-cols-2 gap-x-2 gap-y-1">
-                                    <span>*<b>Negrito</b>*</span>
-                                    <span>_<i>Itálico</i>_</span>
-                                    <span>~<del>Tachado</del>~</span>
-                                    <span>`<code class="text-pink-600">Código</code>`</span>
-                                    <span>- Lista</span>
-                                    <span>1. Numerada</span>
-                                    <span class="col-span-2">> Citação</span>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Cartão CPF Virtual -->
+                    <div class="lg:col-span-1">
+                        <div class="cartao-cidadao rounded-[2rem] p-8 text-white relative overflow-hidden h-full flex flex-col justify-between min-h-[250px]">
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-white opacity-5 rounded-full -mr-10 -mt-10 pointer-events-none"></div>
+                            <div class="absolute bottom-0 right-0 opacity-10 text-8xl pointer-events-none transform translate-x-4 translate-y-4">
+                                <i class="fa-solid fa-fingerprint"></i>
+                            </div>
+                            
+                            <div>
+                                <div class="text-yellow-400 font-black tracking-widest text-xs uppercase mb-1 drop-shadow-sm flex items-center gap-2">
+                                    <i class="fa-solid fa-shield-halved"></i> Identidade Digital
                                 </div>
-                                <p class="text-[10px] text-gray-500 mt-1 border-t border-gray-200 pt-1">Dê 2x Enter para separar parágrafos.</p>
+                                <div class="h-px w-12 bg-white/30 mb-6"></div>
+                            </div>
+                            
+                            <div>
+                                <p class="text-blue-100 text-sm font-medium mb-1">Cidadão Titular</p>
+                                <h3 id="dash-cidadao-nome" class="text-2xl font-black leading-tight mb-4 drop-shadow-md">Carregando...</h3>
+                                
+                                <p class="text-blue-100 text-sm font-medium mb-1">Número do CPF Virtual</p>
+                                <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-4 py-3 inline-flex items-center gap-3">
+                                    <i class="fa-solid fa-qrcode text-yellow-400"></i>
+                                    <span id="dash-cidadao-cpf" class="font-mono text-xl font-bold tracking-wider">---</span>
+                                </div>
                             </div>
                         </div>
-                        
-                        <!-- Barra de Upload de Mídias (Conteúdo) -->
-                        <div class="flex items-center gap-3 mt-1 mb-2">
-                            <label for="upload-midia" class="text-sm bg-blue-50 text-pref-blue border border-blue-200 px-3 py-2 rounded-lg cursor-pointer hover:bg-blue-100 flex items-center gap-2 font-bold shadow-sm transition-colors">
-                                <i class="fa-solid fa-paperclip"></i> Anexar Mídia (Foto, Vídeo, Áudio, GIF)
-                            </label>
-                            <input type="file" id="upload-midia" class="hidden" onchange="fazerUploadMedia(this, 'conteudo')">
-                            <span id="upload-status" class="text-sm font-bold text-pref-blue hidden bg-blue-50 px-3 py-2 rounded-lg"><i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Enviando para a nuvem...</span>
-                        </div>
+                    </div>
 
-                        <textarea id="admin-noticia-conteudo" required placeholder="Escreva o texto da notícia aqui. Dê 2 'Enters' para criar um novo parágrafo." class="w-full flex-grow min-h-[200px] px-4 py-3 rounded-xl border border-gray-300 focus:ring-4 focus:ring-pref-blue/20 focus:border-pref-blue outline-none transition-all resize-none"></textarea>
+                    <!-- Lista Rápida de Serviços -->
+                    <div class="lg:col-span-2 bg-white rounded-[2rem] shadow-sm border border-gray-100 p-8">
+                        <h3 class="text-xl font-black text-gray-800 mb-6 flex items-center gap-2 border-b border-gray-100 pb-4">
+                            <i class="fa-solid fa-layer-group text-pref-blue"></i> Acesso aos Sistemas Internos
+                        </h3>
+                        <p class="text-sm text-gray-500 mb-6 font-medium">Selecione o serviço abaixo. Sua identidade virtual será repassada automaticamente para o sistema.</p>
+                        
+                        <div id="lista-servicos-cidadao" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <!-- Injetado via JS -->
+                        </div>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-noticia" class="hidden flex-col flex-grow bg-white py-12 pb-24">
+            <div class="container mx-auto px-4 lg:px-8 max-w-4xl">
+                <button onclick="window.history.back()" class="flex items-center text-pref-blue font-black hover:text-pref-darkblue mb-8 transition-colors group cursor-pointer bg-blue-50 py-2.5 px-5 rounded-full w-fit">
+                    <i class="fa-solid fa-arrow-left mr-2 group-hover:-translate-x-1 transition-transform"></i> Voltar
+                </button>
+
+                <div class="mb-8 text-center sm:text-left">
+                    <span id="noticia-categoria" class="bg-pref-yellow text-pref-darkblue text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-widest mb-5 inline-block shadow-sm">...</span>
+                    <h1 id="noticia-titulo" class="text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 leading-tight mb-6 tracking-tight">Carregando...</h1>
+                    <div class="flex items-center justify-center sm:justify-start text-gray-500 font-medium">
+                        <i class="fa-regular fa-calendar text-pref-blue mr-2"></i> <span id="noticia-data">...</span>
+                    </div>
+                </div>
+
+                <!-- Fix: Usando object-contain e um fundo escuro elegante para NÃO CORTAR as imagens originais -->
+                <div class="w-full h-64 md:h-96 lg:h-[500px] bg-gray-900 rounded-3xl overflow-hidden mb-10 shadow-2xl relative">
+                    <img id="noticia-imagem" src="" alt="Imagem da Notícia" class="w-full h-full object-contain">
+                </div>
+
+                <div id="noticia-conteudo" class="prose prose-lg max-w-none text-gray-700 leading-relaxed space-y-6 font-medium">
+                    <!-- Conteúdo injetado via JS -->
+                </div>
+            </div>
+        </div>
+
+        <div id="view-servico" class="hidden flex-col flex-grow bg-gray-50 py-12 pb-24">
+            <div class="container mx-auto px-4 lg:px-8 max-w-3xl">
+                <button onclick="window.history.back()" class="flex items-center text-pref-blue font-black hover:text-pref-darkblue mb-8 transition-colors group cursor-pointer bg-white border border-gray-200 shadow-sm py-2.5 px-5 rounded-full w-fit">
+                    <i class="fa-solid fa-arrow-left mr-2 group-hover:-translate-x-1 transition-transform"></i> Voltar
+                </button>
+
+                <div class="bg-white rounded-[2.5rem] shadow-xl border border-gray-100 p-8 md:p-12 text-center relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-3 bg-pref-yellow"></div>
+
+                    <div class="w-24 h-24 bg-blue-50 text-pref-blue rounded-full flex items-center justify-center text-4xl mx-auto mb-6 shadow-inner">
+                        <i id="servico-icone-render" class="fa-solid fa-laptop-file"></i>
+                    </div>
+                    <h2 id="servico-titulo" class="text-3xl font-black text-pref-darkblue mb-4 tracking-tight">Sistema</h2>
+                    <p id="servico-desc" class="text-lg text-gray-600 mb-10 max-w-xl mx-auto font-medium">Acessando sistema...</p>
                     
-                    <div class="pt-4 flex flex-col sm:flex-row gap-3 mt-auto border-t border-gray-100">
-                        <button type="submit" id="btn-salvar-noticia" class="bg-green-600 text-white font-bold py-3.5 px-6 rounded-xl hover:bg-green-700 shadow-md transition-colors flex-grow">
-                            <i class="fa-solid fa-check mr-2"></i> Publicar Notícia
-                        </button>
-                        <button type="button" onclick="cancelarEdicaoNoticia()" class="bg-gray-100 text-gray-700 font-bold py-3.5 px-6 rounded-xl hover:bg-gray-200 transition-colors shadow-sm">
-                            Limpar / Cancelar
-                        </button>
+                    <div class="bg-gray-50 p-6 md:p-8 rounded-3xl border border-gray-200 text-left relative overflow-hidden">
+                        <div class="absolute -right-10 -top-10 text-8xl text-gray-100 pointer-events-none"><i class="fa-solid fa-lock"></i></div>
+                        <h3 class="font-black text-gray-800 mb-6 border-b border-gray-200 pb-4 flex items-center gap-3 relative z-10">
+                            <div class="w-8 h-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center"><i class="fa-solid fa-check"></i></div> 
+                            Autenticado via CPF Virtual
+                        </h3>
+                        
+                        <div class="space-y-4 relative z-10">
+                            <p class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-1">Cidadão Conectado</p>
+                            <div class="flex items-center gap-3 bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                                <i class="fa-solid fa-fingerprint text-pref-blue text-xl"></i>
+                                <div>
+                                    <p id="servico-usuario-nome" class="font-black text-gray-800">Carregando...</p>
+                                    <p id="servico-usuario-cpf" class="text-sm text-gray-500 font-mono font-bold">---</p>
+                                </div>
+                            </div>
+                            
+                            <button onclick="alert('Sistema de demonstração. Em um site real, isso abriria o painel do serviço específico.')" class="w-full bg-pref-blue text-white font-black py-4 px-6 rounded-xl hover:bg-pref-darkblue shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 text-lg mt-4 flex items-center justify-center gap-2">
+                                Iniciar Serviço <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </button>
+                        </div>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-todas-noticias" class="hidden flex-col flex-grow bg-gray-50 py-12 pb-24">
+            <div class="container mx-auto px-4 lg:px-8">
+                <button onclick="window.history.back()" class="flex items-center text-pref-blue font-black hover:text-pref-darkblue mb-8 transition-colors group cursor-pointer bg-white border border-gray-200 shadow-sm py-2.5 px-5 rounded-full w-fit">
+                    <i class="fa-solid fa-arrow-left mr-2 group-hover:-translate-x-1 transition-transform"></i> Voltar
+                </button>
+                <div class="mb-10">
+                    <h2 class="text-3xl md:text-4xl font-black text-pref-darkblue mb-4 tracking-tight">Todas as Notícias</h2>
+                    <div class="h-1.5 w-24 bg-pref-yellow rounded-full mb-4"></div>
+                </div>
+                <div id="grid-todas-noticias" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+            </div>
+        </div>
+
+        <div id="view-admin-login" class="hidden flex-col flex-grow bg-gray-900 py-12 pb-24 items-center justify-center relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-96 h-96 bg-pref-blue opacity-20 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none"></div>
+            <div class="bg-white p-8 md:p-10 rounded-[2rem] shadow-2xl w-full max-w-md border border-gray-100 mx-4 relative z-10">
+                <div class="text-center mb-8">
+                    <div class="w-16 h-16 bg-red-50 text-red-600 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4"><i class="fa-solid fa-shield-halved"></i></div>
+                    <h2 class="text-2xl font-black text-gray-900 tracking-tight">Painel Executivo</h2>
+                    <p class="text-gray-500 text-sm font-medium mt-1">Acesso restrito para funcionários</p>
+                </div>
+                <form id="form-admin-login" onsubmit="event.preventDefault(); fazerLoginAdmin();" class="space-y-5">
+                    <div>
+                        <label class="block text-sm font-black text-gray-700 mb-1.5">E-mail Administrativo</label>
+                        <input type="email" id="admin-email" required placeholder="admin@raboseco.ba.gov.br" class="w-full px-4 py-3.5 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-black text-gray-700 mb-1.5">Senha</label>
+                        <input type="password" id="admin-senha" required placeholder="••••••••" class="w-full px-4 py-3.5 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
+                    </div>
+                    <div id="admin-login-error" class="hidden text-red-600 text-sm font-bold text-center bg-red-50 p-4 rounded-xl border border-red-100">Acesso negado. Use as credenciais corretas.</div>
+                    <button type="submit" id="btn-login-admin" class="w-full bg-gray-900 text-white font-black py-4 px-6 rounded-xl hover:bg-black shadow-lg hover:shadow-xl transition-all text-lg mt-2 transform hover:-translate-y-0.5">
+                        <i class="fa-solid fa-unlock mr-2"></i> Autenticar
+                    </button>
                 </form>
             </div>
         </div>
-        
-        <!-- MODAL DE CONFIRMAÇÃO DE EXCLUSÃO -->
-        <div id="modal-delete" class="hidden fixed inset-0 bg-black/50 z-[100] flex items-center justify-center backdrop-blur-sm px-4">
-            <div class="bg-white p-8 rounded-3xl shadow-2xl max-w-sm w-full text-center">
-                <div class="w-20 h-20 bg-red-50 text-red-500 rounded-full flex items-center justify-center text-4xl mx-auto mb-6">
-                    <i class="fa-solid fa-trash-can"></i>
+
+        <div id="view-admin-dashboard" class="hidden flex-col flex-grow bg-gray-100">
+            <!-- Barra Superior do Admin -->
+            <div class="bg-gray-900 text-white py-4 px-4 md:px-8 flex flex-col md:flex-row justify-between items-center shadow-lg gap-4 z-10 sticky top-0">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-pref-yellow rounded-lg flex items-center justify-center text-gray-900 text-xl"><i class="fa-solid fa-bolt"></i></div>
+                    <div>
+                        <span class="font-black text-lg md:text-xl block leading-none">Painel de Controle</span>
+                        <span class="text-xs text-gray-400 font-medium tracking-widest uppercase">Modo Editor</span>
+                    </div>
                 </div>
-                <h3 class="text-2xl font-bold text-gray-900 mb-2">Excluir Notícia?</h3>
-                <p class="text-gray-500 mb-8">Essa ação apagará o arquivo permanentemente do banco de dados.</p>
-                <div class="flex flex-col gap-3">
-                    <button id="btn-confirmar-delete" class="w-full bg-red-500 text-white font-bold py-3.5 rounded-xl hover:bg-red-600 transition-colors shadow-md">Sim, excluir agora</button>
-                    <button onclick="fecharModalDelete()" class="w-full bg-white text-gray-600 border border-gray-200 font-bold py-3.5 rounded-xl hover:bg-gray-50 transition-colors">Cancelar</button>
+                
+                <!-- Abas de Navegação Admin -->
+                <div class="flex bg-gray-800 p-1 rounded-xl w-full md:w-auto">
+                    <button onclick="mudarAbaAdmin('noticias')" id="btn-aba-noticias" class="flex-1 md:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all bg-white text-gray-900 shadow-sm"><i class="fa-solid fa-newspaper mr-2"></i> Notícias</button>
+                    <button onclick="mudarAbaAdmin('servicos')" id="btn-aba-servicos" class="flex-1 md:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all text-gray-400 hover:text-white"><i class="fa-solid fa-laptop-file mr-2"></i> Serviços</button>
+                </div>
+
+                <div class="flex gap-3 w-full md:w-auto">
+                    <button onclick="goHome()" class="flex-1 md:flex-none text-sm bg-gray-800 hover:bg-gray-700 px-4 py-2.5 rounded-lg transition-colors font-bold"><i class="fa-solid fa-eye mr-1"></i> Ver Site</button>
+                    <button onclick="sairAuth()" class="flex-1 md:flex-none text-sm bg-red-600 hover:bg-red-500 px-4 py-2.5 rounded-lg transition-colors font-bold shadow-md"><i class="fa-solid fa-power-off mr-1"></i> Sair</button>
+                </div>
+            </div>
+            
+            <div class="container mx-auto px-4 py-8 flex-grow flex flex-col lg:flex-row gap-8 max-w-7xl">
+                
+                <!-- Coluna da Lista (Comum para as duas abas) -->
+                <div class="w-full lg:w-5/12 bg-white rounded-[2rem] shadow-sm border border-gray-200 p-6 md:p-8 flex flex-col h-[750px]">
+                    <div class="flex justify-between items-center mb-8 border-b border-gray-100 pb-4">
+                        <h3 id="admin-titulo-lista" class="text-2xl font-black text-gray-800 tracking-tight">Publicações</h3>
+                        <button onclick="prepararNovoAdmin()" class="bg-gray-900 text-white px-5 py-2.5 rounded-xl text-sm font-black hover:bg-black shadow-md transition-all transform hover:-translate-y-0.5 flex items-center gap-2">
+                            <i class="fa-solid fa-plus"></i> Novo
+                        </button>
+                    </div>
+                    <div id="lista-admin-dinamica" class="overflow-y-auto pr-3 space-y-3 flex-grow custom-scrollbar">
+                        <!-- Injetado via JS dependendo da aba ativa -->
+                    </div>
+                </div>
+
+                <!-- Coluna do Formulário -->
+                <div class="w-full lg:w-7/12 bg-white rounded-[2rem] shadow-sm border border-gray-200 p-6 md:p-8 flex flex-col h-[750px]">
+                    <h3 id="admin-titulo-editor" class="text-2xl font-black text-gray-800 mb-8 border-b border-gray-100 pb-4 tracking-tight text-pref-blue">
+                        <i class="fa-solid fa-pen-to-square"></i> Modo de Edição
+                    </h3>
+                    
+                    <div id="admin-form-error" class="hidden mb-6 text-red-600 text-sm font-bold bg-red-50 p-4 rounded-xl border border-red-100"><i class="fa-solid fa-triangle-exclamation mr-2"></i> Erro ao salvar. Verifique sua conexão.</div>
+                    <div id="admin-form-success" class="hidden mb-6 text-green-600 text-sm font-bold bg-green-50 p-4 rounded-xl border border-green-100"><i class="fa-solid fa-check-circle mr-2"></i> Alterações salvas com sucesso!</div>
+
+                    <!-- FORMULÁRIO DE NOTÍCIA -->
+                    <form id="form-admin-noticia" onsubmit="event.preventDefault(); salvarNoticiaAdmin();" class="space-y-6 flex-grow flex flex-col overflow-y-auto pr-3 custom-scrollbar">
+                        <input type="hidden" id="admin-noticia-id">
+                        
+                        <div>
+                            <label class="block text-sm font-black text-gray-700 mb-1.5">Título da Notícia</label>
+                            <input type="text" id="admin-noticia-titulo" required class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-5">
+                            <div class="w-full sm:w-1/2">
+                                <label class="block text-sm font-black text-gray-700 mb-1.5">Categoria</label>
+                                <input type="text" id="admin-noticia-categoria" required placeholder="Ex: Saúde, Obras" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
+                            </div>
+                            <div class="w-full sm:w-1/2">
+                                <label class="block text-sm font-black text-gray-700 mb-1.5">Data Publicação</label>
+                                <input type="text" id="admin-noticia-data" required placeholder="Ex: 24 de Set, 2026" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-5 rounded-2xl border border-gray-200">
+                            <label class="block text-sm font-black text-gray-700 mb-2">Imagem de Capa (Obrigatório)</label>
+                            <div class="flex gap-3">
+                                <input type="url" id="admin-noticia-imagem" required placeholder="Cole o link ou use o botão de envio..." class="flex-grow px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium text-sm" oninput="mostrarPreview(this.value, 'preview-img-admin')">
+                                <label for="upload-capa" class="bg-gray-900 text-white px-5 py-3 rounded-xl cursor-pointer hover:bg-black transition-colors shadow-md flex items-center gap-2 font-black whitespace-nowrap text-sm">
+                                    <i class="fa-solid fa-cloud-arrow-up"></i> Enviar Foto
+                                </label>
+                                <input type="file" id="upload-capa" accept="image/*" class="hidden" onchange="fazerUploadMedia(this, 'capa')">
+                            </div>
+                            <img id="preview-img-admin" src="" class="hidden mt-4 h-36 w-full object-cover rounded-xl border border-gray-300 shadow-inner" onerror="this.classList.add('hidden')">
+                        </div>
+                        
+                        <div class="flex-grow flex flex-col mt-2">
+                            <div class="flex justify-between items-end mb-2">
+                                <label class="block text-sm font-black text-gray-700">Conteúdo da Notícia</label>
+                            </div>
+                            
+                            <!-- Barra de Ferramentas / Colinha -->
+                            <div class="bg-blue-50 border border-blue-100 rounded-t-xl p-3 flex flex-wrap gap-2 items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <label for="upload-midia" class="bg-white border border-blue-200 text-pref-blue px-3 py-1.5 rounded-lg cursor-pointer hover:bg-blue-100 flex items-center gap-2 font-bold shadow-sm transition-colors text-xs">
+                                        <i class="fa-solid fa-paperclip"></i> Inserir Mídia (Foto/Vídeo)
+                                    </label>
+                                    <input type="file" id="upload-midia" class="hidden" onchange="fazerUploadMedia(this, 'conteudo')">
+                                    <span id="upload-status" class="text-xs font-bold text-pref-blue hidden bg-white px-2 py-1 rounded-md"><i class="fa-solid fa-circle-notch fa-spin mr-1"></i> Enviando...</span>
+                                </div>
+                                <div class="text-[10px] font-mono text-gray-500 font-bold flex gap-3">
+                                    <span>*<b>Negrito</b>*</span>
+                                    <span>_<i>Itálico</i>_</span>
+                                    <span>~<del>Tachado</del>~</span>
+                                    <span class="text-pref-blue" title="Pressione Enter duas vezes para novo parágrafo"><i class="fa-solid fa-keyboard mr-1"></i>2x Enter = Parágrafo</span>
+                                </div>
+                            </div>
+                            <textarea id="admin-noticia-conteudo" required placeholder="Escreva o texto aqui..." class="w-full flex-grow min-h-[250px] px-5 py-4 rounded-b-xl border-x-2 border-b-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors resize-none font-medium text-gray-700 leading-relaxed"></textarea>
+                        </div>
+                        
+                        <div class="pt-6 flex gap-4 mt-auto border-t border-gray-100">
+                            <button type="submit" id="btn-salvar-noticia" class="flex-1 bg-pref-blue text-white font-black py-4 rounded-xl hover:bg-pref-darkblue shadow-lg transition-all transform hover:-translate-y-0.5 text-lg">
+                                <i class="fa-solid fa-check mr-2"></i> Salvar Notícia
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- FORMULÁRIO DE SERVIÇO -->
+                    <form id="form-admin-servico" onsubmit="event.preventDefault(); salvarServicoAdmin();" class="hidden space-y-6 flex-grow flex flex-col">
+                        <input type="hidden" id="admin-servico-id">
+                        <div>
+                            <label class="block text-sm font-black text-gray-700 mb-1.5">Título do Serviço</label>
+                            <input type="text" id="admin-servico-titulo" required placeholder="Ex: Emissão de IPTU" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-black text-gray-700 mb-1.5">Ícone FontAwesome (Sem o fa-solid)</label>
+                            <div class="flex gap-3 items-center">
+                                <input type="text" id="admin-servico-icone" required placeholder="Ex: fa-file-invoice-dollar" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium font-mono text-sm" oninput="document.getElementById('preview-icon-admin').className = 'fa-solid ' + this.value">
+                                <div class="w-12 h-12 flex-shrink-0 bg-blue-50 text-pref-blue rounded-xl flex items-center justify-center text-xl border border-blue-100"><i id="preview-icon-admin" class="fa-solid fa-file-invoice-dollar"></i></div>
+                            </div>
+                            <p class="text-[11px] mt-1.5 text-gray-500 font-medium">Procure ícones gratuitos em fontawesome.com/search</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-black text-gray-700 mb-1.5">Descrição Curta</label>
+                            <textarea id="admin-servico-desc" required placeholder="Descreva brevemente para que serve..." class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors resize-none h-24 font-medium text-gray-700"></textarea>
+                        </div>
+                        
+                        <div class="pt-6 flex gap-4 mt-auto border-t border-gray-100">
+                            <button type="submit" id="btn-salvar-servico" class="flex-1 bg-pref-blue text-white font-black py-4 rounded-xl hover:bg-pref-darkblue shadow-lg transition-all transform hover:-translate-y-0.5 text-lg">
+                                <i class="fa-solid fa-check mr-2"></i> Salvar Serviço
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </div>
 
-</div> <!-- FIM APP CONTAINER -->
+        <div id="modal-delete" class="hidden fixed inset-0 bg-gray-900/60 z-[100] flex items-center justify-center backdrop-blur-sm px-4">
+            <div class="bg-white p-8 md:p-10 rounded-[2rem] shadow-2xl max-w-sm w-full text-center transform scale-100 transition-transform">
+                <div class="w-20 h-20 bg-red-50 text-red-600 rounded-full flex items-center justify-center text-4xl mx-auto mb-6 shadow-inner">
+                    <i class="fa-solid fa-trash-can"></i>
+                </div>
+                <h3 class="text-2xl font-black text-gray-900 mb-2 tracking-tight">Excluir Arquivo?</h3>
+                <p class="text-gray-500 mb-8 font-medium">Essa ação apagará permanentemente do banco de dados e não pode ser desfeita.</p>
+                <div class="flex flex-col gap-3">
+                    <button id="btn-confirmar-delete" class="w-full bg-red-600 text-white font-black py-4 rounded-xl hover:bg-red-700 transition-colors shadow-lg">Sim, excluir agora</button>
+                    <button onclick="fecharModalDelete()" class="w-full bg-gray-50 text-gray-600 border-2 border-gray-200 font-black py-3.5 rounded-xl hover:bg-gray-100 transition-colors">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div> <!-- FIM APP CONTAINER -->
 
-<!-- RODAPÉ -->
     <footer id="contato" class="bg-pref-darkblue text-white pt-16 pb-8 border-t-8 border-pref-yellow mt-auto">
         <div class="container mx-auto px-4 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
-                <!-- Info Prefeitura -->
                 <div>
                     <div class="flex items-center gap-4 mb-6">
                         <img src="https://i.imgur.com/yv7TJkd.png" alt="Logo Prefeitura" class="h-12 w-auto object-contain drop-shadow-md">
@@ -472,68 +543,39 @@
                             <h5 class="text-lg font-bold text-pref-yellow leading-tight">Rabo Seco</h5>
                         </div>
                     </div>
-                    <p class="text-blue-200 text-sm mb-6 leading-relaxed">Trabalhando com transparência, responsabilidade e compromisso com o desenvolvimento da nossa cidade e bem-estar da nossa gente.</p>
+                    <p class="text-blue-200 text-sm mb-6 leading-relaxed font-medium">Trabalhando com transparência, responsabilidade e compromisso com o desenvolvimento da nossa cidade.</p>
                     <div class="flex gap-3">
-                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-pref-yellow hover:text-pref-darkblue transition-all transform hover:scale-110">
-                            <i class="fa-brands fa-facebook-f"></i>
-                        </a>
-                        <a href="https://www.instagram.com/prefeituraderaboseco/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-pref-yellow hover:text-pref-darkblue transition-all transform hover:scale-110">
+                        <a href="https://www.instagram.com/prefeituraderaboseco/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-gradient-to-tr hover:from-yellow-400 hover:to-pink-500 hover:text-white transition-all transform hover:scale-110 shadow-sm">
                             <i class="fa-brands fa-instagram"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-pref-yellow hover:text-pref-darkblue transition-all transform hover:scale-110">
-                            <i class="fa-brands fa-twitter"></i>
                         </a>
                     </div>
                 </div>
-
-                <!-- Contato -->
                 <div>
-                    <h4 class="text-lg font-bold mb-6 flex items-center gap-2"><i class="fa-solid fa-address-book text-pref-yellow"></i> Fale Conosco</h4>
-                    <ul class="space-y-4 text-sm text-blue-100">
-                        <li class="flex items-start gap-3">
-                            <i class="fa-solid fa-location-dot mt-1 text-pref-yellow text-lg"></i>
-                            <span>Praça dos Três Poderes, nº 01 - Centro<br>Rabo Seco, BA - CEP: 00000-000</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <i class="fa-solid fa-phone text-pref-yellow text-lg"></i>
-                            <span>(00) 3333-0000</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <i class="fa-solid fa-envelope text-pref-yellow text-lg"></i>
-                            <span>contato@raboseco.ba.gov.br</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <i class="fa-solid fa-clock text-pref-yellow text-lg"></i>
-                            <span>Seg. a Sex. das 08h às 14h</span>
-                        </li>
+                    <h4 class="text-lg font-black mb-6 flex items-center gap-2"><i class="fa-solid fa-address-book text-pref-yellow"></i> Fale Conosco</h4>
+                    <ul class="space-y-4 text-sm text-blue-100 font-medium">
+                        <li class="flex items-start gap-3"><i class="fa-solid fa-location-dot mt-1 text-pref-yellow text-lg"></i><span>Praça dos Três Poderes, nº 01 - Centro<br>Rabo Seco, BA - CEP: 00000-000</span></li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-phone text-pref-yellow text-lg"></i><span>(00) 3333-0000</span></li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-envelope text-pref-yellow text-lg"></i><span>contato@raboseco.ba.gov.br</span></li>
                     </ul>
                 </div>
-
-                <!-- Links Úteis -->
                 <div>
-                    <h4 class="text-lg font-bold mb-6 flex items-center gap-2"><i class="fa-solid fa-link text-pref-yellow"></i> Links Úteis</h4>
-                    <ul class="space-y-3 text-sm text-blue-100">
+                    <h4 class="text-lg font-black mb-6 flex items-center gap-2"><i class="fa-solid fa-link text-pref-yellow"></i> Links Úteis</h4>
+                    <ul class="space-y-3 text-sm text-blue-100 font-medium">
                         <li><a href="#" class="hover:text-pref-yellow hover:translate-x-2 inline-block transition-transform"><i class="fa-solid fa-chevron-right text-xs mr-1 opacity-50"></i> Diário Oficial</a></li>
                         <li><a href="#" class="hover:text-pref-yellow hover:translate-x-2 inline-block transition-transform"><i class="fa-solid fa-chevron-right text-xs mr-1 opacity-50"></i> Portal da Transparência</a></li>
                         <li><a href="#" class="hover:text-pref-yellow hover:translate-x-2 inline-block transition-transform"><i class="fa-solid fa-chevron-right text-xs mr-1 opacity-50"></i> Legislação Municipal</a></li>
-                        <li><a href="#" class="hover:text-pref-yellow hover:translate-x-2 inline-block transition-transform"><i class="fa-solid fa-chevron-right text-xs mr-1 opacity-50"></i> Secretarias</a></li>
-                        <li><a href="#" class="hover:text-pref-yellow hover:translate-x-2 inline-block transition-transform"><i class="fa-solid fa-chevron-right text-xs mr-1 opacity-50"></i> Defesa Civil</a></li>
                     </ul>
                 </div>
-
-                <!-- Brasão/Selo -->
                 <div class="flex flex-col items-center justify-center text-center mt-4 md:mt-0">
-                    <img src="https://i.imgur.com/yv7TJkd.png" alt="Selo Gestão" class="h-28 w-auto mb-4 object-contain drop-shadow-lg transform hover:scale-105 transition-transform duration-300">
+                    <img src="https://i.imgur.com/yv7TJkd.png" alt="Selo Gestão" class="h-28 w-auto mb-4 object-contain drop-shadow-2xl transform hover:scale-105 transition-transform duration-300">
                     <div>
-                        <p class="text-sm text-blue-200 font-bold tracking-[0.2em] uppercase mb-1">Gestão</p>
+                        <p class="text-xs text-blue-200 font-black tracking-[0.2em] uppercase mb-1">Gestão Oficial</p>
                         <div class="h-px w-8 bg-pref-yellow mx-auto mb-1 opacity-70"></div>
-                        <p class="text-pref-yellow font-bold text-xl">2025 - 2028</p>
+                        <p class="text-pref-yellow font-black text-xl tracking-wide">2025 - 2028</p>
                     </div>
                 </div>
             </div>
-
-            <!-- Copyright -->
-            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-blue-300">
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-blue-300 font-medium">
                 <p>&copy; 2026 Prefeitura Municipal de Rabo Seco. Todos os direitos reservados.</p>
                 <p class="mt-4 md:mt-0">Desenvolvido com <i class="fa-solid fa-heart text-pref-yellow mx-1"></i> para os cidadãos.</p>
             </div>
@@ -542,8 +584,8 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDocs, onSnapshot, collection, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, getDocs, onSnapshot, collection, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBEYU7Y0QKZCa_fMC5ML-MWMN2IAdCx114",
@@ -560,232 +602,244 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // VARIÁVEIS GLOBAIS DE ESTADO
+        // ESTADOS GLOBAIS
         let bancoDeNoticias = {};
+        let bancoDeServicos = {};
+        
         let isAdminView = false;
-        let noticiaParaExcluir = null;
+        let adminAbaAtiva = 'noticias';
+        let itemParaExcluir = { id: null, tipo: null };
         let currentArticleId = null;
-        let currentService = { titulo: 'Serviço', desc: 'Acessando sistema...' };
+        let currentServiceId = null;
 
-        // --- SISTEMA DE FORMATAÇÃO WHATSAPP ---
+        // ESTADOS DE AUTENTICAÇÃO
+        let currentUser = null;
+        let isGestorAdmin = false;
+        let isCidadaoLogado = false;
+        let cidadaoPerfil = null;
+        let isModoCadastroCidadao = false; // Alterna entre Login e Cadastro na tela do cidadão
+
+        // UTILITÁRIO: Formatação estilo WhatsApp
         window.formatarTextoParaHTML = function(texto) {
             if (!texto) return '';
-            
-            // Se o texto já tem tags HTML geradas antigamente, ignora a formatação nova para não quebrar
-            if (texto.includes('<p>') || texto.includes('<b>') || texto.includes('<br>')) {
-                return texto;
-            }
+            if (texto.includes('<p>') || texto.includes('<b>') || texto.includes('<br>')) return texto;
 
             let html = texto;
-
-            // Blockquotes (Citações) > texto
-            html = html.replace(/^> (.*$)/gim, '<blockquote class="border-l-4 border-pref-yellow pl-4 italic text-gray-600 my-4 bg-gray-50 py-2 rounded-r-lg">$1</blockquote>');
-
-            // Formatações Inline (Suporta combinações perfeitamente)
-            // Negrito *texto*
+            html = html.replace(/^> (.*$)/gim, '<blockquote class="border-l-4 border-pref-yellow pl-4 italic text-gray-600 my-5 bg-gray-50 py-3 rounded-r-xl">$1</blockquote>');
             html = html.replace(/\*([^\*]+)\*/g, '<strong>$1</strong>');
-            // Itálico _texto_
             html = html.replace(/_([^_]+)_/g, '<em>$1</em>');
-            // Tachado ~texto~
             html = html.replace(/~([^~]+)~/g, '<del>$1</del>');
-            // Código `texto`
-            html = html.replace(/`([^`]+)`/g, '<code class="bg-gray-100 text-pink-600 px-1 py-0.5 rounded font-mono text-sm">$1</code>');
-
-            // Listas
-            // Marcadores - item
-            html = html.replace(/^- (.*$)/gim, '<li class="ml-6 list-disc mb-1">$1</li>');
-            // Numeradas 1. item
-            html = html.replace(/^\d+\. (.*$)/gim, '<li class="ml-6 list-decimal mb-1">$1</li>');
-
-            // Agrupar itens de lista soltos em <ul> ou <ol>
-            html = html.replace(/(<li class="ml-6 list-disc mb-1">.*<\/li>\n?)+/g, '<ul class="my-4">$&</ul>');
-            html = html.replace(/(<li class="ml-6 list-decimal mb-1">.*<\/li>\n?)+/g, '<ol class="my-4">$&</ol>');
-
-            // Quebras de Linha e Parágrafos
-            // Divide o texto por 2 quebras de linha (Enter duas vezes) para criar parágrafos separados
+            html = html.replace(/`([^`]+)`/g, '<code class="bg-gray-100 text-pink-600 px-1.5 py-0.5 rounded font-mono text-sm border border-gray-200">$1</code>');
+            html = html.replace(/^- (.*$)/gim, '<li class="ml-6 list-disc mb-1.5">$1</li>');
+            html = html.replace(/(<li class="ml-6 list-disc mb-1.5">.*<\/li>\n?)+/g, '<ul class="my-5">$&</ul>');
+            
             let paragrafos = html.split(/\n\s*\n/);
             html = paragrafos.map(p => {
-                const trimmed = p.trim();
-                // Evita que o sistema coloque uma tag <p> ao redor de mídias anexadas (imagens, vídeos)
-                if (trimmed.startsWith('<ul') || trimmed.startsWith('<ol') || trimmed.startsWith('<blockquote') || trimmed.startsWith('<img') || trimmed.startsWith('<video') || trimmed.startsWith('<audio') || trimmed.startsWith('<a ')) {
-                    return trimmed;
-                }
-                // Converte quebras de linha únicas em <br>
-                return '<p class="mb-4">' + p.replace(/\n/g, '<br>') + '</p>';
+                const t = p.trim();
+                if (t.startsWith('<ul') || t.startsWith('<blockquote') || t.startsWith('<img') || t.startsWith('<video') || t.startsWith('<audio') || t.startsWith('<a ')) return t;
+                return '<p class="mb-5">' + p.replace(/\n/g, '<br>') + '</p>';
             }).join('');
-
             return html;
         };
 
+        // ROTEAMENTO (HASH NAVIGATION)
         function handleHashChange() {
             let hash = window.location.hash.replace('#', '');
-            if (!hash) hash = 'inicio'; // Rota padrão
+            if (!hash) hash = 'inicio';
 
-            // Oculta todas as páginas do container
-            ['view-home', 'view-noticia', 'view-servico', 'view-todas-noticias', 'view-admin-login', 'view-admin-dashboard'].forEach(id => {
+            ['view-home', 'view-noticia', 'view-servico', 'view-todas-noticias', 'view-admin-login', 'view-admin-dashboard', 'view-cidadao-auth', 'view-cidadao-dashboard'].forEach(id => {
                 const el = document.getElementById(id);
                 if(el) { el.classList.add('hidden'); el.classList.remove('flex'); }
             });
 
-            isAdminView = false; // Por padrão não é admin
+            isAdminView = false;
+            window.scrollTo(0, 0);
 
-            // Mapeia a URL para a página correta
             if (hash === 'inicio') {
-                document.getElementById('view-home').classList.remove('hidden');
-                document.getElementById('view-home').classList.add('flex');
-                window.scrollTo(0, 0);
-
+                document.getElementById('view-home').classList.remove('hidden'); document.getElementById('view-home').classList.add('flex');
+            
             } else if (hash === 'todas-noticias') {
-                document.getElementById('view-todas-noticias').classList.remove('hidden');
-                document.getElementById('view-todas-noticias').classList.add('flex');
+                document.getElementById('view-todas-noticias').classList.remove('hidden'); document.getElementById('view-todas-noticias').classList.add('flex');
                 renderizarGradeTodasNoticias();
-                window.scrollTo(0, 0);
-
+            
             } else if (hash.startsWith('noticia/')) {
                 currentArticleId = hash.split('/')[1];
-                document.getElementById('view-noticia').classList.remove('hidden');
-                document.getElementById('view-noticia').classList.add('flex');
+                document.getElementById('view-noticia').classList.remove('hidden'); document.getElementById('view-noticia').classList.add('flex');
                 renderizarNoticiaAberta();
-                window.scrollTo(0, 0);
-
-            } else if (hash === 'servico') {
-                document.getElementById('view-servico').classList.remove('hidden');
-                document.getElementById('view-servico').classList.add('flex');
+            
+            } else if (hash.startsWith('servico/')) {
+                currentServiceId = hash.split('/')[1];
                 
-                document.getElementById('servico-titulo').innerText = currentService.titulo;
-                document.getElementById('servico-desc').innerText = currentService.desc;
-                document.getElementById('alerta-msg').classList.add('hidden');
-                document.querySelector('#view-servico input').value = '';
-                window.scrollTo(0, 0);
+                // SISTEMA DE TRAVA DE SERVIÇOS
+                if (!isCidadaoLogado) {
+                    alert("Acesso Negado. Faça login no Portal do Cidadão para usar os sistemas da prefeitura.");
+                    window.location.hash = 'cidadao';
+                    return;
+                }
+                
+                document.getElementById('view-servico').classList.remove('hidden'); document.getElementById('view-servico').classList.add('flex');
+                renderizarServicoAberto();
+
+            } else if (hash === 'cidadao') {
+                if (isCidadaoLogado && cidadaoPerfil) {
+                    document.getElementById('view-cidadao-dashboard').classList.remove('hidden'); document.getElementById('view-cidadao-dashboard').classList.add('flex');
+                    document.getElementById('dash-cidadao-nome').innerText = cidadaoPerfil.nome;
+                    document.getElementById('dash-cidadao-cpf').innerText = cidadaoPerfil.cpfVirtual;
+                    renderizarServicosCidadaoDashboard();
+                } else {
+                    document.getElementById('view-cidadao-auth').classList.remove('hidden'); document.getElementById('view-cidadao-auth').classList.add('flex');
+                }
 
             } else if (hash === 'adminprefeitura') {
                 isAdminView = true;
-                if (auth.currentUser && !auth.currentUser.isAnonymous) {
-                    document.getElementById('view-admin-dashboard').classList.remove('hidden');
-                    document.getElementById('view-admin-dashboard').classList.add('flex');
+                if (isGestorAdmin) {
+                    document.getElementById('view-admin-dashboard').classList.remove('hidden'); document.getElementById('view-admin-dashboard').classList.add('flex');
                     renderizarListaAdmin();
                 } else {
-                    document.getElementById('view-admin-login').classList.remove('hidden');
-                    document.getElementById('view-admin-login').classList.add('flex');
+                    document.getElementById('view-admin-login').classList.remove('hidden'); document.getElementById('view-admin-login').classList.add('flex');
                 }
-                window.scrollTo(0, 0);
             } else {
                 window.location.hash = 'inicio';
             }
         }
-
-        // Ativa os eventos de escuta da URL (para o botão "Voltar" funcionar)
         window.addEventListener('hashchange', handleHashChange);
-        window.addEventListener('load', handleHashChange);
 
-        // Monitor de Autenticação
-        onAuthStateChanged(auth, (user) => {
-            // Se ocorreu mudança de login, forçamos o sistema de rotas a reavaliar a tela atual
+        // MONITORES DE AUTENTICAÇÃO
+        onAuthStateChanged(auth, async (user) => {
+            currentUser = user;
+            if (user && !user.isAnonymous) {
+                // Checa se é o Administrador Master
+                if (user.email === 'jeosouzazouza@gmail.com' || user.email === 'sjeje702@gmail.com') {
+                    isGestorAdmin = true;
+                    isCidadaoLogado = false;
+                    cidadaoPerfil = null;
+                } else {
+                    // Se não for admin, é um Cidadão Comum! Busca o perfil dele.
+                    isGestorAdmin = false;
+                    isCidadaoLogado = true;
+                    try {
+                        const docSnap = await getDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'perfil', 'dados'));
+                        if (docSnap.exists()) {
+                            cidadaoPerfil = docSnap.data();
+                        } else {
+                            isCidadaoLogado = false; // Falha na leitura do perfil
+                        }
+                    } catch(e) { console.error("Erro perfil:", e); }
+                }
+                
+                // Muda a cor do botão Header se tiver logado
+                document.getElementById('btn-header-cidadao').innerHTML = isCidadaoLogado ? `<i class="fa-solid fa-circle-user text-lg text-green-500"></i> <span>Meu Painel</span>` : `<i class="fa-regular fa-id-card text-lg"></i> <span>Acesso Cidadão</span>`;
+                
+            } else {
+                isGestorAdmin = false;
+                isCidadaoLogado = false;
+                cidadaoPerfil = null;
+                document.getElementById('btn-header-cidadao').innerHTML = `<i class="fa-regular fa-id-card text-lg"></i> <span>Acesso Cidadão</span>`;
+            }
             handleHashChange();
         });
 
+        // INICIALIZAÇÃO FIREBASE (Sementes)
         const noticiasSemente = [
-            { id: "noticia_1", ordem: 4, titulo: "Prefeitura inaugura nova praça no bairro Esperança com área de lazer e esportes", categoria: "Infraestrutura", data: "23 de Setembro, 2026", imagem: "https://placehold.co/800x500/0047AB/FFFFFF?text=Inauguracao+Praca", conteudo: "<p>A Prefeitura Municipal de Rabo Seco, em um esforço contínuo para melhorar a qualidade de vida da população, entregou nesta manhã a nova Praça da Família no bairro Esperança. O evento contou com a presença do Prefeito, secretários municipais e centenas de moradores e lideranças.</p><p>O novo espaço conta com infraestrutura completa de lazer e convivência.</p>" },
-            { id: "noticia_2", ordem: 3, titulo: "Campanha de vacinação contra a gripe é prorrogada até sexta-feira", categoria: "Saúde", data: "21 de Setembro, 2026", imagem: "https://placehold.co/800x500/FFC107/002D6B?text=Saude", conteudo: "<p>A Secretaria Municipal de Saúde de Rabo Seco informou que a Campanha Nacional de Vacinação contra a Influenza (Gripe) foi estendida até a próxima sexta-feira, visando atingir e ultrapassar a meta estipulada pelo Ministério da Saúde.</p>" },
-            { id: "noticia_3", ordem: 2, titulo: "Matrículas para a rede municipal abrem na próxima semana", categoria: "Educação", data: "19 de Setembro, 2026", imagem: "https://placehold.co/800x500/002D6B/FFFFFF?text=Escola", conteudo: "<p>Atenção pais e responsáveis de alunos! A Secretaria de Educação de Rabo Seco inicia na próxima segunda-feira o período oficial de renovação e novas matrículas para o ano letivo de 2027 em todas as escolas da rede municipal de ensino.</p>" },
-            { id: "noticia_4", ordem: 1, titulo: "Festival Cultural de Rabo Seco atrai milhares de pessoas", categoria: "Cultura", data: "15 de Setembro, 2026", imagem: "https://placehold.co/800x500/E5E7EB/9CA3AF?text=Cultura", conteudo: "<p>O maior evento da nossa cidade superou as expectativas. O tradicional Festival Cultural de Rabo Seco encerrou sua edição deste ano batendo recorde histórico de público na Praça Central.</p>" }
+            { id: "noticia_1", ordem: 4, titulo: "Prefeitura de Rabo Seco entrega nova Praça no Centro", categoria: "Obras", data: "24 de Set, 2026", imagem: "https://placehold.co/800x500/0047AB/FFFFFF?text=Inauguracao+Praca", conteudo: "A Praça Central foi revitalizada com novos espaços de convivência." },
+            { id: "noticia_2", ordem: 3, titulo: "Campanha de vacinação contra a gripe", categoria: "Saúde", data: "21 de Set, 2026", imagem: "https://placehold.co/800x500/FFC107/002D6B?text=Saude", conteudo: "Postos abertos até sexta." }
+        ];
+        const servicosSemente = [
+            { id: "servico_1", ordem: 4, titulo: "Emissão de IPTU", descricao: "Emita a 2ª via do seu IPTU e consulte débitos.", icone: "fa-file-invoice-dollar" },
+            { id: "servico_2", ordem: 3, titulo: "Portal do Servidor", descricao: "Acesso ao contracheque e informes.", icone: "fa-users" },
+            { id: "servico_3", ordem: 2, titulo: "Ouvidoria Digital", descricao: "Denúncias e sugestões direto com a gestão.", icone: "fa-bullhorn" },
+            { id: "servico_4", ordem: 1, titulo: "Licitações", descricao: "Editais e transparência municipal.", icone: "fa-file-contract" }
         ];
 
         async function iniciarBancoDeDados() {
             try {
-                if (typeof __initial_auth_token !== 'undefined') {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-                
-                if (!auth.currentUser) return; 
-
+                if (!auth.currentUser) await signInAnonymously(auth);
                 const noticiasRef = collection(db, 'artifacts', appId, 'public', 'data', 'noticias');
+                const servicosRef = collection(db, 'artifacts', appId, 'public', 'data', 'servicos');
 
-                const snap = await getDocs(noticiasRef);
-                if (snap.empty) {
-                    console.log("Semeando banco...");
-                    for (let n of noticiasSemente) {
-                        await setDoc(doc(noticiasRef, n.id), n);
-                    }
+                // Semente de Notícias
+                if ((await getDocs(noticiasRef)).empty) {
+                    for (let n of noticiasSemente) await setDoc(doc(noticiasRef, n.id), n);
+                }
+                // Semente de Serviços
+                if ((await getDocs(servicosRef)).empty) {
+                    for (let s of servicosSemente) await setDoc(doc(servicosRef, s.id), s);
                 }
 
-                // Escuta em tempo real
-                onSnapshot(noticiasRef, (snapshot) => {
+                // Escutas em Tempo Real
+                onSnapshot(noticiasRef, (snap) => {
                     bancoDeNoticias = {};
-                    snapshot.forEach(docSnap => {
-                        bancoDeNoticias[docSnap.id] = { id: docSnap.id, ...docSnap.data() };
-                    });
-                    
-                    // Atualiza as telas que dependem de dados se o usuário estiver nelas
-                    renderizarNoticiasHome(); 
-                    if (window.location.hash === '#todas-noticias') renderizarGradeTodasNoticias();
-                    if (window.location.hash.startsWith('#noticia/')) renderizarNoticiaAberta();
-                    if (isAdminView) renderizarListaAdmin();
-                }, (error) => {
-                    console.error("Erro no Firestore:", error);
+                    snap.forEach(d => bancoDeNoticias[d.id] = { id: d.id, ...d.data() });
+                    renderizarNoticiasHome(); if (window.location.hash === '#todas-noticias') renderizarGradeTodasNoticias(); if (window.location.hash.startsWith('#noticia/')) renderizarNoticiaAberta(); if (isAdminView && adminAbaAtiva === 'noticias') renderizarListaAdmin();
                 });
 
-            } catch (error) {
-                console.error("Erro na inicialização:", error);
-            }
+                onSnapshot(servicosRef, (snap) => {
+                    bancoDeServicos = {};
+                    snap.forEach(d => bancoDeServicos[d.id] = { id: d.id, ...d.data() });
+                    renderizarServicosHome(); if (window.location.hash === '#cidadao' && isCidadaoLogado) renderizarServicosCidadaoDashboard(); if (isAdminView && adminAbaAtiva === 'servicos') renderizarListaAdmin();
+                });
+
+            } catch (error) { console.error("Erro BD:", error); }
         }
         iniciarBancoDeDados();
+
+        // RENDERIZADORES PÚBLICOS
+        function renderizarServicosHome() {
+            const container = document.getElementById('servicos-grid-home');
+            if (!container) return;
+            const arr = Object.values(bancoDeServicos).sort((a,b) => b.ordem - a.ordem);
+            
+            if(arr.length === 0) { container.innerHTML = '<div class="col-span-full text-center text-gray-500">Nenhum serviço disponível no momento.</div>'; return; }
+            
+            container.innerHTML = arr.map(s => `
+                <a href="#servico/${s.id}" class="bg-white p-6 md:p-8 rounded-[2rem] shadow-sm border border-gray-100 hover:shadow-xl hover:border-pref-yellow hover:-translate-y-2 group transition-all block">
+                    <div class="w-16 h-16 bg-blue-50 text-pref-blue rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-pref-blue group-hover:text-white transition-colors"><i class="fa-solid ${s.icone}"></i></div>
+                    <h4 class="text-xl font-black text-gray-800 mb-3 tracking-tight">${s.titulo}</h4>
+                    <p class="text-gray-500 text-sm leading-relaxed font-medium">${s.descricao}</p>
+                </a>
+            `).join('');
+        }
 
         function renderizarNoticiasHome() {
             const container = document.getElementById('noticias-grid-home');
             if (!container) return;
-            const arrayNoticias = Object.values(bancoDeNoticias).sort((a, b) => b.ordem - a.ordem);
+            const arr = Object.values(bancoDeNoticias).sort((a, b) => b.ordem - a.ordem);
+            if (arr.length === 0) { container.innerHTML = '<div class="text-gray-500 py-12">Nenhuma notícia.</div>'; return; }
 
-            if (arrayNoticias.length === 0) {
-                container.innerHTML = '<div class="text-center text-gray-500 py-12 w-full bg-gray-50 rounded-2xl border border-dashed border-gray-200">Nenhuma notícia publicada ainda.</div>';
-                return;
-            }
+            const princ = arr[0];
+            const sec = arr.slice(1, 4);
+            
+            let html = `<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 w-full">`;
+            
+            // Principal (Sem cortes na capa)
+            html += `
+                <article onclick="window.location.hash='noticia/${princ.id}'" class="${sec.length > 0 ? 'lg:col-span-7' : 'lg:col-span-12'} bg-gray-900 rounded-[2rem] overflow-hidden shadow-lg hover:shadow-xl group cursor-pointer relative block flex flex-col min-h-[400px] sm:min-h-[500px] transition-all duration-300 transform hover:-translate-y-1">
+                    <img src="${princ.imagem}" alt="${princ.categoria}" class="w-full h-full object-contain absolute inset-0 opacity-80 group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/60 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-6 sm:p-8 md:p-10 z-10 w-full flex flex-col justify-end">
+                        <span class="bg-pref-yellow text-pref-darkblue text-[10px] sm:text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-widest mb-4 w-fit shadow-sm">${princ.categoria}</span>
+                        <h4 class="text-2xl sm:text-3xl md:text-4xl font-black text-white mb-4 leading-tight group-hover:text-pref-yellow transition-colors tracking-tight line-clamp-3">${princ.titulo}</h4>
+                        <p class="text-gray-300 text-xs sm:text-sm font-bold flex items-center"><i class="fa-regular fa-calendar mr-2"></i> ${princ.data}</p>
+                    </div>
+                </article>`;
 
-            const principal = arrayNoticias[0];
-            const secundarias = arrayNoticias.slice(1, 4);
-            const hasSecundarias = secundarias.length > 0;
-            const mainColSpan = hasSecundarias ? 'lg:col-span-7' : 'lg:col-span-12 max-w-5xl mx-auto w-full';
-
-            let html = `
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 w-full">
-                    
-                    <!-- NOTÍCIA PRINCIPAL -->
-                    <article onclick="showArticle('${principal.id}')" class="${mainColSpan} rounded-3xl overflow-hidden shadow-lg hover:shadow-xl group cursor-pointer relative block flex flex-col min-h-[380px] sm:min-h-[450px] transition-all duration-300 transform hover:-translate-y-1">
-                        <img src="${principal.imagem}" alt="${principal.categoria}" class="w-full h-full object-cover absolute inset-0 group-hover:scale-105 transition-transform duration-700">
-                        <!-- Novo gradiente estilo Dark Blue Premium -->
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#001738] via-[#001738]/70 to-transparent opacity-95"></div>
-                        
-                        <div class="absolute bottom-0 left-0 p-6 sm:p-8 md:p-10 z-10 w-full flex flex-col justify-end h-full">
-                            <div>
-                                <span class="bg-pref-yellow text-pref-darkblue text-[10px] sm:text-xs font-black px-3.5 py-1.5 rounded-full uppercase tracking-widest mb-4 inline-block shadow-sm">${principal.categoria}</span>
-                                <h4 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4 leading-tight group-hover:text-pref-yellow transition-colors drop-shadow-md line-clamp-4">${principal.titulo}</h4>
-                                <p class="text-gray-300 text-xs sm:text-sm font-medium flex items-center"><i class="fa-regular fa-calendar mr-2"></i> ${principal.data}</p>
-                            </div>
-                        </div>
-                    </article>
-            `;
-
-            if (hasSecundarias) {
+            if (sec.length > 0) {
                 html += `<div class="lg:col-span-5 flex flex-col gap-4 sm:gap-6">`;
-                secundarias.forEach(noticia => {
+                sec.forEach(n => {
                     html += `
-                        <article onclick="showArticle('${noticia.id}')" class="flex flex-row gap-4 sm:gap-5 group cursor-pointer bg-white rounded-2xl p-3 sm:p-4 hover:bg-blue-50/50 transition-all border border-gray-100 hover:border-pref-blue/30 shadow-sm hover:shadow-md transform hover:-translate-y-1">
-                            <div class="w-28 h-28 sm:w-36 sm:h-36 rounded-xl overflow-hidden flex-shrink-0 relative shadow-sm">
-                                <img src="${noticia.imagem}" alt="${noticia.categoria}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <article onclick="window.location.hash='noticia/${n.id}'" class="flex flex-row gap-4 sm:gap-5 group cursor-pointer bg-white rounded-[1.5rem] p-3 hover:bg-blue-50/50 transition-all border border-gray-100 hover:border-pref-blue/30 shadow-sm hover:shadow-md transform hover:-translate-y-1">
+                            <div class="w-28 h-28 sm:w-36 sm:h-36 rounded-2xl overflow-hidden flex-shrink-0 relative bg-gray-100">
+                                <img src="${n.imagem}" alt="${n.categoria}" class="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-500">
                             </div>
-                            <div class="flex flex-col justify-center flex-grow py-1 pr-2">
-                                <span class="text-pref-blue text-[10px] sm:text-xs font-bold uppercase mb-1.5 tracking-wider">${noticia.categoria}</span>
-                                <h4 class="text-gray-800 font-bold leading-snug group-hover:text-pref-blue transition-colors text-sm sm:text-base line-clamp-3">${noticia.titulo}</h4>
-                                <p class="text-gray-500 text-[10px] sm:text-xs mt-auto pt-2 font-medium flex items-center"><i class="fa-regular fa-calendar mr-1.5 opacity-70"></i> ${noticia.data}</p>
+                            <div class="flex flex-col justify-center flex-grow py-2 pr-2">
+                                <span class="text-pref-blue text-[10px] font-black uppercase mb-2 tracking-widest">${n.categoria}</span>
+                                <h4 class="text-gray-800 font-black leading-snug group-hover:text-pref-blue transition-colors text-sm sm:text-base line-clamp-3">${n.titulo}</h4>
+                                <p class="text-gray-400 text-[10px] sm:text-xs mt-auto pt-2 font-bold flex items-center"><i class="fa-regular fa-calendar mr-1.5"></i> ${n.data}</p>
                             </div>
-                        </article>
-                    `;
+                        </article>`;
                 });
                 html += `</div>`;
             }
-
             html += `</div>`;
             container.innerHTML = html;
         }
@@ -793,27 +847,16 @@
         function renderizarGradeTodasNoticias() {
             const grid = document.getElementById('grid-todas-noticias');
             grid.innerHTML = '';
-            const arrayNoticias = Object.values(bancoDeNoticias).sort((a, b) => b.ordem - a.ordem);
-
-            if(arrayNoticias.length === 0) {
-                 grid.innerHTML = '<p class="col-span-full text-center text-gray-500 py-12 bg-white rounded-2xl border border-dashed border-gray-200">Nenhuma notícia no momento.</p>';
-                 return;
-            }
-
-            arrayNoticias.forEach(noticia => {
+            Object.values(bancoDeNoticias).sort((a, b) => b.ordem - a.ordem).forEach(n => {
                 grid.innerHTML += `
-                    <article onclick="showArticle('${noticia.id}')" class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all cursor-pointer border border-gray-100 flex flex-col h-full group transform hover:-translate-y-2">
-                        <div class="h-48 sm:h-56 w-full relative overflow-hidden">
-                            <img src="${noticia.imagem}" alt="${noticia.categoria}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                            <div class="absolute top-4 left-4 bg-pref-yellow text-pref-darkblue text-[10px] sm:text-xs font-black px-3 py-1.5 rounded-full uppercase tracking-wider shadow-md">
-                                ${noticia.categoria}
-                            </div>
+                    <article onclick="window.location.hash='noticia/${n.id}'" class="bg-white rounded-[2rem] overflow-hidden shadow-sm hover:shadow-xl transition-all cursor-pointer border border-gray-100 flex flex-col h-full group transform hover:-translate-y-2">
+                        <div class="h-48 sm:h-56 w-full relative bg-gray-100 overflow-hidden">
+                            <img src="${n.imagem}" alt="${n.categoria}" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700">
+                            <div class="absolute top-4 left-4 bg-pref-yellow text-pref-darkblue text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest shadow-md">${n.categoria}</div>
                         </div>
                         <div class="p-6 sm:p-8 flex flex-col flex-grow">
-                            <h4 class="text-lg sm:text-xl font-bold text-gray-800 mb-4 leading-snug group-hover:text-pref-blue transition-colors line-clamp-3">${noticia.titulo}</h4>
-                            <p class="text-gray-500 text-xs sm:text-sm font-medium mt-auto border-t border-gray-100 pt-4 flex items-center">
-                                <i class="fa-regular fa-calendar mr-2 text-pref-blue"></i> ${noticia.data}
-                            </p>
+                            <h4 class="text-lg sm:text-xl font-black text-gray-800 mb-4 leading-snug group-hover:text-pref-blue transition-colors line-clamp-3">${n.titulo}</h4>
+                            <p class="text-gray-500 text-xs sm:text-sm font-bold mt-auto border-t border-gray-100 pt-4 flex items-center"><i class="fa-regular fa-calendar mr-2 text-pref-blue"></i> ${n.data}</p>
                         </div>
                     </article>
                 `;
@@ -822,373 +865,274 @@
 
         function renderizarNoticiaAberta() {
             if(!currentArticleId) return;
-            const noticia = bancoDeNoticias[currentArticleId];
-            if(!noticia) {
-                 document.getElementById('noticia-titulo').innerText = "Carregando a notícia...";
-                 return;
-            }
-            document.getElementById('noticia-imagem').src = noticia.imagem;
-            document.getElementById('noticia-categoria').innerText = noticia.categoria;
-            document.getElementById('noticia-titulo').innerText = noticia.titulo;
-            document.getElementById('noticia-data').innerText = noticia.data;
-            
-            // Aqui aplicamos o conversor de formatação que acabamos de criar!
-            document.getElementById('noticia-conteudo').innerHTML = formatarTextoParaHTML(noticia.conteudo);
+            const n = bancoDeNoticias[currentArticleId];
+            if(!n) return;
+            document.getElementById('noticia-imagem').src = n.imagem;
+            document.getElementById('noticia-categoria').innerText = n.categoria;
+            document.getElementById('noticia-titulo').innerText = n.titulo;
+            document.getElementById('noticia-data').innerText = n.data;
+            document.getElementById('noticia-conteudo').innerHTML = formatarTextoParaHTML(n.conteudo);
         }
 
-        window.goHome = function() { window.location.hash = 'inicio'; };
+        function renderizarServicoAberto() {
+            if(!currentServiceId) return;
+            const s = bancoDeServicos[currentServiceId];
+            if(!s) return;
+            
+            document.getElementById('servico-icone-render').className = 'fa-solid ' + s.icone;
+            document.getElementById('servico-titulo').innerText = s.titulo;
+            document.getElementById('servico-desc').innerText = s.descricao;
+            
+            // Dados Dinâmicos do Cidadão
+            document.getElementById('servico-usuario-nome').innerText = cidadaoPerfil ? cidadaoPerfil.nome : "Desconhecido";
+            document.getElementById('servico-usuario-cpf').innerText = cidadaoPerfil ? cidadaoPerfil.cpfVirtual : "---";
+        }
 
+        function renderizarServicosCidadaoDashboard() {
+            const list = document.getElementById('lista-servicos-cidadao');
+            if(!list) return;
+            list.innerHTML = Object.values(bancoDeServicos).sort((a,b)=>b.ordem-a.ordem).map(s => `
+                <a href="#servico/${s.id}" class="p-4 rounded-xl border border-gray-200 hover:border-pref-blue hover:bg-blue-50 transition-colors flex items-center gap-4 group">
+                    <div class="w-10 h-10 bg-gray-100 group-hover:bg-pref-blue group-hover:text-white text-gray-500 rounded-lg flex items-center justify-center transition-colors"><i class="fa-solid ${s.icone}"></i></div>
+                    <span class="font-bold text-gray-700 group-hover:text-pref-blue">${s.titulo}</span>
+                </a>
+            `).join('');
+        }
+
+        // FUNÇÕES GLOBAIS DE NAVEGAÇÃO UI
+        window.goHome = function() { window.location.hash = 'inicio'; };
         window.goHomeAndScroll = function(sectionId) {
             if (window.location.hash.replace('#', '') !== 'inicio') {
                 window.location.hash = 'inicio';
-                // Aguarda um instante para o navegador carregar o html da home
-                setTimeout(() => {
-                    const el = document.getElementById(sectionId);
-                    if(el) {
-                        const yOffset = el.getBoundingClientRect().top + window.scrollY - 85;
-                        window.scrollTo({top: yOffset, behavior: 'smooth'});
-                    }
-                }, 100);
-            } else {
-                 const el = document.getElementById(sectionId);
-                 if(el) {
-                     const yOffset = el.getBoundingClientRect().top + window.scrollY - 85;
-                     window.scrollTo({top: yOffset, behavior: 'smooth'});
-                 }
-            }
+                setTimeout(() => { const el = document.getElementById(sectionId); if(el) window.scrollTo({top: el.offsetTop - 85, behavior: 'smooth'}); }, 100);
+            } else { const el = document.getElementById(sectionId); if(el) window.scrollTo({top: el.offsetTop - 85, behavior: 'smooth'}); }
         };
 
-        window.showArticle = function(id) {
-            window.location.hash = 'noticia/' + id;
-        };
-
-        window.showService = function(titulo, desc) {
-            currentService = { titulo, desc };
-            window.location.hash = 'servico';
-        };
-
-        window.showAllNewsView = function() {
-            window.location.hash = 'todas-noticias';
-        };
-
-        // Menu Mobile
         const btnMobile = document.getElementById('mobile-menu-btn');
         const menuMobile = document.getElementById('mobile-menu');
         const icon = btnMobile.querySelector('i');
-
         btnMobile.addEventListener('click', () => {
             menuMobile.classList.toggle('hidden');
-            menuMobile.classList.toggle('flex');
-            
-            if (menuMobile.classList.contains('hidden')) {
-                icon.classList.remove('fa-xmark'); icon.classList.add('fa-bars');
-            } else {
-                icon.classList.remove('fa-bars'); icon.classList.add('fa-xmark');
-            }
+            if (menuMobile.classList.contains('hidden')) { icon.classList.remove('fa-xmark'); icon.classList.add('fa-bars'); } else { icon.classList.remove('fa-bars'); icon.classList.add('fa-xmark'); }
         });
+        window.closeMenu = function() { menuMobile.classList.add('hidden'); icon.classList.remove('fa-xmark'); icon.classList.add('fa-bars'); };
 
-        window.closeMenu = function() {
-            if (!menuMobile.classList.contains('hidden')) {
-                menuMobile.classList.add('hidden');
-                menuMobile.classList.remove('flex');
-                icon.classList.remove('fa-xmark'); icon.classList.add('fa-bars');
-            }
-        };
+        // ================= SISTEMA DO CIDADÃO (AUTH & CPF VIRTUAL) =================
+        window.alternarModoCidadao = function() {
+            isModoCadastroCidadao = !isModoCadastroCidadao;
+            document.getElementById('box-nome-cidadao').style.display = isModoCadastroCidadao ? 'block' : 'none';
+            document.getElementById('btn-submit-cidadao').innerHTML = isModoCadastroCidadao ? '<i class="fa-solid fa-fingerprint"></i> Criar CPF Virtual' : '<i class="fa-solid fa-right-to-bracket"></i> Entrar no Sistema';
+            document.getElementById('toggle-auth-text').innerText = isModoCadastroCidadao ? 'Já possui um CPF Virtual?' : 'Primeiro acesso ao portal?';
+            document.getElementById('toggle-auth-btn').innerText = isModoCadastroCidadao ? 'Fazer login' : 'Gerar meu CPF Virtual agora';
+            document.getElementById('cidadao-msg-erro').classList.add('hidden');
+        }
 
-        window.fazerLoginAdmin = async function() {
-            const email = document.getElementById('admin-email').value;
-            const senha = document.getElementById('admin-senha').value;
-            const errorMsg = document.getElementById('admin-login-error');
-            const btn = document.getElementById('btn-login-admin');
+        function gerarCPFVirtual() {
+            const num = Math.floor(100000 + Math.random() * 900000); // 6 digitos
+            return `RBS-${num}`;
+        }
+
+        window.processarAuthCidadao = async function() {
+            const email = document.getElementById('cidadao-email').value;
+            const senha = document.getElementById('cidadao-senha').value;
+            const nome = document.getElementById('cidadao-nome').value;
+            const btn = document.getElementById('btn-submit-cidadao');
+            const msgErro = document.getElementById('cidadao-msg-erro');
+            const msgTexto = document.getElementById('cidadao-msg-texto');
             
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Autenticando...';
-            btn.disabled = true;
-            errorMsg.classList.add('hidden');
+            btn.disabled = true; msgErro.classList.add('hidden');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processando...';
 
             try {
-                await signInWithEmailAndPassword(auth, email, senha);
-                btn.innerHTML = 'Entrar no Painel';
-                btn.disabled = false;
-                // O onAuthStateChanged vai ser disparado e atualizará a tela
+                if (isModoCadastroCidadao) {
+                    if(!nome) throw new Error("Preencha seu nome completo.");
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
+                    const user = userCredential.user;
+                    
+                    // Gera o CPF Virtual e salva no Perfil Seguro do Firebase
+                    const novoCPF = gerarCPFVirtual();
+                    await setDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'perfil', 'dados'), {
+                        nome: nome,
+                        email: email,
+                        cpfVirtual: novoCPF,
+                        criadoEm: new Date().toISOString()
+                    });
+                } else {
+                    await signInWithEmailAndPassword(auth, email, senha);
+                    // O onAuthStateChanged vai pegar o login e mudar a tela sozinho
+                }
             } catch (error) {
-                console.error("Login falhou:", error);
-                errorMsg.classList.remove('hidden');
-                btn.innerHTML = 'Entrar no Painel';
+                console.error(error);
+                msgErro.classList.remove('hidden');
+                msgTexto.innerText = error.code === 'auth/email-already-in-use' ? 'E-mail já possui cadastro.' : 
+                                     error.code === 'auth/invalid-credential' ? 'E-mail ou senha incorretos.' : 
+                                     error.message || 'Erro ao autenticar.';
                 btn.disabled = false;
+                btn.innerHTML = isModoCadastroCidadao ? '<i class="fa-solid fa-fingerprint"></i> Criar CPF Virtual' : '<i class="fa-solid fa-right-to-bracket"></i> Entrar no Sistema';
             }
         };
 
-        window.sairAdmin = async function() {
-            try {
-                await signOut(auth);
-                await signInAnonymously(auth); // Reconecta cidadão comum
-                window.location.hash = 'inicio'; // Tira o usuário do link admin
-            } catch (error) {
-                console.error("Erro ao deslogar:", error);
-            }
+        window.sairCidadao = async function() {
+            await signOut(auth);
+            await signInAnonymously(auth); // Volta pro anonimo para poder ler o site
+            window.location.hash = 'inicio';
+        }
+
+        // ================= SISTEMA DE ADMINISTRAÇÃO =================
+        window.fazerLoginAdmin = async function() {
+            const e = document.getElementById('admin-email').value; const s = document.getElementById('admin-senha').value;
+            const btn = document.getElementById('btn-login-admin');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Autenticando...';
+            try { await signInWithEmailAndPassword(auth, e, s); } 
+            catch (err) { document.getElementById('admin-login-error').classList.remove('hidden'); btn.innerHTML = '<i class="fa-solid fa-unlock mr-2"></i> Autenticar'; }
+        };
+
+        window.sairAuth = async function() { await signOut(auth); await signInAnonymously(auth); window.location.hash = 'inicio'; };
+
+        window.mudarAbaAdmin = function(aba) {
+            adminAbaAtiva = aba;
+            document.getElementById('form-admin-noticia').classList.add('hidden');
+            document.getElementById('form-admin-servico').classList.add('hidden');
+            
+            document.getElementById('btn-aba-noticias').className = aba === 'noticias' ? 'flex-1 md:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all bg-white text-gray-900 shadow-sm' : 'flex-1 md:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all text-gray-400 hover:text-white';
+            document.getElementById('btn-aba-servicos').className = aba === 'servicos' ? 'flex-1 md:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all bg-white text-gray-900 shadow-sm' : 'flex-1 md:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all text-gray-400 hover:text-white';
+            
+            document.getElementById('form-admin-'+aba).classList.remove('hidden');
+            document.getElementById('admin-titulo-lista').innerText = aba === 'noticias' ? 'Publicações' : 'Sistemas/Serviços';
+            
+            prepararNovoAdmin();
+            renderizarListaAdmin();
         };
 
         window.renderizarListaAdmin = function() {
-            const lista = document.getElementById('lista-admin-noticias');
-            if(!lista) return;
-            const arrayNoticias = Object.values(bancoDeNoticias).sort((a, b) => b.ordem - a.ordem);
-            lista.innerHTML = '';
+            const lista = document.getElementById('lista-admin-dinamica'); if(!lista) return;
+            const dados = adminAbaAtiva === 'noticias' ? Object.values(bancoDeNoticias).sort((a,b)=>b.ordem-a.ordem) : Object.values(bancoDeServicos).sort((a,b)=>b.ordem-a.ordem);
             
-            if (arrayNoticias.length === 0) {
-                lista.innerHTML = '<div class="text-center p-8 bg-gray-50 rounded-xl border border-dashed border-gray-300 text-gray-500"><i class="fa-regular fa-folder-open text-2xl mb-2 block"></i>Nenhuma notícia no banco.</div>';
-                return;
-            }
+            if (dados.length === 0) { lista.innerHTML = '<div class="text-center p-8 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 text-gray-400 font-bold">Vazio.</div>'; return; }
 
-            arrayNoticias.forEach(n => {
-                lista.innerHTML += `
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 bg-gray-50 rounded-xl hover:bg-blue-50 transition-colors border border-gray-100 gap-4 group">
-                        <div class="flex-grow overflow-hidden w-full">
-                            <span class="text-[10px] font-bold text-pref-blue uppercase mb-1 px-2 py-0.5 bg-blue-100 rounded-md inline-block">${n.categoria}</span>
-                            <h4 class="font-bold text-gray-800 text-sm truncate w-full">${n.titulo}</h4>
-                            <p class="text-xs text-gray-400 mt-1"><i class="fa-regular fa-calendar mr-1"></i> Publicado em: ${n.data}</p>
-                        </div>
-                        <div class="flex gap-2 w-full sm:w-auto justify-end pt-3 sm:pt-0 border-t sm:border-t-0 border-gray-200">
-                            <button onclick="editarNoticia('${n.id}')" class="px-4 py-2 bg-white border border-gray-200 text-pref-blue rounded-lg text-sm font-bold hover:bg-pref-blue hover:text-white transition-colors flex items-center gap-2 shadow-sm" title="Editar">
-                                <i class="fa-solid fa-pen"></i>
-                            </button>
-                            <button onclick="abrirModalDelete('${n.id}')" class="px-4 py-2 bg-white border border-gray-200 text-red-500 rounded-lg text-sm font-bold hover:bg-red-500 hover:text-white transition-colors flex items-center gap-2 shadow-sm" title="Excluir">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
-                        </div>
+            lista.innerHTML = dados.map(item => `
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 bg-gray-50 rounded-2xl hover:bg-blue-50 transition-colors border border-gray-100 gap-4 group">
+                    <div class="flex-grow overflow-hidden w-full">
+                        <span class="text-[10px] font-black text-pref-blue uppercase mb-1.5 px-3 py-1 bg-blue-100 rounded-md inline-block tracking-widest">${adminAbaAtiva === 'noticias' ? item.categoria : 'Serviço'}</span>
+                        <h4 class="font-black text-gray-800 text-sm truncate w-full">${item.titulo}</h4>
                     </div>
-                `;
-            });
+                    <div class="flex gap-2 w-full sm:w-auto justify-end">
+                        <button onclick="editarAdmin('${item.id}')" class="w-10 h-10 bg-white border border-gray-200 text-pref-blue rounded-xl hover:bg-pref-blue hover:text-white transition-colors shadow-sm flex items-center justify-center"><i class="fa-solid fa-pen"></i></button>
+                        <button onclick="abrirModalDelete('${item.id}')" class="w-10 h-10 bg-white border border-gray-200 text-red-500 rounded-xl hover:bg-red-500 hover:text-white transition-colors shadow-sm flex items-center justify-center"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                </div>
+            `).join('');
         };
 
-        window.prepararNovaNoticia = function() {
-            document.getElementById('form-admin-noticia').reset();
-            document.getElementById('admin-noticia-id').value = '';
-            document.getElementById('titulo-editor-noticia').innerHTML = '<i class="fa-solid fa-pen-to-square text-pref-yellow"></i> Adicionar Nova Notícia';
-            document.getElementById('btn-salvar-noticia').innerHTML = '<i class="fa-solid fa-check mr-2"></i> Publicar Notícia';
-            document.getElementById('admin-form-error').classList.add('hidden');
-            document.getElementById('admin-form-success').classList.add('hidden');
+        window.prepararNovoAdmin = function() {
+            document.getElementById(`form-admin-${adminAbaAtiva}`).reset();
+            document.getElementById(`admin-${adminAbaAtiva}-id`).value = '';
+            document.getElementById('admin-titulo-editor').innerHTML = `<i class="fa-solid fa-pen-to-square"></i> Modo de Criação`;
+            document.getElementById('admin-form-error').classList.add('hidden'); document.getElementById('admin-form-success').classList.add('hidden');
             
-            // Limpa a miniatura da imagem se houver
-            const preview = document.getElementById('preview-img-admin');
-            if(preview) { preview.src = ''; preview.classList.add('hidden'); }
+            if(adminAbaAtiva === 'noticias') document.getElementById('preview-img-admin').classList.add('hidden');
+            if(adminAbaAtiva === 'servicos') document.getElementById('preview-icon-admin').className = 'fa-solid fa-laptop-file';
         };
 
-        window.cancelarEdicaoNoticia = function() { prepararNovaNoticia(); };
-
-        window.editarNoticia = function(id) {
-            const n = bancoDeNoticias[id];
-            if(!n) return;
+        window.editarAdmin = function(id) {
+            const item = adminAbaAtiva === 'noticias' ? bancoDeNoticias[id] : bancoDeServicos[id];
+            if(!item) return;
             
-            document.getElementById('admin-noticia-id').value = n.id;
-            document.getElementById('admin-noticia-titulo').value = n.titulo;
-            document.getElementById('admin-noticia-categoria').value = n.categoria;
-            document.getElementById('admin-noticia-data').value = n.data;
-            document.getElementById('admin-noticia-imagem').value = n.imagem;
-            document.getElementById('admin-noticia-conteudo').value = n.conteudo;
+            document.getElementById(`admin-${adminAbaAtiva}-id`).value = item.id;
+            document.getElementById(`admin-${adminAbaAtiva}-titulo`).value = item.titulo;
             
-            // Exibe a miniatura da imagem ao clicar para editar
-            const preview = document.getElementById('preview-img-admin');
-            if(preview) { 
-                preview.src = n.imagem; 
-                preview.classList.remove('hidden'); 
-            }
-            
-            document.getElementById('titulo-editor-noticia').innerHTML = '<i class="fa-solid fa-arrows-rotate text-pref-blue"></i> Editando Publicação';
-            document.getElementById('btn-salvar-noticia').innerHTML = '<i class="fa-solid fa-arrows-rotate mr-2"></i> Atualizar Notícia';
-            document.getElementById('admin-form-error').classList.add('hidden');
-            document.getElementById('admin-form-success').classList.add('hidden');
-        };
-
-        window.salvarNoticiaAdmin = async function() {
-            const btn = document.getElementById('btn-salvar-noticia');
-            const msgErro = document.getElementById('admin-form-error');
-            const msgSucesso = document.getElementById('admin-form-success');
-            
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Salvando...';
-            msgErro.classList.add('hidden');
-            msgSucesso.classList.add('hidden');
-
-            const idAtual = document.getElementById('admin-noticia-id').value;
-            const novoId = idAtual || 'noticia_' + Date.now();
-            
-            let ordem = 1;
-            if (idAtual && bancoDeNoticias[idAtual]) {
-                ordem = bancoDeNoticias[idAtual].ordem; 
+            if(adminAbaAtiva === 'noticias') {
+                document.getElementById('admin-noticia-categoria').value = item.categoria;
+                document.getElementById('admin-noticia-data').value = item.data;
+                document.getElementById('admin-noticia-imagem').value = item.imagem;
+                document.getElementById('admin-noticia-conteudo').value = item.conteudo;
+                mostrarPreview(item.imagem, 'preview-img-admin');
             } else {
-                const arrayNoticias = Object.values(bancoDeNoticias);
-                if(arrayNoticias.length > 0) {
-                    ordem = Math.max(...arrayNoticias.map(n => n.ordem || 0)) + 1;
-                }
+                document.getElementById('admin-servico-icone').value = item.icone;
+                document.getElementById('preview-icon-admin').className = 'fa-solid ' + item.icone;
+                document.getElementById('admin-servico-desc').value = item.descricao;
             }
+            document.getElementById('admin-titulo-editor').innerHTML = `<i class="fa-solid fa-arrows-rotate text-pref-blue"></i> Editando Conteúdo`;
+        };
 
-            const dados = {
-                id: novoId,
-                ordem: ordem,
-                titulo: document.getElementById('admin-noticia-titulo').value,
-                categoria: document.getElementById('admin-noticia-categoria').value,
-                data: document.getElementById('admin-noticia-data').value,
-                imagem: document.getElementById('admin-noticia-imagem').value,
-                conteudo: document.getElementById('admin-noticia-conteudo').value
-            };
+        window.salvarNoticiaAdmin = async function() { salvarItemGen(bancoDeNoticias, 'noticias', 'btn-salvar-noticia', {
+            titulo: document.getElementById('admin-noticia-titulo').value, categoria: document.getElementById('admin-noticia-categoria').value,
+            data: document.getElementById('admin-noticia-data').value, imagem: document.getElementById('admin-noticia-imagem').value, conteudo: document.getElementById('admin-noticia-conteudo').value
+        }); };
+
+        window.salvarServicoAdmin = async function() { salvarItemGen(bancoDeServicos, 'servicos', 'btn-salvar-servico', {
+            titulo: document.getElementById('admin-servico-titulo').value, icone: document.getElementById('admin-servico-icone').value.replace('fa-solid ','').replace('fa-regular ',''), descricao: document.getElementById('admin-servico-desc').value
+        }); };
+
+        async function salvarItemGen(banco, colecao, btnId, extraDados) {
+            const btn = document.getElementById(btnId); const oldHtml = btn.innerHTML;
+            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Salvando...';
+            document.getElementById('admin-form-error').classList.add('hidden'); document.getElementById('admin-form-success').classList.add('hidden');
+
+            const idAtual = document.getElementById(`admin-${colecao}-id`).value;
+            const novoId = idAtual || `${colecao}_${Date.now()}`;
+            const ordem = idAtual && banco[idAtual] ? banco[idAtual].ordem : (Object.values(banco).length > 0 ? Math.max(...Object.values(banco).map(n=>n.ordem||0))+1 : 1);
 
             try {
-                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'noticias', novoId);
-                await setDoc(docRef, dados);
-                msgSucesso.classList.remove('hidden');
-                setTimeout(() => msgSucesso.classList.add('hidden'), 4000);
-                if(!idAtual) prepararNovaNoticia(); 
-            } catch(e) {
-                console.error("Erro ao salvar:", e);
-                msgErro.classList.remove('hidden');
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = idAtual ? '<i class="fa-solid fa-arrows-rotate mr-2"></i> Atualizar Notícia' : '<i class="fa-solid fa-check mr-2"></i> Publicar Notícia';
-            }
-        };
+                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', colecao, novoId), { id: novoId, ordem: ordem, ...extraDados });
+                document.getElementById('admin-form-success').classList.remove('hidden'); setTimeout(()=>document.getElementById('admin-form-success').classList.add('hidden'), 3000);
+                if(!idAtual) prepararNovoAdmin();
+            } catch(e) { document.getElementById('admin-form-error').classList.remove('hidden'); } 
+            finally { btn.disabled = false; btn.innerHTML = oldHtml; }
+        }
 
-        window.abrirModalDelete = function(id) {
-            noticiaParaExcluir = id;
-            document.getElementById('modal-delete').classList.remove('hidden');
-        };
-
-        window.fecharModalDelete = function() {
-            noticiaParaExcluir = null;
-            document.getElementById('modal-delete').classList.add('hidden');
-        };
-
-        // --- SISTEMA DE UPLOAD DE MÍDIA (IMGUR & CATBOX) ---
-        window.fazerUploadMedia = async function(input, destino) {
-            const file = input.files[0];
-            if (!file) return;
-
-            const isCapa = destino === 'capa';
-            const statusEl = document.getElementById('upload-status');
-            const labelCapa = input.previousElementSibling; 
-            const originalLabelCapaHTML = labelCapa.innerHTML;
-
-            // Feedback visual de carregamento
-            if (isCapa) {
-                labelCapa.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Enviando...';
-                labelCapa.classList.add('pointer-events-none', 'opacity-70');
-            } else {
-                statusEl.classList.remove('hidden');
-                statusEl.classList.add('inline-flex');
-            }
-
-            try {
-                let urlFinal = '';
-                const isImage = file.type.startsWith('image/');
-
-                // 1. Tentar enviar imagens pro Imgur (Mais rápido para fotos)
-                if (isImage) {
-                    try {
-                        const formData = new FormData();
-                        formData.append("image", file);
-                        const imgurRes = await fetch("https://api.imgur.com/3/image", {
-                            method: "POST",
-                            headers: { "Authorization": "Client-ID 513bb727cecf9ac" },
-                            body: formData
-                        });
-                        const imgurData = await imgurRes.json();
-                        if (imgurData.success) {
-                            urlFinal = imgurData.data.link;
-                        }
-                    } catch (e) {
-                        console.warn("Upload no Imgur falhou, tentando Catbox como reserva...", e);
-                    }
-                }
-
-                // 2. Se não for imagem OU se o Imgur falhou, usa o Catbox (Suporta vídeos, áudios, PDFs, Gifs)
-                if (!urlFinal) {
-                    const catboxData = new FormData();
-                    catboxData.append("reqtype", "fileupload");
-                    catboxData.append("userhash", "c56d69d2549d77aa3919140d3");
-                    catboxData.append("fileToUpload", file);
-                    
-                    const catboxRes = await fetch("https://catbox.moe/user/api.php", {
-                        method: "POST",
-                        body: catboxData
-                    });
-                    
-                    if(catboxRes.ok) {
-                        urlFinal = await catboxRes.text();
-                    } else {
-                        throw new Error("Falha na API de upload.");
-                    }
-                }
-
-                if (!urlFinal || !urlFinal.startsWith('http')) {
-                    throw new Error("URL gerada inválida.");
-                }
-
-                // APLICA O RESULTADO NO FORMULÁRIO DO PAINEL
-                if (isCapa) {
-                    const inputCapa = document.getElementById('admin-noticia-imagem');
-                    inputCapa.value = urlFinal;
-                    // Força a exibição da miniatura
-                    const preview = document.getElementById('preview-img-admin');
-                    preview.src = urlFinal;
-                    preview.classList.remove('hidden');
-                } else {
-                    const textarea = document.getElementById('admin-noticia-conteudo');
-                    let tagInserir = '';
-                    
-                    // Identifica o tipo e gera o player correto pro site!
-                    if (file.type.startsWith('video/')) {
-                        tagInserir = `\n\n<video controls class="w-full rounded-2xl my-6 shadow-md"><source src="${urlFinal}" type="${file.type}"></video>\n\n`;
-                    } else if (file.type.startsWith('audio/')) {
-                        tagInserir = `\n\n<audio controls class="w-full my-6"><source src="${urlFinal}" type="${file.type}"></audio>\n\n`;
-                    } else if (isImage) {
-                        tagInserir = `\n\n<img src="${urlFinal}" alt="Mídia Anexada" class="w-full rounded-2xl my-6 shadow-md">\n\n`;
-                    } else {
-                        tagInserir = `\n\n<a href="${urlFinal}" target="_blank" class="bg-gray-100 text-pref-blue px-4 py-3 rounded-xl font-bold flex items-center gap-2 w-fit my-4 border border-gray-200 hover:bg-gray-200 transition-colors"><i class="fa-solid fa-download"></i> Baixar Arquivo</a>\n\n`;
-                    }
-
-                    // Insere o código no meio do texto, onde o cursor estiver
-                    const cursorPos = textarea.selectionStart;
-                    const textBefore = textarea.value.substring(0, cursorPos);
-                    const textAfter  = textarea.value.substring(cursorPos, textarea.value.length);
-                    textarea.value = textBefore + tagInserir + textAfter;
-                    textarea.focus();
-                }
-
-            } catch (error) {
-                console.error("Erro geral no upload:", error);
-                alert("Falha ao enviar arquivo. Verifique sua conexão ou tente um arquivo menor.");
-            } finally {
-                // Remove o status de "Carregando"
-                if (isCapa) {
-                    labelCapa.innerHTML = originalLabelCapaHTML;
-                    labelCapa.classList.remove('pointer-events-none', 'opacity-70');
-                } else {
-                    statusEl.classList.add('hidden');
-                    statusEl.classList.remove('inline-flex');
-                }
-                input.value = ''; // Limpa a memória para permitir enviar o mesmo arquivo 2x
-            }
-        };
+        window.abrirModalDelete = function(id) { itemParaExcluir = { id, tipo: adminAbaAtiva }; document.getElementById('modal-delete').classList.remove('hidden'); };
+        window.fecharModalDelete = function() { itemParaExcluir = {id:null, tipo:null}; document.getElementById('modal-delete').classList.add('hidden'); };
 
         document.getElementById('btn-confirmar-delete').addEventListener('click', async () => {
-            if(!noticiaParaExcluir) return;
-            const btn = document.getElementById('btn-confirmar-delete');
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Excluindo...';
-            
-            try {
-                await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'noticias', noticiaParaExcluir));
-                fecharModalDelete();
-            } catch(e) {
-                console.error("Falha ao deletar:", e);
-                fecharModalDelete(); 
-                document.getElementById('admin-form-error').classList.remove('hidden');
-                document.getElementById('admin-form-error').innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-1"></i> Erro ao tentar excluir a notícia. Você tem permissão?';
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = 'Sim, excluir agora';
-            }
+            if(!itemParaExcluir.id) return;
+            const btn = document.getElementById('btn-confirmar-delete'); btn.disabled = true; btn.innerHTML = 'Excluindo...';
+            try { await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', itemParaExcluir.tipo, itemParaExcluir.id)); fecharModalDelete(); } 
+            catch(e) { document.getElementById('admin-form-error').classList.remove('hidden'); fecharModalDelete(); } 
+            finally { btn.disabled = false; btn.innerHTML = 'Sim, excluir agora'; }
         });
 
+        // UPLOAD IMGUR / CATBOX
+        window.mostrarPreview = function(url, imgId) { const el = document.getElementById(imgId); if(url.startsWith('http')) { el.src = url; el.classList.remove('hidden'); } else { el.classList.add('hidden'); } }
+
+        window.fazerUploadMedia = async function(input, destino) {
+            const file = input.files[0]; if (!file) return;
+            const isCapa = destino === 'capa'; const labelCapa = input.previousElementSibling; const origH = labelCapa.innerHTML;
+            if (isCapa) { labelCapa.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>'; labelCapa.classList.add('pointer-events-none'); } 
+            else { document.getElementById('upload-status').classList.remove('hidden'); document.getElementById('upload-status').classList.add('inline-flex'); }
+
+            try {
+                let urlFinal = ''; const isImg = file.type.startsWith('image/');
+                if (isImg) {
+                    try {
+                        let fd = new FormData(); fd.append("image", file);
+                        let res = await fetch("https://api.imgur.com/3/image", { method: "POST", headers: { "Authorization": "Client-ID 513bb727cecf9ac" }, body: fd });
+                        let data = await res.json(); if (data.success) urlFinal = data.data.link;
+                    } catch (e) {}
+                }
+                if (!urlFinal) {
+                    let cdata = new FormData(); cdata.append("reqtype", "fileupload"); cdata.append("userhash", "c56d69d2549d77aa3919140d3"); cdata.append("fileToUpload", file);
+                    let cres = await fetch("https://catbox.moe/user/api.php", { method: "POST", body: cdata });
+                    if(cres.ok) urlFinal = await cres.text(); else throw new Error();
+                }
+
+                if (isCapa) {
+                    document.getElementById('admin-noticia-imagem').value = urlFinal; mostrarPreview(urlFinal, 'preview-img-admin');
+                } else {
+                    const txt = document.getElementById('admin-noticia-conteudo');
+                    let t = file.type.startsWith('video/') ? `\n\n<video controls class="w-full rounded-2xl my-6 shadow-md"><source src="${urlFinal}" type="${file.type}"></video>\n\n` :
+                            file.type.startsWith('audio/') ? `\n\n<audio controls class="w-full my-6"><source src="${urlFinal}" type="${file.type}"></audio>\n\n` :
+                            isImg ? `\n\n<img src="${urlFinal}" alt="Anexo" class="w-full rounded-2xl my-6 shadow-md">\n\n` :
+                            `\n\n<a href="${urlFinal}" target="_blank" class="bg-gray-100 text-pref-blue px-4 py-3 rounded-xl font-bold flex w-fit my-4 border border-gray-200 hover:bg-gray-200"> Baixar Anexo</a>\n\n`;
+                    txt.value = txt.value.substring(0, txt.selectionStart) + t + txt.value.substring(txt.selectionStart);
+                }
+            } catch (e) { alert("Falha ao enviar arquivo."); } 
+            finally {
+                if (isCapa) { labelCapa.innerHTML = origH; labelCapa.classList.remove('pointer-events-none'); } 
+                else { document.getElementById('upload-status').classList.add('hidden'); document.getElementById('upload-status').classList.remove('inline-flex'); }
+                input.value = '';
+            }
+        };
     </script>
 </body>
 </html>
