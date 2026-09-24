@@ -509,12 +509,10 @@
     </footer>
 
     <script type="module">
-        // Importando módulos do Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, getDocs, onSnapshot, collection, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Sua configuração do Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyBEYU7Y0QKZCa_fMC5ML-MWMN2IAdCx114",
             authDomain: "prefeituraderaboseco.firebaseapp.com",
@@ -525,137 +523,137 @@
             measurementId: "G-SYG86SG66H"
         };
 
-        // Identificador do App (Usado para estruturar o Banco)
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'prefeituraderaboseco';
-
-        // Inicializando Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // Banco de Notícias na Memória (Será alimentado pelo Firestore)
+        // VARIÁVEIS GLOBAIS DE ESTADO
         let bancoDeNoticias = {};
-        
-        // Controle de Estado do Admin
         let isAdminView = false;
         let noticiaParaExcluir = null;
+        let currentArticleId = null;
+        let currentService = { titulo: 'Serviço', desc: 'Acessando sistema...' };
 
-        // Verifica a URL secreta no carregamento
-        function checkInitialRoute() {
-            // Se acessar site.com/#adminprefeitura
-            if (window.location.hash.includes('adminprefeitura') || window.location.pathname.includes('adminprefeitura')) {
+        function handleHashChange() {
+            let hash = window.location.hash.replace('#', '');
+            if (!hash) hash = 'inicio'; // Rota padrão
+
+            // Oculta todas as páginas do container
+            ['view-home', 'view-noticia', 'view-servico', 'view-todas-noticias', 'view-admin-login', 'view-admin-dashboard'].forEach(id => {
+                const el = document.getElementById(id);
+                if(el) { el.classList.add('hidden'); el.classList.remove('flex'); }
+            });
+
+            isAdminView = false; // Por padrão não é admin
+
+            // Mapeia a URL para a página correta
+            if (hash === 'inicio') {
+                document.getElementById('view-home').classList.remove('hidden');
+                document.getElementById('view-home').classList.add('flex');
+                window.scrollTo(0, 0);
+
+            } else if (hash === 'todas-noticias') {
+                document.getElementById('view-todas-noticias').classList.remove('hidden');
+                document.getElementById('view-todas-noticias').classList.add('flex');
+                renderizarGradeTodasNoticias();
+                window.scrollTo(0, 0);
+
+            } else if (hash.startsWith('noticia/')) {
+                currentArticleId = hash.split('/')[1];
+                document.getElementById('view-noticia').classList.remove('hidden');
+                document.getElementById('view-noticia').classList.add('flex');
+                renderizarNoticiaAberta();
+                window.scrollTo(0, 0);
+
+            } else if (hash === 'servico') {
+                document.getElementById('view-servico').classList.remove('hidden');
+                document.getElementById('view-servico').classList.add('flex');
+                
+                document.getElementById('servico-titulo').innerText = currentService.titulo;
+                document.getElementById('servico-desc').innerText = currentService.desc;
+                document.getElementById('alerta-msg').classList.add('hidden');
+                document.querySelector('#view-servico input').value = '';
+                window.scrollTo(0, 0);
+
+            } else if (hash === 'adminprefeitura') {
                 isAdminView = true;
+                if (auth.currentUser && !auth.currentUser.isAnonymous) {
+                    document.getElementById('view-admin-dashboard').classList.remove('hidden');
+                    document.getElementById('view-admin-dashboard').classList.add('flex');
+                    renderizarListaAdmin();
+                } else {
+                    document.getElementById('view-admin-login').classList.remove('hidden');
+                    document.getElementById('view-admin-login').classList.add('flex');
+                }
+                window.scrollTo(0, 0);
+            } else {
+                window.location.hash = 'inicio';
             }
         }
-        checkInitialRoute();
 
-        // Monitor de Autenticação: Descobre se quem entrou é o prefeito ou cidadão comum
+        // Ativa os eventos de escuta da URL (para o botão "Voltar" funcionar)
+        window.addEventListener('hashchange', handleHashChange);
+        window.addEventListener('load', handleHashChange);
+
+        // Monitor de Autenticação
         onAuthStateChanged(auth, (user) => {
-            if (user && !user.isAnonymous) {
-                // Prefeito / Admin Logado com E-mail
-                if (isAdminView) {
-                    window.switchView('view-admin-dashboard');
-                    renderizarListaAdmin(); // Desenha as notícias no painel
-                }
-            } else {
-                // Cidadão comum ou admin que deslogou
-                if (isAdminView) {
-                    window.switchView('view-admin-login'); // Pede a senha
-                }
-            }
+            // Se ocorreu mudança de login, forçamos o sistema de rotas a reavaliar a tela atual
+            handleHashChange();
         });
 
-        // Dados Iniciais (Caso o banco esteja vazio, ele se auto-preenche com isso)
         const noticiasSemente = [
-            {
-                id: "noticia_1", ordem: 4, // ordem maior = mais recente
-                titulo: "Prefeitura inaugura nova praça no bairro Esperança com área de lazer e esportes",
-                categoria: "Infraestrutura", data: "23 de Setembro, 2026",
-                imagem: "https://placehold.co/800x500/0047AB/FFFFFF?text=Inauguracao+Praca",
-                conteudo: "<p>A Prefeitura Municipal de Rabo Seco, em um esforço contínuo para melhorar a qualidade de vida da população, entregou nesta manhã a nova Praça da Família no bairro Esperança. O evento contou com a presença do Prefeito, secretários municipais e centenas de moradores e lideranças.</p><p>O novo espaço conta com infraestrutura completa de lazer e convivência.</p>"
-            },
-            {
-                id: "noticia_2", ordem: 3,
-                titulo: "Campanha de vacinação contra a gripe é prorrogada até sexta-feira",
-                categoria: "Saúde", data: "21 de Setembro, 2026",
-                imagem: "https://placehold.co/800x500/FFC107/002D6B?text=Saude",
-                conteudo: "<p>A Secretaria Municipal de Saúde de Rabo Seco informou que a Campanha Nacional de Vacinação contra a Influenza (Gripe) foi estendida até a próxima sexta-feira, visando atingir e ultrapassar a meta estipulada pelo Ministério da Saúde.</p>"
-            },
-            {
-                id: "noticia_3", ordem: 2,
-                titulo: "Matrículas para a rede municipal abrem na próxima semana",
-                categoria: "Educação", data: "19 de Setembro, 2026",
-                imagem: "https://placehold.co/800x500/002D6B/FFFFFF?text=Escola",
-                conteudo: "<p>Atenção pais e responsáveis de alunos! A Secretaria de Educação de Rabo Seco inicia na próxima segunda-feira o período oficial de renovação e novas matrículas para o ano letivo de 2027 em todas as escolas da rede municipal de ensino.</p>"
-            },
-            {
-                id: "noticia_4", ordem: 1,
-                titulo: "Festival Cultural de Rabo Seco atrai milhares de pessoas",
-                categoria: "Cultura", data: "15 de Setembro, 2026",
-                imagem: "https://placehold.co/800x500/E5E7EB/9CA3AF?text=Cultura",
-                conteudo: "<p>O maior evento da nossa cidade superou as expectativas. O tradicional Festival Cultural de Rabo Seco encerrou sua edição deste ano batendo recorde histórico de público na Praça Central.</p>"
-            }
+            { id: "noticia_1", ordem: 4, titulo: "Prefeitura inaugura nova praça no bairro Esperança com área de lazer e esportes", categoria: "Infraestrutura", data: "23 de Setembro, 2026", imagem: "https://placehold.co/800x500/0047AB/FFFFFF?text=Inauguracao+Praca", conteudo: "<p>A Prefeitura Municipal de Rabo Seco, em um esforço contínuo para melhorar a qualidade de vida da população, entregou nesta manhã a nova Praça da Família no bairro Esperança. O evento contou com a presença do Prefeito, secretários municipais e centenas de moradores e lideranças.</p><p>O novo espaço conta com infraestrutura completa de lazer e convivência.</p>" },
+            { id: "noticia_2", ordem: 3, titulo: "Campanha de vacinação contra a gripe é prorrogada até sexta-feira", categoria: "Saúde", data: "21 de Setembro, 2026", imagem: "https://placehold.co/800x500/FFC107/002D6B?text=Saude", conteudo: "<p>A Secretaria Municipal de Saúde de Rabo Seco informou que a Campanha Nacional de Vacinação contra a Influenza (Gripe) foi estendida até a próxima sexta-feira, visando atingir e ultrapassar a meta estipulada pelo Ministério da Saúde.</p>" },
+            { id: "noticia_3", ordem: 2, titulo: "Matrículas para a rede municipal abrem na próxima semana", categoria: "Educação", data: "19 de Setembro, 2026", imagem: "https://placehold.co/800x500/002D6B/FFFFFF?text=Escola", conteudo: "<p>Atenção pais e responsáveis de alunos! A Secretaria de Educação de Rabo Seco inicia na próxima segunda-feira o período oficial de renovação e novas matrículas para o ano letivo de 2027 em todas as escolas da rede municipal de ensino.</p>" },
+            { id: "noticia_4", ordem: 1, titulo: "Festival Cultural de Rabo Seco atrai milhares de pessoas", categoria: "Cultura", data: "15 de Setembro, 2026", imagem: "https://placehold.co/800x500/E5E7EB/9CA3AF?text=Cultura", conteudo: "<p>O maior evento da nossa cidade superou as expectativas. O tradicional Festival Cultural de Rabo Seco encerrou sua edição deste ano batendo recorde histórico de público na Praça Central.</p>" }
         ];
 
         async function iniciarBancoDeDados() {
             try {
-                // 1. Autenticação (Obrigatório antes de ler o banco)
                 if (typeof __initial_auth_token !== 'undefined') {
                     await signInWithCustomToken(auth, __initial_auth_token);
                 } else {
                     await signInAnonymously(auth);
                 }
                 
-                if (!auth.currentUser) return; // Proteção extra
+                if (!auth.currentUser) return; 
 
-                // 2. Referência ao caminho oficial de dados públicos
                 const noticiasRef = collection(db, 'artifacts', appId, 'public', 'data', 'noticias');
 
-                // 3. Verificar se o banco está vazio e semear dados se necessário
                 const snap = await getDocs(noticiasRef);
                 if (snap.empty) {
-                    console.log("Banco de dados vazio. Gerando notícias iniciais...");
+                    console.log("Semeando banco...");
                     for (let n of noticiasSemente) {
                         await setDoc(doc(noticiasRef, n.id), n);
                     }
                 }
 
-                // 4. Conectar em tempo real (Qualquer mudança no painel adm, atualiza aqui na hora)
+                // Escuta em tempo real
                 onSnapshot(noticiasRef, (snapshot) => {
                     bancoDeNoticias = {};
                     snapshot.forEach(docSnap => {
                         bancoDeNoticias[docSnap.id] = { id: docSnap.id, ...docSnap.data() };
                     });
                     
-                    renderizarNoticiasHome(); // Atualiza a página inicial
-                    
-                    // Se estiver na tela de Todas as Notícias, atualiza ela também
-                    if (!document.getElementById('view-todas-noticias').classList.contains('hidden')) {
-                        showAllNewsView();
-                    }
-                    
-                    // Se o painel admin estiver aberto, atualiza a lista dele na mesma hora!
-                    if (!document.getElementById('view-admin-dashboard').classList.contains('hidden')) {
-                        renderizarListaAdmin();
-                    }
+                    // Atualiza as telas que dependem de dados se o usuário estiver nelas
+                    renderizarNoticiasHome(); 
+                    if (window.location.hash === '#todas-noticias') renderizarGradeTodasNoticias();
+                    if (window.location.hash.startsWith('#noticia/')) renderizarNoticiaAberta();
+                    if (isAdminView) renderizarListaAdmin();
                 }, (error) => {
-                    console.error("Erro ao escutar Firestore:", error);
+                    console.error("Erro no Firestore:", error);
                 });
 
             } catch (error) {
-                console.error("Erro na inicialização do Firebase:", error);
+                console.error("Erro na inicialização:", error);
             }
         }
-
-        // Chama a inicialização
         iniciarBancoDeDados();
 
-        // Função para desenhar as notícias na página inicial com os dados do Firebase
         function renderizarNoticiasHome() {
             const container = document.getElementById('noticias-grid-home');
             if (!container) return;
-
-            // Ordena as notícias (Maior ordem aparece primeiro)
             const arrayNoticias = Object.values(bancoDeNoticias).sort((a, b) => b.ordem - a.ordem);
 
             if (arrayNoticias.length === 0) {
@@ -663,8 +661,8 @@
                 return;
             }
 
-            const principal = arrayNoticias[0]; // Primeira Notícia (Destaque Maior)
-            const secundarias = arrayNoticias.slice(1, 4); // Próximas 3 Notícias
+            const principal = arrayNoticias[0];
+            const secundarias = arrayNoticias.slice(1, 4);
 
             let html = `
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 w-full">
@@ -677,7 +675,6 @@
                             <p class="text-gray-300 text-sm font-medium"><i class="fa-regular fa-calendar mr-2"></i> ${principal.data}</p>
                         </div>
                     </article>
-
                     <div class="flex flex-col gap-6">
             `;
 
@@ -693,87 +690,22 @@
                     </article>
                 `;
             });
-
             html += `</div></div>`;
             container.innerHTML = html;
         }
 
-        // ==========================================
-        // SISTEMA DE NAVEGAÇÃO SPA (Single Page)
-        // ==========================================
-        
-        // Expondo as funções para o HTML acessar globalmente
-        window.switchView = function(viewId) {
-            window.scrollTo(0, 0); // Rola para o topo
-            ['view-home', 'view-noticia', 'view-servico', 'view-todas-noticias', 'view-admin-login', 'view-admin-dashboard'].forEach(id => {
-                const el = document.getElementById(id);
-                if(el) {
-                    el.classList.add('hidden');
-                    el.classList.remove('flex');
-                }
-            });
-            const targetView = document.getElementById(viewId);
-            if(targetView) {
-                targetView.classList.remove('hidden');
-                targetView.classList.add('flex');
-            }
-            
-            // Se o prefeito clicar em "Ver Site", tira ele do modo admin temporariamente e limpa a URL visualmente
-            if (viewId === 'view-home' || viewId === 'view-todas-noticias' || viewId === 'view-servico') {
-                isAdminView = false;
-                if(window.location.hash.includes('adminprefeitura')) {
-                    window.history.replaceState(null, null, ' '); // Deixa a URL limpinha
-                }
-            }
-        };
-
-        window.goHome = function() { window.switchView('view-home'); };
-
-        window.goHomeAndScroll = function(sectionId) {
-            window.switchView('view-home');
-            setTimeout(() => {
-                const el = document.getElementById(sectionId);
-                if(el) {
-                    const yOffset = el.getBoundingClientRect().top + window.scrollY - 85;
-                    window.scrollTo({top: yOffset, behavior: 'smooth'});
-                }
-            }, 50);
-        };
-
-        window.showArticle = function(id) {
-            const noticia = bancoDeNoticias[id];
-            if(!noticia) return;
-            
-            document.getElementById('noticia-imagem').src = noticia.imagem;
-            document.getElementById('noticia-categoria').innerText = noticia.categoria;
-            document.getElementById('noticia-titulo').innerText = noticia.titulo;
-            document.getElementById('noticia-data').innerText = noticia.data;
-            document.getElementById('noticia-conteudo').innerHTML = noticia.conteudo;
-            
-            window.switchView('view-noticia');
-        };
-
-        window.showService = function(titulo, desc) {
-            document.getElementById('servico-titulo').innerText = titulo;
-            document.getElementById('servico-desc').innerText = desc;
-            document.getElementById('alerta-msg').classList.add('hidden');
-            document.querySelector('#view-servico input').value = '';
-            
-            window.switchView('view-servico');
-        };
-
-        window.showAllNewsView = function() {
+        function renderizarGradeTodasNoticias() {
             const grid = document.getElementById('grid-todas-noticias');
             grid.innerHTML = '';
-            
             const arrayNoticias = Object.values(bancoDeNoticias).sort((a, b) => b.ordem - a.ordem);
 
             if(arrayNoticias.length === 0) {
                  grid.innerHTML = '<p class="col-span-full text-center text-gray-500 py-10">Nenhuma notícia no momento.</p>';
+                 return;
             }
 
             arrayNoticias.forEach(noticia => {
-                const card = `
+                grid.innerHTML += `
                     <article onclick="showArticle('${noticia.id}')" class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all cursor-pointer border border-gray-100 flex flex-col h-full group transform hover:-translate-y-1">
                         <img src="${noticia.imagem}" alt="${noticia.categoria}" class="w-full h-56 object-cover">
                         <div class="p-6 flex flex-col flex-grow">
@@ -785,13 +717,59 @@
                         </div>
                     </article>
                 `;
-                grid.innerHTML += card;
             });
-            
-            window.switchView('view-todas-noticias');
+        }
+
+        function renderizarNoticiaAberta() {
+            if(!currentArticleId) return;
+            const noticia = bancoDeNoticias[currentArticleId];
+            if(!noticia) {
+                 document.getElementById('noticia-titulo').innerText = "Carregando a notícia...";
+                 return;
+            }
+            document.getElementById('noticia-imagem').src = noticia.imagem;
+            document.getElementById('noticia-categoria').innerText = noticia.categoria;
+            document.getElementById('noticia-titulo').innerText = noticia.titulo;
+            document.getElementById('noticia-data').innerText = noticia.data;
+            document.getElementById('noticia-conteudo').innerHTML = noticia.conteudo;
+        }
+
+        window.goHome = function() { window.location.hash = 'inicio'; };
+
+        window.goHomeAndScroll = function(sectionId) {
+            if (window.location.hash.replace('#', '') !== 'inicio') {
+                window.location.hash = 'inicio';
+                // Aguarda um instante para o navegador carregar o html da home
+                setTimeout(() => {
+                    const el = document.getElementById(sectionId);
+                    if(el) {
+                        const yOffset = el.getBoundingClientRect().top + window.scrollY - 85;
+                        window.scrollTo({top: yOffset, behavior: 'smooth'});
+                    }
+                }, 100);
+            } else {
+                 const el = document.getElementById(sectionId);
+                 if(el) {
+                     const yOffset = el.getBoundingClientRect().top + window.scrollY - 85;
+                     window.scrollTo({top: yOffset, behavior: 'smooth'});
+                 }
+            }
         };
 
-        // Funções do Menu Mobile
+        window.showArticle = function(id) {
+            window.location.hash = 'noticia/' + id;
+        };
+
+        window.showService = function(titulo, desc) {
+            currentService = { titulo, desc };
+            window.location.hash = 'servico';
+        };
+
+        window.showAllNewsView = function() {
+            window.location.hash = 'todas-noticias';
+        };
+
+        // Menu Mobile
         const btnMobile = document.getElementById('mobile-menu-btn');
         const menuMobile = document.getElementById('mobile-menu');
         const icon = btnMobile.querySelector('i');
@@ -801,11 +779,9 @@
             menuMobile.classList.toggle('flex');
             
             if (menuMobile.classList.contains('hidden')) {
-                icon.classList.remove('fa-xmark');
-                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-xmark'); icon.classList.add('fa-bars');
             } else {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-xmark');
+                icon.classList.remove('fa-bars'); icon.classList.add('fa-xmark');
             }
         });
 
@@ -813,16 +789,10 @@
             if (!menuMobile.classList.contains('hidden')) {
                 menuMobile.classList.add('hidden');
                 menuMobile.classList.remove('flex');
-                icon.classList.remove('fa-xmark');
-                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-xmark'); icon.classList.add('fa-bars');
             }
         };
 
-        // ==========================================
-        // FUNÇÕES DO PAINEL ADMINISTRATIVO (CMS)
-        // ==========================================
-        
-        // 1. Logar na Prefeitura
         window.fazerLoginAdmin = async function() {
             const email = document.getElementById('admin-email').value;
             const senha = document.getElementById('admin-senha').value;
@@ -834,10 +804,10 @@
             errorMsg.classList.add('hidden');
 
             try {
-                // Se der certo, o Firebase avisa o onAuthStateChanged automaticamente!
                 await signInWithEmailAndPassword(auth, email, senha);
                 btn.innerHTML = 'Entrar no Painel';
                 btn.disabled = false;
+                // O onAuthStateChanged vai ser disparado e atualizará a tela
             } catch (error) {
                 console.error("Login falhou:", error);
                 errorMsg.classList.remove('hidden');
@@ -846,24 +816,19 @@
             }
         };
 
-        // 2. Deslogar e voltar a ser leitor
         window.sairAdmin = async function() {
             try {
                 await signOut(auth);
-                await signInAnonymously(auth); // Reconecta em segredo para poder ler notícias públicas
-                window.location.hash = ''; // Remove o /#adminprefeitura
-                goHome(); 
+                await signInAnonymously(auth); // Reconecta cidadão comum
+                window.location.hash = 'inicio'; // Tira o usuário do link admin
             } catch (error) {
                 console.error("Erro ao deslogar:", error);
             }
         };
 
-        // 3. Renderizar Lista de Controle
         window.renderizarListaAdmin = function() {
             const lista = document.getElementById('lista-admin-noticias');
             if(!lista) return;
-            
-            // Ordena pela notícia mais nova
             const arrayNoticias = Object.values(bancoDeNoticias).sort((a, b) => b.ordem - a.ordem);
             lista.innerHTML = '';
             
@@ -893,7 +858,6 @@
             });
         };
 
-        // 4. Limpar o formulário
         window.prepararNovaNoticia = function() {
             document.getElementById('form-admin-noticia').reset();
             document.getElementById('admin-noticia-id').value = '';
@@ -903,11 +867,8 @@
             document.getElementById('admin-form-success').classList.add('hidden');
         };
 
-        window.cancelarEdicaoNoticia = function() {
-            prepararNovaNoticia();
-        };
+        window.cancelarEdicaoNoticia = function() { prepararNovaNoticia(); };
 
-        // 5. Puxar dados para edição
         window.editarNoticia = function(id) {
             const n = bancoDeNoticias[id];
             if(!n) return;
@@ -925,28 +886,26 @@
             document.getElementById('admin-form-success').classList.add('hidden');
         };
 
-        // 6. Gravar de fato no Banco de Dados Google
         window.salvarNoticiaAdmin = async function() {
             const btn = document.getElementById('btn-salvar-noticia');
             const msgErro = document.getElementById('admin-form-error');
             const msgSucesso = document.getElementById('admin-form-success');
             
             btn.disabled = true;
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Salvando no Servidor...';
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Salvando...';
             msgErro.classList.add('hidden');
             msgSucesso.classList.add('hidden');
 
             const idAtual = document.getElementById('admin-noticia-id').value;
-            const novoId = idAtual || 'noticia_' + Date.now(); // Gera ID único para novas notícias
+            const novoId = idAtual || 'noticia_' + Date.now();
             
-            // Ajusta a ordem cronológica
             let ordem = 1;
             if (idAtual && bancoDeNoticias[idAtual]) {
-                ordem = bancoDeNoticias[idAtual].ordem; // Mantém no lugar original se for edição
+                ordem = bancoDeNoticias[idAtual].ordem; 
             } else {
                 const arrayNoticias = Object.values(bancoDeNoticias);
                 if(arrayNoticias.length > 0) {
-                    ordem = Math.max(...arrayNoticias.map(n => n.ordem || 0)) + 1; // Joga pro topo se for nova
+                    ordem = Math.max(...arrayNoticias.map(n => n.ordem || 0)) + 1;
                 }
             }
 
@@ -961,17 +920,13 @@
             };
 
             try {
-                // Operação de salvamento no Firestore
                 const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'noticias', novoId);
                 await setDoc(docRef, dados);
-                
                 msgSucesso.classList.remove('hidden');
-                setTimeout(() => msgSucesso.classList.add('hidden'), 4000); // Some após 4s
-                
-                if(!idAtual) prepararNovaNoticia(); // Só limpa se foi uma nova postagem
-                
+                setTimeout(() => msgSucesso.classList.add('hidden'), 4000);
+                if(!idAtual) prepararNovaNoticia(); 
             } catch(e) {
-                console.error("Erro ao salvar no Firebase:", e);
+                console.error("Erro ao salvar:", e);
                 msgErro.classList.remove('hidden');
             } finally {
                 btn.disabled = false;
@@ -979,7 +934,6 @@
             }
         };
 
-        // 7. Processo de Exclusão Segura
         window.abrirModalDelete = function(id) {
             noticiaParaExcluir = id;
             document.getElementById('modal-delete').classList.remove('hidden');
@@ -992,7 +946,6 @@
 
         document.getElementById('btn-confirmar-delete').addEventListener('click', async () => {
             if(!noticiaParaExcluir) return;
-            
             const btn = document.getElementById('btn-confirmar-delete');
             btn.disabled = true;
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Excluindo...';
@@ -1002,10 +955,9 @@
                 fecharModalDelete();
             } catch(e) {
                 console.error("Falha ao deletar:", e);
-                // Retorna ao normal e mostra o erro
                 fecharModalDelete(); 
                 document.getElementById('admin-form-error').classList.remove('hidden');
-                document.getElementById('admin-form-error').innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-1"></i> Erro ao tentar excluir a notícia.';
+                document.getElementById('admin-form-error').innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-1"></i> Erro ao tentar excluir a notícia. Você tem permissão?';
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = 'Sim, excluir agora';
