@@ -1098,38 +1098,88 @@
         window.fazerUploadMedia = async function(input, destino) {
             const file = input.files[0]; if (!file) return;
             const isCapa = destino === 'capa'; const labelCapa = input.previousElementSibling; const origH = labelCapa.innerHTML;
-            if (isCapa) { labelCapa.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>'; labelCapa.classList.add('pointer-events-none'); } 
-            else { document.getElementById('upload-status').classList.remove('hidden'); document.getElementById('upload-status').classList.add('inline-flex'); }
+            
+            if (isCapa) { 
+                labelCapa.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>'; 
+                labelCapa.classList.add('pointer-events-none'); 
+            } else { 
+                document.getElementById('upload-status').classList.remove('hidden'); 
+                document.getElementById('upload-status').classList.add('inline-flex'); 
+            }
 
             try {
                 let urlFinal = ''; const isImg = file.type.startsWith('image/');
+                
+                // 1. Tenta Imgur primeiro se for Imagem (ou GIF)
                 if (isImg) {
                     try {
                         let fd = new FormData(); fd.append("image", file);
-                        let res = await fetch("https://api.imgur.com/3/image", { method: "POST", headers: { "Authorization": "Client-ID 513bb727cecf9ac" }, body: fd });
-                        let data = await res.json(); if (data.success) urlFinal = data.data.link;
-                    } catch (e) {}
+                        let res = await fetch("https://api.imgur.com/3/image", { 
+                            method: "POST", 
+                            headers: { "Authorization": "Client-ID 513bb727cecf9ac" }, 
+                            body: fd 
+                        });
+                        let data = await res.json(); 
+                        if (data.success) urlFinal = data.data.link;
+                    } catch (e) { console.warn("Erro ao enviar para Imgur. Tentando Catbox...", e); }
                 }
+                
+                // 2. Se for Vídeo/Áudio, ou se o Imgur falhou por limite de tamanho, tenta o Catbox
                 if (!urlFinal) {
-                    let cdata = new FormData(); cdata.append("reqtype", "fileupload"); cdata.append("userhash", "c56d69d2549d77aa3919140d3"); cdata.append("fileToUpload", file);
-                    let cres = await fetch("https://catbox.moe/user/api.php", { method: "POST", body: cdata });
-                    if(cres.ok) urlFinal = await cres.text(); else throw new Error();
+                    let cdata = new FormData(); 
+                    cdata.append("reqtype", "fileupload"); 
+                    cdata.append("userhash", "c56d69d2549d77aa3919140d3"); 
+                    cdata.append("fileToUpload", file);
+                    
+                    try {
+                        // Tenta conexão direta primeiro
+                        let cres = await fetch("https://catbox.moe/user/api.php", { method: "POST", body: cdata });
+                        if(cres.ok) {
+                            urlFinal = await cres.text();
+                        } else {
+                            throw new Error("Erro no servidor Catbox");
+                        }
+                    } catch (err) {
+                        console.warn("Conexão direta falhou. Usando Proxy CORS...", err);
+                        // Fallback: Usa um Proxy para evitar o bloqueio de CORS do navegador para vídeos/arquivos grandes
+                        let proxyRes = await fetch("https://corsproxy.io/?https://catbox.moe/user/api.php", { method: "POST", body: cdata });
+                        if(proxyRes.ok) {
+                            urlFinal = await proxyRes.text();
+                        } else {
+                            throw new Error("Falha também no Proxy.");
+                        }
+                    }
                 }
 
+                if (!urlFinal || !urlFinal.startsWith('http')) {
+                    throw new Error("URL gerada não é válida.");
+                }
+
+                // Tudo deu certo, vamos exibir
                 if (isCapa) {
-                    document.getElementById('admin-noticia-imagem').value = urlFinal; mostrarPreview(urlFinal, 'preview-img-admin');
+                    document.getElementById('admin-noticia-imagem').value = urlFinal; 
+                    mostrarPreview(urlFinal, 'preview-img-admin');
                 } else {
                     const txt = document.getElementById('admin-noticia-conteudo');
                     let t = file.type.startsWith('video/') ? `\n\n<video controls class="w-full rounded-2xl my-6 shadow-md"><source src="${urlFinal}" type="${file.type}"></video>\n\n` :
                             file.type.startsWith('audio/') ? `\n\n<audio controls class="w-full my-6"><source src="${urlFinal}" type="${file.type}"></audio>\n\n` :
                             isImg ? `\n\n<img src="${urlFinal}" alt="Anexo" class="w-full rounded-2xl my-6 shadow-md">\n\n` :
-                            `\n\n<a href="${urlFinal}" target="_blank" class="bg-gray-100 text-pref-blue px-4 py-3 rounded-xl font-bold flex w-fit my-4 border border-gray-200 hover:bg-gray-200"> Baixar Anexo</a>\n\n`;
+                            `\n\n<a href="${urlFinal}" target="_blank" class="bg-gray-100 text-pref-blue px-4 py-3 rounded-xl font-bold flex w-fit my-4 border border-gray-200 hover:bg-gray-200"><i class="fa-solid fa-download mr-2"></i> Baixar Anexo</a>\n\n`;
                     txt.value = txt.value.substring(0, txt.selectionStart) + t + txt.value.substring(txt.selectionStart);
                 }
-            } catch (e) { alert("Falha ao enviar arquivo."); } 
+            } catch (e) { 
+                console.error("Erro completo:", e);
+                alert("Falha ao enviar arquivo.\n\nMotivo: O arquivo pode ser muito grande (máximo recomendado é 50MB) ou o seu navegador bloqueou o envio (CORS).\nTente novamente com um arquivo um pouco menor."); 
+            } 
             finally {
-                if (isCapa) { labelCapa.innerHTML = origH; labelCapa.classList.remove('pointer-events-none'); } 
-                else { document.getElementById('upload-status').classList.add('hidden'); document.getElementById('upload-status').classList.remove('inline-flex'); }
+                // Restaura os botões
+                if (isCapa) { 
+                    labelCapa.innerHTML = origH; 
+                    labelCapa.classList.remove('pointer-events-none'); 
+                } else { 
+                    document.getElementById('upload-status').classList.add('hidden'); 
+                    document.getElementById('upload-status').classList.remove('inline-flex'); 
+                }
                 input.value = '';
             }
         };
