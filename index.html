@@ -407,18 +407,15 @@
                             <span class="text-xs text-blue-200 font-medium tracking-widest uppercase">Modo Editor</span>
                         </div>
                     </div>
-                    <!-- Botão Mágico no Mobile -->
-                    <button onclick="gerarDadosSemente()" class="md:hidden text-xs bg-pref-yellow text-pref-darkblue font-black px-3 py-1.5 rounded-lg shadow-sm">Gerar Padrão</button>
                 </div>
                 
                 <!-- Abas de Navegação Admin -->
                 <div class="flex bg-pref-darkblue p-1 rounded-xl w-full md:w-auto overflow-x-auto custom-scrollbar">
                     <button onclick="mudarAbaAdmin('noticias')" id="btn-aba-noticias" class="flex-1 md:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all bg-white text-pref-blue shadow-sm whitespace-nowrap"><i class="fa-solid fa-newspaper mr-2"></i> Notícias</button>
-                    <button onclick="mudarAbaAdmin('servicos')" id="btn-aba-servicos" class="flex-1 md:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all text-blue-200 hover:text-white whitespace-nowrap"><i class="fa-solid fa-laptop-file mr-2"></i> Sistemas</button>
+                    <button onclick="mudarAbaAdmin('servicos')" id="btn-aba-servicos" class="flex-1 md:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all text-blue-200 hover:text-white whitespace-nowrap"><i class="fa-solid fa-laptop-file mr-2"></i> Serviços</button>
                 </div>
 
                 <div class="flex gap-3 w-full md:w-auto">
-                    <button onclick="gerarDadosSemente()" class="hidden md:block flex-1 md:flex-none text-sm bg-pref-yellow text-pref-darkblue hover:bg-yellow-400 px-4 py-2.5 rounded-lg transition-colors font-black shadow-md" title="Adiciona sistemas e notícias padrões ao banco"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Gerar Padrão</button>
                     <button onclick="goHome()" class="flex-1 md:flex-none text-sm bg-pref-darkblue hover:bg-blue-900 px-4 py-2.5 rounded-lg transition-colors font-bold"><i class="fa-solid fa-eye mr-1"></i> Ver Site</button>
                     <button onclick="sairAuth()" class="flex-1 md:flex-none text-sm bg-red-500 hover:bg-red-400 px-4 py-2.5 rounded-lg transition-colors font-bold shadow-md"><i class="fa-solid fa-power-off mr-1"></i> Sair</button>
                 </div>
@@ -449,27 +446,27 @@
                     <div id="admin-form-success" class="hidden mb-6 text-green-600 text-sm font-bold bg-green-50 p-4 rounded-xl border border-green-100"><i class="fa-solid fa-check-circle mr-2"></i> Alterações salvas com sucesso!</div>
 
                     <!-- FORMULÁRIO DE NOTÍCIA -->
-                    <form id="form-admin-noticia" onsubmit="event.preventDefault(); salvarNoticiaAdmin();" class="space-y-6 flex-grow flex flex-col overflow-y-auto pr-3 custom-scrollbar">
-                        <input type="hidden" id="admin-noticia-id">
+                    <form id="form-admin-noticias" onsubmit="event.preventDefault(); salvarNoticiaAdmin();" class="space-y-6 flex-grow flex flex-col overflow-y-auto pr-3 custom-scrollbar">
+                        <input type="hidden" id="admin-noticias-id">
                         
                         <div>
                             <label class="block text-sm font-black text-gray-700 mb-1.5">Título da Notícia</label>
-                            <input type="text" id="admin-noticia-titulo" required class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
+                            <input type="text" id="admin-noticias-titulo" required class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
                         </div>
                         <div class="flex flex-col sm:flex-row gap-5">
                             <div class="w-full sm:w-1/2">
                                 <label class="block text-sm font-black text-gray-700 mb-1.5">Categoria</label>
-                                <input type="text" id="admin-noticia-categoria" required placeholder="Ex: Saúde, Obras" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
+                                <input type="text" id="admin-noticias-categoria" required placeholder="Ex: Saúde, Obras" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
                             </div>
                             <div class="w-full sm:w-1/2">
                                 <label class="block text-sm font-black text-gray-700 mb-1.5">Data Publicação</label>
-                                <input type="text" id="admin-noticia-data" required placeholder="Ex: 24 de Set, 2026" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
+                                <input type="text" id="admin-noticias-data" required placeholder="Ex: 24 de Set, 2026" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
                             </div>
                         </div>
                         <div class="bg-gray-50 p-5 rounded-2xl border border-gray-200">
                             <label class="block text-sm font-black text-gray-700 mb-2">Imagem de Capa (Obrigatório)</label>
                             <div class="flex flex-col sm:flex-row gap-3">
-                                <input type="url" id="admin-noticia-imagem" required placeholder="Cole o link ou use o botão de envio..." class="flex-grow px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium text-sm" oninput="mostrarPreview(this.value, 'preview-img-admin')">
+                                <input type="url" id="admin-noticias-imagem" required placeholder="Cole o link ou use o botão de envio..." class="flex-grow px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium text-sm" oninput="mostrarPreview(this.value, 'preview-img-admin')">
                                 <label for="upload-capa" class="bg-pref-blue text-white px-5 py-3 rounded-xl cursor-pointer hover:bg-pref-darkblue transition-colors shadow-md flex justify-center items-center gap-2 font-black whitespace-nowrap text-sm">
                                     <i class="fa-solid fa-cloud-arrow-up"></i> Enviar Foto
                                 </label>
@@ -498,7 +495,7 @@
                                     <span>~<del>Tachado</del>~</span>
                                 </div>
                             </div>
-                            <textarea id="admin-noticia-conteudo" required placeholder="Escreva o texto aqui..." class="w-full flex-grow min-h-[250px] px-5 py-4 rounded-b-xl border-x-2 border-b-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors resize-none font-medium text-gray-700 leading-relaxed"></textarea>
+                            <textarea id="admin-noticias-conteudo" required placeholder="Escreva o texto aqui..." class="w-full flex-grow min-h-[250px] px-5 py-4 rounded-b-xl border-x-2 border-b-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors resize-none font-medium text-gray-700 leading-relaxed"></textarea>
                         </div>
                         
                         <div class="pt-6 flex gap-4 mt-auto border-t border-gray-100">
@@ -509,28 +506,28 @@
                     </form>
 
                     <!-- FORMULÁRIO DE SERVIÇO -->
-                    <form id="form-admin-servico" onsubmit="event.preventDefault(); salvarServicoAdmin();" class="hidden space-y-6 flex-grow flex flex-col">
-                        <input type="hidden" id="admin-servico-id">
+                    <form id="form-admin-servicos" onsubmit="event.preventDefault(); salvarServicoAdmin();" class="hidden space-y-6 flex-grow flex flex-col">
+                        <input type="hidden" id="admin-servicos-id">
                         <div>
                             <label class="block text-sm font-black text-gray-700 mb-1.5">Título do Serviço</label>
-                            <input type="text" id="admin-servico-titulo" required placeholder="Ex: Emissão de IPTU" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
+                            <input type="text" id="admin-servicos-titulo" required placeholder="Ex: Emissão de IPTU" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
                         </div>
                         <div>
                             <label class="block text-sm font-black text-gray-700 mb-1.5">Ícone FontAwesome (Sem o fa-solid)</label>
                             <div class="flex gap-3 items-center">
-                                <input type="text" id="admin-servico-icone" required placeholder="Ex: fa-file-invoice-dollar" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium font-mono text-sm" oninput="document.getElementById('preview-icon-admin').className = 'fa-solid ' + this.value">
+                                <input type="text" id="admin-servicos-icone" required placeholder="Ex: fa-file-invoice-dollar" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium font-mono text-sm" oninput="document.getElementById('preview-icon-admin').className = 'fa-solid ' + this.value">
                                 <div class="w-12 h-12 flex-shrink-0 bg-blue-50 text-pref-blue rounded-xl flex items-center justify-center text-xl border border-blue-100"><i id="preview-icon-admin" class="fa-solid fa-file-invoice-dollar"></i></div>
                             </div>
                             <p class="text-[11px] mt-1.5 text-gray-500 font-medium">Procure ícones gratuitos em fontawesome.com/search</p>
                         </div>
                         <div>
                             <label class="block text-sm font-black text-gray-700 mb-1.5">Descrição Curta</label>
-                            <textarea id="admin-servico-desc" required placeholder="Descreva brevemente para que serve..." class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors resize-none h-32 font-medium text-gray-700"></textarea>
+                            <textarea id="admin-servicos-desc" required placeholder="Descreva brevemente para que serve..." class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors resize-none h-32 font-medium text-gray-700"></textarea>
                         </div>
                         
                         <div class="pt-6 flex gap-4 mt-auto border-t border-gray-100">
                             <button type="submit" id="btn-salvar-servico" class="flex-1 bg-pref-blue text-white font-black py-4 rounded-xl hover:bg-pref-darkblue shadow-lg transition-all transform hover:-translate-y-0.5 text-lg">
-                                <i class="fa-solid fa-check mr-2"></i> Salvar Sistema
+                                <i class="fa-solid fa-check mr-2"></i> Salvar Serviço
                             </button>
                         </div>
                     </form>
@@ -750,7 +747,10 @@
                     isGestorAdmin = true;
                     isCidadaoLogado = false;
                     cidadaoPerfil = null;
-                    document.getElementById('btn-header-cidadao').innerHTML = `<i class="fa-solid fa-shield-halved text-lg"></i> <span>Acesso Admin</span>`;
+                    
+                    // Nota: Removido a modificação do botão de header para admin conforme solicitado.
+                    // O admin deve usar apenas a URL #adminprefeitura para acessar
+                    
                     handleHashChange();
                 } else {
                     isGestorAdmin = false;
@@ -1007,10 +1007,30 @@
                     
                     await setDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'perfil', 'dados'), novoPerfil);
                     
-                    // Nota: O onSnapshot() no authStateChanged vai capturar esse novo documento automaticamente
+                    cidadaoPerfil = novoPerfil;
+                    isCidadaoLogado = true;
                     
                 } else {
                     await signInWithEmailAndPassword(auth, email, senha);
+                    
+                    // Sistema de Espera Segura: aguarda o Firebase baixar o perfil antes de continuar
+                    let tentativas = 0;
+                    while (!isCidadaoLogado && tentativas < 25 && !isGestorAdmin) {
+                        await new Promise(r => setTimeout(r, 200)); // Espera 0.2 segundos por tentativa (máx 5 seg)
+                        tentativas++;
+                    }
+                }
+                
+                // Se a pessoa que usou esse form era o administrador disfarçado...
+                if (isGestorAdmin) {
+                    document.getElementById('form-cidadao').reset();
+                    window.location.hash = 'adminprefeitura';
+                    return;
+                }
+                
+                // Se o perfil do cidadão não foi carregado corretamente
+                if (!isCidadaoLogado) {
+                    throw new Error("Não foi possível localizar os dados do seu CPF Virtual. Conta inválida.");
                 }
                 
                 // Limpa form e manda pra tela
@@ -1049,14 +1069,14 @@
 
         window.mudarAbaAdmin = function(aba) {
             adminAbaAtiva = aba;
-            document.getElementById('form-admin-noticia').classList.add('hidden');
-            document.getElementById('form-admin-servico').classList.add('hidden');
+            document.getElementById('form-admin-noticias').classList.add('hidden');
+            document.getElementById('form-admin-servicos').classList.add('hidden');
             
             document.getElementById('btn-aba-noticias').className = aba === 'noticias' ? 'flex-1 md:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all bg-white text-pref-blue shadow-sm whitespace-nowrap' : 'flex-1 md:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all text-blue-200 hover:text-white whitespace-nowrap';
             document.getElementById('btn-aba-servicos').className = aba === 'servicos' ? 'flex-1 md:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all bg-white text-pref-blue shadow-sm whitespace-nowrap' : 'flex-1 md:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all text-blue-200 hover:text-white whitespace-nowrap';
             
             document.getElementById('form-admin-'+aba).classList.remove('hidden');
-            document.getElementById('admin-titulo-lista').innerText = aba === 'noticias' ? 'Publicações' : 'Sistemas/Serviços';
+            document.getElementById('admin-titulo-lista').innerText = aba === 'noticias' ? 'Publicações' : 'Sistemas de Serviço';
             
             prepararNovoAdmin();
             renderizarListaAdmin();
@@ -1066,7 +1086,7 @@
             const lista = document.getElementById('lista-admin-dinamica'); if(!lista) return;
             const dados = adminAbaAtiva === 'noticias' ? Object.values(bancoDeNoticias).sort((a,b)=>b.ordem-a.ordem) : Object.values(bancoDeServicos).sort((a,b)=>b.ordem-a.ordem);
             
-            if (dados.length === 0) { lista.innerHTML = '<div class="text-center p-8 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 text-gray-400 font-bold">A lista está vazia. Cadastre algo ou clique em "Gerar Padrão".</div>'; return; }
+            if (dados.length === 0) { lista.innerHTML = '<div class="text-center p-8 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 text-gray-400 font-bold">A lista está vazia. Adicione clicando em "Novo".</div>'; return; }
 
             lista.innerHTML = dados.map(item => `
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 bg-gray-50 rounded-2xl hover:bg-blue-50 transition-colors border border-gray-100 gap-4 group">
@@ -1100,26 +1120,26 @@
             document.getElementById(`admin-${adminAbaAtiva}-titulo`).value = item.titulo;
             
             if(adminAbaAtiva === 'noticias') {
-                document.getElementById('admin-noticia-categoria').value = item.categoria;
-                document.getElementById('admin-noticia-data').value = item.data;
-                document.getElementById('admin-noticia-imagem').value = item.imagem;
-                document.getElementById('admin-noticia-conteudo').value = item.conteudo;
+                document.getElementById('admin-noticias-categoria').value = item.categoria;
+                document.getElementById('admin-noticias-data').value = item.data;
+                document.getElementById('admin-noticias-imagem').value = item.imagem;
+                document.getElementById('admin-noticias-conteudo').value = item.conteudo;
                 mostrarPreview(item.imagem, 'preview-img-admin');
             } else {
-                document.getElementById('admin-servico-icone').value = item.icone;
+                document.getElementById('admin-servicos-icone').value = item.icone;
                 document.getElementById('preview-icon-admin').className = 'fa-solid ' + item.icone;
-                document.getElementById('admin-servico-desc').value = item.descricao;
+                document.getElementById('admin-servicos-desc').value = item.descricao;
             }
             document.getElementById('admin-titulo-editor').innerHTML = `<i class="fa-solid fa-arrows-rotate text-pref-blue"></i> Editando Conteúdo`;
         };
 
         window.salvarNoticiaAdmin = async function() { salvarItemGen(bancoDeNoticias, 'noticias', 'btn-salvar-noticia', {
-            titulo: document.getElementById('admin-noticia-titulo').value, categoria: document.getElementById('admin-noticia-categoria').value,
-            data: document.getElementById('admin-noticia-data').value, imagem: document.getElementById('admin-noticia-imagem').value, conteudo: document.getElementById('admin-noticia-conteudo').value
+            titulo: document.getElementById('admin-noticias-titulo').value, categoria: document.getElementById('admin-noticias-categoria').value,
+            data: document.getElementById('admin-noticias-data').value, imagem: document.getElementById('admin-noticias-imagem').value, conteudo: document.getElementById('admin-noticias-conteudo').value
         }); };
 
         window.salvarServicoAdmin = async function() { salvarItemGen(bancoDeServicos, 'servicos', 'btn-salvar-servico', {
-            titulo: document.getElementById('admin-servico-titulo').value, icone: document.getElementById('admin-servico-icone').value.replace('fa-solid ','').replace('fa-regular ',''), descricao: document.getElementById('admin-servico-desc').value
+            titulo: document.getElementById('admin-servicos-titulo').value, icone: document.getElementById('admin-servicos-icone').value.replace('fa-solid ','').replace('fa-regular ',''), descricao: document.getElementById('admin-servicos-desc').value
         }); };
 
         async function salvarItemGen(banco, colecao, btnId, extraDados) {
@@ -1149,44 +1169,6 @@
             catch(e) { document.getElementById('admin-form-error').classList.remove('hidden'); fecharModalDelete(); } 
             finally { btn.disabled = false; btn.innerHTML = 'Sim, excluir agora'; }
         });
-
-        // ================= GERADOR DE DADOS INICIAIS (SEMENTE) =================
-        window.gerarDadosSemente = async function() {
-            if(!confirm("Deseja gerar os sistemas padrão e notícias iniciais no banco de dados da Prefeitura?")) return;
-            
-            const btn = event.target;
-            const oldHtml = btn.innerHTML;
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> Gerando...';
-            
-            const servicosIniciais = [
-                { id: "srv_1", ordem: 10, titulo: "Emissão de IPTU", descricao: "Emita a 2ª via do seu IPTU e consulte débitos.", icone: "fa-file-invoice-dollar" },
-                { id: "srv_2", ordem: 9, titulo: "Ouvidoria Digital", descricao: "Denúncias e sugestões direto com a gestão.", icone: "fa-bullhorn" },
-                { id: "srv_3", ordem: 8, titulo: "Portal da Transparência", descricao: "Contas, despesas e arrecadações públicas.", icone: "fa-chart-pie" },
-                { id: "srv_4", ordem: 7, titulo: "Licitações", descricao: "Acesso a editais e contratos municipais.", icone: "fa-file-contract" },
-                { id: "srv_5", ordem: 6, titulo: "Agendamento Saúde", descricao: "Marque consultas em postos de saúde da cidade.", icone: "fa-notes-medical" },
-                { id: "srv_6", ordem: 5, titulo: "Iluminação Pública", descricao: "Solicite troca de lâmpadas na sua rua.", icone: "fa-lightbulb" },
-                { id: "srv_7", ordem: 4, titulo: "Coleta de Entulho", descricao: "Agende a retirada de entulhos pesados.", icone: "fa-truck" },
-                { id: "srv_8", ordem: 3, titulo: "Alvará Digital", descricao: "Solicite o alvará para seu estabelecimento.", icone: "fa-store" }
-            ];
-
-            const noticiasIniciais = [
-                { id: "not_1", ordem: 10, titulo: "Prefeitura entrega nova Praça de Lazer no Centro", categoria: "Obras e Lazer", data: "24 de Set, 2026", imagem: "https://placehold.co/800x500/0047AB/FFFFFF?text=Nova+Praca", conteudo: "A gestão acaba de entregar a mais nova área verde da cidade para os cidadãos. Venha visitar neste fim de semana!" },
-                { id: "not_2", ordem: 9, titulo: "Campanha de vacinação contra a gripe prorrogada", categoria: "Saúde", data: "20 de Set, 2026", imagem: "https://placehold.co/800x500/FFC107/002D6B?text=Vacinacao+Saude", conteudo: "Aviso importante: Postos abertos até sexta. Previna-se e proteja sua família." }
-            ];
-
-            try {
-                for (let s of servicosIniciais) { await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'servicos', s.id), s); }
-                for (let n of noticiasIniciais) { await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'noticias', n.id), n); }
-                alert("Sistemas e Notícias padrão inseridos com sucesso!");
-            } catch(e) {
-                console.error(e);
-                alert("Erro ao inserir dados. Verifique a conexão.");
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = oldHtml;
-            }
-        };
 
         // UPLOAD IMGUR / CATBOX
         window.mostrarPreview = function(url, imgId) { const el = document.getElementById(imgId); if(url.startsWith('http')) { el.src = url; el.classList.remove('hidden'); } else { el.classList.add('hidden'); } }
@@ -1241,10 +1223,10 @@
                 if (!urlFinal || !urlFinal.startsWith('http')) throw new Error("URL gerada não é válida.");
 
                 if (isCapa) {
-                    document.getElementById('admin-noticia-imagem').value = urlFinal; 
+                    document.getElementById('admin-noticias-imagem').value = urlFinal; 
                     mostrarPreview(urlFinal, 'preview-img-admin');
                 } else {
-                    const txt = document.getElementById('admin-noticia-conteudo');
+                    const txt = document.getElementById('admin-noticias-conteudo');
                     let t = file.type.startsWith('video/') ? `\n\n<video controls class="w-full rounded-2xl my-6 shadow-md"><source src="${urlFinal}" type="${file.type}"></video>\n\n` :
                             file.type.startsWith('audio/') ? `\n\n<audio controls class="w-full my-6"><source src="${urlFinal}" type="${file.type}"></audio>\n\n` :
                             isImg ? `\n\n<img src="${urlFinal}" alt="Anexo" class="w-full rounded-2xl my-6 shadow-md">\n\n` :
@@ -1269,4 +1251,3 @@
     </script>
 </body>
 </html>
-```eof
