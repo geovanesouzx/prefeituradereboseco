@@ -223,15 +223,24 @@
                 
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
                     <div>
-                        <h2 class="text-3xl md:text-4xl font-black text-pref-darkblue tracking-tight">Meu Perfil</h2>
-                        <p class="text-gray-500 font-medium mt-1">Bem-vindo(a) à área segura do portal.</p>
+                        <h2 class="text-3xl md:text-4xl font-black text-pref-darkblue tracking-tight">Portal do Cidadão</h2>
+                        <p class="text-gray-500 font-medium mt-1">Bem-vindo(a) à sua área segura.</p>
                     </div>
-                    <button onclick="sairCidadao()" class="bg-red-50 text-red-600 border border-red-200 px-5 py-2.5 rounded-xl font-black hover:bg-red-100 transition-colors flex items-center gap-2 shadow-sm">
-                        <i class="fa-solid fa-right-from-bracket"></i> Sair da Conta
-                    </button>
+                    
+                    <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+                        <!-- Abas Cidadão -->
+                        <div class="flex bg-white p-1 rounded-xl shadow-sm border border-gray-100">
+                            <button onclick="mudarAbaCidadao('servicos')" id="btn-cidadao-servicos" class="px-5 py-2.5 rounded-lg font-bold text-sm transition-all bg-pref-blue text-white shadow-sm">Início</button>
+                            <button onclick="mudarAbaCidadao('perfil')" id="btn-cidadao-perfil" class="px-5 py-2.5 rounded-lg font-bold text-sm transition-all text-gray-600 hover:text-pref-blue">Meu Perfil</button>
+                        </div>
+                        <button onclick="sairCidadao()" class="bg-red-50 text-red-600 border border-red-200 px-5 py-2.5 rounded-xl font-black hover:bg-red-100 transition-colors flex items-center justify-center gap-2 shadow-sm">
+                            <i class="fa-solid fa-right-from-bracket"></i> Sair
+                        </button>
+                    </div>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Aba Principal: Serviços e Cartão -->
+                <div id="aba-cidadao-servicos" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     <!-- Cartão CPF Virtual -->
                     <div class="lg:col-span-1">
                         <div class="cartao-cidadao rounded-[2rem] p-8 text-white relative overflow-hidden h-full flex flex-col justify-between min-h-[250px]">
@@ -272,6 +281,43 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Nova Aba: Meu Perfil -->
+                <div id="aba-cidadao-perfil" class="hidden max-w-2xl mx-auto w-full">
+                    <div class="bg-white rounded-[2rem] shadow-sm border border-gray-100 p-8 md:p-10">
+                        <div class="flex items-center gap-5 mb-8 border-b border-gray-100 pb-6">
+                            <div class="w-16 h-16 bg-blue-50 text-pref-blue rounded-full flex items-center justify-center text-3xl shadow-inner">
+                                <i class="fa-solid fa-user-check"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-black text-gray-800 tracking-tight">Dados Pessoais</h3>
+                                <p class="text-gray-500 font-medium text-sm mt-1">Informações do seu cadastro municipal</p>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-6">
+                            <div>
+                                <label class="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2">Nome Completo</label>
+                                <div class="text-lg font-bold text-gray-800 bg-gray-50 px-5 py-4 rounded-xl border border-gray-100" id="perfil-nome-view">...</div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2">E-mail Cadastrado</label>
+                                <div class="text-lg font-bold text-gray-800 bg-gray-50 px-5 py-4 rounded-xl border border-gray-100" id="perfil-email-view">...</div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2">CPF Virtual Único</label>
+                                <div class="text-xl font-mono font-black text-pref-blue bg-blue-50 px-5 py-4 rounded-xl border border-blue-100 flex items-center justify-between shadow-inner">
+                                    <span id="perfil-cpf-view">...</span>
+                                    <div class="flex items-center gap-2 text-sm font-bold text-green-600 bg-green-100 px-3 py-1.5 rounded-lg">
+                                        <i class="fa-solid fa-circle-check"></i> Verificado
+                                    </div>
+                                </div>
+                                <p class="text-xs text-gray-400 mt-2 font-medium"><i class="fa-solid fa-circle-info mr-1"></i> Este número é único e intransferível. Use-o para acessar serviços.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -683,8 +729,18 @@
             } else if (hash === 'cidadao') {
                 if (isCidadaoLogado && cidadaoPerfil) {
                     document.getElementById('view-cidadao-dashboard').classList.remove('hidden'); document.getElementById('view-cidadao-dashboard').classList.add('flex');
+                    
+                    // Popula aba inicial (Cartão)
                     document.getElementById('dash-cidadao-nome').innerText = cidadaoPerfil.nome;
                     document.getElementById('dash-cidadao-cpf').innerText = cidadaoPerfil.cpfVirtual;
+                    
+                    // Popula a nova aba de perfil
+                    if(document.getElementById('perfil-nome-view')) document.getElementById('perfil-nome-view').innerText = cidadaoPerfil.nome;
+                    if(document.getElementById('perfil-email-view')) document.getElementById('perfil-email-view').innerText = cidadaoPerfil.email;
+                    if(document.getElementById('perfil-cpf-view')) document.getElementById('perfil-cpf-view').innerText = cidadaoPerfil.cpfVirtual;
+
+                    if(typeof mudarAbaCidadao === 'function') mudarAbaCidadao('servicos'); // Sempre reseta pra aba de início ao entrar
+
                     renderizarServicosCidadaoDashboard();
                 } else {
                     document.getElementById('view-cidadao-auth').classList.remove('hidden'); document.getElementById('view-cidadao-auth').classList.add('flex');
@@ -913,6 +969,16 @@
         window.closeMenu = function() { menuMobile.classList.add('hidden'); icon.classList.remove('fa-xmark'); icon.classList.add('fa-bars'); };
 
         // ================= SISTEMA DO CIDADÃO (AUTH & CPF VIRTUAL) =================
+        window.mudarAbaCidadao = function(aba) {
+            document.getElementById('aba-cidadao-servicos').classList.add('hidden');
+            document.getElementById('aba-cidadao-perfil').classList.add('hidden');
+            
+            document.getElementById('btn-cidadao-servicos').className = aba === 'servicos' ? 'px-5 py-2.5 rounded-lg font-bold text-sm transition-all bg-pref-blue text-white shadow-sm' : 'px-5 py-2.5 rounded-lg font-bold text-sm transition-all text-gray-600 hover:text-pref-blue';
+            document.getElementById('btn-cidadao-perfil').className = aba === 'perfil' ? 'px-5 py-2.5 rounded-lg font-bold text-sm transition-all bg-pref-blue text-white shadow-sm' : 'px-5 py-2.5 rounded-lg font-bold text-sm transition-all text-gray-600 hover:text-pref-blue';
+            
+            document.getElementById('aba-cidadao-' + aba).classList.remove('hidden');
+        };
+
         window.alternarModoCidadao = function() {
             isModoCadastroCidadao = !isModoCadastroCidadao;
             document.getElementById('box-nome-cidadao').style.display = isModoCadastroCidadao ? 'block' : 'none';
@@ -944,7 +1010,7 @@
                     const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
                     const user = userCredential.user;
                     
-                    // Gera o CPF Virtual e salva no Perfil Seguro do Firebase
+                    // Gera o CPF Virtual
                     const novoCPF = gerarCPFVirtual();
                     const novoPerfil = {
                         nome: nome,
@@ -952,20 +1018,23 @@
                         cpfVirtual: novoCPF,
                         criadoEm: new Date().toISOString()
                     };
+                    
+                    // Salva no Banco de Dados
                     await setDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'perfil', 'dados'), novoPerfil);
                     
-                    // Força a variável local a reconhecer os dados instantaneamente
+                    // Força a atualização imediata da variável local para evitar travamento
                     cidadaoPerfil = novoPerfil;
                     isCidadaoLogado = true;
                 } else {
                     await signInWithEmailAndPassword(auth, email, senha);
+                    // No caso do Login, o onAuthStateChanged detecta sozinho e libera a tela
                 }
                 
-                // Restaura o botão e envia para a tela certa imediatamente
+                // Restaura o botão e envia pra tela de dashboard
                 btn.disabled = false;
                 btn.innerHTML = isModoCadastroCidadao ? '<i class="fa-solid fa-fingerprint"></i> Criar CPF Virtual' : '<i class="fa-solid fa-right-to-bracket"></i> Entrar no Sistema';
                 window.location.hash = 'cidadao';
-                
+
             } catch (error) {
                 console.error(error);
                 msgErro.classList.remove('hidden');
