@@ -765,20 +765,14 @@
             currentUser = user;
             if (user && !user.isAnonymous) {
                 // Checa se é o Administrador Master
-                if (user.email === 'jeosouzazouza@gmail.com' || user.email === 'sjeje702@gmail.com') {
+                if (user.email === 'jeosouzazouza@gmail.com') {
                     isGestorAdmin = true;
                     isCidadaoLogado = false;
                     cidadaoPerfil = null;
                 } else {
+                    // Se não for admin, é um Cidadão Comum! Busca o perfil dele.
                     isGestorAdmin = false;
-                    try {
-                        // Proteção contra conflito: se estivermos criando conta, aguarda 1 segundo antes de tentar ler do banco
-                        if (isModoCadastroCidadao && !cidadaoPerfil) { await new Promise(r => setTimeout(r, 1000)); }
-                        
-                        const docSnap = await getDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'perfil', 'dados'));
-                        if (docSnap.exists()) {
-                            cidadaoPerfil = docSnap.data();
-                            isCidadaoLogado = true;
+                    isCidadaoLogado = true;
                         } else {
                             if (!cidadaoPerfil) isCidadaoLogado = false;
                         }
@@ -1056,9 +1050,26 @@
         window.fazerLoginAdmin = async function() {
             const e = document.getElementById('admin-email').value; const s = document.getElementById('admin-senha').value;
             const btn = document.getElementById('btn-login-admin');
+            const errorBox = document.getElementById('admin-login-error');
+            
+            errorBox.classList.add('hidden');
+            
+            // BLOQUEIO DE SEGURANÇA: Impede que qualquer outro e-mail tente fazer login no painel
+            if (e !== 'jeosouzazouza@gmail.com') {
+                errorBox.innerText = 'Acesso Negado: Seu e-mail não tem permissão de administrador.';
+                errorBox.classList.remove('hidden');
+                return;
+            }
+
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Autenticando...';
-            try { await signInWithEmailAndPassword(auth, e, s); } 
-            catch (err) { document.getElementById('admin-login-error').classList.remove('hidden'); btn.innerHTML = '<i class="fa-solid fa-unlock mr-2"></i> Autenticar'; }
+            try { 
+                await signInWithEmailAndPassword(auth, e, s); 
+            } 
+            catch (err) { 
+                errorBox.innerText = 'Acesso negado. Senha incorreta ou conta inexistente.'; 
+                errorBox.classList.remove('hidden'); 
+                btn.innerHTML = '<i class="fa-solid fa-unlock mr-2"></i> Autenticar'; 
+            }
         };
 
         window.sairAuth = async function() { await signOut(auth); await signInAnonymously(auth); window.location.hash = 'inicio'; };
