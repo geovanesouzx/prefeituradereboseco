@@ -354,12 +354,12 @@
             </div>
         </div>
 
-        <div id="view-admin-login" class="hidden flex-col flex-grow bg-gray-900 py-12 pb-24 items-center justify-center relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-96 h-96 bg-pref-blue opacity-20 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none"></div>
+        <div id="view-admin-login" class="hidden flex-col flex-grow bg-gray-50 py-12 pb-24 items-center justify-center relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-96 h-96 bg-pref-blue opacity-10 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none"></div>
             <div class="bg-white p-8 md:p-10 rounded-[2rem] shadow-2xl w-full max-w-md border border-gray-100 mx-4 relative z-10">
                 <div class="text-center mb-8">
-                    <div class="w-16 h-16 bg-red-50 text-red-600 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4"><i class="fa-solid fa-shield-halved"></i></div>
-                    <h2 class="text-2xl font-black text-gray-900 tracking-tight">Painel Executivo</h2>
+                    <div class="w-16 h-16 bg-blue-50 text-pref-blue rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4"><i class="fa-solid fa-shield-halved"></i></div>
+                    <h2 class="text-2xl font-black text-pref-darkblue tracking-tight">Painel Executivo</h2>
                     <p class="text-gray-500 text-sm font-medium mt-1">Acesso restrito para funcionários</p>
                 </div>
                 <form id="form-admin-login" onsubmit="event.preventDefault(); fazerLoginAdmin();" class="space-y-5">
@@ -372,33 +372,33 @@
                         <input type="password" id="admin-senha" required placeholder="••••••••" class="w-full px-4 py-3.5 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
                     </div>
                     <div id="admin-login-error" class="hidden text-red-600 text-sm font-bold text-center bg-red-50 p-4 rounded-xl border border-red-100">Acesso negado. Use as credenciais corretas.</div>
-                    <button type="submit" id="btn-login-admin" class="w-full bg-gray-900 text-white font-black py-4 px-6 rounded-xl hover:bg-black shadow-lg hover:shadow-xl transition-all text-lg mt-2 transform hover:-translate-y-0.5">
+                    <button type="submit" id="btn-login-admin" class="w-full bg-pref-blue text-white font-black py-4 px-6 rounded-xl hover:bg-pref-darkblue shadow-lg hover:shadow-xl transition-all text-lg mt-2 transform hover:-translate-y-0.5">
                         <i class="fa-solid fa-unlock mr-2"></i> Autenticar
                     </button>
                 </form>
             </div>
         </div>
 
-        <div id="view-admin-dashboard" class="hidden flex-col flex-grow bg-gray-100">
+        <div id="view-admin-dashboard" class="hidden flex-col flex-grow bg-gray-50">
             <!-- Barra Superior do Admin -->
-            <div class="bg-gray-900 text-white py-4 px-4 md:px-8 flex flex-col md:flex-row justify-between items-center shadow-lg gap-4 z-10 sticky top-0">
+            <div class="bg-pref-blue text-white py-4 px-4 md:px-8 flex flex-col md:flex-row justify-between items-center shadow-lg gap-4 z-10 sticky top-0">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-pref-yellow rounded-lg flex items-center justify-center text-gray-900 text-xl"><i class="fa-solid fa-bolt"></i></div>
+                    <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center text-pref-blue text-xl"><i class="fa-solid fa-bolt"></i></div>
                     <div>
                         <span class="font-black text-lg md:text-xl block leading-none">Painel de Controle</span>
-                        <span class="text-xs text-gray-400 font-medium tracking-widest uppercase">Modo Editor</span>
+                        <span class="text-xs text-blue-200 font-medium tracking-widest uppercase">Modo Editor</span>
                     </div>
                 </div>
                 
                 <!-- Abas de Navegação Admin -->
-                <div class="flex bg-gray-800 p-1 rounded-xl w-full md:w-auto">
-                    <button onclick="mudarAbaAdmin('noticias')" id="btn-aba-noticias" class="flex-1 md:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all bg-white text-gray-900 shadow-sm"><i class="fa-solid fa-newspaper mr-2"></i> Notícias</button>
-                    <button onclick="mudarAbaAdmin('servicos')" id="btn-aba-servicos" class="flex-1 md:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all text-gray-400 hover:text-white"><i class="fa-solid fa-laptop-file mr-2"></i> Serviços</button>
+                <div class="flex bg-pref-darkblue p-1 rounded-xl w-full md:w-auto">
+                    <button onclick="mudarAbaAdmin('noticias')" id="btn-aba-noticias" class="flex-1 md:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all bg-white text-pref-blue shadow-sm"><i class="fa-solid fa-newspaper mr-2"></i> Notícias</button>
+                    <button onclick="mudarAbaAdmin('servicos')" id="btn-aba-servicos" class="flex-1 md:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all text-blue-200 hover:text-white"><i class="fa-solid fa-laptop-file mr-2"></i> Serviços</button>
                 </div>
 
                 <div class="flex gap-3 w-full md:w-auto">
-                    <button onclick="goHome()" class="flex-1 md:flex-none text-sm bg-gray-800 hover:bg-gray-700 px-4 py-2.5 rounded-lg transition-colors font-bold"><i class="fa-solid fa-eye mr-1"></i> Ver Site</button>
-                    <button onclick="sairAuth()" class="flex-1 md:flex-none text-sm bg-red-600 hover:bg-red-500 px-4 py-2.5 rounded-lg transition-colors font-bold shadow-md"><i class="fa-solid fa-power-off mr-1"></i> Sair</button>
+                    <button onclick="goHome()" class="flex-1 md:flex-none text-sm bg-pref-darkblue hover:bg-blue-900 px-4 py-2.5 rounded-lg transition-colors font-bold"><i class="fa-solid fa-eye mr-1"></i> Ver Site</button>
+                    <button onclick="sairAuth()" class="flex-1 md:flex-none text-sm bg-red-500 hover:bg-red-400 px-4 py-2.5 rounded-lg transition-colors font-bold shadow-md"><i class="fa-solid fa-power-off mr-1"></i> Sair</button>
                 </div>
             </div>
             
@@ -408,7 +408,7 @@
                 <div class="w-full lg:w-5/12 bg-white rounded-[2rem] shadow-sm border border-gray-200 p-6 md:p-8 flex flex-col h-[750px]">
                     <div class="flex justify-between items-center mb-8 border-b border-gray-100 pb-4">
                         <h3 id="admin-titulo-lista" class="text-2xl font-black text-gray-800 tracking-tight">Publicações</h3>
-                        <button onclick="prepararNovoAdmin()" class="bg-gray-900 text-white px-5 py-2.5 rounded-xl text-sm font-black hover:bg-black shadow-md transition-all transform hover:-translate-y-0.5 flex items-center gap-2">
+                        <button onclick="prepararNovoAdmin()" class="bg-pref-blue text-white px-5 py-2.5 rounded-xl text-sm font-black hover:bg-pref-darkblue shadow-md transition-all transform hover:-translate-y-0.5 flex items-center gap-2">
                             <i class="fa-solid fa-plus"></i> Novo
                         </button>
                     </div>
@@ -448,7 +448,7 @@
                             <label class="block text-sm font-black text-gray-700 mb-2">Imagem de Capa (Obrigatório)</label>
                             <div class="flex gap-3">
                                 <input type="url" id="admin-noticia-imagem" required placeholder="Cole o link ou use o botão de envio..." class="flex-grow px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium text-sm" oninput="mostrarPreview(this.value, 'preview-img-admin')">
-                                <label for="upload-capa" class="bg-gray-900 text-white px-5 py-3 rounded-xl cursor-pointer hover:bg-black transition-colors shadow-md flex items-center gap-2 font-black whitespace-nowrap text-sm">
+                                <label for="upload-capa" class="bg-pref-blue text-white px-5 py-3 rounded-xl cursor-pointer hover:bg-pref-darkblue transition-colors shadow-md flex items-center gap-2 font-black whitespace-nowrap text-sm">
                                     <i class="fa-solid fa-cloud-arrow-up"></i> Enviar Foto
                                 </label>
                                 <input type="file" id="upload-capa" accept="image/*" class="hidden" onchange="fazerUploadMedia(this, 'capa')">
@@ -754,34 +754,27 @@
         ];
 
         async function iniciarBancoDeDados() {
-            try {
-                if (!auth.currentUser) await signInAnonymously(auth);
-                const noticiasRef = collection(db, 'artifacts', appId, 'public', 'data', 'noticias');
-                const servicosRef = collection(db, 'artifacts', appId, 'public', 'data', 'servicos');
+            // Criando as referências
+            const noticiasRef = collection(db, 'artifacts', appId, 'public', 'data', 'noticias');
+            const servicosRef = collection(db, 'artifacts', appId, 'public', 'data', 'servicos');
 
-                // Semente de Notícias
-                if ((await getDocs(noticiasRef)).empty) {
-                    for (let n of noticiasSemente) await setDoc(doc(noticiasRef, n.id), n);
-                }
-                // Semente de Serviços
-                if ((await getDocs(servicosRef)).empty) {
-                    for (let s of servicosSemente) await setDoc(doc(servicosRef, s.id), s);
-                }
+            // 1. Escutas em Tempo Real (Roda para todos, sem dar erro de permissão)
+            onSnapshot(noticiasRef, (snap) => {
+                bancoDeNoticias = {};
+                snap.forEach(d => bancoDeNoticias[d.id] = { id: d.id, ...d.data() });
+                renderizarNoticiasHome(); if (window.location.hash === '#todas-noticias') renderizarGradeTodasNoticias(); if (window.location.hash.startsWith('#noticia/')) renderizarNoticiaAberta(); if (isAdminView && adminAbaAtiva === 'noticias') renderizarListaAdmin();
+            });
 
-                // Escutas em Tempo Real
-                onSnapshot(noticiasRef, (snap) => {
-                    bancoDeNoticias = {};
-                    snap.forEach(d => bancoDeNoticias[d.id] = { id: d.id, ...d.data() });
-                    renderizarNoticiasHome(); if (window.location.hash === '#todas-noticias') renderizarGradeTodasNoticias(); if (window.location.hash.startsWith('#noticia/')) renderizarNoticiaAberta(); if (isAdminView && adminAbaAtiva === 'noticias') renderizarListaAdmin();
-                });
-
-                onSnapshot(servicosRef, (snap) => {
-                    bancoDeServicos = {};
-                    snap.forEach(d => bancoDeServicos[d.id] = { id: d.id, ...d.data() });
-                    renderizarServicosHome(); if (window.location.hash === '#cidadao' && isCidadaoLogado) renderizarServicosCidadaoDashboard(); if (isAdminView && adminAbaAtiva === 'servicos') renderizarListaAdmin();
-                });
-
-            } catch (error) { console.error("Erro BD:", error); }
+            onSnapshot(servicosRef, (snap) => {
+                bancoDeServicos = {};
+                snap.forEach(d => bancoDeServicos[d.id] = { id: d.id, ...d.data() });
+                renderizarServicosHome(); if (window.location.hash === '#cidadao' && isCidadaoLogado) renderizarServicosCidadaoDashboard(); if (isAdminView && adminAbaAtiva === 'servicos') renderizarListaAdmin();
+            });
+            
+            // 2. Não faremos mais Semente Automática de dados aqui.
+            // O bloqueio de permissão impedia o código acima de rodar.
+            // A partir de agora, use o Painel Admin para cadastrar os serviços e notícias,
+            // ou se quiser, eu gero um script pra adicionar via botão!
         }
         iniciarBancoDeDados();
 
@@ -1006,8 +999,8 @@
             document.getElementById('form-admin-noticia').classList.add('hidden');
             document.getElementById('form-admin-servico').classList.add('hidden');
             
-            document.getElementById('btn-aba-noticias').className = aba === 'noticias' ? 'flex-1 md:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all bg-white text-gray-900 shadow-sm' : 'flex-1 md:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all text-gray-400 hover:text-white';
-            document.getElementById('btn-aba-servicos').className = aba === 'servicos' ? 'flex-1 md:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all bg-white text-gray-900 shadow-sm' : 'flex-1 md:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all text-gray-400 hover:text-white';
+            document.getElementById('btn-aba-noticias').className = aba === 'noticias' ? 'flex-1 md:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all bg-white text-pref-blue shadow-sm' : 'flex-1 md:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all text-blue-200 hover:text-white';
+            document.getElementById('btn-aba-servicos').className = aba === 'servicos' ? 'flex-1 md:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all bg-white text-pref-blue shadow-sm' : 'flex-1 md:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all text-blue-200 hover:text-white';
             
             document.getElementById('form-admin-'+aba).classList.remove('hidden');
             document.getElementById('admin-titulo-lista').innerText = aba === 'noticias' ? 'Publicações' : 'Sistemas/Serviços';
