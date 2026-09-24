@@ -378,9 +378,30 @@
                                 </div>
                             </div>
                             
-                            <button onclick="alert('Sistema de demonstração. Em um site real, isso abriria o painel do serviço específico.')" class="w-full bg-pref-blue text-white font-black py-4 px-6 rounded-xl hover:bg-pref-darkblue shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 text-lg mt-4 flex items-center justify-center gap-2">
-                                Iniciar Serviço <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                            </button>
+                            <div id="box-servico-acao" class="mt-6">
+                                <button onclick="gerarProtocoloServico()" class="w-full bg-pref-blue text-white font-black py-4 px-6 rounded-xl hover:bg-pref-darkblue shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 text-lg flex items-center justify-center gap-2">
+                                    Iniciar Serviço Seguro <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                </button>
+                            </div>
+                            
+                            <div id="box-servico-resultado" class="hidden mt-6 bg-green-50 p-6 rounded-2xl border border-green-200">
+                                <div class="flex items-center gap-3 mb-4 text-green-700">
+                                    <i class="fa-solid fa-circle-check text-2xl"></i>
+                                    <h4 class="font-black text-lg">Protocolo Gerado com Sucesso!</h4>
+                                </div>
+                                <p class="text-sm text-green-800 mb-4 font-medium">Sua solicitação foi registrada no banco de dados da prefeitura e enviada ao setor responsável.</p>
+                                <div class="bg-white p-4 rounded-xl border border-green-100 mb-5 font-mono text-center font-bold text-lg tracking-wider text-gray-800 shadow-sm">
+                                    PTR-<span id="num-protocolo">...</span>
+                                </div>
+                                <div class="flex gap-3">
+                                    <button onclick="window.print()" class="flex-1 bg-white border-2 border-gray-200 text-gray-700 font-bold py-3 rounded-xl hover:bg-gray-50 transition-colors flex items-center justify-center gap-2">
+                                        <i class="fa-solid fa-print"></i> Imprimir
+                                    </button>
+                                    <button onclick="alert('Uma cópia do protocolo foi enviada para o e-mail cadastrado no seu CPF Virtual.')" class="flex-1 bg-green-600 text-white font-bold py-3 rounded-xl hover:bg-green-700 transition-colors shadow-md flex items-center justify-center gap-2">
+                                        <i class="fa-solid fa-envelope"></i> E-mail
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -959,7 +980,27 @@
             // Dados Dinâmicos do Cidadão
             document.getElementById('servico-usuario-nome').innerText = cidadaoPerfil ? cidadaoPerfil.nome : "Desconhecido";
             document.getElementById('servico-usuario-cpf').innerText = cidadaoPerfil ? cidadaoPerfil.cpfVirtual : "---";
+            
+            // Reseta a tela de resultado sempre que abrir um novo serviço
+            if(document.getElementById('box-servico-resultado')) {
+                document.getElementById('box-servico-resultado').classList.add('hidden');
+                document.getElementById('box-servico-acao').classList.remove('hidden');
+                document.getElementById('box-servico-acao').innerHTML = '<button onclick="gerarProtocoloServico()" class="w-full bg-pref-blue text-white font-black py-4 px-6 rounded-xl hover:bg-pref-darkblue shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 text-lg flex items-center justify-center gap-2">Iniciar Serviço Seguro <i class="fa-solid fa-arrow-up-right-from-square"></i></button>';
+            }
         }
+
+        window.gerarProtocoloServico = function() {
+            const btnBox = document.getElementById('box-servico-acao');
+            const resBox = document.getElementById('box-servico-resultado');
+            
+            btnBox.innerHTML = '<button disabled class="w-full bg-pref-blue text-white font-black py-4 px-6 rounded-xl text-lg flex items-center justify-center gap-2 opacity-70"><i class="fa-solid fa-spinner fa-spin"></i> Processando Requisição...</button>';
+            
+            setTimeout(() => {
+                btnBox.classList.add('hidden');
+                resBox.classList.remove('hidden');
+                document.getElementById('num-protocolo').innerText = Math.floor(10000000 + Math.random() * 90000000);
+            }, 1500);
+        };
 
         function renderizarServicosCidadaoDashboard() {
             const list = document.getElementById('lista-servicos-cidadao');
