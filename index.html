@@ -773,6 +773,10 @@
                     // Se não for admin, é um Cidadão Comum! Busca o perfil dele.
                     isGestorAdmin = false;
                     isCidadaoLogado = true;
+                    try {
+                        const docSnap = await getDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'perfil', 'dados'));
+                        if (docSnap.exists()) {
+                            cidadaoPerfil = docSnap.data();
                         } else {
                             if (!cidadaoPerfil) isCidadaoLogado = false;
                         }
