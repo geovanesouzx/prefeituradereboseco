@@ -97,7 +97,7 @@
                     
                     <!-- Destaque para Acesso Cidadão no Mobile -->
                     <a href="#cidadao" onclick="closeMenu();" class="mt-4 border-2 border-pref-blue text-pref-blue text-center font-black py-3.5 rounded-xl hover:bg-blue-50 shadow-sm transition-colors flex items-center justify-center gap-2">
-                        <i class="fa-regular fa-id-card text-lg"></i> Meu Perfil / CPF
+                        <i class="fa-regular fa-id-card text-lg"></i> Meu CPF Virtual
                     </a>
                     
                     <a href="javascript:void(0)" onclick="goHomeAndScroll('contato'); closeMenu();" class="bg-pref-blue text-white text-center font-black py-3.5 mt-3 rounded-xl hover:bg-pref-darkblue shadow-md transition-colors">
@@ -140,9 +140,9 @@
             <section id="servicos" class="py-16 md:py-24 bg-gray-50">
                 <div class="container mx-auto px-4 lg:px-8">
                     <div class="text-center mb-16">
-                        <h3 class="text-3xl md:text-4xl font-black text-pref-darkblue mb-4 tracking-tight">Sistemas e Serviços Digitais</h3>
+                        <h3 class="text-3xl md:text-4xl font-black text-pref-darkblue mb-4 tracking-tight">Serviços Digitais</h3>
                         <div class="h-1.5 w-24 bg-pref-yellow mx-auto rounded-full"></div>
-                        <p class="text-gray-500 mt-5 text-lg max-w-2xl mx-auto font-medium">Acesse os serviços da prefeitura com agilidade. Login com CPF Virtual é obrigatório para sua segurança.</p>
+                        <p class="text-gray-500 mt-5 text-lg max-w-2xl mx-auto font-medium">Acesse os serviços da prefeitura com agilidade. Login com CPF Virtual obrigatório.</p>
                     </div>
 
                     <!-- Container onde os serviços do Banco de Dados vão aparecer -->
@@ -219,34 +219,16 @@
 
         <!-- TELA 2: PAINEL DO CIDADÃO (LOGADO) -->
         <div id="view-cidadao-dashboard" class="hidden flex-col flex-grow bg-gray-50 py-12 pb-24">
-            <div class="container mx-auto px-4 lg:px-8 max-w-6xl">
+            <div class="container mx-auto px-4 lg:px-8 max-w-5xl">
                 
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
                     <div>
-                        <h2 class="text-3xl md:text-4xl font-black text-pref-darkblue tracking-tight">Meu Painel</h2>
-                        <p class="text-gray-500 font-medium mt-1">Bem-vindo(a) à área segura do portal da prefeitura.</p>
+                        <h2 class="text-3xl md:text-4xl font-black text-pref-darkblue tracking-tight">Meu Perfil</h2>
+                        <p class="text-gray-500 font-medium mt-1">Bem-vindo(a) à área segura do portal.</p>
                     </div>
                     <button onclick="sairCidadao()" class="bg-red-50 text-red-600 border border-red-200 px-5 py-2.5 rounded-xl font-black hover:bg-red-100 transition-colors flex items-center gap-2 shadow-sm">
                         <i class="fa-solid fa-right-from-bracket"></i> Sair da Conta
                     </button>
-                </div>
-
-                <!-- Destaque do Perfil -->
-                <div class="bg-white rounded-[2rem] shadow-sm border border-gray-100 p-8 flex flex-col md:flex-row items-center gap-6 mb-8">
-                    <div class="w-24 h-24 bg-blue-50 border border-blue-100 text-pref-blue rounded-full flex items-center justify-center text-4xl font-bold shadow-inner flex-shrink-0">
-                        <i class="fa-solid fa-user-tie"></i>
-                    </div>
-                    <div class="flex-grow text-center md:text-left">
-                        <h3 id="dash-cidadao-nome-header" class="text-2xl font-black text-gray-800">Carregando...</h3>
-                        <p id="dash-cidadao-email-header" class="text-gray-500 font-medium mt-1">...</p>
-                        <div class="mt-3 inline-flex items-center gap-2 bg-green-50 text-green-700 px-4 py-1.5 rounded-full text-xs font-black tracking-wide border border-green-200">
-                            <i class="fa-solid fa-shield-check"></i> Cidadão Verificado
-                        </div>
-                    </div>
-                    <div class="text-center md:text-right border-t md:border-t-0 md:border-l border-gray-100 pt-4 md:pt-0 md:pl-6 w-full md:w-auto">
-                        <p class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-1">Membro desde</p>
-                        <p id="dash-cidadao-data-header" class="text-gray-700 font-black">...</p>
-                    </div>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -267,10 +249,10 @@
                             
                             <div>
                                 <p class="text-blue-100 text-sm font-medium mb-1">Cidadão Titular</p>
-                                <h3 id="dash-cidadao-nome" class="text-2xl font-black leading-tight mb-4 drop-shadow-md truncate">Carregando...</h3>
+                                <h3 id="dash-cidadao-nome" class="text-2xl font-black leading-tight mb-4 drop-shadow-md">Carregando...</h3>
                                 
                                 <p class="text-blue-100 text-sm font-medium mb-1">Número do CPF Virtual</p>
-                                <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-4 py-3 inline-flex items-center gap-3 w-full">
+                                <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-4 py-3 inline-flex items-center gap-3">
                                     <i class="fa-solid fa-qrcode text-yellow-400"></i>
                                     <span id="dash-cidadao-cpf" class="font-mono text-xl font-bold tracking-wider">---</span>
                                 </div>
@@ -283,7 +265,7 @@
                         <h3 class="text-xl font-black text-gray-800 mb-6 flex items-center gap-2 border-b border-gray-100 pb-4">
                             <i class="fa-solid fa-layer-group text-pref-blue"></i> Acesso aos Sistemas Internos
                         </h3>
-                        <p class="text-sm text-gray-500 mb-6 font-medium">Selecione o serviço abaixo. Sua identidade virtual será repassada automaticamente para o sistema municipal.</p>
+                        <p class="text-sm text-gray-500 mb-6 font-medium">Selecione o serviço abaixo. Sua identidade virtual será repassada automaticamente para o sistema.</p>
                         
                         <div id="lista-servicos-cidadao" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <!-- Injetado via JS -->
@@ -307,6 +289,7 @@
                     </div>
                 </div>
 
+                <!-- Fix: Usando object-contain e um fundo escuro elegante para NÃO CORTAR as imagens originais -->
                 <div class="w-full h-64 md:h-96 lg:h-[500px] bg-gray-900 rounded-3xl overflow-hidden mb-10 shadow-2xl relative">
                     <img id="noticia-imagem" src="" alt="Imagem da Notícia" class="w-full h-full object-contain">
                 </div>
@@ -326,7 +309,7 @@
                 <div class="bg-white rounded-[2.5rem] shadow-xl border border-gray-100 p-8 md:p-12 text-center relative overflow-hidden">
                     <div class="absolute top-0 left-0 w-full h-3 bg-pref-yellow"></div>
 
-                    <div class="w-24 h-24 bg-blue-50 text-pref-blue rounded-full flex items-center justify-center text-4xl mx-auto mb-6 shadow-inner border border-blue-100">
+                    <div class="w-24 h-24 bg-blue-50 text-pref-blue rounded-full flex items-center justify-center text-4xl mx-auto mb-6 shadow-inner">
                         <i id="servico-icone-render" class="fa-solid fa-laptop-file"></i>
                     </div>
                     <h2 id="servico-titulo" class="text-3xl font-black text-pref-darkblue mb-4 tracking-tight">Sistema</h2>
@@ -344,12 +327,12 @@
                             <div class="flex items-center gap-3 bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
                                 <i class="fa-solid fa-fingerprint text-pref-blue text-xl"></i>
                                 <div>
-                                    <p id="servico-usuario-nome" class="font-black text-gray-800 truncate max-w-xs">Carregando...</p>
+                                    <p id="servico-usuario-nome" class="font-black text-gray-800">Carregando...</p>
                                     <p id="servico-usuario-cpf" class="text-sm text-gray-500 font-mono font-bold">---</p>
                                 </div>
                             </div>
                             
-                            <button id="btn-iniciar-servico" onclick="executarServicoSimulado(this)" class="w-full bg-pref-blue text-white font-black py-4 px-6 rounded-xl hover:bg-pref-darkblue shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 text-lg mt-4 flex items-center justify-center gap-2">
+                            <button onclick="alert('Sistema de demonstração. Em um site real, isso abriria o painel do serviço específico.')" class="w-full bg-pref-blue text-white font-black py-4 px-6 rounded-xl hover:bg-pref-darkblue shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 text-lg mt-4 flex items-center justify-center gap-2">
                                 Iniciar Serviço <i class="fa-solid fa-arrow-up-right-from-square"></i>
                             </button>
                         </div>
@@ -375,7 +358,7 @@
             <div class="absolute top-0 right-0 w-96 h-96 bg-pref-blue opacity-10 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none"></div>
             <div class="bg-white p-8 md:p-10 rounded-[2rem] shadow-2xl w-full max-w-md border border-gray-100 mx-4 relative z-10">
                 <div class="text-center mb-8">
-                    <div class="w-16 h-16 bg-blue-50 text-pref-blue rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4 border border-blue-100"><i class="fa-solid fa-shield-halved"></i></div>
+                    <div class="w-16 h-16 bg-blue-50 text-pref-blue rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4"><i class="fa-solid fa-shield-halved"></i></div>
                     <h2 class="text-2xl font-black text-pref-darkblue tracking-tight">Painel Executivo</h2>
                     <p class="text-gray-500 text-sm font-medium mt-1">Acesso restrito para funcionários</p>
                 </div>
@@ -399,20 +382,18 @@
         <div id="view-admin-dashboard" class="hidden flex-col flex-grow bg-gray-50">
             <!-- Barra Superior do Admin -->
             <div class="bg-pref-blue text-white py-4 px-4 md:px-8 flex flex-col md:flex-row justify-between items-center shadow-lg gap-4 z-10 sticky top-0">
-                <div class="flex items-center gap-3 w-full md:w-auto justify-between md:justify-start">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center text-pref-blue text-xl"><i class="fa-solid fa-bolt"></i></div>
-                        <div>
-                            <span class="font-black text-lg md:text-xl block leading-none">Painel de Controle</span>
-                            <span class="text-xs text-blue-200 font-medium tracking-widest uppercase">Modo Editor</span>
-                        </div>
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center text-pref-blue text-xl"><i class="fa-solid fa-bolt"></i></div>
+                    <div>
+                        <span class="font-black text-lg md:text-xl block leading-none">Painel de Controle</span>
+                        <span class="text-xs text-blue-200 font-medium tracking-widest uppercase">Modo Editor</span>
                     </div>
                 </div>
                 
                 <!-- Abas de Navegação Admin -->
-                <div class="flex bg-pref-darkblue p-1 rounded-xl w-full md:w-auto overflow-x-auto custom-scrollbar">
-                    <button onclick="mudarAbaAdmin('noticias')" id="btn-aba-noticias" class="flex-1 md:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all bg-white text-pref-blue shadow-sm whitespace-nowrap"><i class="fa-solid fa-newspaper mr-2"></i> Notícias</button>
-                    <button onclick="mudarAbaAdmin('servicos')" id="btn-aba-servicos" class="flex-1 md:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all text-blue-200 hover:text-white whitespace-nowrap"><i class="fa-solid fa-laptop-file mr-2"></i> Serviços</button>
+                <div class="flex bg-pref-darkblue p-1 rounded-xl w-full md:w-auto">
+                    <button onclick="mudarAbaAdmin('noticias')" id="btn-aba-noticias" class="flex-1 md:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all bg-white text-pref-blue shadow-sm"><i class="fa-solid fa-newspaper mr-2"></i> Notícias</button>
+                    <button onclick="mudarAbaAdmin('servicos')" id="btn-aba-servicos" class="flex-1 md:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all text-blue-200 hover:text-white"><i class="fa-solid fa-laptop-file mr-2"></i> Serviços</button>
                 </div>
 
                 <div class="flex gap-3 w-full md:w-auto">
@@ -446,28 +427,28 @@
                     <div id="admin-form-success" class="hidden mb-6 text-green-600 text-sm font-bold bg-green-50 p-4 rounded-xl border border-green-100"><i class="fa-solid fa-check-circle mr-2"></i> Alterações salvas com sucesso!</div>
 
                     <!-- FORMULÁRIO DE NOTÍCIA -->
-                    <form id="form-admin-noticias" onsubmit="event.preventDefault(); salvarNoticiaAdmin();" class="space-y-6 flex-grow flex flex-col overflow-y-auto pr-3 custom-scrollbar">
-                        <input type="hidden" id="admin-noticias-id">
+                    <form id="form-admin-noticia" onsubmit="event.preventDefault(); salvarNoticiaAdmin();" class="space-y-6 flex-grow flex flex-col overflow-y-auto pr-3 custom-scrollbar">
+                        <input type="hidden" id="admin-noticia-id">
                         
                         <div>
                             <label class="block text-sm font-black text-gray-700 mb-1.5">Título da Notícia</label>
-                            <input type="text" id="admin-noticias-titulo" required class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
+                            <input type="text" id="admin-noticia-titulo" required class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
                         </div>
                         <div class="flex flex-col sm:flex-row gap-5">
                             <div class="w-full sm:w-1/2">
                                 <label class="block text-sm font-black text-gray-700 mb-1.5">Categoria</label>
-                                <input type="text" id="admin-noticias-categoria" required placeholder="Ex: Saúde, Obras" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
+                                <input type="text" id="admin-noticia-categoria" required placeholder="Ex: Saúde, Obras" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
                             </div>
                             <div class="w-full sm:w-1/2">
                                 <label class="block text-sm font-black text-gray-700 mb-1.5">Data Publicação</label>
-                                <input type="text" id="admin-noticias-data" required placeholder="Ex: 24 de Set, 2026" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
+                                <input type="text" id="admin-noticia-data" required placeholder="Ex: 24 de Set, 2026" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
                             </div>
                         </div>
                         <div class="bg-gray-50 p-5 rounded-2xl border border-gray-200">
                             <label class="block text-sm font-black text-gray-700 mb-2">Imagem de Capa (Obrigatório)</label>
-                            <div class="flex flex-col sm:flex-row gap-3">
-                                <input type="url" id="admin-noticias-imagem" required placeholder="Cole o link ou use o botão de envio..." class="flex-grow px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium text-sm" oninput="mostrarPreview(this.value, 'preview-img-admin')">
-                                <label for="upload-capa" class="bg-pref-blue text-white px-5 py-3 rounded-xl cursor-pointer hover:bg-pref-darkblue transition-colors shadow-md flex justify-center items-center gap-2 font-black whitespace-nowrap text-sm">
+                            <div class="flex gap-3">
+                                <input type="url" id="admin-noticia-imagem" required placeholder="Cole o link ou use o botão de envio..." class="flex-grow px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium text-sm" oninput="mostrarPreview(this.value, 'preview-img-admin')">
+                                <label for="upload-capa" class="bg-pref-blue text-white px-5 py-3 rounded-xl cursor-pointer hover:bg-pref-darkblue transition-colors shadow-md flex items-center gap-2 font-black whitespace-nowrap text-sm">
                                     <i class="fa-solid fa-cloud-arrow-up"></i> Enviar Foto
                                 </label>
                                 <input type="file" id="upload-capa" accept="image/*" class="hidden" onchange="fazerUploadMedia(this, 'capa')">
@@ -493,9 +474,10 @@
                                     <span>*<b>Negrito</b>*</span>
                                     <span>_<i>Itálico</i>_</span>
                                     <span>~<del>Tachado</del>~</span>
+                                    <span class="text-pref-blue" title="Pressione Enter duas vezes para novo parágrafo"><i class="fa-solid fa-keyboard mr-1"></i>2x Enter = Parágrafo</span>
                                 </div>
                             </div>
-                            <textarea id="admin-noticias-conteudo" required placeholder="Escreva o texto aqui..." class="w-full flex-grow min-h-[250px] px-5 py-4 rounded-b-xl border-x-2 border-b-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors resize-none font-medium text-gray-700 leading-relaxed"></textarea>
+                            <textarea id="admin-noticia-conteudo" required placeholder="Escreva o texto aqui..." class="w-full flex-grow min-h-[250px] px-5 py-4 rounded-b-xl border-x-2 border-b-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors resize-none font-medium text-gray-700 leading-relaxed"></textarea>
                         </div>
                         
                         <div class="pt-6 flex gap-4 mt-auto border-t border-gray-100">
@@ -506,23 +488,23 @@
                     </form>
 
                     <!-- FORMULÁRIO DE SERVIÇO -->
-                    <form id="form-admin-servicos" onsubmit="event.preventDefault(); salvarServicoAdmin();" class="hidden space-y-6 flex-grow flex flex-col">
-                        <input type="hidden" id="admin-servicos-id">
+                    <form id="form-admin-servico" onsubmit="event.preventDefault(); salvarServicoAdmin();" class="hidden space-y-6 flex-grow flex flex-col">
+                        <input type="hidden" id="admin-servico-id">
                         <div>
                             <label class="block text-sm font-black text-gray-700 mb-1.5">Título do Serviço</label>
-                            <input type="text" id="admin-servicos-titulo" required placeholder="Ex: Emissão de IPTU" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
+                            <input type="text" id="admin-servico-titulo" required placeholder="Ex: Emissão de IPTU" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
                         </div>
                         <div>
                             <label class="block text-sm font-black text-gray-700 mb-1.5">Ícone FontAwesome (Sem o fa-solid)</label>
                             <div class="flex gap-3 items-center">
-                                <input type="text" id="admin-servicos-icone" required placeholder="Ex: fa-file-invoice-dollar" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium font-mono text-sm" oninput="document.getElementById('preview-icon-admin').className = 'fa-solid ' + this.value">
+                                <input type="text" id="admin-servico-icone" required placeholder="Ex: fa-file-invoice-dollar" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium font-mono text-sm" oninput="document.getElementById('preview-icon-admin').className = 'fa-solid ' + this.value">
                                 <div class="w-12 h-12 flex-shrink-0 bg-blue-50 text-pref-blue rounded-xl flex items-center justify-center text-xl border border-blue-100"><i id="preview-icon-admin" class="fa-solid fa-file-invoice-dollar"></i></div>
                             </div>
                             <p class="text-[11px] mt-1.5 text-gray-500 font-medium">Procure ícones gratuitos em fontawesome.com/search</p>
                         </div>
                         <div>
                             <label class="block text-sm font-black text-gray-700 mb-1.5">Descrição Curta</label>
-                            <textarea id="admin-servicos-desc" required placeholder="Descreva brevemente para que serve..." class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors resize-none h-32 font-medium text-gray-700"></textarea>
+                            <textarea id="admin-servico-desc" required placeholder="Descreva brevemente para que serve..." class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors resize-none h-24 font-medium text-gray-700"></textarea>
                         </div>
                         
                         <div class="pt-6 flex gap-4 mt-auto border-t border-gray-100">
@@ -602,8 +584,8 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, onSnapshot, collection, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, getDocs, onSnapshot, collection, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBEYU7Y0QKZCa_fMC5ML-MWMN2IAdCx114",
@@ -635,8 +617,7 @@
         let isGestorAdmin = false;
         let isCidadaoLogado = false;
         let cidadaoPerfil = null;
-        let isModoCadastroCidadao = false;
-        let unsubscribePerfilListener = null;
+        let isModoCadastroCidadao = false; // Alterna entre Login e Cadastro na tela do cidadão
 
         // UTILITÁRIO: Formatação estilo WhatsApp
         window.formatarTextoParaHTML = function(texto) {
@@ -661,7 +642,7 @@
             return html;
         };
 
-        // ROTEAMENTO
+        // ROTEAMENTO (HASH NAVIGATION)
         function handleHashChange() {
             let hash = window.location.hash.replace('#', '');
             if (!hash) hash = 'inicio';
@@ -691,7 +672,7 @@
                 
                 // SISTEMA DE TRAVA DE SERVIÇOS
                 if (!isCidadaoLogado) {
-                    console.log("Acesso Negado. Você precisa fazer login com seu CPF Virtual para usar os sistemas internos.");
+                    alert("Acesso Negado. Faça login no Portal do Cidadão para usar os sistemas da prefeitura.");
                     window.location.hash = 'cidadao';
                     return;
                 }
@@ -704,15 +685,6 @@
                     document.getElementById('view-cidadao-dashboard').classList.remove('hidden'); document.getElementById('view-cidadao-dashboard').classList.add('flex');
                     document.getElementById('dash-cidadao-nome').innerText = cidadaoPerfil.nome;
                     document.getElementById('dash-cidadao-cpf').innerText = cidadaoPerfil.cpfVirtual;
-                    
-                    document.getElementById('dash-cidadao-nome-header').innerText = cidadaoPerfil.nome;
-                    document.getElementById('dash-cidadao-email-header').innerText = cidadaoPerfil.email;
-                    
-                    if(cidadaoPerfil.criadoEm) {
-                        const dataObj = new Date(cidadaoPerfil.criadoEm);
-                        document.getElementById('dash-cidadao-data-header').innerText = dataObj.toLocaleDateString('pt-BR', { year: 'numeric', month: 'short' }).toUpperCase();
-                    }
-                    
                     renderizarServicosCidadaoDashboard();
                 } else {
                     document.getElementById('view-cidadao-auth').classList.remove('hidden'); document.getElementById('view-cidadao-auth').classList.add('flex');
@@ -732,46 +704,34 @@
         }
         window.addEventListener('hashchange', handleHashChange);
 
-        // MONITORES DE AUTENTICAÇÃO (Sincronização 100% precisa)
-        onAuthStateChanged(auth, (user) => {
+        // MONITORES DE AUTENTICAÇÃO
+        onAuthStateChanged(auth, async (user) => {
             currentUser = user;
-            
-            // Limpar listener antigo
-            if (unsubscribePerfilListener) {
-                unsubscribePerfilListener();
-                unsubscribePerfilListener = null;
-            }
-
             if (user && !user.isAnonymous) {
+                // Checa se é o Administrador Master
                 if (user.email === 'jeosouzazouza@gmail.com' || user.email === 'sjeje702@gmail.com') {
                     isGestorAdmin = true;
                     isCidadaoLogado = false;
                     cidadaoPerfil = null;
-                    
-                    // Nota: Removido a modificação do botão de header para admin conforme solicitado.
-                    // O admin deve usar apenas a URL #adminprefeitura para acessar
-                    
-                    handleHashChange();
                 } else {
                     isGestorAdmin = false;
-                    // Escuta o perfil em tempo real, corrige o bug de não ter o perfil logo que loga
-                    const docRef = doc(db, 'artifacts', appId, 'users', user.uid, 'perfil', 'dados');
-                    unsubscribePerfilListener = onSnapshot(docRef, (docSnap) => {
+                    try {
+                        // Proteção contra conflito: se estivermos criando conta, aguarda 1 segundo antes de tentar ler do banco
+                        if (isModoCadastroCidadao && !cidadaoPerfil) { await new Promise(r => setTimeout(r, 1000)); }
+                        
+                        const docSnap = await getDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'perfil', 'dados'));
                         if (docSnap.exists()) {
                             cidadaoPerfil = docSnap.data();
                             isCidadaoLogado = true;
-                            document.getElementById('btn-header-cidadao').innerHTML = `<i class="fa-solid fa-circle-user text-lg text-green-500"></i> <span>Meu Painel</span>`;
-                            
-                            // Se tiver na página de cidadão, força a renderização para atualizar os dados visuais
-                            if(window.location.hash === '#cidadao') {
-                                handleHashChange();
-                            }
                         } else {
-                            // Se o doc não existe, pode ser que o setDoc ainda não terminou. Fica aguardando silenciosamente.
-                            isCidadaoLogado = false;
+                            if (!cidadaoPerfil) isCidadaoLogado = false;
                         }
-                    });
+                    } catch(e) { console.error("Erro perfil:", e); }
                 }
+                
+                // Muda a cor do botão Header se tiver logado
+                document.getElementById('btn-header-cidadao').innerHTML = isCidadaoLogado ? `<i class="fa-solid fa-circle-user text-lg text-green-500"></i> <span>Meu Painel</span>` : `<i class="fa-regular fa-id-card text-lg"></i> <span>Acesso Cidadão</span>`;
+                handleHashChange();
             } else {
                 isGestorAdmin = false;
                 isCidadaoLogado = false;
@@ -781,27 +741,40 @@
             }
         });
 
-        // INICIALIZAÇÃO FIREBASE PÚBLICA
+        // INICIALIZAÇÃO FIREBASE (Sementes)
+        const noticiasSemente = [
+            { id: "noticia_1", ordem: 4, titulo: "Prefeitura de Rabo Seco entrega nova Praça no Centro", categoria: "Obras", data: "24 de Set, 2026", imagem: "https://placehold.co/800x500/0047AB/FFFFFF?text=Inauguracao+Praca", conteudo: "A Praça Central foi revitalizada com novos espaços de convivência." },
+            { id: "noticia_2", ordem: 3, titulo: "Campanha de vacinação contra a gripe", categoria: "Saúde", data: "21 de Set, 2026", imagem: "https://placehold.co/800x500/FFC107/002D6B?text=Saude", conteudo: "Postos abertos até sexta." }
+        ];
+        const servicosSemente = [
+            { id: "servico_1", ordem: 4, titulo: "Emissão de IPTU", descricao: "Emita a 2ª via do seu IPTU e consulte débitos.", icone: "fa-file-invoice-dollar" },
+            { id: "servico_2", ordem: 3, titulo: "Portal do Servidor", descricao: "Acesso ao contracheque e informes.", icone: "fa-users" },
+            { id: "servico_3", ordem: 2, titulo: "Ouvidoria Digital", descricao: "Denúncias e sugestões direto com a gestão.", icone: "fa-bullhorn" },
+            { id: "servico_4", ordem: 1, titulo: "Licitações", descricao: "Editais e transparência municipal.", icone: "fa-file-contract" }
+        ];
+
         async function iniciarBancoDeDados() {
+            // Criando as referências
             const noticiasRef = collection(db, 'artifacts', appId, 'public', 'data', 'noticias');
             const servicosRef = collection(db, 'artifacts', appId, 'public', 'data', 'servicos');
 
+            // 1. Escutas em Tempo Real (Roda para todos, sem dar erro de permissão)
             onSnapshot(noticiasRef, (snap) => {
                 bancoDeNoticias = {};
                 snap.forEach(d => bancoDeNoticias[d.id] = { id: d.id, ...d.data() });
-                renderizarNoticiasHome(); 
-                if (window.location.hash === '#todas-noticias') renderizarGradeTodasNoticias(); 
-                if (window.location.hash.startsWith('#noticia/')) renderizarNoticiaAberta(); 
-                if (isAdminView && adminAbaAtiva === 'noticias') renderizarListaAdmin();
+                renderizarNoticiasHome(); if (window.location.hash === '#todas-noticias') renderizarGradeTodasNoticias(); if (window.location.hash.startsWith('#noticia/')) renderizarNoticiaAberta(); if (isAdminView && adminAbaAtiva === 'noticias') renderizarListaAdmin();
             });
 
             onSnapshot(servicosRef, (snap) => {
                 bancoDeServicos = {};
                 snap.forEach(d => bancoDeServicos[d.id] = { id: d.id, ...d.data() });
-                renderizarServicosHome(); 
-                if (window.location.hash === '#cidadao' && isCidadaoLogado) renderizarServicosCidadaoDashboard(); 
-                if (isAdminView && adminAbaAtiva === 'servicos') renderizarListaAdmin();
+                renderizarServicosHome(); if (window.location.hash === '#cidadao' && isCidadaoLogado) renderizarServicosCidadaoDashboard(); if (isAdminView && adminAbaAtiva === 'servicos') renderizarListaAdmin();
             });
+            
+            // 2. Não faremos mais Semente Automática de dados aqui.
+            // O bloqueio de permissão impedia o código acima de rodar.
+            // A partir de agora, use o Painel Admin para cadastrar os serviços e notícias,
+            // ou se quiser, eu gero um script pra adicionar via botão!
         }
         iniciarBancoDeDados();
 
@@ -811,13 +784,13 @@
             if (!container) return;
             const arr = Object.values(bancoDeServicos).sort((a,b) => b.ordem - a.ordem);
             
-            if(arr.length === 0) { container.innerHTML = '<div class="col-span-full text-center text-gray-500 py-10 font-bold">Nenhum sistema disponível no momento. Volte mais tarde.</div>'; return; }
+            if(arr.length === 0) { container.innerHTML = '<div class="col-span-full text-center text-gray-500">Nenhum serviço disponível no momento.</div>'; return; }
             
             container.innerHTML = arr.map(s => `
-                <a href="#servico/${s.id}" class="bg-white p-6 md:p-8 rounded-[2rem] shadow-sm border border-gray-100 hover:shadow-xl hover:border-pref-yellow hover:-translate-y-2 group transition-all block flex flex-col h-full">
-                    <div class="w-16 h-16 bg-blue-50 text-pref-blue rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-pref-blue group-hover:text-white transition-colors flex-shrink-0"><i class="fa-solid ${s.icone}"></i></div>
-                    <h4 class="text-xl font-black text-gray-800 mb-3 tracking-tight group-hover:text-pref-blue transition-colors">${s.titulo}</h4>
-                    <p class="text-gray-500 text-sm leading-relaxed font-medium mt-auto">${s.descricao}</p>
+                <a href="#servico/${s.id}" class="bg-white p-6 md:p-8 rounded-[2rem] shadow-sm border border-gray-100 hover:shadow-xl hover:border-pref-yellow hover:-translate-y-2 group transition-all block">
+                    <div class="w-16 h-16 bg-blue-50 text-pref-blue rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-pref-blue group-hover:text-white transition-colors"><i class="fa-solid ${s.icone}"></i></div>
+                    <h4 class="text-xl font-black text-gray-800 mb-3 tracking-tight">${s.titulo}</h4>
+                    <p class="text-gray-500 text-sm leading-relaxed font-medium">${s.descricao}</p>
                 </a>
             `).join('');
         }
@@ -826,14 +799,14 @@
             const container = document.getElementById('noticias-grid-home');
             if (!container) return;
             const arr = Object.values(bancoDeNoticias).sort((a, b) => b.ordem - a.ordem);
-            if (arr.length === 0) { container.innerHTML = '<div class="text-gray-500 py-12 text-center w-full font-bold">Nenhuma notícia publicada.</div>'; return; }
+            if (arr.length === 0) { container.innerHTML = '<div class="text-gray-500 py-12">Nenhuma notícia.</div>'; return; }
 
             const princ = arr[0];
             const sec = arr.slice(1, 4);
             
             let html = `<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 w-full">`;
             
-            // Principal
+            // Principal (Sem cortes na capa)
             html += `
                 <article onclick="window.location.hash='noticia/${princ.id}'" class="${sec.length > 0 ? 'lg:col-span-7' : 'lg:col-span-12'} bg-gray-900 rounded-[2rem] overflow-hidden shadow-lg hover:shadow-xl group cursor-pointer relative block flex flex-col min-h-[400px] sm:min-h-[500px] transition-all duration-300 transform hover:-translate-y-1">
                     <img src="${princ.imagem}" alt="${princ.categoria}" class="w-full h-full object-contain absolute inset-0 opacity-80 group-hover:scale-105 transition-transform duration-700">
@@ -905,45 +878,20 @@
             document.getElementById('servico-titulo').innerText = s.titulo;
             document.getElementById('servico-desc').innerText = s.descricao;
             
-            document.getElementById('servico-usuario-nome').innerText = cidadaoPerfil ? cidadaoPerfil.nome : "Cidadão";
+            // Dados Dinâmicos do Cidadão
+            document.getElementById('servico-usuario-nome').innerText = cidadaoPerfil ? cidadaoPerfil.nome : "Desconhecido";
             document.getElementById('servico-usuario-cpf').innerText = cidadaoPerfil ? cidadaoPerfil.cpfVirtual : "---";
         }
 
         function renderizarServicosCidadaoDashboard() {
             const list = document.getElementById('lista-servicos-cidadao');
             if(!list) return;
-            
-            const arrServicos = Object.values(bancoDeServicos).sort((a,b)=>b.ordem-a.ordem);
-            
-            if(arrServicos.length === 0){
-                list.innerHTML = `<div class="col-span-2 text-center text-gray-400 py-4 font-bold border-2 border-dashed border-gray-200 rounded-xl">Sem serviços no momento.</div>`;
-                return;
-            }
-            
-            list.innerHTML = arrServicos.map(s => `
+            list.innerHTML = Object.values(bancoDeServicos).sort((a,b)=>b.ordem-a.ordem).map(s => `
                 <a href="#servico/${s.id}" class="p-4 rounded-xl border border-gray-200 hover:border-pref-blue hover:bg-blue-50 transition-colors flex items-center gap-4 group">
                     <div class="w-10 h-10 bg-gray-100 group-hover:bg-pref-blue group-hover:text-white text-gray-500 rounded-lg flex items-center justify-center transition-colors"><i class="fa-solid ${s.icone}"></i></div>
                     <span class="font-bold text-gray-700 group-hover:text-pref-blue">${s.titulo}</span>
                 </a>
             `).join('');
-        }
-
-        // SIMULADOR DE SERVIÇO
-        window.executarServicoSimulado = function(btn) {
-            btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> Processando...`;
-            btn.disabled = true;
-            setTimeout(() => {
-                btn.classList.remove('bg-pref-blue', 'hover:bg-pref-darkblue');
-                btn.classList.add('bg-green-600', 'hover:bg-green-700');
-                btn.innerHTML = `<i class="fa-solid fa-check-circle"></i> Solicitação Recebida com Sucesso`;
-                setTimeout(() => {
-                    btn.classList.add('bg-pref-blue', 'hover:bg-pref-darkblue');
-                    btn.classList.remove('bg-green-600', 'hover:bg-green-700');
-                    btn.innerHTML = `Iniciar Serviço <i class="fa-solid fa-arrow-up-right-from-square"></i>`;
-                    btn.disabled = false;
-                    console.log("Isso é uma simulação.\nEm um portal real, o cidadão seria encaminhado ao painel de controle do serviço em questão agora.");
-                }, 3000);
-            }, 1500);
         }
 
         // FUNÇÕES GLOBAIS DE NAVEGAÇÃO UI
@@ -996,7 +944,7 @@
                     const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
                     const user = userCredential.user;
                     
-                    // Gera o CPF Virtual e salva no Banco
+                    // Gera o CPF Virtual e salva no Perfil Seguro do Firebase
                     const novoCPF = gerarCPFVirtual();
                     const novoPerfil = {
                         nome: nome,
@@ -1004,37 +952,18 @@
                         cpfVirtual: novoCPF,
                         criadoEm: new Date().toISOString()
                     };
-                    
                     await setDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'perfil', 'dados'), novoPerfil);
                     
+                    // Força a variável local a reconhecer os dados instantaneamente
                     cidadaoPerfil = novoPerfil;
                     isCidadaoLogado = true;
-                    
                 } else {
                     await signInWithEmailAndPassword(auth, email, senha);
-                    
-                    // Sistema de Espera Segura: aguarda o Firebase baixar o perfil antes de continuar
-                    let tentativas = 0;
-                    while (!isCidadaoLogado && tentativas < 25 && !isGestorAdmin) {
-                        await new Promise(r => setTimeout(r, 200)); // Espera 0.2 segundos por tentativa (máx 5 seg)
-                        tentativas++;
-                    }
                 }
                 
-                // Se a conta for de administrador, bloqueia o acesso por aqui e não revela a URL secreta
-                if (isGestorAdmin) {
-                    await signOut(auth);
-                    await signInAnonymously(auth);
-                    throw new Error("Esta conta não possui um CPF Virtual de cidadão vinculado.");
-                }
-                
-                // Se o perfil do cidadão não foi carregado corretamente
-                if (!isCidadaoLogado) {
-                    throw new Error("Não foi possível localizar os dados do seu CPF Virtual. Conta inválida.");
-                }
-                
-                // Limpa form e manda pra tela
-                document.getElementById('form-cidadao').reset();
+                // Restaura o botão e envia para a tela certa imediatamente
+                btn.disabled = false;
+                btn.innerHTML = isModoCadastroCidadao ? '<i class="fa-solid fa-fingerprint"></i> Criar CPF Virtual' : '<i class="fa-solid fa-right-to-bracket"></i> Entrar no Sistema';
                 window.location.hash = 'cidadao';
                 
             } catch (error) {
@@ -1042,9 +971,7 @@
                 msgErro.classList.remove('hidden');
                 msgTexto.innerText = error.code === 'auth/email-already-in-use' ? 'E-mail já possui cadastro.' : 
                                      error.code === 'auth/invalid-credential' ? 'E-mail ou senha incorretos.' : 
-                                     error.code === 'auth/weak-password' ? 'Sua senha deve ter no mínimo 6 caracteres.' :
                                      error.message || 'Erro ao autenticar.';
-            } finally {
                 btn.disabled = false;
                 btn.innerHTML = isModoCadastroCidadao ? '<i class="fa-solid fa-fingerprint"></i> Criar CPF Virtual' : '<i class="fa-solid fa-right-to-bracket"></i> Entrar no Sistema';
             }
@@ -1069,14 +996,14 @@
 
         window.mudarAbaAdmin = function(aba) {
             adminAbaAtiva = aba;
-            document.getElementById('form-admin-noticias').classList.add('hidden');
-            document.getElementById('form-admin-servicos').classList.add('hidden');
+            document.getElementById('form-admin-noticia').classList.add('hidden');
+            document.getElementById('form-admin-servico').classList.add('hidden');
             
-            document.getElementById('btn-aba-noticias').className = aba === 'noticias' ? 'flex-1 md:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all bg-white text-pref-blue shadow-sm whitespace-nowrap' : 'flex-1 md:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all text-blue-200 hover:text-white whitespace-nowrap';
-            document.getElementById('btn-aba-servicos').className = aba === 'servicos' ? 'flex-1 md:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all bg-white text-pref-blue shadow-sm whitespace-nowrap' : 'flex-1 md:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all text-blue-200 hover:text-white whitespace-nowrap';
+            document.getElementById('btn-aba-noticias').className = aba === 'noticias' ? 'flex-1 md:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all bg-white text-pref-blue shadow-sm' : 'flex-1 md:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all text-blue-200 hover:text-white';
+            document.getElementById('btn-aba-servicos').className = aba === 'servicos' ? 'flex-1 md:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all bg-white text-pref-blue shadow-sm' : 'flex-1 md:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all text-blue-200 hover:text-white';
             
             document.getElementById('form-admin-'+aba).classList.remove('hidden');
-            document.getElementById('admin-titulo-lista').innerText = aba === 'noticias' ? 'Publicações' : 'Sistemas de Serviço';
+            document.getElementById('admin-titulo-lista').innerText = aba === 'noticias' ? 'Publicações' : 'Sistemas/Serviços';
             
             prepararNovoAdmin();
             renderizarListaAdmin();
@@ -1086,12 +1013,12 @@
             const lista = document.getElementById('lista-admin-dinamica'); if(!lista) return;
             const dados = adminAbaAtiva === 'noticias' ? Object.values(bancoDeNoticias).sort((a,b)=>b.ordem-a.ordem) : Object.values(bancoDeServicos).sort((a,b)=>b.ordem-a.ordem);
             
-            if (dados.length === 0) { lista.innerHTML = '<div class="text-center p-8 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 text-gray-400 font-bold">A lista está vazia. Adicione clicando em "Novo".</div>'; return; }
+            if (dados.length === 0) { lista.innerHTML = '<div class="text-center p-8 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 text-gray-400 font-bold">Vazio.</div>'; return; }
 
             lista.innerHTML = dados.map(item => `
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 bg-gray-50 rounded-2xl hover:bg-blue-50 transition-colors border border-gray-100 gap-4 group">
                     <div class="flex-grow overflow-hidden w-full">
-                        <span class="text-[10px] font-black text-pref-blue uppercase mb-1.5 px-3 py-1 bg-blue-100 rounded-md inline-block tracking-widest">${adminAbaAtiva === 'noticias' ? item.categoria : 'Sistema Digital'}</span>
+                        <span class="text-[10px] font-black text-pref-blue uppercase mb-1.5 px-3 py-1 bg-blue-100 rounded-md inline-block tracking-widest">${adminAbaAtiva === 'noticias' ? item.categoria : 'Serviço'}</span>
                         <h4 class="font-black text-gray-800 text-sm truncate w-full">${item.titulo}</h4>
                     </div>
                     <div class="flex gap-2 w-full sm:w-auto justify-end">
@@ -1120,26 +1047,26 @@
             document.getElementById(`admin-${adminAbaAtiva}-titulo`).value = item.titulo;
             
             if(adminAbaAtiva === 'noticias') {
-                document.getElementById('admin-noticias-categoria').value = item.categoria;
-                document.getElementById('admin-noticias-data').value = item.data;
-                document.getElementById('admin-noticias-imagem').value = item.imagem;
-                document.getElementById('admin-noticias-conteudo').value = item.conteudo;
+                document.getElementById('admin-noticia-categoria').value = item.categoria;
+                document.getElementById('admin-noticia-data').value = item.data;
+                document.getElementById('admin-noticia-imagem').value = item.imagem;
+                document.getElementById('admin-noticia-conteudo').value = item.conteudo;
                 mostrarPreview(item.imagem, 'preview-img-admin');
             } else {
-                document.getElementById('admin-servicos-icone').value = item.icone;
+                document.getElementById('admin-servico-icone').value = item.icone;
                 document.getElementById('preview-icon-admin').className = 'fa-solid ' + item.icone;
-                document.getElementById('admin-servicos-desc').value = item.descricao;
+                document.getElementById('admin-servico-desc').value = item.descricao;
             }
             document.getElementById('admin-titulo-editor').innerHTML = `<i class="fa-solid fa-arrows-rotate text-pref-blue"></i> Editando Conteúdo`;
         };
 
         window.salvarNoticiaAdmin = async function() { salvarItemGen(bancoDeNoticias, 'noticias', 'btn-salvar-noticia', {
-            titulo: document.getElementById('admin-noticias-titulo').value, categoria: document.getElementById('admin-noticias-categoria').value,
-            data: document.getElementById('admin-noticias-data').value, imagem: document.getElementById('admin-noticias-imagem').value, conteudo: document.getElementById('admin-noticias-conteudo').value
+            titulo: document.getElementById('admin-noticia-titulo').value, categoria: document.getElementById('admin-noticia-categoria').value,
+            data: document.getElementById('admin-noticia-data').value, imagem: document.getElementById('admin-noticia-imagem').value, conteudo: document.getElementById('admin-noticia-conteudo').value
         }); };
 
         window.salvarServicoAdmin = async function() { salvarItemGen(bancoDeServicos, 'servicos', 'btn-salvar-servico', {
-            titulo: document.getElementById('admin-servicos-titulo').value, icone: document.getElementById('admin-servicos-icone').value.replace('fa-solid ','').replace('fa-regular ',''), descricao: document.getElementById('admin-servicos-desc').value
+            titulo: document.getElementById('admin-servico-titulo').value, icone: document.getElementById('admin-servico-icone').value.replace('fa-solid ','').replace('fa-regular ',''), descricao: document.getElementById('admin-servico-desc').value
         }); };
 
         async function salvarItemGen(banco, colecao, btnId, extraDados) {
@@ -1202,7 +1129,7 @@
                     } catch (e) { console.warn("Erro ao enviar para Imgur. Tentando Catbox...", e); }
                 }
                 
-                // 2. Se for Vídeo/Áudio, ou se o Imgur falhou, tenta o Catbox
+                // 2. Se for Vídeo/Áudio, ou se o Imgur falhou por limite de tamanho, tenta o Catbox
                 if (!urlFinal) {
                     let cdata = new FormData(); 
                     cdata.append("reqtype", "fileupload"); 
@@ -1210,23 +1137,35 @@
                     cdata.append("fileToUpload", file);
                     
                     try {
+                        // Tenta conexão direta primeiro
                         let cres = await fetch("https://catbox.moe/user/api.php", { method: "POST", body: cdata });
-                        if(cres.ok) { urlFinal = await cres.text(); } 
-                        else { throw new Error("Erro no servidor Catbox"); }
+                        if(cres.ok) {
+                            urlFinal = await cres.text();
+                        } else {
+                            throw new Error("Erro no servidor Catbox");
+                        }
                     } catch (err) {
+                        console.warn("Conexão direta falhou. Usando Proxy CORS...", err);
+                        // Fallback: Usa um Proxy para evitar o bloqueio de CORS do navegador para vídeos/arquivos grandes
                         let proxyRes = await fetch("https://corsproxy.io/?https://catbox.moe/user/api.php", { method: "POST", body: cdata });
-                        if(proxyRes.ok) { urlFinal = await proxyRes.text(); } 
-                        else { throw new Error("Falha também no Proxy."); }
+                        if(proxyRes.ok) {
+                            urlFinal = await proxyRes.text();
+                        } else {
+                            throw new Error("Falha também no Proxy.");
+                        }
                     }
                 }
 
-                if (!urlFinal || !urlFinal.startsWith('http')) throw new Error("URL gerada não é válida.");
+                if (!urlFinal || !urlFinal.startsWith('http')) {
+                    throw new Error("URL gerada não é válida.");
+                }
 
+                // Tudo deu certo, vamos exibir
                 if (isCapa) {
-                    document.getElementById('admin-noticias-imagem').value = urlFinal; 
+                    document.getElementById('admin-noticia-imagem').value = urlFinal; 
                     mostrarPreview(urlFinal, 'preview-img-admin');
                 } else {
-                    const txt = document.getElementById('admin-noticias-conteudo');
+                    const txt = document.getElementById('admin-noticia-conteudo');
                     let t = file.type.startsWith('video/') ? `\n\n<video controls class="w-full rounded-2xl my-6 shadow-md"><source src="${urlFinal}" type="${file.type}"></video>\n\n` :
                             file.type.startsWith('audio/') ? `\n\n<audio controls class="w-full my-6"><source src="${urlFinal}" type="${file.type}"></audio>\n\n` :
                             isImg ? `\n\n<img src="${urlFinal}" alt="Anexo" class="w-full rounded-2xl my-6 shadow-md">\n\n` :
@@ -1235,9 +1174,10 @@
                 }
             } catch (e) { 
                 console.error("Erro completo:", e);
-                console.log("Falha ao enviar arquivo.\n\nMotivo: O arquivo pode ser muito grande ou o envio foi bloqueado."); 
+                alert("Falha ao enviar arquivo.\n\nMotivo: O arquivo pode ser muito grande (máximo recomendado é 50MB) ou o seu navegador bloqueou o envio (CORS).\nTente novamente com um arquivo um pouco menor."); 
             } 
             finally {
+                // Restaura os botões
                 if (isCapa) { 
                     labelCapa.innerHTML = origH; 
                     labelCapa.classList.remove('pointer-events-none'); 
