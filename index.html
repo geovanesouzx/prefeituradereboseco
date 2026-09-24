@@ -691,7 +691,7 @@
                 
                 // SISTEMA DE TRAVA DE SERVIÇOS
                 if (!isCidadaoLogado) {
-                    alert("Acesso Negado. Você precisa fazer login com seu CPF Virtual para usar os sistemas internos.");
+                    console.log("Acesso Negado. Você precisa fazer login com seu CPF Virtual para usar os sistemas internos.");
                     window.location.hash = 'cidadao';
                     return;
                 }
@@ -941,7 +941,7 @@
                     btn.classList.remove('bg-green-600', 'hover:bg-green-700');
                     btn.innerHTML = `Iniciar Serviço <i class="fa-solid fa-arrow-up-right-from-square"></i>`;
                     btn.disabled = false;
-                    alert("Isso é uma simulação.\nEm um portal real, o cidadão seria encaminhado ao painel de controle do serviço em questão agora.");
+                    console.log("Isso é uma simulação.\nEm um portal real, o cidadão seria encaminhado ao painel de controle do serviço em questão agora.");
                 }, 3000);
             }, 1500);
         }
@@ -1021,11 +1021,11 @@
                     }
                 }
                 
-                // Se a pessoa que usou esse form era o administrador disfarçado...
+                // Se a conta for de administrador, bloqueia o acesso por aqui e não revela a URL secreta
                 if (isGestorAdmin) {
-                    document.getElementById('form-cidadao').reset();
-                    window.location.hash = 'adminprefeitura';
-                    return;
+                    await signOut(auth);
+                    await signInAnonymously(auth);
+                    throw new Error("Esta conta não possui um CPF Virtual de cidadão vinculado.");
                 }
                 
                 // Se o perfil do cidadão não foi carregado corretamente
@@ -1235,7 +1235,7 @@
                 }
             } catch (e) { 
                 console.error("Erro completo:", e);
-                alert("Falha ao enviar arquivo.\n\nMotivo: O arquivo pode ser muito grande ou o envio foi bloqueado."); 
+                console.log("Falha ao enviar arquivo.\n\nMotivo: O arquivo pode ser muito grande ou o envio foi bloqueado."); 
             } 
             finally {
                 if (isCapa) { 
