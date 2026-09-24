@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prefeitura Municipal de Rabo Seco</title>
+    
+    <!-- Tailwind CSS para estilização rápida e responsiva -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome para os ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Configuração de cores personalizadas no Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        pref: {
+                            blue: '#0047AB', // Azul institucional principal
+                            darkblue: '#002D6B', // Azul mais escuro
+                            yellow: '#FFC107', // Amarelo para destaques
+                            light: '#F8FAFC', // Branco/Cinza super claro para fundos
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Suavização de rolagem e transições globais */
+        html { scroll-behavior: smooth; }
+        * { transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease; }
+        
+        /* Estilização da barra de rolagem */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #F8FAFC; }
+        ::-webkit-scrollbar-thumb { background: #0047AB; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #002D6B; }
+    </style>
+</head>
+<body class="bg-pref-light text-gray-800 font-sans antialiased flex flex-col min-h-screen">
+
+    <!-- CABEÇALHO -->
+    <header class="bg-white shadow-md sticky top-0 z-50 border-b-4 border-pref-yellow">
+        <div class="container mx-auto px-4 lg:px-8 py-4">
+            <div class="flex justify-between items-center">
+                
+                <!-- Logo / Nome da Prefeitura -->
+                <div class="flex items-center gap-3 cursor-pointer" onclick="goHome();">
+                    <img src="https://i.imgur.com/yv7TJkd.png" alt="Logo Prefeitura" class="h-12 md:h-14 w-auto object-contain drop-shadow-sm">
+                    <div>
+                        <h1 class="text-xl md:text-2xl font-bold text-pref-darkblue leading-tight">Prefeitura de</h1>
+                        <h2 class="text-lg md:text-xl font-bold text-pref-yellow leading-tight -mt-1">Rabo Seco</h2>
+                    </div>
+                </div>
+
+                <!-- Menu de Navegação (Desktop) -->
+                <nav class="hidden md:flex gap-6 items-center">
+                    <a href="#" onclick="goHome(); return false;" class="text-gray-600 hover:text-pref-blue font-medium transition-colors">Início</a>
+                    <a href="#" onclick="goHomeAndScroll('servicos'); return false;" class="text-gray-600 hover:text-pref-blue font-medium transition-colors">Serviços</a>
+                    <a href="#" onclick="goHomeAndScroll('noticias'); return false;" class="text-gray-600 hover:text-pref-blue font-medium transition-colors">Notícias</a>
+                    <a href="#" onclick="showService('Portal da Transparência', 'Acesse dados financeiros, contratos e licitações em tempo real.'); return false;" class="text-gray-600 hover:text-pref-blue font-medium transition-colors">Transparência</a>
+                    <a href="#" onclick="goHomeAndScroll('contato'); return false;" class="bg-pref-blue text-white px-5 py-2 rounded-full font-medium hover:bg-pref-darkblue shadow-sm transition-colors">Fale Conosco</a>
+                </nav>
+
+                <!-- Botão Menu Mobile -->
+                <button class="md:hidden text-pref-blue text-2xl focus:outline-none" id="mobile-menu-btn" aria-label="Abrir Menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+            
+            <!-- Menu Mobile Expandido -->
+            <div id="mobile-menu" class="hidden md:hidden flex-col gap-4 pt-4 mt-4 border-t border-gray-100">
+                <a href="#" onclick="goHome(); closeMenu(); return false;" class="text-gray-600 font-medium block hover:text-pref-blue">Início</a>
+                <a href="#" onclick="goHomeAndScroll('servicos'); closeMenu(); return false;" class="text-gray-600 font-medium block hover:text-pref-blue">Serviços</a>
+                <a href="#" onclick="goHomeAndScroll('noticias'); closeMenu(); return false;" class="text-gray-600 font-medium block hover:text-pref-blue">Notícias</a>
+                <a href="#" onclick="showService('Portal da Transparência', 'Acesse dados financeiros, contratos e licitações em tempo real.'); closeMenu(); return false;" class="text-gray-600 font-medium block hover:text-pref-blue">Transparência</a>
+                <a href="#" onclick="goHomeAndScroll('contato'); closeMenu(); return false;" class="text-pref-blue font-bold block">Fale Conosco</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER PARA SISTEMA DE "PÁGINAS" -->
+    <div id="app-container" class="flex-grow flex flex-col">
+        
+        <!-- PÁGINA INICIAL -->
+        <div id="view-home" class="flex-col flex flex-grow">
+
+            <!-- HERO SECTION (Destaque Principal) -->
+            <section class="bg-pref-blue text-white py-16 md:py-24 relative overflow-hidden">
+                <!-- Elemento decorativo de fundo -->
+                <div class="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -mr-20 -mt-20 pointer-events-none"></div>
+                <div class="absolute bottom-0 left-0 w-96 h-96 bg-pref-darkblue opacity-50 rounded-full -ml-32 -mb-32 pointer-events-none"></div>
+                
+                <div class="container mx-auto px-4 lg:px-8 relative z-10 flex flex-col md:flex-row items-center gap-12">
+                    <div class="md:w-3/5 text-center md:text-left">
+                        <span class="inline-block py-1 px-3 rounded-full bg-pref-yellow text-pref-darkblue text-sm font-bold tracking-wider mb-6 uppercase shadow-sm">Portal do Cidadão</span>
+                        <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                            Trabalhando por uma <span class="text-pref-yellow">Rabo Seco</span> melhor todos os dias.
+                        </h2>
+                        <p class="text-lg text-blue-100 mb-8 md:pr-10 leading-relaxed">
+                            Acesse serviços digitais, acompanhe as notícias da cidade e participe ativamente da gestão municipal com total transparência.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                            <a href="#" onclick="goHomeAndScroll('servicos'); return false;" class="bg-pref-yellow text-pref-darkblue px-8 py-3 rounded-full font-bold text-lg hover:bg-yellow-400 shadow-lg text-center transition-all transform hover:-translate-y-1">
+                                Acesso a Serviços <i class="fa-solid fa-arrow-right ml-2"></i>
+                            </a>
+                            <a href="#" onclick="showService('Portal da Transparência', 'Acesso livre e transparente aos dados de finanças e gestão do município.'); return false;" class="bg-white/10 text-white backdrop-blur-md px-8 py-3 rounded-full font-bold text-lg hover:bg-white/20 border border-white/30 text-center transition-all">
+                                Transparência
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="md:w-2/5 flex justify-center">
+                        <!-- Imagem ilustrativa ou brasão -->
+                        <img src="https://i.imgur.com/yv7TJkd.png" alt="Brasão de Rabo Seco" class="w-64 h-auto lg:w-80 transform hover:scale-105 transition-transform duration-300 drop-shadow-2xl">
+                    </div>
+                </div>
+            </section>
+
+            <!-- SEÇÃO DE SERVIÇOS RÁPIDOS -->
+            <section id="servicos" class="py-16 md:py-24 bg-gray-50">
+                <div class="container mx-auto px-4 lg:px-8">
+                    <div class="text-center mb-16">
+                        <h3 class="text-3xl md:text-4xl font-bold text-pref-darkblue mb-4">Serviços ao Cidadão</h3>
+                        <div class="h-1.5 w-24 bg-pref-yellow mx-auto rounded-full"></div>
+                        <p class="text-gray-500 mt-5 text-lg max-w-2xl mx-auto">Acesse os principais serviços digitais da prefeitura sem sair de casa, com agilidade e segurança.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <!-- Serviço 1 -->
+                        <a href="#" onclick="showService('Emissão de IPTU', 'Emita a 2ª via do seu IPTU, consulte débitos e parcelamentos de anos anteriores.'); return false;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl hover:border-pref-yellow hover:-translate-y-2 group transition-all block">
+                            <div class="w-16 h-16 bg-blue-50 text-pref-blue rounded-full flex items-center justify-center text-2xl mb-6 group-hover:bg-pref-blue group-hover:text-white transition-colors">
+                                <i class="fa-solid fa-file-invoice-dollar"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-gray-800 mb-3">Emissão de IPTU</h4>
+                            <p class="text-gray-500 text-sm leading-relaxed">Emita a 2ª via do seu IPTU, consulte débitos e parcelamentos.</p>
+                        </a>
+
+                        <!-- Serviço 2 -->
+                        <a href="#" onclick="showService('Portal do Servidor', 'Acesso restrito a servidores da prefeitura para consulta de holerites, férias e informações de RH.'); return false;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl hover:border-pref-yellow hover:-translate-y-2 group transition-all block">
+                            <div class="w-16 h-16 bg-blue-50 text-pref-blue rounded-full flex items-center justify-center text-2xl mb-6 group-hover:bg-pref-blue group-hover:text-white transition-colors">
+                                <i class="fa-solid fa-users"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-gray-800 mb-3">Portal do Servidor</h4>
+                            <p class="text-gray-500 text-sm leading-relaxed">Acesso ao contracheque, informe de rendimentos e avisos internos.</p>
+                        </a>
+
+                        <!-- Serviço 3 -->
+                        <a href="#" onclick="showService('Ouvidoria', 'Faça sua denúncia, reclamação, sugestão ou elogio formalmente aos órgãos da prefeitura.'); return false;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl hover:border-pref-yellow hover:-translate-y-2 group transition-all block">
+                            <div class="w-16 h-16 bg-blue-50 text-pref-blue rounded-full flex items-center justify-center text-2xl mb-6 group-hover:bg-pref-blue group-hover:text-white transition-colors">
+                                <i class="fa-solid fa-bullhorn"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-gray-800 mb-3">Ouvidoria</h4>
+                            <p class="text-gray-500 text-sm leading-relaxed">Faça sua denúncia, reclamação, sugestão ou elogio para a gestão.</p>
+                        </a>
+
+                        <!-- Serviço 4 -->
+                        <a href="#" onclick="showService('Licitações', 'Acompanhe editais, pregões eletrônicos, concorrências e avisos de licitação do município.'); return false;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl hover:border-pref-yellow hover:-translate-y-2 group transition-all block">
+                            <div class="w-16 h-16 bg-blue-50 text-pref-blue rounded-full flex items-center justify-center text-2xl mb-6 group-hover:bg-pref-blue group-hover:text-white transition-colors">
+                                <i class="fa-solid fa-file-contract"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-gray-800 mb-3">Licitações</h4>
+                            <p class="text-gray-500 text-sm leading-relaxed">Acompanhe editais, pregões e avisos de licitação do município.</p>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SEÇÃO DE NOTÍCIAS -->
+            <section id="noticias" class="py-16 md:py-24 bg-white flex-grow border-t border-gray-100">
+                <div class="container mx-auto px-4 lg:px-8">
+                    <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
+                        <div>
+                            <h3 class="text-3xl md:text-4xl font-bold text-pref-darkblue mb-4">Últimas Notícias</h3>
+                            <div class="h-1.5 w-24 bg-pref-yellow rounded-full"></div>
+                        </div>
+                        <button onclick="showAllNewsView()" class="bg-gray-100 text-gray-700 px-6 py-2.5 rounded-full font-bold hover:bg-gray-200 transition-colors shadow-sm flex items-center gap-2">
+                            Ver Todas <i class="fa-solid fa-list text-sm"></i>
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <!-- Notícia 1 (Destaque Maior) -->
+                        <article onclick="showArticle(1)" class="lg:col-span-2 rounded-2xl overflow-hidden shadow-lg group cursor-pointer relative block">
+                            <img src="https://placehold.co/800x500/0047AB/FFFFFF?text=Inauguracao+Praca" alt="Obras na praça central" class="w-full h-96 object-cover group-hover:scale-105 transition-transform duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+                            <div class="absolute bottom-0 left-0 p-8">
+                                <span class="bg-pref-yellow text-pref-darkblue text-xs font-bold px-3 py-1 rounded-full uppercase mb-4 inline-block">Infraestrutura</span>
+                                <h4 class="text-2xl md:text-3xl font-bold text-white mb-3 leading-tight group-hover:text-pref-yellow transition-colors">Prefeitura inaugura nova praça no bairro Esperança com área de lazer e esportes</h4>
+                                <p class="text-gray-300 text-sm font-medium"><i class="fa-regular fa-calendar mr-2"></i> 23 de Setembro, 2026</p>
+                            </div>
+                        </article>
+
+                        <!-- Coluna de Notícias Menores -->
+                        <div class="flex flex-col gap-6">
+                            <!-- Notícia 2 -->
+                            <article onclick="showArticle(2)" class="flex gap-5 group cursor-pointer bg-gray-50 rounded-xl p-3 hover:bg-gray-100 transition-colors border border-transparent hover:border-gray-200">
+                                <img src="https://placehold.co/150x150/FFC107/002D6B?text=Saude" alt="Vacinação" class="w-28 h-28 rounded-lg object-cover flex-shrink-0 shadow-sm">
+                                <div class="flex flex-col justify-center">
+                                    <span class="text-pref-blue text-xs font-bold uppercase mb-1">Saúde</span>
+                                    <h4 class="text-gray-800 font-bold leading-tight group-hover:text-pref-blue transition-colors text-sm md:text-base">Campanha de vacinação contra a gripe é prorrogada até sexta</h4>
+                                    <p class="text-gray-500 text-xs mt-2 font-medium">21 de Setembro, 2026</p>
+                                </div>
+                            </article>
+
+                            <!-- Notícia 3 -->
+                            <article onclick="showArticle(3)" class="flex gap-5 group cursor-pointer bg-gray-50 rounded-xl p-3 hover:bg-gray-100 transition-colors border border-transparent hover:border-gray-200">
+                                <img src="https://placehold.co/150x150/002D6B/FFFFFF?text=Escola" alt="Escola" class="w-28 h-28 rounded-lg object-cover flex-shrink-0 shadow-sm">
+                                <div class="flex flex-col justify-center">
+                                    <span class="text-pref-blue text-xs font-bold uppercase mb-1">Educação</span>
+                                    <h4 class="text-gray-800 font-bold leading-tight group-hover:text-pref-blue transition-colors text-sm md:text-base">Matrículas para a rede municipal abrem na próxima semana</h4>
+                                    <p class="text-gray-500 text-xs mt-2 font-medium">19 de Setembro, 2026</p>
+                                </div>
+                            </article>
+                            
+                            <!-- Notícia 4 -->
+                            <article onclick="showArticle(4)" class="flex gap-5 group cursor-pointer bg-gray-50 rounded-xl p-3 hover:bg-gray-100 transition-colors border border-transparent hover:border-gray-200">
+                                <div class="w-28 h-28 rounded-lg bg-gray-200 flex items-center justify-center text-gray-400 flex-shrink-0 shadow-sm">
+                                     <i class="fa-solid fa-camera text-3xl"></i>
+                                </div>
+                                <div class="flex flex-col justify-center">
+                                    <span class="text-pref-blue text-xs font-bold uppercase mb-1">Cultura</span>
+                                    <h4 class="text-gray-800 font-bold leading-tight group-hover:text-pref-blue transition-colors text-sm md:text-base">Festival Cultural de Rabo Seco atrai milhares de pessoas</h4>
+                                    <p class="text-gray-500 text-xs mt-2 font-medium">15 de Setembro, 2026</p>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div> <!-- FIM PÁGINA INICIAL (#view-home) -->
+
+        <!-- NOVA TELA: LEITURA DE NOTÍCIA -->
+        <div id="view-noticia" class="hidden flex-col flex-grow bg-white py-12 pb-24">
+            <div class="container mx-auto px-4 lg:px-8 max-w-4xl">
+                <!-- Botão Voltar -->
+                <button onclick="goHomeAndScroll('noticias')" class="flex items-center text-pref-blue font-bold hover:text-pref-darkblue mb-8 transition-colors group cursor-pointer bg-blue-50 py-2 px-4 rounded-full w-fit">
+                    <i class="fa-solid fa-arrow-left mr-2 group-hover:-translate-x-1 transition-transform"></i> Voltar para Notícias
+                </button>
+
+                <!-- Cabeçalho da Notícia -->
+                <div class="mb-8">
+                    <span id="noticia-categoria" class="bg-pref-yellow text-pref-darkblue text-xs font-bold px-3 py-1 rounded-full uppercase mb-4 inline-block">Categoria</span>
+                    <h1 id="noticia-titulo" class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mb-6">Título da Notícia</h1>
+                    <div class="flex items-center text-gray-500 font-medium">
+                        <i class="fa-regular fa-calendar text-pref-blue mr-2"></i>
+                        <span id="noticia-data">Data da publicação</span>
+                    </div>
+                </div>
+
+                <!-- Imagem Principal -->
+                <img id="noticia-imagem" src="" alt="Imagem da Notícia" class="w-full h-64 md:h-96 lg:h-[500px] object-cover rounded-2xl mb-10 shadow-lg">
+
+                <!-- Conteúdo -->
+                <div id="noticia-conteudo" class="prose prose-lg max-w-none text-gray-700 leading-relaxed space-y-6">
+                    <!-- Conteúdo injetado via JS -->
+                </div>
+                
+                <!-- Compartilhar -->
+                <div class="mt-16 pt-8 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-6">
+                    <div class="font-bold text-gray-800 text-lg">Gostou? Compartilhe esta notícia:</div>
+                    <div class="flex gap-4">
+                        <button class="w-12 h-12 rounded-full bg-[#1877F2] text-white flex items-center justify-center hover:bg-[#0C63D4] transition-colors shadow-md text-xl"><i class="fa-brands fa-facebook-f"></i></button>
+                        <button class="w-12 h-12 rounded-full bg-[#1DA1F2] text-white flex items-center justify-center hover:bg-[#0C85D0] transition-colors shadow-md text-xl"><i class="fa-brands fa-twitter"></i></button>
+                        <button class="w-12 h-12 rounded-full bg-[#25D366] text-white flex items-center justify-center hover:bg-[#12B949] transition-colors shadow-md text-xl"><i class="fa-brands fa-whatsapp"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NOVA TELA: SERVIÇO INTERNO -->
+        <div id="view-servico" class="hidden flex-col flex-grow bg-gray-50 py-12 pb-24">
+            <div class="container mx-auto px-4 lg:px-8 max-w-3xl">
+                <!-- Botão Voltar -->
+                <button onclick="goHomeAndScroll('servicos')" class="flex items-center text-pref-blue font-bold hover:text-pref-darkblue mb-8 transition-colors group cursor-pointer bg-white border border-gray-200 shadow-sm py-2 px-4 rounded-full w-fit">
+                    <i class="fa-solid fa-arrow-left mr-2 group-hover:-translate-x-1 transition-transform"></i> Voltar para os Serviços
+                </button>
+
+                <!-- Box de Serviço -->
+                <div class="bg-white rounded-3xl shadow-lg border border-gray-100 p-8 md:p-12 text-center relative overflow-hidden">
+                    <!-- Detalhe visual de topo -->
+                    <div class="absolute top-0 left-0 w-full h-2 bg-pref-yellow"></div>
+
+                    <div class="w-24 h-24 bg-blue-50 text-pref-blue rounded-full flex items-center justify-center text-4xl mx-auto mb-6 shadow-inner">
+                        <i class="fa-solid fa-laptop-file"></i>
+                    </div>
+                    <h2 id="servico-titulo" class="text-3xl font-bold text-pref-darkblue mb-4">Nome do Serviço</h2>
+                    <p id="servico-desc" class="text-lg text-gray-600 mb-10 max-w-xl mx-auto">Descrição do serviço entra aqui.</p>
+                    
+                    <div class="bg-gray-50 p-6 md:p-8 rounded-2xl border border-gray-200 text-left">
+                        <h3 class="font-bold text-gray-800 mb-6 border-b border-gray-200 pb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-shield-halved text-pref-blue"></i> Acesso Restrito
+                        </h3>
+                        
+                        <!-- Formulário Fictício -->
+                        <form onsubmit="event.preventDefault(); document.getElementById('alerta-msg').classList.remove('hidden');" class="space-y-5">
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Insira seu CPF, CNPJ ou Matrícula</label>
+                                <input type="text" placeholder="Digite apenas números..." class="w-full px-5 py-4 rounded-xl border border-gray-300 focus:ring-4 focus:ring-pref-blue/20 focus:border-pref-blue outline-none transition-all text-lg">
+                            </div>
+                            <button type="submit" class="w-full bg-pref-blue text-white font-bold py-4 px-6 rounded-xl hover:bg-pref-darkblue shadow-md transition-colors cursor-pointer text-lg">
+                                Consultar Sistema <i class="fa-solid fa-magnifying-glass ml-2"></i>
+                            </button>
+                            
+                            <!-- Mensagem de Alerta -->
+                            <div id="alerta-msg" class="hidden mt-6 bg-yellow-50 border-l-4 border-pref-yellow text-gray-800 p-5 rounded-r-xl text-sm flex gap-4 items-start shadow-sm">
+                                <i class="fa-solid fa-triangle-exclamation text-pref-yellow text-xl mt-0.5"></i>
+                                <div>
+                                    <h4 class="font-bold mb-1">Aviso do Sistema</h4>
+                                    <p>Este é apenas o ambiente de demonstração do portal da Prefeitura de Rabo Seco. Nenhuma base de dados oficial foi acessada.</p>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NOVA TELA: TODAS AS NOTÍCIAS -->
+        <div id="view-todas-noticias" class="hidden flex-col flex-grow bg-gray-50 py-12 pb-24">
+            <div class="container mx-auto px-4 lg:px-8">
+                <!-- Botão Voltar -->
+                <button onclick="goHomeAndScroll('noticias')" class="flex items-center text-pref-blue font-bold hover:text-pref-darkblue mb-8 transition-colors group cursor-pointer bg-white border border-gray-200 shadow-sm py-2 px-4 rounded-full w-fit">
+                    <i class="fa-solid fa-arrow-left mr-2 group-hover:-translate-x-1 transition-transform"></i> Voltar para Início
+                </button>
+                
+                <div class="mb-10">
+                    <h2 class="text-3xl md:text-4xl font-bold text-pref-darkblue mb-4">Todas as Notícias</h2>
+                    <div class="h-1.5 w-24 bg-pref-yellow rounded-full mb-4"></div>
+                    <p class="text-gray-600">Acompanhe tudo o que acontece na nossa cidade.</p>
+                </div>
+
+                <!-- Grid de Notícias Gerado Dinamicamente -->
+                <div id="grid-todas-noticias" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Conteúdo injetado via JS -->
+                </div>
+            </div>
+        </div>
+
+    </div> <!-- FIM APP CONTAINER -->
+
+    <!-- RODAPÉ -->
+    <footer id="contato" class="bg-pref-darkblue text-white pt-16 pb-8 border-t-8 border-pref-yellow mt-auto">
+        <div class="container mx-auto px-4 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+                <!-- Info Prefeitura -->
+                <div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <img src="https://i.imgur.com/yv7TJkd.png" alt="Logo Prefeitura" class="h-12 w-auto object-contain drop-shadow-md">
+                        <div>
+                            <h4 class="text-xl font-bold leading-tight">Prefeitura de</h4>
+                            <h5 class="text-lg font-bold text-pref-yellow leading-tight">Rabo Seco</h5>
+                        </div>
+                    </div>
+                    <p class="text-blue-200 text-sm mb-6 leading-relaxed">Trabalhando com transparência, responsabilidade e compromisso com o desenvolvimento da nossa cidade e bem-estar da nossa gente.</p>
+                    <div class="flex gap-3">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-pref-yellow hover:text-pref-darkblue transition-all transform hover:scale-110">
+                            <i class="fa-brands fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/prefeituraderaboseco/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-pref-yellow hover:text-pref-darkblue transition-all transform hover:scale-110">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-pref-yellow hover:text-pref-darkblue transition-all transform hover:scale-110">
+                            <i class="fa-brands fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Contato -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6 flex items-center gap-2"><i class="fa-solid fa-address-book text-pref-yellow"></i> Fale Conosco</h4>
+                    <ul class="space-y-4 text-sm text-blue-100">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-location-dot mt-1 text-pref-yellow text-lg"></i>
+                            <span>Praça dos Três Poderes, nº 01 - Centro<br>Rabo Seco, BA - CEP: 00000-000</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-phone text-pref-yellow text-lg"></i>
+                            <span>(00) 3333-0000</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-envelope text-pref-yellow text-lg"></i>
+                            <span>contato@raboseco.ba.gov.br</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-clock text-pref-yellow text-lg"></i>
+                            <span>Seg. a Sex. das 08h às 14h</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Links Úteis -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6 flex items-center gap-2"><i class="fa-solid fa-link text-pref-yellow"></i> Links Úteis</h4>
+                    <ul class="space-y-3 text-sm text-blue-100">
+                        <li><a href="#" class="hover:text-pref-yellow hover:translate-x-2 inline-block transition-transform"><i class="fa-solid fa-chevron-right text-xs mr-1 opacity-50"></i> Diário Oficial</a></li>
+                        <li><a href="#" class="hover:text-pref-yellow hover:translate-x-2 inline-block transition-transform"><i class="fa-solid fa-chevron-right text-xs mr-1 opacity-50"></i> Portal da Transparência</a></li>
+                        <li><a href="#" class="hover:text-pref-yellow hover:translate-x-2 inline-block transition-transform"><i class="fa-solid fa-chevron-right text-xs mr-1 opacity-50"></i> Legislação Municipal</a></li>
+                        <li><a href="#" class="hover:text-pref-yellow hover:translate-x-2 inline-block transition-transform"><i class="fa-solid fa-chevron-right text-xs mr-1 opacity-50"></i> Secretarias</a></li>
+                        <li><a href="#" class="hover:text-pref-yellow hover:translate-x-2 inline-block transition-transform"><i class="fa-solid fa-chevron-right text-xs mr-1 opacity-50"></i> Defesa Civil</a></li>
+                    </ul>
+                </div>
+
+                <!-- Brasão/Selo -->
+                <div class="flex flex-col items-center justify-center text-center mt-4 md:mt-0">
+                    <img src="https://i.imgur.com/yv7TJkd.png" alt="Selo Gestão" class="h-28 w-auto mb-4 object-contain drop-shadow-lg transform hover:scale-105 transition-transform duration-300">
+                    <div>
+                        <p class="text-sm text-blue-200 font-bold tracking-[0.2em] uppercase mb-1">Gestão</p>
+                        <div class="h-px w-8 bg-pref-yellow mx-auto mb-1 opacity-70"></div>
+                        <p class="text-pref-yellow font-bold text-xl">2025 - 2028</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-blue-300">
+                <p>&copy; 2026 Prefeitura Municipal de Rabo Seco. Todos os direitos reservados.</p>
+                <p class="mt-4 md:mt-0">Desenvolvido com <i class="fa-solid fa-heart text-pref-yellow mx-1"></i> para os cidadãos.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT PARA INTERATIVIDADE -->
+    <script>
+        // Função para abrir/fechar menu no Celular
+        const btnMobile = document.getElementById('mobile-menu-btn');
+        const menuMobile = document.getElementById('mobile-menu');
+        const icon = btnMobile.querySelector('i');
+
+        btnMobile.addEventListener('click', () => {
+            menuMobile.classList.toggle('hidden');
+            menuMobile.classList.toggle('flex');
+            
+            if (menuMobile.classList.contains('hidden')) {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            } else {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+            }
+        });
+
+        function closeMenu() {
+            if (!menuMobile.classList.contains('hidden')) {
+                menuMobile.classList.add('hidden');
+                menuMobile.classList.remove('flex');
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            }
+        }
+
+        // ==========================================
+        // SISTEMA DE NAVEGAÇÃO "PÁGINA ÚNICA" (SPA)
+        // ==========================================
+
+        // Dados simulados para funcionamento offline (Sem banco de dados real)
+        const bancoDeNoticias = {
+            1: {
+                titulo: "Prefeitura inaugura nova praça no bairro Esperança com área de lazer e esportes",
+                categoria: "Infraestrutura",
+                data: "23 de Setembro, 2026",
+                imagem: "https://placehold.co/800x500/0047AB/FFFFFF?text=Inauguracao+Praca",
+                conteudo: `
+                    <p>A Prefeitura Municipal de Rabo Seco, em um esforço contínuo para melhorar a qualidade de vida da população, entregou nesta manhã a nova Praça da Família no bairro Esperança. O evento contou com a presença do Prefeito, secretários municipais e centenas de moradores e lideranças.</p>
+                    <p>O novo espaço conta com infraestrutura completa de lazer e convivência para todas as idades:</p>
+                    <ul>
+                        <li>Quadra poliesportiva com iluminação de LED para jogos noturnos;</li>
+                        <li>Playground moderno com piso emborrachado garantindo a segurança das crianças;</li>
+                        <li>Academia da Saúde ao ar livre focada na melhoria da qualidade de vida da terceira idade;</li>
+                        <li>Projeto paisagístico especial com amplo plantio de árvores nativas da região.</li>
+                    </ul>
+                    <p><strong>"Esta obra reflete o nosso compromisso em transformar áreas abandonadas em espaços vivos e seguros para as nossas famílias"</strong>, destacou o gestor municipal de Rabo Seco durante o corte da fita inaugural.</p>
+                    <p>A obra foi realizada de forma transparente e 100% com recursos próprios do município, totalizando um investimento em prol da saúde preventiva. A Secretaria de Obras informou que a manutenção será realizada semanalmente para garantir a conservação impecável do novo patrimônio público.</p>
+                `
+            },
+            2: {
+                titulo: "Campanha de vacinação contra a gripe é prorrogada até sexta-feira",
+                categoria: "Saúde",
+                data: "21 de Setembro, 2026",
+                imagem: "https://placehold.co/800x500/FFC107/002D6B?text=Saude",
+                conteudo: "<p>A Secretaria Municipal de Saúde de Rabo Seco informou que a Campanha Nacional de Vacinação contra a Influenza (Gripe) foi estendida até a próxima sexta-feira, visando atingir e ultrapassar a meta estipulada pelo Ministério da Saúde.</p><p>A vacinação está amplamente disponível em todas as Unidades Básicas de Saúde (UBS) do município e pontos itinerantes, funcionando das 08h às 16h sem fechar para o almoço.</p><p>O público-alvo prioritário nesta etapa de prorrogação inclui idosos, gestantes, crianças de 6 meses a menores de 6 anos e trabalhadores da saúde. É necessário apresentar documento com foto e a caderneta de vacinação nos postos de triagem.</p>"
+            },
+            3: {
+                titulo: "Matrículas para a rede municipal abrem na próxima semana",
+                categoria: "Educação",
+                data: "19 de Setembro, 2026",
+                imagem: "https://placehold.co/800x500/002D6B/FFFFFF?text=Escola",
+                conteudo: "<p>Atenção pais e responsáveis de alunos! A Secretaria de Educação de Rabo Seco inicia na próxima segunda-feira o período oficial de renovação e novas matrículas para o ano letivo de 2027 em todas as escolas da rede municipal de ensino.</p><p>Neste ano, visando facilitar e modernizar o acesso sem pegar filas no sol, o processo será inicialmente 100% digital diretamente aqui pelo Portal do Cidadão, sendo exigido o comparecimento presencial nas escolas apenas para entrega da documentação comprobatória física em janeiro.</p><p>Cerca de 2.500 novas vagas foram abertas nas creches (educação infantil) e escolas de ensino fundamental 1 e 2, tudo graças ao audacioso plano de ampliação das unidades escolares executado no ano passado com aprovação da câmara.</p>"
+            },
+            4: {
+                titulo: "Festival Cultural de Rabo Seco atrai milhares de pessoas",
+                categoria: "Cultura",
+                data: "15 de Setembro, 2026",
+                imagem: "https://placehold.co/800x500/E5E7EB/9CA3AF?text=Cultura",
+                conteudo: "<p>O maior evento da nossa cidade superou as expectativas. O tradicional Festival Cultural de Rabo Seco encerrou sua edição deste ano batendo recorde histórico de público. A Praça Central de Eventos ficou completamente lotada nos três dias de festa cultural e musical.</p><p>O espaço reuniu o melhor dos artesãos locais, estandes com farta culinária típica e grandes shows de talentos regionais e artistas convidados.</p><p>O evento também movimentou e muito a economia local. Segundo balanço divulgado pela Secretaria de Turismo e Comércio, a ocupação da rede hoteleira e de pousadas bateu a impressionante marca de 98% de lotação no fim de semana, injetando milhões de reais de forma direta e indireta em nosso município.</p>"
+            }
+        };
+
+        // Troca qual DIV é exibida na tela
+        function switchView(viewId) {
+            window.scrollTo(0, 0); // Rola para o topo
+            
+            // Oculta todas as páginas
+            document.getElementById('view-home').classList.add('hidden');
+            document.getElementById('view-home').classList.remove('flex');
+            
+            document.getElementById('view-noticia').classList.add('hidden');
+            document.getElementById('view-noticia').classList.remove('flex');
+            
+            document.getElementById('view-servico').classList.add('hidden');
+            document.getElementById('view-servico').classList.remove('flex');
+
+            document.getElementById('view-todas-noticias').classList.add('hidden');
+            document.getElementById('view-todas-noticias').classList.remove('flex');
+            
+            // Exibe apenas a página desejada
+            const targetView = document.getElementById(viewId);
+            targetView.classList.remove('hidden');
+            targetView.classList.add('flex');
+        }
+
+        function goHome() {
+            switchView('view-home');
+        }
+
+        function goHomeAndScroll(sectionId) {
+            switchView('view-home');
+            
+            // Espera o HTML renderizar a home e rola até a seção
+            setTimeout(() => {
+                const el = document.getElementById(sectionId);
+                if(el) {
+                    // Compensa o tamanho do cabeçalho fixo (aprox 80px)
+                    const yOffset = el.getBoundingClientRect().top + window.scrollY - 85;
+                    window.scrollTo({top: yOffset, behavior: 'smooth'});
+                }
+            }, 50);
+        }
+
+        function showArticle(id) {
+            const noticia = bancoDeNoticias[id];
+            if(!noticia) return;
+            
+            document.getElementById('noticia-imagem').src = noticia.imagem;
+            document.getElementById('noticia-categoria').innerText = noticia.categoria;
+            document.getElementById('noticia-titulo').innerText = noticia.titulo;
+            document.getElementById('noticia-data').innerText = noticia.data;
+            document.getElementById('noticia-conteudo').innerHTML = noticia.conteudo;
+            
+            switchView('view-noticia');
+        }
+
+        function showService(titulo, desc) {
+            document.getElementById('servico-titulo').innerText = titulo;
+            document.getElementById('servico-desc').innerText = desc;
+            
+            // Reseta formulário visualmente
+            document.getElementById('alerta-msg').classList.add('hidden');
+            document.querySelector('#view-servico input').value = '';
+            
+            switchView('view-servico');
+        }
+
+        function showAllNewsView() {
+            const grid = document.getElementById('grid-todas-noticias');
+            grid.innerHTML = ''; // Limpa o grid
+            
+            // Percorre o banco de notícias e cria os cards dinamicamente
+            Object.keys(bancoDeNoticias).forEach(id => {
+                const noticia = bancoDeNoticias[id];
+                
+                const card = `
+                    <article onclick="showArticle(${id})" class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all cursor-pointer border border-gray-100 flex flex-col h-full group transform hover:-translate-y-1">
+                        <img src="${noticia.imagem}" alt="${noticia.categoria}" class="w-full h-56 object-cover">
+                        <div class="p-6 flex flex-col flex-grow">
+                            <span class="bg-blue-50 text-pref-blue text-xs font-bold px-3 py-1 rounded-full uppercase mb-4 self-start">${noticia.categoria}</span>
+                            <h4 class="text-xl font-bold text-gray-800 mb-3 leading-tight group-hover:text-pref-blue transition-colors">${noticia.titulo}</h4>
+                            <p class="text-gray-500 text-sm font-medium mt-auto border-t border-gray-100 pt-4 flex items-center">
+                                <i class="fa-regular fa-calendar mr-2 text-pref-blue"></i> ${noticia.data}
+                            </p>
+                        </div>
+                    </article>
+                `;
+                grid.innerHTML += card;
+            });
+            
+            switchView('view-todas-noticias');
+        }
+
+        // Verifica quando a página carrega se existe a instrução na URL para abrir a tela de Todas as Notícias
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('page') === 'todas-noticias') {
+                showAllNewsView();
+            }
+        });
+    </script>
+</body>
+</html>
