@@ -714,29 +714,31 @@
                     isCidadaoLogado = false;
                     cidadaoPerfil = null;
                 } else {
-                    // Se não for admin, é um Cidadão Comum! Busca o perfil dele.
                     isGestorAdmin = false;
-                    isCidadaoLogado = true;
                     try {
+                        // Proteção contra conflito: se estivermos criando conta, aguarda 1 segundo antes de tentar ler do banco
+                        if (isModoCadastroCidadao && !cidadaoPerfil) { await new Promise(r => setTimeout(r, 1000)); }
+                        
                         const docSnap = await getDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'perfil', 'dados'));
                         if (docSnap.exists()) {
                             cidadaoPerfil = docSnap.data();
+                            isCidadaoLogado = true;
                         } else {
-                            isCidadaoLogado = false; // Falha na leitura do perfil
+                            if (!cidadaoPerfil) isCidadaoLogado = false;
                         }
                     } catch(e) { console.error("Erro perfil:", e); }
                 }
                 
                 // Muda a cor do botão Header se tiver logado
                 document.getElementById('btn-header-cidadao').innerHTML = isCidadaoLogado ? `<i class="fa-solid fa-circle-user text-lg text-green-500"></i> <span>Meu Painel</span>` : `<i class="fa-regular fa-id-card text-lg"></i> <span>Acesso Cidadão</span>`;
-                
+                handleHashChange();
             } else {
                 isGestorAdmin = false;
                 isCidadaoLogado = false;
                 cidadaoPerfil = null;
                 document.getElementById('btn-header-cidadao').innerHTML = `<i class="fa-regular fa-id-card text-lg"></i> <span>Acesso Cidadão</span>`;
+                handleHashChange();
             }
-            handleHashChange();
         });
 
         // INICIALIZAÇÃO FIREBASE (Sementes)
@@ -951,16 +953,26 @@
                     
                     // Gera o CPF Virtual e salva no Perfil Seguro do Firebase
                     const novoCPF = gerarCPFVirtual();
-                    await setDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'perfil', 'dados'), {
+                    const novoPerfil = {
                         nome: nome,
                         email: email,
                         cpfVirtual: novoCPF,
                         criadoEm: new Date().toISOString()
-                    });
+                    };
+                    await setDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'perfil', 'dados'), novoPerfil);
+                    
+                    // Força a variável local a reconhecer os dados instantaneamente
+                    cidadaoPerfil = novoPerfil;
+                    isCidadaoLogado = true;
                 } else {
                     await signInWithEmailAndPassword(auth, email, senha);
-                    // O onAuthStateChanged vai pegar o login e mudar a tela sozinho
                 }
+                
+                // Restaura o botão e envia para a tela certa imediatamente
+                btn.disabled = false;
+                btn.innerHTML = isModoCadastroCidadao ? '<i class="fa-solid fa-fingerprint"></i> Criar CPF Virtual' : '<i class="fa-solid fa-right-to-bracket"></i> Entrar no Sistema';
+                window.location.hash = 'cidadao';
+                
             } catch (error) {
                 console.error(error);
                 msgErro.classList.remove('hidden');
