@@ -94,7 +94,6 @@
         <!-- PÁGINA INICIAL -->
         <div id="view-home" class="flex-col flex flex-grow">
 
-            <!-- HERO SECTION (Destaque Principal) -->
             <section class="bg-pref-blue text-white py-16 md:py-24 relative overflow-hidden">
                 <!-- Elemento decorativo de fundo -->
                 <div class="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -mr-20 -mt-20 pointer-events-none"></div>
@@ -120,8 +119,7 @@
                     </div>
                     
                     <div class="md:w-2/5 flex justify-center">
-                        <!-- Imagem ilustrativa ou brasão -->
-                        <img src="https://i.imgur.com/yv7TJkd.png" alt="Brasão de Rabo Seco" class="w-64 h-auto lg:w-80 transform hover:scale-105 transition-transform duration-300 drop-shadow-2xl">
+                        <img src="https://i.imgur.com/yv7TJkd.png" alt="Símbolo de Rabo Seco" class="w-64 h-auto lg:w-80 transform hover:scale-105 transition-transform duration-300 drop-shadow-2xl">
                     </div>
                 </div>
             </section>
@@ -136,7 +134,6 @@
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <!-- Serviço 1 -->
                         <a href="#" onclick="showService('Emissão de IPTU', 'Emita a 2ª via do seu IPTU, consulte débitos e parcelamentos de anos anteriores.'); return false;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl hover:border-pref-yellow hover:-translate-y-2 group transition-all block">
                             <div class="w-16 h-16 bg-blue-50 text-pref-blue rounded-full flex items-center justify-center text-2xl mb-6 group-hover:bg-pref-blue group-hover:text-white transition-colors">
                                 <i class="fa-solid fa-file-invoice-dollar"></i>
@@ -145,7 +142,6 @@
                             <p class="text-gray-500 text-sm leading-relaxed">Emita a 2ª via do seu IPTU, consulte débitos e parcelamentos.</p>
                         </a>
 
-                        <!-- Serviço 2 -->
                         <a href="#" onclick="showService('Portal do Servidor', 'Acesso restrito a servidores da prefeitura para consulta de holerites, férias e informações de RH.'); return false;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl hover:border-pref-yellow hover:-translate-y-2 group transition-all block">
                             <div class="w-16 h-16 bg-blue-50 text-pref-blue rounded-full flex items-center justify-center text-2xl mb-6 group-hover:bg-pref-blue group-hover:text-white transition-colors">
                                 <i class="fa-solid fa-users"></i>
@@ -154,7 +150,6 @@
                             <p class="text-gray-500 text-sm leading-relaxed">Acesso ao contracheque, informe de rendimentos e avisos internos.</p>
                         </a>
 
-                        <!-- Serviço 3 -->
                         <a href="#" onclick="showService('Ouvidoria', 'Faça sua denúncia, reclamação, sugestão ou elogio formalmente aos órgãos da prefeitura.'); return false;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl hover:border-pref-yellow hover:-translate-y-2 group transition-all block">
                             <div class="w-16 h-16 bg-blue-50 text-pref-blue rounded-full flex items-center justify-center text-2xl mb-6 group-hover:bg-pref-blue group-hover:text-white transition-colors">
                                 <i class="fa-solid fa-bullhorn"></i>
@@ -163,7 +158,6 @@
                             <p class="text-gray-500 text-sm leading-relaxed">Faça sua denúncia, reclamação, sugestão ou elogio para a gestão.</p>
                         </a>
 
-                        <!-- Serviço 4 -->
                         <a href="#" onclick="showService('Licitações', 'Acompanhe editais, pregões eletrônicos, concorrências e avisos de licitação do município.'); return false;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl hover:border-pref-yellow hover:-translate-y-2 group transition-all block">
                             <div class="w-16 h-16 bg-blue-50 text-pref-blue rounded-full flex items-center justify-center text-2xl mb-6 group-hover:bg-pref-blue group-hover:text-white transition-colors">
                                 <i class="fa-solid fa-file-contract"></i>
@@ -188,51 +182,11 @@
                         </button>
                     </div>
 
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                        <!-- Notícia 1 (Destaque Maior) -->
-                        <article onclick="showArticle(1)" class="lg:col-span-2 rounded-2xl overflow-hidden shadow-lg group cursor-pointer relative block">
-                            <img src="https://placehold.co/800x500/0047AB/FFFFFF?text=Inauguracao+Praca" alt="Obras na praça central" class="w-full h-96 object-cover group-hover:scale-105 transition-transform duration-700">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
-                            <div class="absolute bottom-0 left-0 p-8">
-                                <span class="bg-pref-yellow text-pref-darkblue text-xs font-bold px-3 py-1 rounded-full uppercase mb-4 inline-block">Infraestrutura</span>
-                                <h4 class="text-2xl md:text-3xl font-bold text-white mb-3 leading-tight group-hover:text-pref-yellow transition-colors">Prefeitura inaugura nova praça no bairro Esperança com área de lazer e esportes</h4>
-                                <p class="text-gray-300 text-sm font-medium"><i class="fa-regular fa-calendar mr-2"></i> 23 de Setembro, 2026</p>
-                            </div>
-                        </article>
-
-                        <!-- Coluna de Notícias Menores -->
-                        <div class="flex flex-col gap-6">
-                            <!-- Notícia 2 -->
-                            <article onclick="showArticle(2)" class="flex gap-5 group cursor-pointer bg-gray-50 rounded-xl p-3 hover:bg-gray-100 transition-colors border border-transparent hover:border-gray-200">
-                                <img src="https://placehold.co/150x150/FFC107/002D6B?text=Saude" alt="Vacinação" class="w-28 h-28 rounded-lg object-cover flex-shrink-0 shadow-sm">
-                                <div class="flex flex-col justify-center">
-                                    <span class="text-pref-blue text-xs font-bold uppercase mb-1">Saúde</span>
-                                    <h4 class="text-gray-800 font-bold leading-tight group-hover:text-pref-blue transition-colors text-sm md:text-base">Campanha de vacinação contra a gripe é prorrogada até sexta</h4>
-                                    <p class="text-gray-500 text-xs mt-2 font-medium">21 de Setembro, 2026</p>
-                                </div>
-                            </article>
-
-                            <!-- Notícia 3 -->
-                            <article onclick="showArticle(3)" class="flex gap-5 group cursor-pointer bg-gray-50 rounded-xl p-3 hover:bg-gray-100 transition-colors border border-transparent hover:border-gray-200">
-                                <img src="https://placehold.co/150x150/002D6B/FFFFFF?text=Escola" alt="Escola" class="w-28 h-28 rounded-lg object-cover flex-shrink-0 shadow-sm">
-                                <div class="flex flex-col justify-center">
-                                    <span class="text-pref-blue text-xs font-bold uppercase mb-1">Educação</span>
-                                    <h4 class="text-gray-800 font-bold leading-tight group-hover:text-pref-blue transition-colors text-sm md:text-base">Matrículas para a rede municipal abrem na próxima semana</h4>
-                                    <p class="text-gray-500 text-xs mt-2 font-medium">19 de Setembro, 2026</p>
-                                </div>
-                            </article>
-                            
-                            <!-- Notícia 4 -->
-                            <article onclick="showArticle(4)" class="flex gap-5 group cursor-pointer bg-gray-50 rounded-xl p-3 hover:bg-gray-100 transition-colors border border-transparent hover:border-gray-200">
-                                <div class="w-28 h-28 rounded-lg bg-gray-200 flex items-center justify-center text-gray-400 flex-shrink-0 shadow-sm">
-                                     <i class="fa-solid fa-camera text-3xl"></i>
-                                </div>
-                                <div class="flex flex-col justify-center">
-                                    <span class="text-pref-blue text-xs font-bold uppercase mb-1">Cultura</span>
-                                    <h4 class="text-gray-800 font-bold leading-tight group-hover:text-pref-blue transition-colors text-sm md:text-base">Festival Cultural de Rabo Seco atrai milhares de pessoas</h4>
-                                    <p class="text-gray-500 text-xs mt-2 font-medium">15 de Setembro, 2026</p>
-                                </div>
-                            </article>
+                    <!-- Container onde as notícias do Firebase serão injetadas -->
+                    <div id="noticias-grid-home" class="min-h-[400px] flex items-center justify-center">
+                        <div class="text-gray-400 font-medium flex items-center gap-3">
+                            <i class="fa-solid fa-circle-notch fa-spin text-pref-blue text-2xl"></i> 
+                            Carregando notícias do banco de dados...
                         </div>
                     </div>
                 </div>
@@ -250,16 +204,16 @@
 
                 <!-- Cabeçalho da Notícia -->
                 <div class="mb-8">
-                    <span id="noticia-categoria" class="bg-pref-yellow text-pref-darkblue text-xs font-bold px-3 py-1 rounded-full uppercase mb-4 inline-block">Categoria</span>
-                    <h1 id="noticia-titulo" class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mb-6">Título da Notícia</h1>
+                    <span id="noticia-categoria" class="bg-pref-yellow text-pref-darkblue text-xs font-bold px-3 py-1 rounded-full uppercase mb-4 inline-block">...</span>
+                    <h1 id="noticia-titulo" class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mb-6">Carregando...</h1>
                     <div class="flex items-center text-gray-500 font-medium">
                         <i class="fa-regular fa-calendar text-pref-blue mr-2"></i>
-                        <span id="noticia-data">Data da publicação</span>
+                        <span id="noticia-data">...</span>
                     </div>
                 </div>
 
                 <!-- Imagem Principal -->
-                <img id="noticia-imagem" src="" alt="Imagem da Notícia" class="w-full h-64 md:h-96 lg:h-[500px] object-cover rounded-2xl mb-10 shadow-lg">
+                <img id="noticia-imagem" src="" alt="Imagem da Notícia" class="w-full h-64 md:h-96 lg:h-[500px] object-cover rounded-2xl mb-10 shadow-lg bg-gray-100">
 
                 <!-- Conteúdo -->
                 <div id="noticia-conteudo" class="prose prose-lg max-w-none text-gray-700 leading-relaxed space-y-6">
@@ -337,10 +291,10 @@
                 <div class="mb-10">
                     <h2 class="text-3xl md:text-4xl font-bold text-pref-darkblue mb-4">Todas as Notícias</h2>
                     <div class="h-1.5 w-24 bg-pref-yellow rounded-full mb-4"></div>
-                    <p class="text-gray-600">Acompanhe tudo o que acontece na nossa cidade.</p>
+                    <p class="text-gray-600">Acompanhe tudo o que acontece na nossa cidade em tempo real pelo nosso sistema online.</p>
                 </div>
 
-                <!-- Grid de Notícias Gerado Dinamicamente -->
+                <!-- Grid de Notícias Gerado Dinamicamente do Firebase -->
                 <div id="grid-todas-noticias" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <!-- Conteúdo injetado via JS -->
                 </div>
@@ -430,9 +384,243 @@
         </div>
     </footer>
 
-    <!-- JAVASCRIPT PARA INTERATIVIDADE -->
-    <script>
-        // Função para abrir/fechar menu no Celular
+    <script type="module">
+        // Importando módulos do Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDocs, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Sua configuração do Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyBEYU7Y0QKZCa_fMC5ML-MWMN2IAdCx114",
+            authDomain: "prefeituraderaboseco.firebaseapp.com",
+            projectId: "prefeituraderaboseco",
+            storageBucket: "prefeituraderaboseco.firebasestorage.app",
+            messagingSenderId: "806112181742",
+            appId: "1:806112181742:web:a7f7154cb3d98e82e2a2ff",
+            measurementId: "G-SYG86SG66H"
+        };
+
+        // Identificador do App (Usado para estruturar o Banco)
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'prefeituraderaboseco';
+
+        // Inicializando Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Banco de Notícias na Memória (Será alimentado pelo Firestore)
+        let bancoDeNoticias = {};
+
+        // Dados Iniciais (Caso o banco esteja vazio, ele se auto-preenche com isso)
+        const noticiasSemente = [
+            {
+                id: "noticia_1", ordem: 4, // ordem maior = mais recente
+                titulo: "Prefeitura inaugura nova praça no bairro Esperança com área de lazer e esportes",
+                categoria: "Infraestrutura", data: "23 de Setembro, 2026",
+                imagem: "https://placehold.co/800x500/0047AB/FFFFFF?text=Inauguracao+Praca",
+                conteudo: "<p>A Prefeitura Municipal de Rabo Seco, em um esforço contínuo para melhorar a qualidade de vida da população, entregou nesta manhã a nova Praça da Família no bairro Esperança. O evento contou com a presença do Prefeito, secretários municipais e centenas de moradores e lideranças.</p><p>O novo espaço conta com infraestrutura completa de lazer e convivência.</p>"
+            },
+            {
+                id: "noticia_2", ordem: 3,
+                titulo: "Campanha de vacinação contra a gripe é prorrogada até sexta-feira",
+                categoria: "Saúde", data: "21 de Setembro, 2026",
+                imagem: "https://placehold.co/800x500/FFC107/002D6B?text=Saude",
+                conteudo: "<p>A Secretaria Municipal de Saúde de Rabo Seco informou que a Campanha Nacional de Vacinação contra a Influenza (Gripe) foi estendida até a próxima sexta-feira, visando atingir e ultrapassar a meta estipulada pelo Ministério da Saúde.</p>"
+            },
+            {
+                id: "noticia_3", ordem: 2,
+                titulo: "Matrículas para a rede municipal abrem na próxima semana",
+                categoria: "Educação", data: "19 de Setembro, 2026",
+                imagem: "https://placehold.co/800x500/002D6B/FFFFFF?text=Escola",
+                conteudo: "<p>Atenção pais e responsáveis de alunos! A Secretaria de Educação de Rabo Seco inicia na próxima segunda-feira o período oficial de renovação e novas matrículas para o ano letivo de 2027 em todas as escolas da rede municipal de ensino.</p>"
+            },
+            {
+                id: "noticia_4", ordem: 1,
+                titulo: "Festival Cultural de Rabo Seco atrai milhares de pessoas",
+                categoria: "Cultura", data: "15 de Setembro, 2026",
+                imagem: "https://placehold.co/800x500/E5E7EB/9CA3AF?text=Cultura",
+                conteudo: "<p>O maior evento da nossa cidade superou as expectativas. O tradicional Festival Cultural de Rabo Seco encerrou sua edição deste ano batendo recorde histórico de público na Praça Central.</p>"
+            }
+        ];
+
+        async function iniciarBancoDeDados() {
+            try {
+                // 1. Autenticação (Obrigatório antes de ler o banco)
+                if (typeof __initial_auth_token !== 'undefined') {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+                
+                if (!auth.currentUser) return; // Proteção extra
+
+                // 2. Referência ao caminho oficial de dados públicos
+                const noticiasRef = collection(db, 'artifacts', appId, 'public', 'data', 'noticias');
+
+                // 3. Verificar se o banco está vazio e semear dados se necessário
+                const snap = await getDocs(noticiasRef);
+                if (snap.empty) {
+                    console.log("Banco de dados vazio. Gerando notícias iniciais...");
+                    for (let n of noticiasSemente) {
+                        await setDoc(doc(noticiasRef, n.id), n);
+                    }
+                }
+
+                // 4. Conectar em tempo real (Qualquer mudança no painel adm, atualiza aqui na hora)
+                onSnapshot(noticiasRef, (snapshot) => {
+                    bancoDeNoticias = {};
+                    snapshot.forEach(docSnap => {
+                        bancoDeNoticias[docSnap.id] = { id: docSnap.id, ...docSnap.data() };
+                    });
+                    
+                    renderizarNoticiasHome(); // Atualiza a página inicial
+                    
+                    // Se estiver na tela de Todas as Notícias, atualiza ela também
+                    if (!document.getElementById('view-todas-noticias').classList.contains('hidden')) {
+                        showAllNewsView();
+                    }
+                }, (error) => {
+                    console.error("Erro ao escutar Firestore:", error);
+                });
+
+            } catch (error) {
+                console.error("Erro na inicialização do Firebase:", error);
+            }
+        }
+
+        // Chama a inicialização
+        iniciarBancoDeDados();
+
+        // Função para desenhar as notícias na página inicial com os dados do Firebase
+        function renderizarNoticiasHome() {
+            const container = document.getElementById('noticias-grid-home');
+            if (!container) return;
+
+            // Ordena as notícias (Maior ordem aparece primeiro)
+            const arrayNoticias = Object.values(bancoDeNoticias).sort((a, b) => b.ordem - a.ordem);
+
+            if (arrayNoticias.length === 0) {
+                container.innerHTML = '<div class="text-center text-gray-500 py-10 w-full">Nenhuma notícia publicada ainda.</div>';
+                return;
+            }
+
+            const principal = arrayNoticias[0]; // Primeira Notícia (Destaque Maior)
+            const secundarias = arrayNoticias.slice(1, 4); // Próximas 3 Notícias
+
+            let html = `
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 w-full">
+                    <article onclick="showArticle('${principal.id}')" class="lg:col-span-2 rounded-2xl overflow-hidden shadow-lg group cursor-pointer relative block h-full min-h-[400px]">
+                        <img src="${principal.imagem}" alt="${principal.categoria}" class="w-full h-full object-cover absolute inset-0 group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-8 z-10 w-full">
+                            <span class="bg-pref-yellow text-pref-darkblue text-xs font-bold px-3 py-1 rounded-full uppercase mb-4 inline-block">${principal.categoria}</span>
+                            <h4 class="text-2xl md:text-3xl font-bold text-white mb-3 leading-tight group-hover:text-pref-yellow transition-colors">${principal.titulo}</h4>
+                            <p class="text-gray-300 text-sm font-medium"><i class="fa-regular fa-calendar mr-2"></i> ${principal.data}</p>
+                        </div>
+                    </article>
+
+                    <div class="flex flex-col gap-6">
+            `;
+
+            secundarias.forEach(noticia => {
+                html += `
+                    <article onclick="showArticle('${noticia.id}')" class="flex gap-5 group cursor-pointer bg-gray-50 rounded-xl p-3 hover:bg-gray-100 transition-colors border border-transparent hover:border-gray-200">
+                        <img src="${noticia.imagem}" alt="${noticia.categoria}" class="w-28 h-28 rounded-lg object-cover flex-shrink-0 shadow-sm">
+                        <div class="flex flex-col justify-center">
+                            <span class="text-pref-blue text-xs font-bold uppercase mb-1">${noticia.categoria}</span>
+                            <h4 class="text-gray-800 font-bold leading-tight group-hover:text-pref-blue transition-colors text-sm md:text-base">${noticia.titulo}</h4>
+                            <p class="text-gray-500 text-xs mt-2 font-medium">${noticia.data}</p>
+                        </div>
+                    </article>
+                `;
+            });
+
+            html += `</div></div>`;
+            container.innerHTML = html;
+        }
+
+        // ==========================================
+        // SISTEMA DE NAVEGAÇÃO SPA (Single Page)
+        // ==========================================
+        
+        // Expondo as funções para o HTML acessar globalmente
+        window.switchView = function(viewId) {
+            window.scrollTo(0, 0); // Rola para o topo
+            ['view-home', 'view-noticia', 'view-servico', 'view-todas-noticias'].forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+                document.getElementById(id).classList.remove('flex');
+            });
+            const targetView = document.getElementById(viewId);
+            targetView.classList.remove('hidden');
+            targetView.classList.add('flex');
+        };
+
+        window.goHome = function() { window.switchView('view-home'); };
+
+        window.goHomeAndScroll = function(sectionId) {
+            window.switchView('view-home');
+            setTimeout(() => {
+                const el = document.getElementById(sectionId);
+                if(el) {
+                    const yOffset = el.getBoundingClientRect().top + window.scrollY - 85;
+                    window.scrollTo({top: yOffset, behavior: 'smooth'});
+                }
+            }, 50);
+        };
+
+        window.showArticle = function(id) {
+            const noticia = bancoDeNoticias[id];
+            if(!noticia) return;
+            
+            document.getElementById('noticia-imagem').src = noticia.imagem;
+            document.getElementById('noticia-categoria').innerText = noticia.categoria;
+            document.getElementById('noticia-titulo').innerText = noticia.titulo;
+            document.getElementById('noticia-data').innerText = noticia.data;
+            document.getElementById('noticia-conteudo').innerHTML = noticia.conteudo;
+            
+            window.switchView('view-noticia');
+        };
+
+        window.showService = function(titulo, desc) {
+            document.getElementById('servico-titulo').innerText = titulo;
+            document.getElementById('servico-desc').innerText = desc;
+            document.getElementById('alerta-msg').classList.add('hidden');
+            document.querySelector('#view-servico input').value = '';
+            
+            window.switchView('view-servico');
+        };
+
+        window.showAllNewsView = function() {
+            const grid = document.getElementById('grid-todas-noticias');
+            grid.innerHTML = '';
+            
+            const arrayNoticias = Object.values(bancoDeNoticias).sort((a, b) => b.ordem - a.ordem);
+
+            if(arrayNoticias.length === 0) {
+                 grid.innerHTML = '<p class="col-span-full text-center text-gray-500 py-10">Nenhuma notícia no momento.</p>';
+            }
+
+            arrayNoticias.forEach(noticia => {
+                const card = `
+                    <article onclick="showArticle('${noticia.id}')" class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all cursor-pointer border border-gray-100 flex flex-col h-full group transform hover:-translate-y-1">
+                        <img src="${noticia.imagem}" alt="${noticia.categoria}" class="w-full h-56 object-cover">
+                        <div class="p-6 flex flex-col flex-grow">
+                            <span class="bg-blue-50 text-pref-blue text-xs font-bold px-3 py-1 rounded-full uppercase mb-4 self-start">${noticia.categoria}</span>
+                            <h4 class="text-xl font-bold text-gray-800 mb-3 leading-tight group-hover:text-pref-blue transition-colors">${noticia.titulo}</h4>
+                            <p class="text-gray-500 text-sm font-medium mt-auto border-t border-gray-100 pt-4 flex items-center">
+                                <i class="fa-regular fa-calendar mr-2 text-pref-blue"></i> ${noticia.data}
+                            </p>
+                        </div>
+                    </article>
+                `;
+                grid.innerHTML += card;
+            });
+            
+            window.switchView('view-todas-noticias');
+        };
+
+        // Funções do Menu Mobile
         const btnMobile = document.getElementById('mobile-menu-btn');
         const menuMobile = document.getElementById('mobile-menu');
         const icon = btnMobile.querySelector('i');
@@ -450,160 +638,14 @@
             }
         });
 
-        function closeMenu() {
+        window.closeMenu = function() {
             if (!menuMobile.classList.contains('hidden')) {
                 menuMobile.classList.add('hidden');
                 menuMobile.classList.remove('flex');
                 icon.classList.remove('fa-xmark');
                 icon.classList.add('fa-bars');
             }
-        }
-
-        // ==========================================
-        // SISTEMA DE NAVEGAÇÃO "PÁGINA ÚNICA" (SPA)
-        // ==========================================
-
-        // Dados simulados para funcionamento offline (Sem banco de dados real)
-        const bancoDeNoticias = {
-            1: {
-                titulo: "Prefeitura inaugura nova praça no bairro Esperança com área de lazer e esportes",
-                categoria: "Infraestrutura",
-                data: "23 de Setembro, 2026",
-                imagem: "https://placehold.co/800x500/0047AB/FFFFFF?text=Inauguracao+Praca",
-                conteudo: `
-                    <p>A Prefeitura Municipal de Rabo Seco, em um esforço contínuo para melhorar a qualidade de vida da população, entregou nesta manhã a nova Praça da Família no bairro Esperança. O evento contou com a presença do Prefeito, secretários municipais e centenas de moradores e lideranças.</p>
-                    <p>O novo espaço conta com infraestrutura completa de lazer e convivência para todas as idades:</p>
-                    <ul>
-                        <li>Quadra poliesportiva com iluminação de LED para jogos noturnos;</li>
-                        <li>Playground moderno com piso emborrachado garantindo a segurança das crianças;</li>
-                        <li>Academia da Saúde ao ar livre focada na melhoria da qualidade de vida da terceira idade;</li>
-                        <li>Projeto paisagístico especial com amplo plantio de árvores nativas da região.</li>
-                    </ul>
-                    <p><strong>"Esta obra reflete o nosso compromisso em transformar áreas abandonadas em espaços vivos e seguros para as nossas famílias"</strong>, destacou o gestor municipal de Rabo Seco durante o corte da fita inaugural.</p>
-                    <p>A obra foi realizada de forma transparente e 100% com recursos próprios do município, totalizando um investimento em prol da saúde preventiva. A Secretaria de Obras informou que a manutenção será realizada semanalmente para garantir a conservação impecável do novo patrimônio público.</p>
-                `
-            },
-            2: {
-                titulo: "Campanha de vacinação contra a gripe é prorrogada até sexta-feira",
-                categoria: "Saúde",
-                data: "21 de Setembro, 2026",
-                imagem: "https://placehold.co/800x500/FFC107/002D6B?text=Saude",
-                conteudo: "<p>A Secretaria Municipal de Saúde de Rabo Seco informou que a Campanha Nacional de Vacinação contra a Influenza (Gripe) foi estendida até a próxima sexta-feira, visando atingir e ultrapassar a meta estipulada pelo Ministério da Saúde.</p><p>A vacinação está amplamente disponível em todas as Unidades Básicas de Saúde (UBS) do município e pontos itinerantes, funcionando das 08h às 16h sem fechar para o almoço.</p><p>O público-alvo prioritário nesta etapa de prorrogação inclui idosos, gestantes, crianças de 6 meses a menores de 6 anos e trabalhadores da saúde. É necessário apresentar documento com foto e a caderneta de vacinação nos postos de triagem.</p>"
-            },
-            3: {
-                titulo: "Matrículas para a rede municipal abrem na próxima semana",
-                categoria: "Educação",
-                data: "19 de Setembro, 2026",
-                imagem: "https://placehold.co/800x500/002D6B/FFFFFF?text=Escola",
-                conteudo: "<p>Atenção pais e responsáveis de alunos! A Secretaria de Educação de Rabo Seco inicia na próxima segunda-feira o período oficial de renovação e novas matrículas para o ano letivo de 2027 em todas as escolas da rede municipal de ensino.</p><p>Neste ano, visando facilitar e modernizar o acesso sem pegar filas no sol, o processo será inicialmente 100% digital diretamente aqui pelo Portal do Cidadão, sendo exigido o comparecimento presencial nas escolas apenas para entrega da documentação comprobatória física em janeiro.</p><p>Cerca de 2.500 novas vagas foram abertas nas creches (educação infantil) e escolas de ensino fundamental 1 e 2, tudo graças ao audacioso plano de ampliação das unidades escolares executado no ano passado com aprovação da câmara.</p>"
-            },
-            4: {
-                titulo: "Festival Cultural de Rabo Seco atrai milhares de pessoas",
-                categoria: "Cultura",
-                data: "15 de Setembro, 2026",
-                imagem: "https://placehold.co/800x500/E5E7EB/9CA3AF?text=Cultura",
-                conteudo: "<p>O maior evento da nossa cidade superou as expectativas. O tradicional Festival Cultural de Rabo Seco encerrou sua edição deste ano batendo recorde histórico de público. A Praça Central de Eventos ficou completamente lotada nos três dias de festa cultural e musical.</p><p>O espaço reuniu o melhor dos artesãos locais, estandes com farta culinária típica e grandes shows de talentos regionais e artistas convidados.</p><p>O evento também movimentou e muito a economia local. Segundo balanço divulgado pela Secretaria de Turismo e Comércio, a ocupação da rede hoteleira e de pousadas bateu a impressionante marca de 98% de lotação no fim de semana, injetando milhões de reais de forma direta e indireta em nosso município.</p>"
-            }
         };
-
-        // Troca qual DIV é exibida na tela
-        function switchView(viewId) {
-            window.scrollTo(0, 0); // Rola para o topo
-            
-            // Oculta todas as páginas
-            document.getElementById('view-home').classList.add('hidden');
-            document.getElementById('view-home').classList.remove('flex');
-            
-            document.getElementById('view-noticia').classList.add('hidden');
-            document.getElementById('view-noticia').classList.remove('flex');
-            
-            document.getElementById('view-servico').classList.add('hidden');
-            document.getElementById('view-servico').classList.remove('flex');
-
-            document.getElementById('view-todas-noticias').classList.add('hidden');
-            document.getElementById('view-todas-noticias').classList.remove('flex');
-            
-            // Exibe apenas a página desejada
-            const targetView = document.getElementById(viewId);
-            targetView.classList.remove('hidden');
-            targetView.classList.add('flex');
-        }
-
-        function goHome() {
-            switchView('view-home');
-        }
-
-        function goHomeAndScroll(sectionId) {
-            switchView('view-home');
-            
-            // Espera o HTML renderizar a home e rola até a seção
-            setTimeout(() => {
-                const el = document.getElementById(sectionId);
-                if(el) {
-                    // Compensa o tamanho do cabeçalho fixo (aprox 80px)
-                    const yOffset = el.getBoundingClientRect().top + window.scrollY - 85;
-                    window.scrollTo({top: yOffset, behavior: 'smooth'});
-                }
-            }, 50);
-        }
-
-        function showArticle(id) {
-            const noticia = bancoDeNoticias[id];
-            if(!noticia) return;
-            
-            document.getElementById('noticia-imagem').src = noticia.imagem;
-            document.getElementById('noticia-categoria').innerText = noticia.categoria;
-            document.getElementById('noticia-titulo').innerText = noticia.titulo;
-            document.getElementById('noticia-data').innerText = noticia.data;
-            document.getElementById('noticia-conteudo').innerHTML = noticia.conteudo;
-            
-            switchView('view-noticia');
-        }
-
-        function showService(titulo, desc) {
-            document.getElementById('servico-titulo').innerText = titulo;
-            document.getElementById('servico-desc').innerText = desc;
-            
-            // Reseta formulário visualmente
-            document.getElementById('alerta-msg').classList.add('hidden');
-            document.querySelector('#view-servico input').value = '';
-            
-            switchView('view-servico');
-        }
-
-        function showAllNewsView() {
-            const grid = document.getElementById('grid-todas-noticias');
-            grid.innerHTML = ''; // Limpa o grid
-            
-            // Percorre o banco de notícias e cria os cards dinamicamente
-            Object.keys(bancoDeNoticias).forEach(id => {
-                const noticia = bancoDeNoticias[id];
-                
-                const card = `
-                    <article onclick="showArticle(${id})" class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all cursor-pointer border border-gray-100 flex flex-col h-full group transform hover:-translate-y-1">
-                        <img src="${noticia.imagem}" alt="${noticia.categoria}" class="w-full h-56 object-cover">
-                        <div class="p-6 flex flex-col flex-grow">
-                            <span class="bg-blue-50 text-pref-blue text-xs font-bold px-3 py-1 rounded-full uppercase mb-4 self-start">${noticia.categoria}</span>
-                            <h4 class="text-xl font-bold text-gray-800 mb-3 leading-tight group-hover:text-pref-blue transition-colors">${noticia.titulo}</h4>
-                            <p class="text-gray-500 text-sm font-medium mt-auto border-t border-gray-100 pt-4 flex items-center">
-                                <i class="fa-regular fa-calendar mr-2 text-pref-blue"></i> ${noticia.data}
-                            </p>
-                        </div>
-                    </article>
-                `;
-                grid.innerHTML += card;
-            });
-            
-            switchView('view-todas-noticias');
-        }
-
-        // Verifica quando a página carrega se existe a instrução na URL para abrir a tela de Todas as Notícias
-        window.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('page') === 'todas-noticias') {
-                showAllNewsView();
-            }
-        });
     </script>
 </body>
 </html>
