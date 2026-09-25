@@ -902,9 +902,70 @@
         }
         window.addEventListener('hashchange', handleHashChange);
 
+        // INICIALIZAÇÃO FIREBASE (Banco de Dados Tempo Real)
+        let isDBIniciado = false;
+        let unsubNoticias, unsubServicos, unsubCidadaos, unsubImpostos;
+
+        function iniciarBancoDeDados() {
+            if (!auth.currentUser) return; // Segurança dupla
+            
+            const noticiasRef = collection(db, 'artifacts', appId, 'public', 'data', 'noticias');
+            const servicosRef = collection(db, 'artifacts', appId, 'public', 'data', 'servicos');
+            const cidadaosRef = collection(db, 'artifacts', appId, 'public', 'data', 'cidadaos');
+            const impostosRef = collection(db, 'artifacts', appId, 'public', 'data', 'impostos');
+
+            unsubNoticias = onSnapshot(noticiasRef, (snap) => {
+                bancoDeNoticias = {};
+                snap.forEach(d => bancoDeNoticias[d.id] = { id: d.id, ...d.data() });
+                renderizarNoticiasHome(); 
+                if (window.location.hash === '#todas-noticias') renderizarGradeTodasNoticias(); 
+                if (window.location.hash.startsWith('#noticia/')) renderizarNoticiaAberta(); 
+                if (isAdminView) renderListaNoticiasAdmin();
+            }, (error) => console.error("Erro Notícias:", error));
+
+            unsubServicos = onSnapshot(servicosRef, (snap) => {
+                bancoDeServicos = {};
+                snap.forEach(d => bancoDeServicos[d.id] = { id: d.id, ...d.data() });
+                renderizarServicosHome(); 
+                if (window.location.hash === '#cidadao' && isCidadaoLogado) renderizarServicosCidadaoDashboard(); 
+                if (isAdminView) renderListaServicosAdmin();
+            }, (error) => console.error("Erro Serviços:", error));
+            
+            unsubCidadaos = onSnapshot(cidadaosRef, (snap) => {
+                bancoDeCidadaos = {};
+                snap.forEach(d => bancoDeCidadaos[d.id] = { id: d.id, ...d.data() });
+                if (isAdminView && adminAbaAtiva === 'cidadaos') renderListaCidadaosAdmin();
+            }, (error) => console.error("Erro Cidadãos:", error));
+
+            unsubImpostos = onSnapshot(impostosRef, (snap) => {
+                bancoDeImpostos = {};
+                snap.forEach(d => bancoDeImpostos[d.id] = { id: d.id, ...d.data() });
+                if (isAdminView && adminAbaAtiva === 'cidadaos' && currentAdminCidadaoId) renderImpostosCidadaoAdmin();
+            }, (error) => console.error("Erro Impostos:", error));
+        }
+
         // MONITORES DE AUTENTICAÇÃO
         onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                try {
+                    // Resolve token silencioso primeiro para evitar falha de permissão no onSnapshot
+                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                        await signInWithCustomToken(auth, __initial_auth_token);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+                } catch (e) { console.error("Erro auth inicial:", e); }
+                return; // O próximo evento onAuthStateChanged trará o usuário logado
+            }
+
             currentUser = user;
+            
+            // Inicia o DB apenas quando tivermos certeza da autenticação estabelecida
+            if (!isDBIniciado) {
+                isDBIniciado = true;
+                iniciarBancoDeDados();
+            }
+
             if (user && !user.isAnonymous) {
                 if (user.email === 'jeosouzazouza@gmail.com') {
                     isGestorAdmin = true;
@@ -921,56 +982,15 @@
                 }
                 
                 document.getElementById('btn-header-cidadao').innerHTML = isCidadaoLogado ? `<i class="fa-solid fa-circle-user text-lg text-green-500"></i> <span>Meu Painel</span>` : `<i class="fa-regular fa-id-card text-lg"></i> <span>Acesso Cidadão</span>`;
-                handleHashChange();
             } else {
                 isGestorAdmin = false;
                 isCidadaoLogado = false;
                 cidadaoPerfil = null;
                 document.getElementById('btn-header-cidadao').innerHTML = `<i class="fa-regular fa-id-card text-lg"></i> <span>Acesso Cidadão</span>`;
-                handleHashChange();
             }
-        });
-
-        // INICIALIZAÇÃO FIREBASE (Banco de Dados Tempo Real)
-        async function iniciarBancoDeDados() {
-            // Se não tiver token, loga anonimamente para poder ler os dados públicos
-            try { await signInAnonymously(auth); } catch(e) { console.log("Auth anônimo falhou", e); }
-
-            const noticiasRef = collection(db, 'artifacts', appId, 'public', 'data', 'noticias');
-            const servicosRef = collection(db, 'artifacts', appId, 'public', 'data', 'servicos');
-            const cidadaosRef = collection(db, 'artifacts', appId, 'public', 'data', 'cidadaos');
-            const impostosRef = collection(db, 'artifacts', appId, 'public', 'data', 'impostos');
-
-            onSnapshot(noticiasRef, (snap) => {
-                bancoDeNoticias = {};
-                snap.forEach(d => bancoDeNoticias[d.id] = { id: d.id, ...d.data() });
-                renderizarNoticiasHome(); 
-                if (window.location.hash === '#todas-noticias') renderizarGradeTodasNoticias(); 
-                if (window.location.hash.startsWith('#noticia/')) renderizarNoticiaAberta(); 
-                if (isAdminView) renderListaNoticiasAdmin();
-            });
-
-            onSnapshot(servicosRef, (snap) => {
-                bancoDeServicos = {};
-                snap.forEach(d => bancoDeServicos[d.id] = { id: d.id, ...d.data() });
-                renderizarServicosHome(); 
-                if (window.location.hash === '#cidadao' && isCidadaoLogado) renderizarServicosCidadaoDashboard(); 
-                if (isAdminView) renderListaServicosAdmin();
-            });
             
-            onSnapshot(cidadaosRef, (snap) => {
-                bancoDeCidadaos = {};
-                snap.forEach(d => bancoDeCidadaos[d.id] = { id: d.id, ...d.data() });
-                if (isAdminView && adminAbaAtiva === 'cidadaos') renderListaCidadaosAdmin();
-            });
-
-            onSnapshot(impostosRef, (snap) => {
-                bancoDeImpostos = {};
-                snap.forEach(d => bancoDeImpostos[d.id] = { id: d.id, ...d.data() });
-                if (isAdminView && adminAbaAtiva === 'cidadaos' && currentAdminCidadaoId) renderImpostosCidadaoAdmin();
-            });
-        }
-        iniciarBancoDeDados();
+            handleHashChange();
+        });
 
         // RENDERIZADORES PÚBLICOS BÁSICOS
         function renderizarServicosHome() {
@@ -1570,12 +1590,22 @@
             const lista = document.getElementById('lista-admin-cidadaos'); if(!lista) return;
             const busca = (document.getElementById('busca-cidadao')?.value || '').toLowerCase();
             
+            const todosOsCidadaos = Object.values(bancoDeCidadaos);
+            
+            if (todosOsCidadaos.length === 0) { 
+                lista.innerHTML = '<div class="text-center p-8 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 text-gray-400 font-bold"><i class="fa-solid fa-users-slash text-2xl mb-2 block"></i>Nenhum cidadão cadastrado no sistema ainda.</div>'; 
+                return; 
+            }
+
             // Adicionado fallback (|| '') para evitar erros com cadastros incompletos ou antigos
-            const dados = Object.values(bancoDeCidadaos)
+            const dados = todosOsCidadaos
                 .filter(c => (c.nome || '').toLowerCase().includes(busca) || (c.cpfVirtual || '').toLowerCase().includes(busca))
                 .sort((a,b)=> (a.nome || '').localeCompare(b.nome || ''));
             
-            if (dados.length === 0) { lista.innerHTML = '<div class="text-center p-8 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 text-gray-400 font-bold">Nenhum cidadão encontrado.</div>'; return; }
+            if (dados.length === 0) { 
+                lista.innerHTML = '<div class="text-center p-8 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 text-gray-400 font-bold"><i class="fa-solid fa-magnifying-glass text-2xl mb-2 block"></i>Nenhum cidadão corresponde à busca.</div>'; 
+                return; 
+            }
 
             lista.innerHTML = dados.map(item => `
                 <div onclick="selecionarCidadaoAdmin('${item.cpfVirtual}')" class="cursor-pointer flex items-center p-4 rounded-2xl transition-colors border ${currentAdminCidadaoId === item.cpfVirtual ? 'bg-blue-50 border-pref-blue shadow-sm' : 'bg-gray-50 border-gray-100 hover:bg-gray-100'} gap-3">
