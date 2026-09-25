@@ -1570,9 +1570,10 @@
             const lista = document.getElementById('lista-admin-cidadaos'); if(!lista) return;
             const busca = (document.getElementById('busca-cidadao')?.value || '').toLowerCase();
             
+            // Adicionado fallback (|| '') para evitar erros com cadastros incompletos ou antigos
             const dados = Object.values(bancoDeCidadaos)
-                .filter(c => c.nome.toLowerCase().includes(busca) || c.cpfVirtual.toLowerCase().includes(busca))
-                .sort((a,b)=> a.nome.localeCompare(b.nome));
+                .filter(c => (c.nome || '').toLowerCase().includes(busca) || (c.cpfVirtual || '').toLowerCase().includes(busca))
+                .sort((a,b)=> (a.nome || '').localeCompare(b.nome || ''));
             
             if (dados.length === 0) { lista.innerHTML = '<div class="text-center p-8 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 text-gray-400 font-bold">Nenhum cidadão encontrado.</div>'; return; }
 
@@ -1580,8 +1581,8 @@
                 <div onclick="selecionarCidadaoAdmin('${item.cpfVirtual}')" class="cursor-pointer flex items-center p-4 rounded-2xl transition-colors border ${currentAdminCidadaoId === item.cpfVirtual ? 'bg-blue-50 border-pref-blue shadow-sm' : 'bg-gray-50 border-gray-100 hover:bg-gray-100'} gap-3">
                     <div class="w-10 h-10 rounded-full flex-shrink-0 bg-white border border-gray-200 flex items-center justify-center text-pref-blue"><i class="fa-solid fa-user"></i></div>
                     <div class="flex-grow overflow-hidden">
-                        <h4 class="font-black text-gray-800 text-sm truncate">${item.nome}</h4>
-                        <p class="text-[11px] text-gray-500 font-mono mt-0.5">${item.cpfVirtual}</p>
+                        <h4 class="font-black text-gray-800 text-sm truncate">${item.nome || 'Cidadão sem nome'}</h4>
+                        <p class="text-[11px] text-gray-500 font-mono mt-0.5">${item.cpfVirtual || 'Sem CPF Virtual'}</p>
                     </div>
                     <i class="fa-solid fa-chevron-right text-gray-300 text-xs"></i>
                 </div>
