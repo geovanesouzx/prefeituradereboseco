@@ -1020,6 +1020,150 @@
         let cidadaoPerfil = null;
         let isModoCadastroCidadao = false; 
 
+        // ==========================================
+        // FUNÇÕES DE UI E NAVEGAÇÃO (FALTANTES)
+        // ==========================================
+        window.goHome = function() { window.location.hash = 'inicio'; };
+        window.goHomeAndScroll = function(id) { 
+            window.location.hash = 'inicio'; 
+            setTimeout(() => { const el = document.getElementById(id); if(el) el.scrollIntoView({behavior: 'smooth'}); }, 150); 
+        };
+        window.closeMenu = function() { document.getElementById('mobile-menu').classList.add('hidden'); };
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => { document.getElementById('mobile-menu').classList.toggle('hidden'); });
+        
+        window.mudarAbaAdmin = function(aba) {
+            adminAbaAtiva = aba;
+            const secoes = ['noticias', 'servicos', 'cidadaos', 'ouvidoria', 'saude', 'licitacoes', 'transparencia'];
+            secoes.forEach(s => {
+                const sec = document.getElementById(`admin-secao-${s}`);
+                const btn = document.getElementById(`btn-aba-${s}`);
+                if(sec) { sec.classList.add('hidden'); sec.classList.remove('flex'); }
+                if(btn) btn.className = 'flex-1 md:flex-none px-4 py-2.5 rounded-lg font-bold text-sm transition-all text-blue-200 hover:text-white whitespace-nowrap';
+            });
+            const activeSec = document.getElementById(`admin-secao-${aba}`);
+            const activeBtn = document.getElementById(`btn-aba-${aba}`);
+            if(activeSec) { activeSec.classList.remove('hidden'); activeSec.classList.add('flex'); }
+            if(activeBtn) activeBtn.className = 'flex-1 md:flex-none px-4 py-2.5 rounded-lg font-bold text-sm transition-all bg-white text-pref-blue shadow-sm whitespace-nowrap';
+            renderListasAdmin();
+        };
+
+        window.mudarAbaCidadao = function(aba) {
+            document.getElementById('aba-cidadao-servicos').classList.toggle('hidden', aba !== 'servicos');
+            document.getElementById('aba-cidadao-perfil').classList.toggle('hidden', aba !== 'perfil');
+            document.getElementById('btn-cidadao-servicos').className = aba === 'servicos' ? 'px-5 py-2.5 rounded-lg font-bold text-sm transition-all bg-pref-blue text-white shadow-sm' : 'px-5 py-2.5 rounded-lg font-bold text-sm transition-all text-gray-600 hover:text-pref-blue';
+            document.getElementById('btn-cidadao-perfil').className = aba === 'perfil' ? 'px-5 py-2.5 rounded-lg font-bold text-sm transition-all bg-pref-blue text-white shadow-sm' : 'px-5 py-2.5 rounded-lg font-bold text-sm transition-all text-gray-600 hover:text-pref-blue';
+        };
+
+        window.prepararNovoAdmin = function() {
+            if(adminAbaAtiva === 'noticias') {
+                document.getElementById('form-admin-noticia').reset(); document.getElementById('admin-noticia-id').value = '';
+                document.getElementById('admin-titulo-editor-noticias').innerHTML = '<i class="fa-solid fa-pen-to-square"></i> Nova Notícia';
+                document.getElementById('preview-img-admin').classList.add('hidden');
+            } else if (adminAbaAtiva === 'servicos') {
+                document.getElementById('form-admin-servico').reset(); document.getElementById('admin-servico-id').value = '';
+                document.getElementById('admin-titulo-editor-servicos').innerHTML = '<i class="fa-solid fa-pen-to-square"></i> Novo Serviço';
+                document.getElementById('preview-icon-admin').className = 'fa-solid fa-laptop-file';
+            }
+        };
+
+        window.alternarModoCidadao = function() {
+            isModoCadastroCidadao = !isModoCadastroCidadao;
+            document.getElementById('box-nome-cidadao').classList.toggle('hidden', !isModoCadastroCidadao);
+            document.getElementById('cidadao-nome').required = isModoCadastroCidadao;
+            document.getElementById('btn-submit-cidadao').innerHTML = isModoCadastroCidadao ? '<i class="fa-solid fa-fingerprint"></i> Criar Meu CPF Virtual' : '<i class="fa-solid fa-right-to-bracket"></i> Entrar no Sistema';
+            document.getElementById('toggle-auth-text').innerText = isModoCadastroCidadao ? 'Já possui CPF Virtual?' : 'Primeiro acesso ao portal?';
+            document.getElementById('toggle-auth-btn').innerText = isModoCadastroCidadao ? 'Fazer login' : 'Gerar meu CPF Virtual agora';
+        };
+
+        // ==========================================
+        // FUNÇÕES DE AUTENTICAÇÃO (LOGIN)
+        // ==========================================
+        window.gerarCPFVirtual = function() { return Math.floor(10000000000 + Math.random() * 90000000000).toString().replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4"); };
+
+        window.fazerLoginAdmin = async function() {
+            const email = document.getElementById('admin-email').value;
+            const senha = document.getElementById('admin-senha').value;
+            const btn = document.getElementById('btn-login-admin');
+            const erro = document.getElementById('admin-login-error');
+            erro.classList.add('hidden');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Autenticando...';
+            try {
+                // Strict check against the email before attempting to login, 
+                // matching the Firestore Security Rule: request.auth.token.email == 'jeosouzazouza@gmail.com'
+                if(email !== 'jeosouzazouza@gmail.com') {
+                    throw new Error("Acesso negado. Usuário não autorizado.");
+                }
+                
+                await signInWithEmailAndPassword(auth, email, senha);
+                // Firebase disparará o onAuthStateChanged e abrirá o painel
+            } catch (e) {
+                erro.classList.remove('hidden');
+                btn.innerHTML = '<i class="fa-solid fa-unlock mr-2"></i> Autenticar';
+            }
+        };
+
+        window.processarAuthCidadao = async function() {
+            const email = document.getElementById('cidadao-email').value;
+            const senha = document.getElementById('cidadao-senha').value;
+            const nome = document.getElementById('cidadao-nome').value;
+            const btn = document.getElementById('btn-submit-cidadao');
+            const erroMsg = document.getElementById('cidadao-msg-erro');
+            const erroTexto = document.getElementById('cidadao-msg-texto');
+
+            erroMsg.classList.add('hidden');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Processando...';
+
+            try {
+                if (isModoCadastroCidadao) {
+                    if(!nome) throw new Error("Nome é obrigatório");
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
+                    const user = userCredential.user;
+                    const cpfVirtual = window.gerarCPFVirtual();
+                    const perfilData = { uid: user.uid, nome: nome, email: email, cpfVirtual: cpfVirtual, criadoEm: new Date().toISOString() };
+                    
+                    // Salva no privado (para o cidadão ler) e no público (para o admin ler)
+                    await setDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'perfil', 'dados'), perfilData);
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'cidadaos', cpfVirtual), perfilData);
+                } else {
+                    await signInWithEmailAndPassword(auth, email, senha);
+                }
+            } catch (e) {
+                erroMsg.classList.remove('hidden');
+                erroTexto.innerText = "Erro ao acessar. Verifique seus dados. A senha deve ter 6 ou mais caracteres.";
+                btn.disabled = false;
+                btn.innerHTML = isModoCadastroCidadao ? '<i class="fa-solid fa-fingerprint"></i> Criar Meu CPF Virtual' : '<i class="fa-solid fa-right-to-bracket"></i> Entrar no Sistema';
+            }
+        };
+
+        window.sairAuth = async function() { await signOut(auth); window.location.hash = 'inicio'; };
+        window.sairCidadao = async function() { await signOut(auth); window.location.hash = 'inicio'; };
+
+        window.salvarPerfilCidadao = async function() {
+            if (!currentUser || !cidadaoPerfil) return;
+            const btn = document.getElementById('btn-salvar-perfil');
+            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Salvando...';
+            try {
+                const novosDados = {
+                    ...cidadaoPerfil,
+                    nome: document.getElementById('perfil-nome-edit').value,
+                    rg: document.getElementById('perfil-rg-edit').value,
+                    telefone: document.getElementById('perfil-telefone-edit').value,
+                    endereco: document.getElementById('perfil-endereco-edit').value
+                };
+                await setDoc(doc(db, 'artifacts', appId, 'users', currentUser.uid, 'perfil', 'dados'), novosDados);
+                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'cidadaos', cidadaoPerfil.cpfVirtual), novosDados);
+                
+                cidadaoPerfil = novosDados;
+                document.getElementById('msg-perfil-cidadao').classList.remove('hidden');
+                setTimeout(() => document.getElementById('msg-perfil-cidadao').classList.add('hidden'), 3000);
+            } catch(e) {
+                alert("Erro ao salvar perfil.");
+            } finally {
+                btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-floppy-disk mr-2"></i> Salvar Minhas Informações';
+            }
+        };
+
         window.formatarTextoParaHTML = function(texto) {
             if (!texto) return '';
             if (texto.includes('<p>') || texto.includes('<b>') || texto.includes('<br>')) return texto;
@@ -1145,6 +1289,7 @@
             iniciarBancoDeDados();
 
             if (user && !user.isAnonymous) {
+                // Restore strict admin check
                 if (user.email === 'jeosouzazouza@gmail.com') {
                     isGestorAdmin = true; isCidadaoLogado = false; cidadaoPerfil = null;
                 } else {
