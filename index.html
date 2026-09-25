@@ -18,7 +18,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
     
-    <!-- Configuração Tailwind -->
     <script>
         tailwind.config = {
             theme: {
@@ -65,6 +64,12 @@
         }
         .ribbon-anim { animation: float-ribbon 6s ease-in-out infinite; }
         .ribbon-anim:nth-child(even) { animation-delay: -3s; animation-duration: 7s; }
+        
+        /* Ocultar barra de rolagem onde necessário mas manter funcionalidade */
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; height: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .custom-scrollbar:hover::-webkit-scrollbar-thumb { background: #94a3b8; }
     </style>
 </head>
 <body class="bg-pref-light text-gray-800 font-sans antialiased flex flex-col min-h-screen relative">
@@ -142,8 +147,8 @@
                 <div class="absolute bottom-0 left-0 w-96 h-96 bg-pref-darkblue opacity-50 rounded-full -ml-32 -mb-32 pointer-events-none"></div>
                 
                 <!-- Laço Gigante de Campanha -->
-                <div id="hero-campaign-ribbon" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[24rem] h-[24rem] md:w-[35rem] md:h-[35rem] lg:w-[45rem] lg:h-[45rem] opacity-15 pointer-events-none hidden z-0 transition-colors duration-500">
-                    <svg viewBox="0 0 512 512" fill="currentColor"><path d="M439.4 39.4c-52.5-52.5-137.6-52.5-190.1 0l-37.4 37.4c-5.8 5.8-5.8 15.3 0 21.1 5.8 5.8 15.3 5.8 21.1 0l37.4-37.4c40.9-40.9 107.1-40.9 148 0 40.9 40.9 40.9 107.1 0 148L321 306c-5.8 5.8-5.8 15.3 0 21.1 5.8 5.8 15.3 5.8 21.1 0l97.3-97.3c52.5-52.6 52.5-137.7 0-190.4zm-366.8 0C20 91.9 20 177 72.6 229.6l97.3 97.3c5.8 5.8 15.3 5.8 21.1 0 5.8-5.8 5.8-15.3 0-21.1L93.7 208.5c-40.9-40.9-40.9-107.1 0-148 40.9-40.9 107.1-40.9 148 0l37.4 37.4c5.8 5.8 15.3 5.8 21.1 0 5.8-5.8 5.8-15.3 0-21.1L262.8 39.4C210.3-13.1 125.1-13.1 72.6 39.4zm346.7 346.7c-5.8-5.8-15.3-5.8-21.1 0L249.7 534.6c-5.8 5.8-5.8 15.3 0 21.1 5.8 5.8 15.3 5.8 21.1 0l148.5-148.5c5.9-5.8 5.9-15.3 0-21.1zm-327.4 0c-5.8-5.8-15.3-5.8-21.1 0-5.8 5.8-5.8 15.3 0 21.1l148.5 148.5c5.8 5.8 15.3 5.8 21.1 0 5.8-5.8 5.8-15.3 0-21.1L91.9 386.1z"/></svg>
+                <div id="hero-campaign-ribbon" class="absolute top-1/2 left-[75%] transform -translate-x-1/2 -translate-y-1/2 text-[15rem] sm:text-[25rem] lg:text-[45rem] opacity-25 pointer-events-none hidden z-0 transition-colors duration-500 drop-shadow-2xl rotate-12">
+                    <i class="fa-solid fa-ribbon"></i>
                 </div>
                 
                 <div class="container mx-auto px-4 lg:px-8 relative z-10 flex flex-col md:flex-row items-center gap-8 md:gap-12">
@@ -330,7 +335,7 @@
                     </div>
                 </div>
 
-                <!-- Nova Aba: Meu Perfil REDESENHADA -->
+                <!-- Aba: Meu Perfil REDESENHADA -->
                 <div id="aba-cidadao-perfil" class="hidden max-w-5xl mx-auto w-full">
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                         
@@ -619,13 +624,12 @@
                             </div>
                         </div>
                         <div class="bg-gray-50 p-5 rounded-2xl border border-gray-200">
-                            <label class="block text-sm font-black text-gray-700 mb-2">Imagem de Capa (Obrigatório)</label>
+                            <label class="block text-sm font-black text-gray-700 mb-2">Imagem de Capa (Link/URL)</label>
                             <div class="flex gap-3">
-                                <input type="url" id="admin-noticia-imagem" required placeholder="Cole o link ou use o botão de envio..." class="flex-grow px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium text-sm" oninput="mostrarPreview(this.value, 'preview-img-admin')">
-                                <label for="upload-capa" class="bg-pref-blue text-white px-5 py-3 rounded-xl cursor-pointer hover:bg-pref-darkblue transition-colors shadow-md flex items-center gap-2 font-black whitespace-nowrap text-sm">
-                                    <i class="fa-solid fa-cloud-arrow-up"></i> Enviar Foto
+                                <input type="url" id="admin-noticia-imagem" required placeholder="Cole o link ou URL da imagem..." class="flex-grow px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium text-sm" oninput="mostrarPreview(this.value, 'preview-img-admin')">
+                                <label for="upload-capa" class="bg-pref-blue text-white px-5 py-3 rounded-xl cursor-pointer hover:bg-pref-darkblue transition-colors shadow-md flex items-center gap-2 font-black whitespace-nowrap text-sm" onclick="mostrarAlerta('No ambiente de simulação, use um link externo (ex: imgur) para a imagem.')">
+                                    <i class="fa-solid fa-cloud-arrow-up"></i> Info
                                 </label>
-                                <input type="file" id="upload-capa" accept="image/*" class="hidden" onchange="fazerUploadMedia(this, 'capa')">
                             </div>
                             <img id="preview-img-admin" src="" class="hidden mt-4 h-36 w-full object-cover rounded-xl border border-gray-300 shadow-inner" onerror="this.classList.add('hidden')">
                         </div>
@@ -636,11 +640,9 @@
                             </div>
                             <div class="bg-blue-50 border border-blue-100 rounded-t-xl p-3 flex flex-wrap gap-2 items-center justify-between">
                                 <div class="flex items-center gap-3">
-                                    <label for="upload-midia" class="bg-white border border-blue-200 text-pref-blue px-3 py-1.5 rounded-lg cursor-pointer hover:bg-blue-100 flex items-center gap-2 font-bold shadow-sm transition-colors text-xs">
-                                        <i class="fa-solid fa-paperclip"></i> Inserir Mídia
+                                    <label for="upload-midia" onclick="mostrarAlerta('Sistema de envio de mídia simulado. Formatação permitida via markdown simples.')" class="bg-white border border-blue-200 text-pref-blue px-3 py-1.5 rounded-lg cursor-pointer hover:bg-blue-100 flex items-center gap-2 font-bold shadow-sm transition-colors text-xs">
+                                        <i class="fa-solid fa-paperclip"></i> Info Mídia
                                     </label>
-                                    <input type="file" id="upload-midia" class="hidden" onchange="fazerUploadMedia(this, 'conteudo')">
-                                    <span id="upload-status" class="text-xs font-bold text-pref-blue hidden bg-white px-2 py-1 rounded-md"><i class="fa-solid fa-circle-notch fa-spin mr-1"></i> Enviando...</span>
                                 </div>
                                 <div class="text-[10px] font-mono text-gray-500 font-bold flex gap-3">
                                     <span>*<b>Negrito</b>*</span>
@@ -1266,9 +1268,6 @@
         let cidadaoPerfil = null;
         let isModoCadastroCidadao = false; 
 
-        // ==========================================
-        // FUNÇÕES DE UI E NAVEGAÇÃO 
-        // ==========================================
         window.goHome = function() { window.location.hash = 'inicio'; };
         window.goHomeAndScroll = function(id) { 
             window.location.hash = 'inicio'; 
@@ -1331,9 +1330,6 @@
             document.getElementById('toggle-auth-btn').innerText = isModoCadastroCidadao ? 'Fazer login' : 'Gerar meu CPF Virtual agora';
         };
 
-        // ==========================================
-        // FUNÇÕES DE AUTENTICAÇÃO (LOGIN) CORRIGIDAS
-        // ==========================================
         window.gerarCPFVirtual = function() { return Math.floor(10000000000 + Math.random() * 90000000000).toString().replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4"); };
 
         window.fazerLoginAdmin = async function() {
@@ -1354,21 +1350,15 @@
                 try {
                     await signInWithEmailAndPassword(auth, email, senha);
                 } catch (e) {
-                    // Tenta criar se não existir
                     if (e.code === 'auth/user-not-found' || e.code === 'auth/invalid-credential') {
-                        try {
-                            await createUserWithEmailAndPassword(auth, email, senha);
-                        } catch(e2) {
-                            throw e; 
-                        }
-                    } else {
-                        throw e;
-                    }
+                        try { await createUserWithEmailAndPassword(auth, email, senha); } 
+                        catch(e2) { throw e; }
+                    } else { throw e; }
                 }
                 isGestorAdmin = true;
                 isCidadaoLogado = false;
                 window.location.hash = 'adminprefeitura';
-                handleHashChange(); // Força a atualização da tela instantaneamente
+                handleHashChange(); 
             } catch (e) {
                 console.error(e);
                 erro.classList.remove('hidden');
@@ -1398,14 +1388,13 @@
                     const cpfVirtual = window.gerarCPFVirtual();
                     const perfilData = { uid: user.uid, nome: nome, email: email, cpfVirtual: cpfVirtual, criadoEm: new Date().toISOString() };
                     
-                    cidadaoPerfil = perfilData; // Previne race condition setando imediatamente
+                    cidadaoPerfil = perfilData; 
                     isCidadaoLogado = true;
                     
                     await setDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'perfil', 'dados'), perfilData);
                     await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'cidadaos', cpfVirtual), perfilData);
                 } else {
                     const userCredential = await signInWithEmailAndPassword(auth, email, senha);
-                    // Busca imediatamente o perfil para não depender do listener atrasado do firebase auth
                     const docSnap = await getDoc(doc(db, 'artifacts', appId, 'users', userCredential.user.uid, 'perfil', 'dados'));
                     if (docSnap.exists()) {
                         cidadaoPerfil = docSnap.data();
@@ -1416,7 +1405,7 @@
                 }
                 
                 window.location.hash = 'cidadao';
-                handleHashChange(); // Força update da UI na mesma hora
+                handleHashChange();
             } catch (e) {
                 console.error("Erro auth cidadão:", e);
                 erroMsg.classList.remove('hidden');
@@ -1799,7 +1788,6 @@
                 sLog = config.slogan || defaultTexts['padrao'].s;
                 subLog = config.subSlogan || defaultTexts['padrao'].sub;
             } else {
-                // Em caso de campanhas forçamos as frases próprias (ignorando as salvas que não sejam originais)
                 sLog = defaultTexts[config.tipo]?.s || defaultTexts['padrao'].s;
                 subLog = defaultTexts[config.tipo]?.sub || defaultTexts['padrao'].sub;
             }
@@ -1828,8 +1816,8 @@
                     const dur = Math.random() * 5 + 5;
                     const y = Math.random() * 80;
                     htmlLacos += `
-                        <div class="absolute ribbon-anim opacity-20" style="left: ${left}%; top: ${y}%; width: ${size}px; animation-delay: ${delay}s; animation-duration: ${dur}s">
-                            <svg viewBox="0 0 512 512" fill="${corLaco}"><path d="M439.4 39.4c-52.5-52.5-137.6-52.5-190.1 0l-37.4 37.4c-5.8 5.8-5.8 15.3 0 21.1 5.8 5.8 15.3 5.8 21.1 0l37.4-37.4c40.9-40.9 107.1-40.9 148 0 40.9 40.9 40.9 107.1 0 148L321 306c-5.8 5.8-5.8 15.3 0 21.1 5.8 5.8 15.3 5.8 21.1 0l97.3-97.3c52.5-52.6 52.5-137.7 0-190.4zm-366.8 0C20 91.9 20 177 72.6 229.6l97.3 97.3c5.8 5.8 15.3 5.8 21.1 0 5.8-5.8 5.8-15.3 0-21.1L93.7 208.5c-40.9-40.9-40.9-107.1 0-148 40.9-40.9 107.1-40.9 148 0l37.4 37.4c5.8 5.8 15.3 5.8 21.1 0 5.8-5.8 5.8-15.3 0-21.1L262.8 39.4C210.3-13.1 125.1-13.1 72.6 39.4zm346.7 346.7c-5.8-5.8-15.3-5.8-21.1 0L249.7 534.6c-5.8 5.8-5.8 15.3 0 21.1 5.8 5.8 15.3 5.8 21.1 0l148.5-148.5c5.9-5.8 5.9-15.3 0-21.1zm-327.4 0c-5.8-5.8-15.3-5.8-21.1 0-5.8 5.8-5.8 15.3 0 21.1l148.5 148.5c5.8 5.8 15.3 5.8 21.1 0 5.8-5.8 5.8-15.3 0-21.1L91.9 386.1z"/></svg>
+                        <div class="absolute ribbon-anim opacity-20" style="left: ${left}%; top: ${y}%; font-size: ${size}px; color: ${corLaco}; animation-delay: ${delay}s; animation-duration: ${dur}s">
+                            <i class="fa-solid fa-ribbon"></i>
                         </div>
                     `;
                 }
@@ -2515,8 +2503,6 @@
             } catch(e) { console.error("Erro IA Simulação:", e); mostrarAlerta("Falha ao gerar impostos simulados."); } finally { btn.disabled = false; btn.innerHTML = oldHtml; }
         };
 
-        // --- NOVAS FUNÇÕES DE GERAÇÃO POR IA ---
-
         window.gerarNoticiasIA = async function() {
             const btn = document.getElementById('btn-ia-noticias'); const old = btn.innerHTML;
             btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gerando...';
@@ -2575,24 +2561,20 @@
             btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gerando...';
             try {
                 await new Promise(r => setTimeout(r, 1200));
-                const mock = [
-                    { tipo: "Reclamação", bairro: "Centro", msg: "Buraco na rua principal próximo à padaria da esquina." },
-                    { tipo: "Sugestão", bairro: "Vila Nova", msg: "Poderiam colocar mais lixeiras recicláveis na pracinha principal." },
-                    { tipo: "Solicitação de Serviço", bairro: "Bela Vista", msg: "Poste da rua João Alves com lâmpada queimada desde segunda." }
-                ];
-                const keys = Object.keys(bancoDeCidadaos);
-                
-                for (let i of mock) {
-                    const cpfRef = keys.length > 0 ? keys[Math.floor(Math.random() * keys.length)] : window.gerarCPFVirtual();
-                    const novoId = `ouv_${Date.now()}_${Math.floor(Math.random()*100)}`;
-                    const protocolo = 'OUV-' + Math.floor(10000 + Math.random() * 90000);
+                const cpfs = Object.keys(bancoDeCidadaos);
+                if(cpfs.length > 0) {
+                    const cpf = cpfs[Math.floor(Math.random() * cpfs.length)];
+                    const novoId = `ouv_${Date.now()}`;
                     await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'ouvidoria', novoId), {
-                        id: novoId, protocolo: protocolo, tipo: i.tipo, bairro: i.bairro, mensagem: i.msg,
-                        cpfCidadao: cpfRef, status: 'Pendente', data: new Date().toLocaleDateString('pt-BR')
+                        id: novoId, protocolo: 'OUV-' + Math.floor(10000 + Math.random() * 90000),
+                        tipo: 'Reclamação', bairro: 'Centro', mensagem: 'Há um buraco muito grande na rua principal que precisa de reparo urgente.',
+                        cpfCidadao: cpf, status: 'Pendente', data: new Date().toLocaleDateString('pt-BR')
                     });
+                    mostrarAlerta("Manifestação gerada via IA!");
+                } else {
+                    mostrarAlerta("Gere alguns cidadãos primeiro na aba Cidadãos.");
                 }
-                mostrarAlerta("Manifestações geradas!");
-            } catch(e) { mostrarAlerta("Erro."); } finally { btn.disabled = false; btn.innerHTML = old; }
+            } catch(e) { mostrarAlerta("Erro ao gerar."); } finally { btn.disabled = false; btn.innerHTML = old; }
         };
 
         window.gerarSaudeIA = async function() {
@@ -2600,23 +2582,20 @@
             btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gerando...';
             try {
                 await new Promise(r => setTimeout(r, 1200));
-                const keys = Object.keys(bancoDeCidadaos);
-                
-                const mock = [
-                    { esp: "Clínico Geral", data: "2026-10-15", obs: "Exames de rotina anual." },
-                    { esp: "Odontologia", data: "2026-11-20", obs: "Dor constante no siso." },
-                    { esp: "Pediatria", data: "2026-12-05", obs: "Acompanhamento mensal infantil." }
-                ];
-                for (let i of mock) {
-                    const cpfRef = keys.length > 0 ? keys[Math.floor(Math.random() * keys.length)] : window.gerarCPFVirtual();
-                    const novoId = `agend_${Date.now()}_${Math.floor(Math.random()*100)}`;
+                const cpfs = Object.keys(bancoDeCidadaos);
+                if(cpfs.length > 0) {
+                    const cpf = cpfs[Math.floor(Math.random() * cpfs.length)];
+                    const novoId = `agend_${Date.now()}`;
+                    const anoAtual = new Date().getFullYear();
                     await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'saude', novoId), {
-                        id: novoId, especialidade: i.esp, dataSolicitada: i.data, observacoes: i.obs,
-                        cpfCidadao: cpfRef, status: 'Pendente Análise'
+                        id: novoId, especialidade: 'Clínico Geral', dataSolicitada: `${anoAtual}-11-20`, observacoes: 'Dores de cabeça constantes.',
+                        cpfCidadao: cpf, status: 'Pendente Análise'
                     });
+                    mostrarAlerta("Agendamento gerado via IA!");
+                } else {
+                    mostrarAlerta("Gere alguns cidadãos primeiro na aba Cidadãos.");
                 }
-                mostrarAlerta("Agendamentos gerados!");
-            } catch(e) { mostrarAlerta("Erro."); } finally { btn.disabled = false; btn.innerHTML = old; }
+            } catch(e) { mostrarAlerta("Erro ao gerar."); } finally { btn.disabled = false; btn.innerHTML = old; }
         };
 
         window.gerarLicitacoesIA = async function() {
@@ -2624,19 +2603,15 @@
             btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gerando...';
             try {
                 await new Promise(r => setTimeout(r, 1200));
-                const mock = [
-                    { titulo: "Pregão Eletrônico 01/2026", desc: "Aquisição de merenda escolar, materiais e insumos.", status: "Edital Aberto" },
-                    { titulo: "Tomada de Preços 02/2026", desc: "Reforma geral do posto de saúde central e pintura.", status: "Em Andamento" },
-                    { titulo: "Concorrência Pública 03/2026", desc: "Obras de pavimentação asfáltica no bairro Vila Nova.", status: "Homologado" }
-                ];
-                for (let i of mock) {
-                    const novoId = `lic_${Date.now()}_${Math.floor(Math.random()*100)}`;
-                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'licitacoes', novoId), {
-                        id: novoId, titulo: i.titulo, descricao: i.desc, status: i.status, linkArquivo: "https://example.com/edital.pdf"
-                    });
-                }
-                mostrarAlerta("Licitações geradas!");
-            } catch(e) { mostrarAlerta("Erro."); } finally { btn.disabled = false; btn.innerHTML = old; }
+                const anoAtual = new Date().getFullYear();
+                const novoId = `lic_${Date.now()}`;
+                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'licitacoes', novoId), {
+                    id: novoId, titulo: `Pregão Eletrônico 0${Math.floor(Math.random()*9)+1}/${anoAtual}`,
+                    descricao: 'Aquisição de materiais de expediente para a prefeitura.',
+                    status: 'Edital Aberto', linkArquivo: 'https://exemplo.com/edital.pdf'
+                });
+                mostrarAlerta("Licitação gerada via IA!");
+            } catch(e) { mostrarAlerta("Erro ao gerar."); } finally { btn.disabled = false; btn.innerHTML = old; }
         };
 
         window.gerarTransparenciaIA = async function() {
@@ -2644,114 +2619,127 @@
             btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gerando...';
             try {
                 await new Promise(r => setTimeout(r, 1200));
-                const mock = [
-                    { tipo: "Receita", desc: "Repasse do FPM - Governo Federal", valor: (Math.random() * 50000 + 100000).toFixed(2) },
-                    { tipo: "Despesa", desc: "Folha de Pagamento Servidores (Mês atual)", valor: (Math.random() * 30000 + 50000).toFixed(2) },
-                    { tipo: "Receita", desc: "Arrecadação IPTU cota única", valor: (Math.random() * 20000 + 10000).toFixed(2) },
-                    { tipo: "Despesa", desc: "Manutenção Frota e Combustível", valor: (Math.random() * 5000 + 2000).toFixed(2) }
-                ];
-                for (let i of mock) {
-                    const novoId = `transp_${Date.now()}_${Math.floor(Math.random()*100)}`;
-                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'transparencia', novoId), {
-                        id: novoId, tipo: i.tipo, descricao: i.desc, valor: i.valor, data: new Date().toISOString().split('T')[0]
-                    });
-                }
-                mostrarAlerta("Lançamentos gerados!");
-            } catch(e) { mostrarAlerta("Erro."); } finally { btn.disabled = false; btn.innerHTML = old; }
+                const isRec = Math.random() > 0.5;
+                const novoId = `transp_${Date.now()}`;
+                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'transparencia', novoId), {
+                    id: novoId, tipo: isRec ? 'Receita' : 'Despesa',
+                    descricao: isRec ? 'Repasse do Governo Federal (FPM)' : 'Pagamento de Empresa de Limpeza',
+                    valor: (Math.random() * 50000 + 1000).toFixed(2),
+                    data: new Date().toISOString().split('T')[0]
+                });
+                mostrarAlerta("Movimentação gerada via IA!");
+            } catch(e) { mostrarAlerta("Erro ao gerar."); } finally { btn.disabled = false; btn.innerHTML = old; }
         };
 
+        // SALVAR EDITORES DO ADMIN (Notícia / Serviço)
+        window.salvarNoticiaAdmin = async function() {
+            const btn = document.getElementById('btn-salvar-noticia'); const old = btn.innerHTML;
+            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Salvando...';
+            const idAtual = document.getElementById('admin-noticia-id').value;
+            const novoId = idAtual || `noticia_${Date.now()}`;
+            try {
+                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'noticias', novoId), {
+                    id: novoId, 
+                    ordem: idAtual ? bancoDeNoticias[idAtual].ordem : Date.now(),
+                    titulo: document.getElementById('admin-noticia-titulo').value,
+                    categoria: document.getElementById('admin-noticia-categoria').value,
+                    data: document.getElementById('admin-noticia-data').value,
+                    imagem: document.getElementById('admin-noticia-imagem').value,
+                    conteudo: document.getElementById('admin-noticia-conteudo').value
+                });
+                document.getElementById('admin-form-success-noticias').classList.remove('hidden');
+                setTimeout(() => { document.getElementById('admin-form-success-noticias').classList.add('hidden'); prepararNovoAdmin(); }, 2000);
+            } catch(e) { document.getElementById('admin-form-error-noticias').classList.remove('hidden'); setTimeout(()=>document.getElementById('admin-form-error-noticias').classList.add('hidden'),3000); } 
+            finally { btn.disabled = false; btn.innerHTML = old; }
+        };
+
+        window.salvarServicoAdmin = async function() {
+            const btn = document.getElementById('btn-salvar-servico'); const old = btn.innerHTML;
+            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Salvando...';
+            const idAtual = document.getElementById('admin-servico-id').value;
+            const novoId = idAtual || `servico_${Date.now()}`;
+            try {
+                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'servicos', novoId), {
+                    id: novoId, 
+                    ordem: idAtual ? bancoDeServicos[idAtual].ordem : Date.now(),
+                    titulo: document.getElementById('admin-servico-titulo').value,
+                    icone: document.getElementById('admin-servico-icone').value,
+                    descricao: document.getElementById('admin-servico-desc').value
+                });
+                document.getElementById('admin-form-success-servicos').classList.remove('hidden');
+                setTimeout(() => { document.getElementById('admin-form-success-servicos').classList.add('hidden'); prepararNovoAdmin(); }, 2000);
+            } catch(e) { document.getElementById('admin-form-error-servicos').classList.remove('hidden'); setTimeout(()=>document.getElementById('admin-form-error-servicos').classList.add('hidden'),3000); } 
+            finally { btn.disabled = false; btn.innerHTML = old; }
+        };
 
         window.editarAdmin = function(tipo, id) {
-            const isNoticia = tipo === 'noticias'; const item = isNoticia ? bancoDeNoticias[id] : bancoDeServicos[id]; if(!item) return;
-            const pfx = isNoticia ? 'noticia' : 'servico';
-            document.getElementById(`admin-${pfx}-id`).value = item.id;
-            document.getElementById(`admin-${pfx}-titulo`).value = item.titulo;
-            
-            if(isNoticia) {
+            if (tipo === 'noticias') {
+                const item = bancoDeNoticias[id]; if(!item) return;
+                document.getElementById('admin-noticia-id').value = item.id;
+                document.getElementById('admin-noticia-titulo').value = item.titulo;
                 document.getElementById('admin-noticia-categoria').value = item.categoria;
                 document.getElementById('admin-noticia-data').value = item.data;
                 document.getElementById('admin-noticia-imagem').value = item.imagem;
                 document.getElementById('admin-noticia-conteudo').value = item.conteudo;
+                document.getElementById('admin-titulo-editor-noticias').innerHTML = `<i class="fa-solid fa-arrows-rotate text-pref-blue"></i> Editando Notícia`;
                 mostrarPreview(item.imagem, 'preview-img-admin');
-            } else {
-                const iconRaw = item.icone.replace('fa-solid ','').replace('fa-regular ','').replace('fa-','');
-                document.getElementById('admin-servico-icone').value = iconRaw;
-                document.getElementById('preview-icon-admin').className = 'fa-solid fa-' + iconRaw;
+            } else if (tipo === 'servicos') {
+                const item = bancoDeServicos[id]; if(!item) return;
+                document.getElementById('admin-servico-id').value = item.id;
+                document.getElementById('admin-servico-titulo').value = item.titulo;
+                document.getElementById('admin-servico-icone').value = item.icone;
                 document.getElementById('admin-servico-desc').value = item.descricao;
+                document.getElementById('admin-titulo-editor-servicos').innerHTML = `<i class="fa-solid fa-arrows-rotate text-pref-blue"></i> Editando Serviço`;
+                document.getElementById('preview-icon-admin').className = 'fa-solid fa-' + item.icone.replace('fa-','');
             }
-            document.getElementById(`admin-titulo-editor-${tipo}`).innerHTML = `<i class="fa-solid fa-arrows-rotate text-pref-blue"></i> Editando Cadastro`;
         };
 
-        window.salvarNoticiaAdmin = async function() { salvarItemGen(bancoDeNoticias, 'noticias', 'btn-salvar-noticia', {
-            titulo: document.getElementById('admin-noticia-titulo').value, categoria: document.getElementById('admin-noticia-categoria').value,
-            data: document.getElementById('admin-noticia-data').value, imagem: document.getElementById('admin-noticia-imagem').value, conteudo: document.getElementById('admin-noticia-conteudo').value
-        }); };
-
-        window.salvarServicoAdmin = async function() { salvarItemGen(bancoDeServicos, 'servicos', 'btn-salvar-servico', {
-            titulo: document.getElementById('admin-servico-titulo').value, icone: document.getElementById('admin-servico-icone').value.replace('fa-solid ','').replace('fa-regular ',''), descricao: document.getElementById('admin-servico-desc').value
-        }); };
-
-        async function salvarItemGen(banco, colecao, btnId, extraDados) {
-            const btn = document.getElementById(btnId); const oldHtml = btn.innerHTML;
-            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Salvando...';
-            document.getElementById(`admin-form-error-${colecao}`).classList.add('hidden'); 
-            document.getElementById(`admin-form-success-${colecao}`).classList.add('hidden');
-            const pfx = colecao === 'noticias' ? 'noticia' : 'servico';
-            const idAtual = document.getElementById(`admin-${pfx}-id`).value;
-            const novoId = idAtual || `${colecao}_${Date.now()}`;
-            const ordem = idAtual && banco[idAtual] ? banco[idAtual].ordem : (Object.values(banco).length > 0 ? Math.max(...Object.values(banco).map(n=>n.ordem||0))+1 : 1);
-            try {
-                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', colecao, novoId), { id: novoId, ordem: ordem, ...extraDados });
-                document.getElementById(`admin-form-success-${colecao}`).classList.remove('hidden'); setTimeout(()=>document.getElementById(`admin-form-success-${colecao}`).classList.add('hidden'), 3000);
-                if(!idAtual) prepararNovoAdmin();
-            } catch(e) { document.getElementById(`admin-form-error-${colecao}`).classList.remove('hidden'); } 
-            finally { btn.disabled = false; btn.innerHTML = oldHtml; }
-        }
+        // FUNÇÕES GENÉRICAS
+        window.mostrarPreview = function(url, imgId) {
+            const img = document.getElementById(imgId);
+            if(url) { img.src = url; img.classList.remove('hidden'); }
+            else { img.classList.add('hidden'); }
+        };
 
         window.abrirModalDelete = function(tipo, id) {
-            itemParaExcluir = { tipo: tipo, id: id };
+            if(!id) return;
+            itemParaExcluir = { tipo, id };
             document.getElementById('modal-delete').classList.remove('hidden');
         };
 
         window.fecharModalDelete = function() {
-            itemParaExcluir = { tipo: null, id: null };
+            itemParaExcluir = { id: null, tipo: null };
             document.getElementById('modal-delete').classList.add('hidden');
         };
 
         document.getElementById('btn-confirmar-delete').addEventListener('click', async () => {
-            if(!itemParaExcluir.id) return;
-            try {
-                await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', itemParaExcluir.tipo, itemParaExcluir.id));
-                fecharModalDelete();
-                mostrarAlerta("Item excluído com sucesso.");
-            } catch (e) {
-                mostrarAlerta("Erro ao excluir.");
+            if(itemParaExcluir.id && itemParaExcluir.tipo) {
+                const btn = document.getElementById('btn-confirmar-delete');
+                const old = btn.innerHTML;
+                btn.disabled = true; btn.innerHTML = 'Excluindo...';
+                try {
+                    await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', itemParaExcluir.tipo, itemParaExcluir.id));
+                    fecharModalDelete();
+                    
+                    if(itemParaExcluir.tipo === 'noticias') prepararNovoAdmin();
+                    if(itemParaExcluir.tipo === 'servicos') prepararNovoAdmin();
+                    if(itemParaExcluir.tipo === 'ouvidoria') { document.getElementById('admin-aviso-selecione-ouvidoria').classList.remove('hidden'); currentAdminOuvidoriaId = null; }
+                    if(itemParaExcluir.tipo === 'saude') { document.getElementById('admin-aviso-selecione-saude').classList.remove('hidden'); currentAdminAgendamentoId = null; }
+                    if(itemParaExcluir.tipo === 'licitacoes') prepararNovoAdminLicitacao();
+                    
+                    mostrarAlerta("Item excluído com sucesso.");
+                } catch(e) {
+                    mostrarAlerta("Erro ao excluir.");
+                    btn.disabled = false; btn.innerHTML = old;
+                }
             }
         });
 
-        window.mostrarPreview = function(url, idElemento) {
-            const img = document.getElementById(idElemento);
-            if(url && url.length > 5) {
-                img.src = url;
-                img.classList.remove('hidden');
-            } else {
-                img.classList.add('hidden');
-            }
+        // Evento de inicio global
+        window.onload = function() {
+            handleHashChange();
         };
 
-        window.fazerUploadMedia = function(input, tipo) {
-            mostrarAlerta("Upload de mídia simulado. Por favor, cole a URL da imagem no campo correspondente.");
-            if(tipo === 'capa') {
-                document.getElementById('admin-noticia-imagem').value = 'https://i.imgur.com/yv7TJkd.png';
-                window.mostrarPreview('https://i.imgur.com/yv7TJkd.png', 'preview-img-admin');
-            }
-        };
-
-        // ==========================================
-        // LISTENERS DE ROTEAMENTO (MUITO IMPORTANTE)
-        // ==========================================
-        window.addEventListener('hashchange', handleHashChange);
-        window.addEventListener('DOMContentLoaded', handleHashChange);
     </script>
 </body>
 </html>
