@@ -1667,37 +1667,43 @@
             btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Gerando com IA...';
             
             try {
-                const prompt = `Atue como o sistema financeiro da prefeitura. Gere exatamente 3 impostos ou taxas fictícias (ex: IPTU, Taxa de Lixo, ISS, Alvará) para o cidadão ${cidadao.nome}. Retorne APENAS um array JSON válido, onde cada objeto tem as propriedades: "titulo" (string), "valor" (numero formato float), "vencimento" (string formato DD/MM/AAAA). Não inclua crases ou markdown na resposta, apenas o JSON puro.`;
+                // Chama a nossa API Serverless do Vercel (que usa o Groq em background)
+                const response = await fetch('/api/gerar-impostos', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        nome: cidadao.nome,
+                        cpf: cidadao.cpfVirtual
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Erro na API do Vercel: ${response.status}`);
+                }
+
+                const impostosGerados = await response.json();
                 
-                const payload = {
-                    contents: [{ parts: [{ text: prompt }] }],
-                    generationConfig: { responseMimeType: "application/json" }
-                };
-                
-                const apiKey = ""; // A plataforma injeta
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
-                
-                const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-                const data = await response.json();
-                
-                if (data.candidates && data.candidates.length > 0) {
-                    const jsonStr = data.candidates[0].content.parts[0].text;
-                    const impostosGerados = JSON.parse(jsonStr);
-                    
-                    // Salvar no banco
+                if (impostosGerados && Array.isArray(impostosGerados) && impostosGerados.length > 0) {
+                    // Salvar no banco de dados do Firebase
                     for (let imp of impostosGerados) {
                         const novoId = `imp_${Date.now()}_${Math.floor(Math.random()*1000)}`;
                         await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'impostos', novoId), {
-                            id: novoId, cpfCidadao: currentAdminCidadaoId, titulo: imp.titulo,
-                            valor: imp.valor, vencimento: imp.vencimento, status: 'Pendente'
+                            id: novoId, 
+                            cpfCidadao: currentAdminCidadaoId, 
+                            titulo: imp.titulo,
+                            valor: imp.valor, 
+                            vencimento: imp.vencimento, 
+                            status: imp.status || 'Pendente'
                         });
                     }
                 } else {
-                    throw new Error("Resposta vazia da IA");
+                    throw new Error("Resposta inválida ou vazia da IA");
                 }
             } catch(e) {
-                console.error("Erro IA:", e);
-                alert("Falha ao gerar impostos com a IA. Tente novamente.");
+                console.error("Erro IA Backend:", e);
+                alert("Falha ao conectar com o gerador de IA. Verifique os logs do Vercel.");
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = oldHtml;
