@@ -125,6 +125,7 @@
                         <span class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-blue-50 transition-colors"><i class="fa-solid fa-newspaper text-gray-400 group-hover:text-pref-blue"></i></div> Últimas Notícias</span> <i class="fa-solid fa-chevron-right text-xs text-gray-300"></i>
                     </a>
                     
+                    <!-- Destaque para Acesso Cidadão no Mobile -->
                     <a href="#cidadao" onclick="closeMenu();" class="mt-4 border-2 border-pref-blue text-pref-blue text-center font-black py-3.5 rounded-xl hover:bg-blue-50 shadow-sm transition-colors flex items-center justify-center gap-2">
                         <i class="fa-regular fa-id-card text-lg"></i> Meu CPF Virtual
                     </a>
@@ -146,7 +147,7 @@
                 <div class="absolute bottom-0 left-0 w-96 h-96 bg-pref-darkblue opacity-50 rounded-full -ml-32 -mb-32 pointer-events-none"></div>
                 
                 <!-- Laço Gigante de Campanha -->
-                <div id="hero-campaign-ribbon" class="absolute top-1/2 left-[75%] transform -translate-x-1/2 -translate-y-1/2 text-[15rem] sm:text-[25rem] lg:text-[45rem] opacity-15 pointer-events-none hidden z-0 transition-colors duration-500 drop-shadow-2xl rotate-12">
+                <div id="hero-campaign-ribbon" class="absolute top-1/2 left-[75%] transform -translate-x-1/2 -translate-y-1/2 text-[15rem] sm:text-[25rem] lg:text-[45rem] opacity-25 pointer-events-none hidden z-0 transition-colors duration-500 drop-shadow-2xl rotate-12">
                     <i class="fa-solid fa-ribbon"></i>
                 </div>
                 
@@ -166,7 +167,7 @@
                         </div>
                     </div>
                     <div class="md:w-2/5 flex justify-center">
-                        <img src="https://i.imgur.com/yv7TJkd.png" alt="Símbolo de Rabo Seco" class="w-64 h-auto lg:w-80 transform hover:scale-105 transition-transform duration-300 drop-shadow-2xl relative z-10">
+                        <img src="https://i.imgur.com/yv7TJkd.png" alt="Símbolo de Rabo Seco" class="w-64 h-auto lg:w-80 transform hover:scale-105 transition-transform duration-300 drop-shadow-2xl">
                     </div>
                 </div>
             </section>
@@ -202,8 +203,11 @@
             </section>
         </div>
 
+        <!-- TELA 1: LOGIN/CADASTRO CIDADÃO REDESENHADA -->
         <div id="view-cidadao-auth" class="hidden flex-col flex-grow bg-white items-center justify-center relative min-h-[80vh]">
             <div class="flex w-full max-w-6xl mx-auto rounded-[2.5rem] shadow-2xl overflow-hidden bg-white border border-gray-100 min-h-[600px] m-4 relative z-10">
+                
+                <!-- Lado Esquerdo (Branding) -->
                 <div class="hidden lg:flex w-1/2 bg-gradient-to-br from-pref-darkblue to-pref-blue text-white p-12 flex-col justify-between relative overflow-hidden">
                     <div class="absolute top-0 right-0 w-96 h-96 bg-white opacity-5 rounded-full -mr-32 -mt-32"></div>
                     <div class="absolute bottom-0 left-0 w-80 h-80 bg-pref-yellow opacity-10 rounded-full blur-3xl -ml-20 -mb-20"></div>
@@ -225,6 +229,7 @@
                     </div>
                 </div>
 
+                <!-- Lado Direito (Formulário) -->
                 <div class="w-full lg:w-1/2 p-8 md:p-14 flex flex-col justify-center bg-gray-50 relative">
                     <button onclick="window.history.back()" class="absolute top-6 left-6 text-gray-400 hover:text-pref-blue font-bold flex items-center gap-2 transition-colors lg:hidden">
                         <i class="fa-solid fa-arrow-left"></i> Voltar
@@ -271,6 +276,7 @@
             </div>
         </div>
 
+        <!-- TELA 2: PAINEL DO CIDADÃO (LOGADO) -->
         <div id="view-cidadao-dashboard" class="hidden flex-col flex-grow bg-gray-50 py-12 pb-24">
             <div class="container mx-auto px-4 lg:px-8 max-w-5xl">
                 
@@ -309,6 +315,7 @@
                                 <div class="h-px w-12 bg-white/30 mb-6"></div>
                             </div>
                             
+                            <!-- ESTRUTURA RESTAURADA AQUI -->
                             <div>
                                 <p class="text-[10px] uppercase tracking-widest text-blue-200 mb-1 font-bold">Titular</p>
                                 <p id="dash-cidadao-nome" class="font-black text-xl mb-4 leading-tight">Carregando...</p>
@@ -328,10 +335,11 @@
                     </div>
                 </div>
 
-                <!-- Aba: Meu Perfil -->
+                <!-- Aba: Meu Perfil REDESENHADA -->
                 <div id="aba-cidadao-perfil" class="hidden max-w-5xl mx-auto w-full">
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                         
+                        <!-- Coluna Identidade -->
                         <div class="lg:col-span-1 space-y-6">
                             <div class="bg-white rounded-[2rem] shadow-sm border border-gray-100 p-8 text-center relative overflow-hidden">
                                 <div class="absolute top-0 left-0 w-full h-4 bg-pref-yellow"></div>
@@ -358,6 +366,7 @@
                             </div>
                         </div>
 
+                        <!-- Coluna Formulário -->
                         <div class="lg:col-span-2">
                             <div class="bg-white rounded-[2rem] shadow-sm border border-gray-100 p-8 md:p-10">
                                 <div class="flex justify-between items-center mb-8 border-b border-gray-100 pb-6">
@@ -373,6 +382,7 @@
                                 </div>
 
                                 <form id="form-perfil-cidadao" onsubmit="event.preventDefault(); salvarPerfilCidadao();" class="space-y-6">
+                                    
                                     <div class="space-y-4">
                                         <h4 class="text-sm font-black text-gray-800 uppercase tracking-widest flex items-center gap-2"><i class="fa-regular fa-address-book text-pref-blue"></i> Informações Pessoais</h4>
                                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -409,8 +419,10 @@
                                 </form>
                             </div>
                         </div>
+
                     </div>
                 </div>
+
             </div>
         </div>
 
@@ -470,8 +482,9 @@
                                 </div>
                             </div>
                             
+                            <!-- Container Dinâmico que receberá os formulários específicos de cada serviço -->
                             <div id="servico-conteudo-dinamico" class="mt-4 pt-4 border-t border-gray-200">
-                                <!-- Injetado via JS -->
+                                <!-- Injetado via JS dependendo do serviço escolhido -->
                             </div>
                         </div>
                     </div>
@@ -534,7 +547,9 @@
             </div>
         </div>
 
+        <!-- PAINEL ADMIN COM SEPARAÇÃO COMPLETA -->
         <div id="view-admin-dashboard" class="hidden flex-col md:flex-row flex-grow bg-gray-50 items-stretch">
+            <!-- Sidebar Lateral do Admin -->
             <aside class="w-full md:w-64 bg-pref-darkblue text-white flex flex-col flex-shrink-0 z-20 sticky top-[76px] md:h-[calc(100vh-76px)] overflow-y-auto custom-scrollbar shadow-2xl">
                 <div class="p-6 border-b border-white/10 flex items-center gap-3 hidden md:flex">
                     <div class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center text-pref-yellow text-xl"><i class="fa-solid fa-bolt"></i></div>
@@ -544,6 +559,7 @@
                     </div>
                 </div>
                 
+                <!-- Abas de Navegação Sidebar -->
                 <nav class="flex md:flex-col gap-1 p-2 md:p-4 overflow-x-auto md:overflow-visible flex-row custom-scrollbar border-b md:border-b-0 border-white/10">
                     <button onclick="mudarAbaAdmin('noticias')" id="btn-aba-noticias" class="flex-shrink-0 md:w-full px-4 py-3 rounded-xl font-bold text-sm transition-all bg-white/10 text-white border-l-4 border-pref-yellow text-left flex items-center gap-3"><i class="fa-solid fa-newspaper w-5 text-center"></i> Notícias</button>
                     <button onclick="mudarAbaAdmin('servicos')" id="btn-aba-servicos" class="flex-shrink-0 md:w-full px-4 py-3 rounded-xl font-bold text-sm transition-all text-blue-200 hover:text-white hover:bg-white/10 text-left flex items-center gap-3 border-l-4 border-transparent"><i class="fa-solid fa-laptop-file w-5 text-center"></i> Serviços</button>
@@ -562,8 +578,9 @@
             </aside>
             
             <main class="flex-grow flex flex-col min-w-0">
-            <!-- SEÇÃO DE NOTÍCIAS -->
+            <!-- SEÇÃO DE NOTÍCIAS SEPARADA -->
             <div id="admin-secao-noticias" class="container mx-auto px-4 py-8 flex flex-col lg:flex-row gap-8 max-w-7xl flex-grow">
+                <!-- Coluna da Lista de Notícias -->
                 <div class="w-full lg:w-5/12 bg-white rounded-[2rem] shadow-sm border border-gray-200 p-6 md:p-8 flex flex-col h-[750px]">
                     <div class="flex justify-between items-center mb-8 border-b border-gray-100 pb-4">
                         <h3 class="text-2xl font-black text-gray-800 tracking-tight">Publicações</h3>
@@ -576,9 +593,12 @@
                             </button>
                         </div>
                     </div>
-                    <div id="lista-admin-noticias" class="overflow-y-auto pr-3 space-y-3 flex-grow custom-scrollbar"></div>
+                    <div id="lista-admin-noticias" class="overflow-y-auto pr-3 space-y-3 flex-grow custom-scrollbar">
+                        <!-- Injetado via JS -->
+                    </div>
                 </div>
 
+                <!-- Coluna do Formulário de Notícias -->
                 <div class="w-full lg:w-7/12 bg-white rounded-[2rem] shadow-sm border border-gray-200 p-6 md:p-8 flex flex-col h-[750px]">
                     <h3 id="admin-titulo-editor-noticias" class="text-2xl font-black text-gray-800 mb-8 border-b border-gray-100 pb-4 tracking-tight text-pref-blue">
                         <i class="fa-solid fa-pen-to-square"></i> Editar Notícia
@@ -607,6 +627,9 @@
                             <label class="block text-sm font-black text-gray-700 mb-2">Imagem de Capa (Link/URL)</label>
                             <div class="flex gap-3">
                                 <input type="url" id="admin-noticia-imagem" required placeholder="Cole o link ou URL da imagem..." class="flex-grow px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium text-sm" oninput="mostrarPreview(this.value, 'preview-img-admin')">
+                                <label for="upload-capa" class="bg-pref-blue text-white px-5 py-3 rounded-xl cursor-pointer hover:bg-pref-darkblue transition-colors shadow-md flex items-center gap-2 font-black whitespace-nowrap text-sm" onclick="mostrarAlerta('No ambiente de simulação, use um link externo (ex: imgur) para a imagem.')">
+                                    <i class="fa-solid fa-cloud-arrow-up"></i> Info
+                                </label>
                             </div>
                             <img id="preview-img-admin" src="" class="hidden mt-4 h-36 w-full object-cover rounded-xl border border-gray-300 shadow-inner" onerror="this.classList.add('hidden')">
                         </div>
@@ -615,7 +638,18 @@
                             <div class="flex justify-between items-end mb-2">
                                 <label class="block text-sm font-black text-gray-700">Conteúdo da Notícia</label>
                             </div>
-                            <textarea id="admin-noticia-conteudo" required placeholder="Escreva o texto aqui..." class="w-full flex-grow min-h-[250px] px-5 py-4 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors resize-none font-medium text-gray-700 leading-relaxed"></textarea>
+                            <div class="bg-blue-50 border border-blue-100 rounded-t-xl p-3 flex flex-wrap gap-2 items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <label for="upload-midia" onclick="mostrarAlerta('Sistema de envio de mídia simulado. Formatação permitida via markdown simples.')" class="bg-white border border-blue-200 text-pref-blue px-3 py-1.5 rounded-lg cursor-pointer hover:bg-blue-100 flex items-center gap-2 font-bold shadow-sm transition-colors text-xs">
+                                        <i class="fa-solid fa-paperclip"></i> Info Mídia
+                                    </label>
+                                </div>
+                                <div class="text-[10px] font-mono text-gray-500 font-bold flex gap-3">
+                                    <span>*<b>Negrito</b>*</span>
+                                    <span>_<i>Itálico</i>_</span>
+                                </div>
+                            </div>
+                            <textarea id="admin-noticia-conteudo" required placeholder="Escreva o texto aqui..." class="w-full flex-grow min-h-[250px] px-5 py-4 rounded-b-xl border-x-2 border-b-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors resize-none font-medium text-gray-700 leading-relaxed"></textarea>
                         </div>
                         
                         <div class="pt-6 flex gap-4 mt-auto border-t border-gray-100">
@@ -627,8 +661,9 @@
                 </div>
             </div>
 
-            <!-- SEÇÃO DE SERVIÇOS -->
+            <!-- SEÇÃO DE SERVIÇOS SEPARADA -->
             <div id="admin-secao-servicos" class="container mx-auto px-4 py-8 flex-col lg:flex-row gap-8 max-w-7xl flex-grow hidden">
+                <!-- Coluna da Lista de Serviços -->
                 <div class="w-full lg:w-5/12 bg-white rounded-[2rem] shadow-sm border border-gray-200 p-6 md:p-8 flex flex-col h-[750px]">
                     <div class="flex justify-between items-center mb-8 border-b border-gray-100 pb-4">
                         <h3 class="text-2xl font-black text-gray-800 tracking-tight">Serviços Ativos</h3>
@@ -641,22 +676,26 @@
                             </button>
                         </div>
                     </div>
-                    <div id="lista-admin-servicos" class="overflow-y-auto pr-3 space-y-3 flex-grow custom-scrollbar"></div>
+                    <div id="lista-admin-servicos" class="overflow-y-auto pr-3 space-y-3 flex-grow custom-scrollbar">
+                        <!-- Injetado via JS -->
+                    </div>
                 </div>
 
+                <!-- Coluna do Formulário de Serviços -->
                 <div class="w-full lg:w-7/12 bg-white rounded-[2rem] shadow-sm border border-gray-200 p-6 md:p-8 flex flex-col h-[750px]">
                     <h3 id="admin-titulo-editor-servicos" class="text-2xl font-black text-gray-800 mb-8 border-b border-gray-100 pb-4 tracking-tight text-pref-blue">
                         <i class="fa-solid fa-pen-to-square"></i> Editar Serviço
                     </h3>
                     
-                    <div id="admin-form-error-servicos" class="hidden mb-6 text-red-600 text-sm font-bold bg-red-50 p-4 rounded-xl border border-red-100">Erro ao salvar serviço.</div>
-                    <div id="admin-form-success-servicos" class="hidden mb-6 text-green-600 text-sm font-bold bg-green-50 p-4 rounded-xl border border-green-100">Serviço salvo com sucesso!</div>
+                    <div id="admin-form-error-servicos" class="hidden mb-6 text-red-600 text-sm font-bold bg-red-50 p-4 rounded-xl border border-red-100"><i class="fa-solid fa-triangle-exclamation mr-2"></i> Erro ao salvar serviço.</div>
+                    <div id="admin-form-success-servicos" class="hidden mb-6 text-green-600 text-sm font-bold bg-green-50 p-4 rounded-xl border border-green-100"><i class="fa-solid fa-check-circle mr-2"></i> Serviço salvo com sucesso!</div>
 
                     <form id="form-admin-servico" onsubmit="event.preventDefault(); salvarServicoAdmin();" class="space-y-6 flex-grow flex flex-col">
                         <input type="hidden" id="admin-servico-id">
                         <div>
                             <label class="block text-sm font-black text-gray-700 mb-1.5">Título do Serviço</label>
                             <input type="text" id="admin-servico-titulo" required placeholder="Ex: Impostos e Taxas" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
+                            <p class="text-[11px] mt-1.5 text-pref-blue font-bold"><i class="fa-solid fa-circle-info mr-1"></i> Dica: O sistema ativa apps interativos se o título tiver as palavras: "Imposto", "Taxa", "IPTU", "Ouvidoria", "Saúde", "Agendamento", "Licitações", "Transparência" ou "Servidor".</p>
                         </div>
                         <div>
                             <label class="block text-sm font-black text-gray-700 mb-1.5">Ícone FontAwesome (Sem o fa-solid)</label>
@@ -679,8 +718,9 @@
                 </div>
             </div>
             
-            <!-- SEÇÃO DE CIDADÃOS -->
+            <!-- SEÇÃO DE CIDADÃOS E IMPOSTOS SEPARADA -->
             <div id="admin-secao-cidadaos" class="container mx-auto px-4 py-8 flex-col lg:flex-row gap-8 max-w-7xl flex-grow hidden">
+                <!-- Coluna da Lista de Cidadãos -->
                 <div class="w-full lg:w-4/12 bg-white rounded-[2rem] shadow-sm border border-gray-200 p-6 md:p-8 flex flex-col h-[750px]">
                     <div class="flex justify-between items-center mb-6 border-b border-gray-100 pb-4">
                         <h3 class="text-2xl font-black text-gray-800 tracking-tight">Moradores</h3>
@@ -692,13 +732,17 @@
                         <input type="text" id="busca-cidadao" onkeyup="filtrarCidadaosAdmin()" placeholder="Buscar por nome ou CPF..." class="w-full px-4 py-2.5 pl-10 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium text-sm">
                         <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-gray-400"></i>
                     </div>
-                    <div id="lista-admin-cidadaos" class="overflow-y-auto pr-3 space-y-3 flex-grow custom-scrollbar"></div>
+                    <div id="lista-admin-cidadaos" class="overflow-y-auto pr-3 space-y-3 flex-grow custom-scrollbar">
+                        <!-- Injetado via JS -->
+                    </div>
                 </div>
 
+                <!-- Coluna do Perfil e Impostos do Cidadão -->
                 <div class="w-full lg:w-8/12 bg-white rounded-[2rem] shadow-sm border border-gray-200 p-6 md:p-8 flex flex-col h-[750px] overflow-hidden relative">
                     <div id="admin-aviso-selecione-cidadao" class="absolute inset-0 z-10 bg-white/90 backdrop-blur-sm flex flex-col items-center justify-center text-center p-8">
                         <div class="w-24 h-24 bg-blue-50 text-pref-blue rounded-full flex items-center justify-center text-4xl mb-4"><i class="fa-solid fa-hand-pointer"></i></div>
                         <h3 class="text-2xl font-black text-gray-800">Selecione um Morador</h3>
+                        <p class="text-gray-500 font-medium">Clique em um cidadão na lista ao lado para ver seus dados e gerenciar seus impostos.</p>
                     </div>
 
                     <div class="flex justify-between items-start mb-6 border-b border-gray-100 pb-6">
@@ -712,6 +756,7 @@
                     </div>
                     
                     <div class="flex-grow overflow-y-auto pr-3 custom-scrollbar space-y-8">
+                        <!-- Informações Cadastrais -->
                         <div>
                             <h4 class="font-black text-gray-700 text-sm uppercase tracking-widest mb-4 flex items-center gap-2"><i class="fa-solid fa-address-card text-pref-blue"></i> Dados Cadastrais</h4>
                             <div class="bg-gray-50 p-5 rounded-2xl border border-gray-100 grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm font-medium">
@@ -722,6 +767,7 @@
                             </div>
                         </div>
 
+                        <!-- Gestão de Impostos -->
                         <div>
                             <div class="flex justify-between items-center mb-4">
                                 <h4 class="font-black text-gray-700 text-sm uppercase tracking-widest flex items-center gap-2"><i class="fa-solid fa-file-invoice-dollar text-pref-blue"></i> Impostos e Taxas</h4>
@@ -730,13 +776,17 @@
                                 </button>
                             </div>
                             
-                            <div id="admin-lista-impostos-cidadao" class="space-y-3 mb-6"></div>
+                            <!-- Lista de impostos do morador -->
+                            <div id="admin-lista-impostos-cidadao" class="space-y-3 mb-6">
+                                <!-- Injetado via JS -->
+                            </div>
 
+                            <!-- Formulário para adicionar novo imposto -->
                             <div class="bg-blue-50/50 p-5 rounded-2xl border border-blue-100">
                                 <h5 class="font-bold text-pref-blue mb-4 text-sm"><i class="fa-solid fa-plus-circle mr-1"></i> Adicionar Lançamento Manual</h5>
                                 <form id="form-admin-imposto" onsubmit="event.preventDefault(); salvarImpostoAdmin();" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div class="sm:col-span-2">
-                                        <input type="text" id="admin-imposto-titulo" required placeholder="Título (Ex: IPTU 2026)" class="w-full px-3 py-2.5 rounded-lg border border-gray-200 focus:border-pref-blue outline-none text-sm font-medium">
+                                        <input type="text" id="admin-imposto-titulo" required placeholder="Título (Ex: IPTU 2026, Taxa de Lixo)" class="w-full px-3 py-2.5 rounded-lg border border-gray-200 focus:border-pref-blue outline-none text-sm font-medium">
                                     </div>
                                     <div>
                                         <input type="number" step="0.01" id="admin-imposto-valor" required placeholder="Valor (R$)" class="w-full px-3 py-2.5 rounded-lg border border-gray-200 focus:border-pref-blue outline-none text-sm font-medium">
@@ -756,7 +806,7 @@
                 </div>
             </div>
 
-            <!-- SEÇÃO DE OUVIDORIA -->
+            <!-- NOVA SEÇÃO: OUVIDORIA -->
             <div id="admin-secao-ouvidoria" class="container mx-auto px-4 py-8 flex-col lg:flex-row gap-8 max-w-7xl flex-grow hidden">
                 <div class="w-full lg:w-5/12 bg-white rounded-[2rem] shadow-sm border border-gray-200 p-6 md:p-8 flex flex-col h-[750px]">
                     <div class="flex justify-between items-center mb-6 border-b border-gray-100 pb-4">
@@ -765,12 +815,15 @@
                             <i class="fa-solid fa-wand-magic-sparkles"></i> Gerar via IA
                         </button>
                     </div>
-                    <div id="lista-admin-ouvidoria" class="overflow-y-auto pr-3 space-y-3 flex-grow custom-scrollbar"></div>
+                    <div id="lista-admin-ouvidoria" class="overflow-y-auto pr-3 space-y-3 flex-grow custom-scrollbar">
+                        <!-- Injetado via JS -->
+                    </div>
                 </div>
                 <div class="w-full lg:w-7/12 bg-white rounded-[2rem] shadow-sm border border-gray-200 p-6 md:p-8 flex flex-col h-[750px] relative">
                     <div id="admin-aviso-selecione-ouvidoria" class="absolute inset-0 z-10 bg-white/90 backdrop-blur-sm flex flex-col items-center justify-center text-center p-8">
                         <div class="w-24 h-24 bg-blue-50 text-pref-blue rounded-full flex items-center justify-center text-4xl mb-4"><i class="fa-solid fa-envelope-open-text"></i></div>
                         <h3 class="text-2xl font-black text-gray-800">Selecione uma Mensagem</h3>
+                        <p class="text-gray-500 font-medium">Clique em um protocolo ao lado para ler e responder.</p>
                     </div>
                     
                     <div class="flex justify-between items-start mb-6 border-b border-gray-100 pb-4">
@@ -778,23 +831,27 @@
                             <span id="ouvidoria-detalhe-tipo" class="text-[10px] font-black text-pref-blue uppercase px-3 py-1 bg-blue-100 rounded-md tracking-widest inline-block mb-2">TIPO</span>
                             <h3 class="text-xl font-black text-gray-800 tracking-tight">Protocolo: <span id="ouvidoria-detalhe-protocolo" class="text-pref-blue">...</span></h3>
                             <p class="text-sm text-gray-500 font-medium mt-1">Enviado por: <span id="ouvidoria-detalhe-cidadao" class="font-bold text-gray-700">...</span> (<span id="ouvidoria-detalhe-data">...</span>)</p>
+                            <p class="text-sm text-gray-500 font-medium">Localidade: <span id="ouvidoria-detalhe-bairro" class="font-bold text-gray-700">...</span></p>
                         </div>
                         <span id="ouvidoria-detalhe-status" class="px-3 py-1 rounded font-black text-xs uppercase">STATUS</span>
                     </div>
                     <div class="bg-gray-50 p-5 rounded-2xl border border-gray-100 mb-6 flex-grow overflow-y-auto">
-                        <p class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-3">Mensagem</p>
+                        <p class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-3">Mensagem do Cidadão</p>
                         <p id="ouvidoria-detalhe-msg" class="text-gray-700 whitespace-pre-wrap font-medium">...</p>
                     </div>
                     
-                    <div class="pt-4 border-t border-gray-100 flex gap-3">
-                        <button onclick="mudarStatusOuvidoria('Em Análise')" class="flex-1 bg-yellow-100 text-yellow-700 font-black py-3 rounded-xl transition-colors text-sm">Em Análise</button>
-                        <button onclick="mudarStatusOuvidoria('Resolvido')" class="flex-1 bg-green-100 text-green-700 font-black py-3 rounded-xl transition-colors text-sm">Resolvido</button>
-                        <button onclick="abrirModalDelete('ouvidoria', currentAdminOuvidoriaId)" class="bg-red-50 text-red-500 px-4 py-3 rounded-xl"><i class="fa-solid fa-trash"></i></button>
+                    <div class="pt-4 border-t border-gray-100">
+                        <p class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-3">Ação Rápida</p>
+                        <div class="flex gap-3">
+                            <button onclick="mudarStatusOuvidoria('Em Análise')" class="flex-1 bg-yellow-100 text-yellow-700 hover:bg-yellow-200 font-black py-3 rounded-xl transition-colors text-sm">Marcar como Em Análise</button>
+                            <button onclick="mudarStatusOuvidoria('Resolvido')" class="flex-1 bg-green-100 text-green-700 hover:bg-green-200 font-black py-3 rounded-xl transition-colors text-sm">Marcar como Resolvido</button>
+                            <button onclick="abrirModalDelete('ouvidoria', currentAdminOuvidoriaId)" class="bg-red-50 text-red-500 px-4 py-3 rounded-xl hover:bg-red-100 transition-colors"><i class="fa-solid fa-trash"></i></button>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- SEÇÃO DE SAÚDE -->
+            <!-- NOVA SEÇÃO: SAÚDE (AGENDAMENTOS) -->
             <div id="admin-secao-saude" class="container mx-auto px-4 py-8 flex-col lg:flex-row gap-8 max-w-7xl flex-grow hidden">
                 <div class="w-full lg:w-5/12 bg-white rounded-[2rem] shadow-sm border border-gray-200 p-6 md:p-8 flex flex-col h-[750px]">
                     <div class="flex justify-between items-center mb-6 border-b border-gray-100 pb-4">
@@ -803,12 +860,15 @@
                             <i class="fa-solid fa-wand-magic-sparkles"></i> Gerar via IA
                         </button>
                     </div>
-                    <div id="lista-admin-saude" class="overflow-y-auto pr-3 space-y-3 flex-grow custom-scrollbar"></div>
+                    <div id="lista-admin-saude" class="overflow-y-auto pr-3 space-y-3 flex-grow custom-scrollbar">
+                        <!-- Injetado via JS -->
+                    </div>
                 </div>
                 <div class="w-full lg:w-7/12 bg-white rounded-[2rem] shadow-sm border border-gray-200 p-6 md:p-8 flex flex-col h-[750px] relative">
                     <div id="admin-aviso-selecione-saude" class="absolute inset-0 z-10 bg-white/90 backdrop-blur-sm flex flex-col items-center justify-center text-center p-8">
                         <div class="w-24 h-24 bg-blue-50 text-pref-blue rounded-full flex items-center justify-center text-4xl mb-4"><i class="fa-solid fa-stethoscope"></i></div>
                         <h3 class="text-2xl font-black text-gray-800">Selecione uma Consulta</h3>
+                        <p class="text-gray-500 font-medium">Clique em um agendamento para aprovar ou rejeitar.</p>
                     </div>
                     
                     <div class="flex justify-between items-start mb-6 border-b border-gray-100 pb-6">
@@ -824,20 +884,32 @@
                     
                     <div class="bg-gray-50 p-6 rounded-2xl border border-gray-100 mb-6 flex-grow">
                         <div class="grid grid-cols-2 gap-6">
-                            <div><p class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-1">Data Solicitada</p><p id="saude-detalhe-data" class="text-xl font-black text-gray-800">...</p></div>
-                            <div><p class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-1">Unidade</p><p class="text-xl font-black text-gray-800">Posto Central</p></div>
-                            <div class="col-span-2"><p class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-1">Observações do Paciente</p><p id="saude-detalhe-obs" class="text-sm text-gray-700 font-medium">...</p></div>
+                            <div>
+                                <p class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-1">Data Solicitada</p>
+                                <p id="saude-detalhe-data" class="text-xl font-black text-gray-800">...</p>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-1">Unidade</p>
+                                <p class="text-xl font-black text-gray-800">Posto Central</p>
+                            </div>
+                            <div class="col-span-2">
+                                <p class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-1">Observações do Paciente</p>
+                                <p id="saude-detalhe-obs" class="text-sm text-gray-700 font-medium">...</p>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="pt-4 border-t border-gray-100 flex gap-3">
-                        <button onclick="mudarStatusSaude('Aprovado')" class="flex-1 bg-green-600 text-white font-black py-3.5 rounded-xl text-sm"><i class="fa-solid fa-check mr-2"></i> Confirmar Consulta</button>
-                        <button onclick="mudarStatusSaude('Cancelado')" class="flex-1 bg-gray-100 text-gray-700 font-black py-3.5 rounded-xl text-sm"><i class="fa-solid fa-xmark mr-2"></i> Cancelar</button>
+                    <div class="pt-4 border-t border-gray-100">
+                        <p class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-3">Aprovação</p>
+                        <div class="flex gap-3">
+                            <button onclick="mudarStatusSaude('Aprovado')" class="flex-1 bg-green-600 text-white hover:bg-green-700 font-black py-3.5 rounded-xl transition-colors shadow-md text-sm"><i class="fa-solid fa-check mr-2"></i> Confirmar Consulta</button>
+                            <button onclick="mudarStatusSaude('Cancelado')" class="flex-1 bg-gray-100 text-gray-700 hover:bg-gray-200 font-black py-3.5 rounded-xl transition-colors text-sm"><i class="fa-solid fa-xmark mr-2"></i> Cancelar</button>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- SEÇÃO DE LICITAÇÕES -->
+            <!-- NOVA SEÇÃO: LICITAÇÕES -->
             <div id="admin-secao-licitacoes" class="container mx-auto px-4 py-8 flex-col lg:flex-row gap-8 max-w-7xl flex-grow hidden">
                 <div class="w-full lg:w-5/12 bg-white rounded-[2rem] shadow-sm border border-gray-200 p-6 md:p-8 flex flex-col h-[750px]">
                     <div class="flex justify-between items-center mb-6 border-b border-gray-100 pb-4">
@@ -883,7 +955,7 @@
                 </div>
             </div>
 
-            <!-- SEÇÃO DE TRANSPARÊNCIA -->
+            <!-- NOVA SEÇÃO: TRANSPARÊNCIA -->
             <div id="admin-secao-transparencia" class="container mx-auto px-4 py-8 flex-col lg:flex-row gap-8 max-w-7xl flex-grow hidden">
                 <div class="w-full lg:w-6/12 bg-white rounded-[2rem] shadow-sm border border-gray-200 p-6 md:p-8 flex flex-col h-[750px]">
                     <div class="flex justify-between items-center mb-6 border-b border-gray-100 pb-4">
@@ -941,14 +1013,14 @@
                 </div>
             </div>
 
-            <!-- SEÇÃO DE APARÊNCIA / TEMAS ATUALIZADA -->
-            <div id="admin-secao-aparencia" class="container mx-auto px-4 py-8 flex-col gap-8 max-w-7xl flex-grow hidden">
+            <!-- NOVA SEÇÃO: APARÊNCIA / TEMAS -->
+            <div id="admin-secao-aparencia" class="container mx-auto px-4 py-8 flex-col gap-8 max-w-5xl flex-grow hidden">
                 <div class="bg-white rounded-[2rem] shadow-sm border border-gray-200 p-8 md:p-10">
                     <div class="flex items-center gap-4 border-b border-gray-100 pb-6 mb-8">
                         <div class="w-16 h-16 bg-blue-50 text-pref-blue rounded-2xl flex items-center justify-center text-3xl"><i class="fa-solid fa-paintbrush"></i></div>
                         <div>
                             <h3 class="text-3xl font-black text-gray-800 tracking-tight">Identidade Visual do Portal</h3>
-                            <p class="text-gray-500 font-medium mt-1">Calendário da Saúde: Altere as cores e adicione campanhas temáticas ao site.</p>
+                            <p class="text-gray-500 font-medium mt-1">Altere as cores e adicione campanhas temáticas ao site.</p>
                         </div>
                     </div>
 
@@ -958,17 +1030,15 @@
 
                     <form id="form-admin-tema" onsubmit="event.preventDefault(); salvarTemaAdmin();" class="space-y-8">
                         
-                        <!-- Temas de Campanha (Presets do Ano Inteiro) -->
+                        <!-- Temas de Campanha (Presets) -->
                         <div>
-                            <h4 class="text-sm font-black text-gray-800 uppercase tracking-widest mb-4 flex items-center gap-2"><i class="fa-solid fa-star text-pref-yellow"></i> Campanhas Municipais (Calendário da Saúde)</h4>
-                            
-                            <!-- Grid para todas as campanhas do ano -->
-                            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 max-h-[400px] overflow-y-auto p-2 border border-gray-100 bg-gray-50 rounded-2xl custom-scrollbar">
+                            <h4 class="text-sm font-black text-gray-800 uppercase tracking-widest mb-4 flex items-center gap-2"><i class="fa-solid fa-star text-pref-yellow"></i> Campanhas Municipais</h4>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                                 
                                 <label class="cursor-pointer group">
                                     <input type="radio" name="tema-preset" value="padrao" class="peer sr-only" checked onchange="previewTema(this.value)">
-                                    <div class="bg-white border-2 border-gray-200 rounded-2xl p-4 peer-checked:border-blue-500 peer-checked:bg-blue-50 transition-all hover:shadow-md">
-                                        <div class="h-12 rounded-xl mb-3 flex overflow-hidden border border-gray-200">
+                                    <div class="border-2 border-gray-200 rounded-2xl p-4 peer-checked:border-blue-500 peer-checked:bg-blue-50 transition-all">
+                                        <div class="h-16 rounded-xl mb-3 flex overflow-hidden border border-gray-200">
                                             <div class="w-2/3 h-full bg-[#0047AB]"></div><div class="w-1/3 h-full bg-[#FFC107]"></div>
                                         </div>
                                         <p class="font-black text-gray-800 text-center text-sm">Padrão</p>
@@ -977,146 +1047,38 @@
                                 </label>
 
                                 <label class="cursor-pointer group">
-                                    <input type="radio" name="tema-preset" value="janeiro-branco" class="peer sr-only" onchange="previewTema(this.value)">
-                                    <div class="bg-white border-2 border-gray-200 rounded-2xl p-4 peer-checked:border-gray-500 peer-checked:bg-gray-100 transition-all relative overflow-hidden hover:shadow-md">
-                                        <i class="fa-solid fa-ribbon absolute -right-2 -bottom-2 text-5xl text-gray-300 opacity-30"></i>
-                                        <div class="h-12 rounded-xl mb-3 flex overflow-hidden border border-gray-200">
-                                            <div class="w-2/3 h-full bg-[#9ca3af]"></div><div class="w-1/3 h-full bg-[#ffffff]"></div>
-                                        </div>
-                                        <p class="font-black text-gray-800 text-center text-sm leading-tight">Janeiro Branco</p>
-                                        <p class="text-[10px] text-gray-500 text-center font-bold">Saúde Mental</p>
-                                    </div>
-                                </label>
-
-                                <label class="cursor-pointer group">
-                                    <input type="radio" name="tema-preset" value="fevereiro-roxo-laranja" class="peer sr-only" onchange="previewTema(this.value)">
-                                    <div class="bg-white border-2 border-gray-200 rounded-2xl p-4 peer-checked:border-purple-500 peer-checked:bg-purple-50 transition-all relative overflow-hidden hover:shadow-md">
-                                        <i class="fa-solid fa-ribbon absolute -right-2 -bottom-2 text-5xl text-purple-400 opacity-20"></i>
-                                        <div class="h-12 rounded-xl mb-3 flex overflow-hidden border border-gray-200">
-                                            <div class="w-2/3 h-full bg-[#9333ea]"></div><div class="w-1/3 h-full bg-[#f97316]"></div>
-                                        </div>
-                                        <p class="font-black text-gray-800 text-center text-sm leading-tight">Fevereiro Roxo/Laranja</p>
-                                        <p class="text-[10px] text-gray-500 text-center font-bold">Lúpus / Leucemia</p>
-                                    </div>
-                                </label>
-
-                                <label class="cursor-pointer group">
-                                    <input type="radio" name="tema-preset" value="marco-azul-lilas" class="peer sr-only" onchange="previewTema(this.value)">
-                                    <div class="bg-white border-2 border-gray-200 rounded-2xl p-4 peer-checked:border-blue-600 peer-checked:bg-blue-100 transition-all relative overflow-hidden hover:shadow-md">
-                                        <i class="fa-solid fa-ribbon absolute -right-2 -bottom-2 text-5xl text-blue-600 opacity-20"></i>
-                                        <div class="h-12 rounded-xl mb-3 flex overflow-hidden border border-gray-200">
-                                            <div class="w-2/3 h-full bg-[#1e3a8a]"></div><div class="w-1/3 h-full bg-[#c084fc]"></div>
-                                        </div>
-                                        <p class="font-black text-gray-800 text-center text-sm leading-tight">Março Azul/Lilás</p>
-                                        <p class="text-[10px] text-gray-500 text-center font-bold">Câncer Colorretal / Colo</p>
-                                    </div>
-                                </label>
-
-                                <label class="cursor-pointer group">
-                                    <input type="radio" name="tema-preset" value="abril-azul-verde" class="peer sr-only" onchange="previewTema(this.value)">
-                                    <div class="bg-white border-2 border-gray-200 rounded-2xl p-4 peer-checked:border-blue-400 peer-checked:bg-blue-50 transition-all relative overflow-hidden hover:shadow-md">
-                                        <i class="fa-solid fa-ribbon absolute -right-2 -bottom-2 text-5xl text-blue-400 opacity-20"></i>
-                                        <div class="h-12 rounded-xl mb-3 flex overflow-hidden border border-gray-200">
-                                            <div class="w-2/3 h-full bg-[#3b82f6]"></div><div class="w-1/3 h-full bg-[#22c55e]"></div>
-                                        </div>
-                                        <p class="font-black text-gray-800 text-center text-sm leading-tight">Abril Azul/Verde</p>
-                                        <p class="text-[10px] text-gray-500 text-center font-bold">Autismo / Trab. Seguro</p>
-                                    </div>
-                                </label>
-                                
-                                <label class="cursor-pointer group">
-                                    <input type="radio" name="tema-preset" value="maio-amarelo" class="peer sr-only" onchange="previewTema(this.value)">
-                                    <div class="bg-white border-2 border-gray-200 rounded-2xl p-4 peer-checked:border-yellow-500 peer-checked:bg-yellow-100 transition-all relative overflow-hidden hover:shadow-md">
-                                        <i class="fa-solid fa-ribbon absolute -right-2 -bottom-2 text-5xl text-yellow-500 opacity-20"></i>
-                                        <div class="h-12 rounded-xl mb-3 flex overflow-hidden border border-gray-200">
-                                            <div class="w-2/3 h-full bg-[#eab308]"></div><div class="w-1/3 h-full bg-[#fde047]"></div>
-                                        </div>
-                                        <p class="font-black text-gray-800 text-center text-sm leading-tight">Maio Amarelo</p>
-                                        <p class="text-[10px] text-gray-500 text-center font-bold">Trânsito Seguro</p>
-                                    </div>
-                                </label>
-
-                                <label class="cursor-pointer group">
-                                    <input type="radio" name="tema-preset" value="junho-vermelho" class="peer sr-only" onchange="previewTema(this.value)">
-                                    <div class="bg-white border-2 border-gray-200 rounded-2xl p-4 peer-checked:border-red-500 peer-checked:bg-red-50 transition-all relative overflow-hidden hover:shadow-md">
-                                        <i class="fa-solid fa-ribbon absolute -right-2 -bottom-2 text-5xl text-red-500 opacity-20"></i>
-                                        <div class="h-12 rounded-xl mb-3 flex overflow-hidden border border-gray-200">
-                                            <div class="w-2/3 h-full bg-[#ef4444]"></div><div class="w-1/3 h-full bg-[#fca5a5]"></div>
-                                        </div>
-                                        <p class="font-black text-gray-800 text-center text-sm leading-tight">Junho Vermelho</p>
-                                        <p class="text-[10px] text-gray-500 text-center font-bold">Doação de Sangue</p>
-                                    </div>
-                                </label>
-
-                                <label class="cursor-pointer group">
-                                    <input type="radio" name="tema-preset" value="julho-amarelo-verde" class="peer sr-only" onchange="previewTema(this.value)">
-                                    <div class="bg-white border-2 border-gray-200 rounded-2xl p-4 peer-checked:border-yellow-500 peer-checked:bg-yellow-50 transition-all relative overflow-hidden hover:shadow-md">
-                                        <i class="fa-solid fa-ribbon absolute -right-2 -bottom-2 text-5xl text-yellow-500 opacity-20"></i>
-                                        <div class="h-12 rounded-xl mb-3 flex overflow-hidden border border-gray-200">
-                                            <div class="w-2/3 h-full bg-[#eab308]"></div><div class="w-1/3 h-full bg-[#22c55e]"></div>
-                                        </div>
-                                        <p class="font-black text-gray-800 text-center text-sm leading-tight">Julho Amarelo/Verde</p>
-                                        <p class="text-[10px] text-gray-500 text-center font-bold">Hepatites Virais</p>
-                                    </div>
-                                </label>
-
-                                <label class="cursor-pointer group">
-                                    <input type="radio" name="tema-preset" value="agosto-dourado" class="peer sr-only" onchange="previewTema(this.value)">
-                                    <div class="bg-white border-2 border-gray-200 rounded-2xl p-4 peer-checked:border-yellow-600 peer-checked:bg-yellow-50 transition-all relative overflow-hidden hover:shadow-md">
-                                        <i class="fa-solid fa-ribbon absolute -right-2 -bottom-2 text-5xl text-yellow-600 opacity-20"></i>
-                                        <div class="h-12 rounded-xl mb-3 flex overflow-hidden border border-gray-200">
-                                            <div class="w-2/3 h-full bg-[#d97706]"></div><div class="w-1/3 h-full bg-[#fcd34d]"></div>
-                                        </div>
-                                        <p class="font-black text-gray-800 text-center text-sm leading-tight">Agosto Dourado</p>
-                                        <p class="text-[10px] text-gray-500 text-center font-bold">Aleitamento Materno</p>
-                                    </div>
-                                </label>
-
-                                <label class="cursor-pointer group">
                                     <input type="radio" name="tema-preset" value="setembro-amarelo" class="peer sr-only" onchange="previewTema(this.value)">
-                                    <div class="bg-white border-2 border-gray-200 rounded-2xl p-4 peer-checked:border-yellow-500 peer-checked:bg-yellow-100 transition-all relative overflow-hidden hover:shadow-md">
+                                    <div class="border-2 border-gray-200 rounded-2xl p-4 peer-checked:border-yellow-500 peer-checked:bg-yellow-50 transition-all relative overflow-hidden">
                                         <i class="fa-solid fa-ribbon absolute -right-2 -bottom-2 text-5xl text-yellow-500 opacity-20"></i>
-                                        <div class="h-12 rounded-xl mb-3 flex overflow-hidden border border-gray-200">
+                                        <div class="h-16 rounded-xl mb-3 flex overflow-hidden border border-gray-200">
                                             <div class="w-2/3 h-full bg-[#F59E0B]"></div><div class="w-1/3 h-full bg-[#FCD34D]"></div>
                                         </div>
-                                        <p class="font-black text-gray-800 text-center text-sm leading-tight">Setembro Amarelo</p>
-                                        <p class="text-[10px] text-gray-500 text-center font-bold">Prevenção ao Suicídio</p>
+                                        <p class="font-black text-gray-800 text-center text-sm">Setembro Amarelo</p>
+                                        <p class="text-[10px] text-gray-500 text-center font-bold">+ Laços decorativos</p>
                                     </div>
                                 </label>
 
                                 <label class="cursor-pointer group">
                                     <input type="radio" name="tema-preset" value="outubro-rosa" class="peer sr-only" onchange="previewTema(this.value)">
-                                    <div class="bg-white border-2 border-gray-200 rounded-2xl p-4 peer-checked:border-pink-500 peer-checked:bg-pink-50 transition-all relative overflow-hidden hover:shadow-md">
+                                    <div class="border-2 border-gray-200 rounded-2xl p-4 peer-checked:border-pink-500 peer-checked:bg-pink-50 transition-all relative overflow-hidden">
                                         <i class="fa-solid fa-ribbon absolute -right-2 -bottom-2 text-5xl text-pink-500 opacity-20"></i>
-                                        <div class="h-12 rounded-xl mb-3 flex overflow-hidden border border-gray-200">
+                                        <div class="h-16 rounded-xl mb-3 flex overflow-hidden border border-gray-200">
                                             <div class="w-2/3 h-full bg-[#EC4899]"></div><div class="w-1/3 h-full bg-[#FBCFE8]"></div>
                                         </div>
-                                        <p class="font-black text-gray-800 text-center text-sm leading-tight">Outubro Rosa</p>
-                                        <p class="text-[10px] text-gray-500 text-center font-bold">Câncer de Mama</p>
+                                        <p class="font-black text-gray-800 text-center text-sm">Outubro Rosa</p>
+                                        <p class="text-[10px] text-gray-500 text-center font-bold">+ Laços decorativos</p>
                                     </div>
                                 </label>
 
                                 <label class="cursor-pointer group">
                                     <input type="radio" name="tema-preset" value="novembro-azul" class="peer sr-only" onchange="previewTema(this.value)">
-                                    <div class="bg-white border-2 border-gray-200 rounded-2xl p-4 peer-checked:border-cyan-500 peer-checked:bg-cyan-50 transition-all relative overflow-hidden hover:shadow-md">
+                                    <div class="border-2 border-gray-200 rounded-2xl p-4 peer-checked:border-cyan-500 peer-checked:bg-cyan-50 transition-all relative overflow-hidden">
                                         <i class="fa-solid fa-ribbon absolute -right-2 -bottom-2 text-5xl text-cyan-500 opacity-20"></i>
-                                        <div class="h-12 rounded-xl mb-3 flex overflow-hidden border border-gray-200">
+                                        <div class="h-16 rounded-xl mb-3 flex overflow-hidden border border-gray-200">
                                             <div class="w-2/3 h-full bg-[#06B6D4]"></div><div class="w-1/3 h-full bg-[#67E8F9]"></div>
                                         </div>
-                                        <p class="font-black text-gray-800 text-center text-sm leading-tight">Novembro Azul</p>
-                                        <p class="text-[10px] text-gray-500 text-center font-bold">Saúde do Homem</p>
-                                    </div>
-                                </label>
-
-                                <label class="cursor-pointer group">
-                                    <input type="radio" name="tema-preset" value="dezembro-vermelho-laranja" class="peer sr-only" onchange="previewTema(this.value)">
-                                    <div class="bg-white border-2 border-gray-200 rounded-2xl p-4 peer-checked:border-red-600 peer-checked:bg-red-50 transition-all relative overflow-hidden hover:shadow-md">
-                                        <i class="fa-solid fa-ribbon absolute -right-2 -bottom-2 text-5xl text-red-500 opacity-20"></i>
-                                        <div class="h-12 rounded-xl mb-3 flex overflow-hidden border border-gray-200">
-                                            <div class="w-2/3 h-full bg-[#dc2626]"></div><div class="w-1/3 h-full bg-[#f97316]"></div>
-                                        </div>
-                                        <p class="font-black text-gray-800 text-center text-sm leading-tight">Dezembro Verm/Laranja</p>
-                                        <p class="text-[10px] text-gray-500 text-center font-bold">HIV / Câncer de Pele</p>
+                                        <p class="font-black text-gray-800 text-center text-sm">Novembro Azul</p>
+                                        <p class="text-[10px] text-gray-500 text-center font-bold">+ Laços decorativos</p>
                                     </div>
                                 </label>
 
@@ -1128,7 +1090,7 @@
                             <h4 class="text-sm font-black text-gray-800 uppercase tracking-widest mb-4 flex items-center gap-2">
                                 <i class="fa-solid fa-palette text-pref-blue"></i> Cores Personalizadas (Avançado)
                             </h4>
-                            <p class="text-xs text-gray-500 font-bold mb-4">Ao selecionar um tema personalizado, as campanhas acima e os laços são desativados.</p>
+                            <p class="text-xs text-gray-500 font-bold mb-4">Ao selecionar um tema personalizado, as campanhas acima são desativadas.</p>
                             
                             <div class="flex items-center gap-3 mb-6">
                                 <input type="radio" name="tema-preset" value="customizado" id="radio-custom" class="w-5 h-5 cursor-pointer" onchange="previewTema('customizado')">
@@ -1260,6 +1222,18 @@
             setTimeout(() => { modal.style.opacity = '0'; setTimeout(() => modal.remove(), 300); }, 3500);
         };
 
+        window.mostrarPreview = function(url, id) {
+            const img = document.getElementById(id);
+            if(img) {
+                if(url) {
+                    img.src = url;
+                    img.classList.remove('hidden');
+                } else {
+                    img.classList.add('hidden');
+                }
+            }
+        };
+
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, getDoc, onSnapshot, collection, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
@@ -1305,55 +1279,6 @@
         let isCidadaoLogado = false;
         let cidadaoPerfil = null;
         let isModoCadastroCidadao = false; 
-
-        // DICIONÁRIOS DO CALENDÁRIO DA SAÚDE
-        const CORES_TEMA = {
-            'padrao': { p: '#0047AB', pd: '#002D6B', s: '#FFC107' },
-            'janeiro-branco': { p: '#9ca3af', pd: '#4b5563', s: '#ffffff' },
-            'fevereiro-roxo-laranja': { p: '#9333ea', pd: '#6b21a8', s: '#f97316' },
-            'marco-azul-lilas': { p: '#1e3a8a', pd: '#172554', s: '#c084fc' },
-            'abril-azul-verde': { p: '#3b82f6', pd: '#1d4ed8', s: '#22c55e' },
-            'maio-amarelo': { p: '#eab308', pd: '#a16207', s: '#fde047' },
-            'junho-vermelho': { p: '#ef4444', pd: '#991b1b', s: '#fca5a5' },
-            'julho-amarelo-verde': { p: '#eab308', pd: '#a16207', s: '#22c55e' },
-            'agosto-dourado': { p: '#d97706', pd: '#b45309', s: '#fcd34d' },
-            'setembro-amarelo': { p: '#F59E0B', pd: '#B45309', s: '#FCD34D' },
-            'outubro-rosa': { p: '#EC4899', pd: '#BE185D', s: '#FBCFE8' },
-            'novembro-azul': { p: '#06B6D4', pd: '#0E7490', s: '#67E8F9' },
-            'dezembro-vermelho-laranja': { p: '#dc2626', pd: '#991b1b', s: '#f97316' }
-        };
-
-        const TEXTOS_TEMA = {
-            'padrao': { s: `Trabalhando por uma <span class="text-pref-yellow block sm:inline">Rabo Seco</span> melhor todos os dias.`, sub: `Acesse serviços digitais com seu CPF Virtual, acompanhe as notícias da cidade e participe ativamente da gestão municipal com total transparência.` },
-            'janeiro-branco': { s: `Cuidar da mente é cuidar da <span class="text-pref-yellow block sm:inline">vida</span>.`, sub: `Janeiro Branco: Mês da conscientização sobre a saúde mental e emocional. A Prefeitura apoia o seu bem-estar integral.` },
-            'fevereiro-roxo-laranja': { s: `Apoio, cuidado e <span class="text-pref-yellow block sm:inline">esperança</span>.`, sub: `Fevereiro Roxo e Laranja: Conscientização sobre Alzheimer, lúpus, fibromialgia e incentivo à doação de medula óssea.` },
-            'marco-azul-lilas': { s: `Prevenção que <span class="text-pref-yellow block sm:inline">salva vidas</span>.`, sub: `Março Azul-Marinho e Lilás: Juntos na conscientização e combate ao câncer colorretal e câncer do colo do útero.` },
-            'abril-azul-verde': { s: `Inclusão, respeito e <span class="text-pref-yellow block sm:inline">segurança</span>.`, sub: `Abril Azul e Verde: Mês de conscientização sobre o Autismo e de promoção da saúde e segurança no ambiente de trabalho.` },
-            'maio-amarelo': { s: `No trânsito, escolha a <span class="text-pref-yellow block sm:inline">vida</span>.`, sub: `Maio Amarelo: Movimento pela redução de acidentes e valorização da vida nas estradas. Faça sua parte por um trânsito mais seguro.` },
-            'junho-vermelho': { s: `Doar sangue é doar <span class="text-pref-yellow block sm:inline">esperança</span>.`, sub: `Junho Vermelho: A sua doação pode salvar vidas. Procure o hemocentro mais próximo e faça parte dessa corrente do bem.` },
-            'julho-amarelo-verde': { s: `Atenção aos sinais, <span class="text-pref-yellow block sm:inline">cuidado constante</span>.`, sub: `Julho Amarelo e Verde: Mês de combate às hepatites virais e conscientização do câncer de cabeça e pescoço.` },
-            'agosto-dourado': { s: `Apoio ao <span class="text-pref-yellow block sm:inline">aleitamento materno</span>.`, sub: `Agosto Dourado: Amamentação é a base da vida. Promovemos e apoiamos o aleitamento materno em nossa rede de saúde.` },
-            'setembro-amarelo': { s: `Valorizando a vida em <span class="text-pref-yellow block sm:inline">Rabo Seco</span> todos os dias.`, sub: `Mês de prevenção ao suicídio. Você não está sozinho! A Prefeitura apoia esta causa com serviços de saúde mental gratuitos.` },
-            'outubro-rosa': { s: `Prevenção é um ato de <span class="text-pref-yellow block sm:inline">amor à vida</span>.`, sub: `Outubro Rosa em Rabo Seco: Mês de conscientização e combate ao câncer de mama. A rede municipal de saúde está de portas abertas para você cuidar de si.` },
-            'novembro-azul': { s: `Cuidar da saúde também é <span class="text-pref-yellow block sm:inline">coisa de homem</span>.`, sub: `Novembro Azul em Rabo Seco: Mês de combate ao câncer de próstata. Procure nossa rede de atendimento para exames preventivos rápidos e seguros.` },
-            'dezembro-vermelho-laranja': { s: `Prevenção, cuidado e <span class="text-pref-yellow block sm:inline">solidariedade</span>.`, sub: `Dezembro Vermelho e Laranja: Mobilização contra o HIV/AIDS e prevenção ao câncer de pele. Proteja-se e cuide da sua saúde.` },
-            'customizado': { s: `Trabalhando por uma <span class="text-pref-yellow block sm:inline">Rabo Seco</span> melhor todos os dias.`, sub: `Acesse serviços digitais com seu CPF Virtual, acompanhe as notícias da cidade e participe ativamente da gestão municipal com total transparência.` }
-        };
-
-        const CORES_LACO = {
-            'janeiro-branco': '#E5E7EB',
-            'fevereiro-roxo-laranja': '#A855F7',
-            'marco-azul-lilas': '#3B82F6',
-            'abril-azul-verde': '#60A5FA',
-            'maio-amarelo': '#FACC15',
-            'junho-vermelho': '#F87171',
-            'julho-amarelo-verde': '#FACC15',
-            'agosto-dourado': '#FBBF24',
-            'setembro-amarelo': '#FBBF24',
-            'outubro-rosa': '#F472B6',
-            'novembro-azul': '#22D3EE',
-            'dezembro-vermelho-laranja': '#EF4444'
-        };
 
         window.goHome = function() { window.location.hash = 'inicio'; };
         window.goHomeAndScroll = function(id) { 
@@ -1407,6 +1332,53 @@
                 document.getElementById('preview-icon-admin').className = 'fa-solid fa-laptop-file';
             }
         };
+
+        window.editarAdmin = function(tipo, id) {
+            if(tipo === 'noticias') {
+                const item = bancoDeNoticias[id]; if(!item) return;
+                document.getElementById('admin-noticia-id').value = item.id;
+                document.getElementById('admin-noticia-titulo').value = item.titulo;
+                document.getElementById('admin-noticia-categoria').value = item.categoria;
+                document.getElementById('admin-noticia-data').value = item.data;
+                document.getElementById('admin-noticia-imagem').value = item.imagem;
+                document.getElementById('admin-noticia-conteudo').value = item.conteudo;
+                document.getElementById('admin-titulo-editor-noticias').innerHTML = '<i class="fa-solid fa-pen-to-square"></i> Editando Notícia';
+                mostrarPreview(item.imagem, 'preview-img-admin');
+            } else if (tipo === 'servicos') {
+                const item = bancoDeServicos[id]; if(!item) return;
+                document.getElementById('admin-servico-id').value = item.id;
+                document.getElementById('admin-servico-titulo').value = item.titulo;
+                document.getElementById('admin-servico-icone').value = item.icone;
+                document.getElementById('admin-servico-desc').value = item.descricao;
+                document.getElementById('preview-icon-admin').className = 'fa-solid fa-' + item.icone.replace('fa-','');
+                document.getElementById('admin-titulo-editor-servicos').innerHTML = '<i class="fa-solid fa-pen-to-square"></i> Editando Serviço';
+            }
+        };
+
+        window.abrirModalDelete = function(tipo, id) {
+            itemParaExcluir = { tipo, id };
+            document.getElementById('modal-delete').classList.remove('hidden');
+        };
+
+        window.fecharModalDelete = function() {
+            itemParaExcluir = { id: null, tipo: null };
+            document.getElementById('modal-delete').classList.add('hidden');
+        };
+
+        document.getElementById('btn-confirmar-delete').addEventListener('click', async () => {
+            if(!itemParaExcluir.id) return;
+            const btn = document.getElementById('btn-confirmar-delete');
+            btn.innerHTML = 'Excluindo...';
+            try {
+                await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', itemParaExcluir.tipo, itemParaExcluir.id));
+                mostrarAlerta('Item excluído com sucesso!');
+                fecharModalDelete();
+            } catch(e) {
+                mostrarAlerta('Erro ao excluir item.');
+            } finally {
+                btn.innerHTML = 'Sim, excluir';
+            }
+        });
 
         window.alternarModoCidadao = function() {
             isModoCadastroCidadao = !isModoCadastroCidadao;
@@ -1655,7 +1627,6 @@
                 if(docSnap.exists()) {
                     configTemaAtual = docSnap.data();
                     aplicarTemaVisual(configTemaAtual);
-                    
                     if(document.querySelector(`input[name="tema-preset"][value="${configTemaAtual.tipo}"]`)) {
                         document.querySelector(`input[name="tema-preset"][value="${configTemaAtual.tipo}"]`).checked = true;
                     }
@@ -1673,10 +1644,13 @@
                         if(configTemaAtual.slogan) document.getElementById('admin-tema-slogan').value = configTemaAtual.slogan;
                         if(configTemaAtual.subSlogan) document.getElementById('admin-tema-subslogan').value = configTemaAtual.subSlogan;
                     } else {
-                        if(TEXTOS_TEMA[t]) {
-                            document.getElementById('admin-tema-slogan').value = TEXTOS_TEMA[t].s;
-                            document.getElementById('admin-tema-subslogan').value = TEXTOS_TEMA[t].sub;
-                        }
+                        const def = {
+                            'setembro-amarelo': { s: `Valorizando a vida em <span class="text-pref-yellow block sm:inline">Rabo Seco</span> todos os dias.`, sub: `Mês de prevenção ao suicídio. Você não está sozinho! A Prefeitura apoia esta causa com serviços de saúde mental gratuitos.` },
+                            'outubro-rosa': { s: `Prevenção é um ato de <span class="text-pref-yellow block sm:inline">amor à vida</span>.`, sub: `Outubro Rosa em Rabo Seco: Mês de conscientização e combate ao câncer de mama. A rede municipal de saúde está de portas abertas para você cuidar de si.` },
+                            'novembro-azul': { s: `Cuidar da saúde também é <span class="text-pref-yellow block sm:inline">coisa de homem</span>.`, sub: `Novembro Azul em Rabo Seco: Mês de combate ao câncer de próstata. Procure nossa rede de atendimento para exames preventivos rápidos e seguros.` },
+                        };
+                        document.getElementById('admin-tema-slogan').value = def[t].s;
+                        document.getElementById('admin-tema-subslogan').value = def[t].sub;
                     }
                 }
             }, errHandler);
@@ -1718,153 +1692,6 @@
             
             handleHashChange();
         });
-
-        window.previewTema = function(tipo) {
-            const boxCustom = document.getElementById('box-cores-custom');
-            const sloganInput = document.getElementById('admin-tema-slogan');
-            const subInput = document.getElementById('admin-tema-subslogan');
-            
-            if (tipo === 'customizado') {
-                boxCustom.style.opacity = '1'; boxCustom.style.pointerEvents = 'auto';
-                const p = document.getElementById('color-primary').value;
-                const s = document.getElementById('color-secondary').value;
-                document.getElementById('hex-primary').innerText = p;
-                document.getElementById('hex-secondary').innerText = s;
-                aplicarTemaVisual({ tipo: 'customizado', cPrimary: p, cSecondary: s, slogan: sloganInput.value, subSlogan: subInput.value });
-            } else {
-                boxCustom.style.opacity = '0.5'; boxCustom.style.pointerEvents = 'none';
-                
-                if(TEXTOS_TEMA[tipo]) {
-                    sloganInput.value = TEXTOS_TEMA[tipo].s;
-                    subInput.value = TEXTOS_TEMA[tipo].sub;
-                }
-                
-                aplicarTemaVisual({ tipo: tipo, slogan: sloganInput.value, subSlogan: subInput.value });
-            }
-        };
-
-        window.aplicarTemaVisual = function(config) {
-            const root = document.documentElement;
-            const overlay = document.getElementById('campaign-overlay');
-            const heroRibbon = document.getElementById('hero-campaign-ribbon');
-            
-            let p, pd, s;
-            if (config.tipo === 'customizado') {
-                p = config.cPrimary; s = config.cSecondary; 
-                pd = ajustarBrilhoCor(p, -30);
-            } else {
-                const t = CORES_TEMA[config.tipo] || CORES_TEMA['padrao'];
-                p = t.p; pd = t.pd; s = t.s;
-            }
-
-            root.style.setProperty('--pref-blue', p);
-            root.style.setProperty('--pref-darkblue', pd);
-            root.style.setProperty('--pref-yellow', s);
-
-            let sLog, subLog;
-            if (config.tipo === 'padrao' || config.tipo === 'customizado') {
-                sLog = config.slogan || TEXTOS_TEMA['padrao'].s;
-                subLog = config.subSlogan || TEXTOS_TEMA['padrao'].sub;
-            } else {
-                sLog = TEXTOS_TEMA[config.tipo]?.s || TEXTOS_TEMA['padrao'].s;
-                subLog = TEXTOS_TEMA[config.tipo]?.sub || TEXTOS_TEMA['padrao'].sub;
-            }
-
-            if (document.getElementById('hero-title')) {
-                document.getElementById('hero-title').innerHTML = sLog;
-            }
-            if (document.getElementById('hero-subtitle')) {
-                document.getElementById('hero-subtitle').innerText = subLog;
-            }
-
-            if (config.tipo !== 'padrao' && config.tipo !== 'customizado' && CORES_LACO[config.tipo]) {
-                overlay.classList.remove('hidden');
-                const corLaco = CORES_LACO[config.tipo];
-                
-                if (heroRibbon) {
-                    heroRibbon.classList.remove('hidden');
-                    heroRibbon.style.color = corLaco;
-                }
-                
-                let htmlLacos = '';
-                for(let i=0; i<8; i++) {
-                    const size = Math.random() * 40 + 30;
-                    const left = Math.random() * 90;
-                    const delay = Math.random() * -10;
-                    const dur = Math.random() * 5 + 5;
-                    const y = Math.random() * 80;
-                    htmlLacos += `
-                        <div class="absolute ribbon-anim opacity-20" style="left: ${left}%; top: ${y}%; font-size: ${size}px; color: ${corLaco}; animation-delay: ${delay}s; animation-duration: ${dur}s">
-                            <i class="fa-solid fa-ribbon"></i>
-                        </div>
-                    `;
-                }
-                overlay.innerHTML = htmlLacos;
-            } else {
-                overlay.classList.add('hidden');
-                overlay.innerHTML = '';
-                if (heroRibbon) {
-                    heroRibbon.classList.add('hidden');
-                }
-            }
-        };
-
-        window.gerarFrasesIA = async function() {
-            const btn = document.getElementById('btn-ia-frases');
-            const original = btn.innerHTML;
-            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gerando...';
-            try {
-                await new Promise(r => setTimeout(r, 1200));
-                const slogans = [
-                    { t: `Acelerando o futuro de <span class="text-pref-yellow block sm:inline">Rabo Seco</span> juntos.`, s: "Mais inovação, saúde e transparência para nossa população. Acesse os serviços na palma da sua mão." },
-                    { t: `Gestão eficiente e <span class="text-pref-yellow block sm:inline">transparente</span> para você.`, s: "Portal do cidadão 100% digital. Rapidez e comodidade para resolver suas demandas." },
-                    { t: `Transformando <span class="text-pref-yellow block sm:inline">Rabo Seco</span> com trabalho sério.`, s: "Inovação tecnológica a serviço da nossa gente. Tudo em um só lugar com o CPF Virtual." }
-                ];
-                const sorteado = slogans[Math.floor(Math.random() * slogans.length)];
-                document.getElementById('admin-tema-slogan').value = sorteado.t;
-                document.getElementById('admin-tema-subslogan').value = sorteado.s;
-                mostrarAlerta("Frases geradas com sucesso!");
-            } catch(e) {
-                mostrarAlerta("Erro ao gerar frases.");
-            } finally {
-                btn.disabled = false; btn.innerHTML = original;
-            }
-        };
-
-        window.salvarTemaAdmin = async function() {
-            const btn = document.getElementById('btn-salvar-tema');
-            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Publicando Tema...';
-            
-            const tipo = document.querySelector('input[name="tema-preset"]:checked').value;
-            const p = document.getElementById('color-primary').value;
-            const s = document.getElementById('color-secondary').value;
-            const sloganVal = document.getElementById('admin-tema-slogan').value;
-            const subSloganVal = document.getElementById('admin-tema-subslogan').value;
-            
-            const novoConfig = { tipo: tipo };
-            if(tipo === 'customizado') { novoConfig.cPrimary = p; novoConfig.cSecondary = s; }
-            if(sloganVal.trim() !== '') novoConfig.slogan = sloganVal;
-            if(subSloganVal.trim() !== '') novoConfig.subSlogan = subSloganVal;
-
-            try {
-                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'config', 'tema_site'), novoConfig);
-                document.getElementById('msg-tema-salvo').classList.remove('hidden');
-                setTimeout(() => document.getElementById('msg-tema-salvo').classList.add('hidden'), 4000);
-            } catch(e) {
-                mostrarAlerta("Erro ao salvar tema.");
-            } finally {
-                btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-check-double mr-2"></i> Publicar Novo Tema';
-            }
-        };
-
-        function ajustarBrilhoCor(hex, percent) {
-            hex = hex.replace(/^\s*#|\s*$/g, '');
-            if(hex.length == 3) hex = hex.replace(/(.)/g, '$1$1');
-            var r = parseInt(hex.substr(0, 2), 16), g = parseInt(hex.substr(2, 2), 16), b = parseInt(hex.substr(4, 2), 16);
-            return '#' + ((0|(1<<8) + r + (256 - r) * percent / 100).toString(16)).substr(1) +
-                ((0|(1<<8) + g + (256 - g) * percent / 100).toString(16)).substr(1) +
-                ((0|(1<<8) + b + (256 - b) * percent / 100).toString(16)).substr(1);
-        }
 
         function renderizarServicosHome() {
             const container = document.getElementById('servicos-grid-home'); if (!container) return;
@@ -1949,6 +1776,175 @@
             document.getElementById('noticia-data').innerText = n.data;
             document.getElementById('noticia-imagem').src = n.imagem;
             document.getElementById('noticia-conteudo').innerHTML = formatarTextoParaHTML(n.conteudo);
+        }
+
+        const CORES_TEMA = {
+            'padrao': { p: '#0047AB', pd: '#002D6B', s: '#FFC107' },
+            'setembro-amarelo': { p: '#F59E0B', pd: '#B45309', s: '#FCD34D' },
+            'outubro-rosa': { p: '#EC4899', pd: '#BE185D', s: '#FBCFE8' },
+            'novembro-azul': { p: '#06B6D4', pd: '#0E7490', s: '#67E8F9' }
+        };
+
+        window.previewTema = function(tipo) {
+            const boxCustom = document.getElementById('box-cores-custom');
+            const sloganInput = document.getElementById('admin-tema-slogan');
+            const subInput = document.getElementById('admin-tema-subslogan');
+            
+            const defaultTexts = {
+                'padrao': { s: `Trabalhando por uma <span class="text-pref-yellow block sm:inline">Rabo Seco</span> melhor todos os dias.`, sub: `Acesse serviços digitais com seu CPF Virtual, acompanhe as notícias da cidade e participe ativamente da gestão municipal com total transparência.` },
+                'setembro-amarelo': { s: `Valorizando a vida em <span class="text-pref-yellow block sm:inline">Rabo Seco</span> todos os dias.`, sub: `Mês de prevenção ao suicídio. Você não está sozinho! A Prefeitura apoia esta causa com serviços de saúde mental gratuitos.` },
+                'outubro-rosa': { s: `Prevenção é um ato de <span class="text-pref-yellow block sm:inline">amor à vida</span>.`, sub: `Outubro Rosa em Rabo Seco: Mês de conscientização e combate ao câncer de mama. A rede municipal de saúde está de portas abertas para você cuidar de si.` },
+                'novembro-azul': { s: `Cuidar da saúde também é <span class="text-pref-yellow block sm:inline">coisa de homem</span>.`, sub: `Novembro Azul em Rabo Seco: Mês de combate ao câncer de próstata. Procure nossa rede de atendimento para exames preventivos rápidos e seguros.` }
+            };
+            
+            if (tipo === 'customizado') {
+                boxCustom.style.opacity = '1'; boxCustom.style.pointerEvents = 'auto';
+                const p = document.getElementById('color-primary').value;
+                const s = document.getElementById('color-secondary').value;
+                document.getElementById('hex-primary').innerText = p;
+                document.getElementById('hex-secondary').innerText = s;
+                aplicarTemaVisual({ tipo: 'customizado', cPrimary: p, cSecondary: s, slogan: sloganInput.value, subSlogan: subInput.value });
+            } else {
+                boxCustom.style.opacity = '0.5'; boxCustom.style.pointerEvents = 'none';
+                
+                if(defaultTexts[tipo]) {
+                    sloganInput.value = defaultTexts[tipo].s;
+                    subInput.value = defaultTexts[tipo].sub;
+                }
+                
+                aplicarTemaVisual({ tipo: tipo, slogan: sloganInput.value, subSlogan: subInput.value });
+            }
+        };
+
+        window.aplicarTemaVisual = function(config) {
+            const root = document.documentElement;
+            const overlay = document.getElementById('campaign-overlay');
+            const heroRibbon = document.getElementById('hero-campaign-ribbon');
+            
+            let p, pd, s;
+            if (config.tipo === 'customizado') {
+                p = config.cPrimary; s = config.cSecondary; 
+                pd = ajustarBrilhoCor(p, -30);
+            } else {
+                const t = CORES_TEMA[config.tipo] || CORES_TEMA['padrao'];
+                p = t.p; pd = t.pd; s = t.s;
+            }
+
+            root.style.setProperty('--pref-blue', p);
+            root.style.setProperty('--pref-darkblue', pd);
+            root.style.setProperty('--pref-yellow', s);
+            
+            const defaultTexts = {
+                'padrao': { s: `Trabalhando por uma <span class="text-pref-yellow block sm:inline">Rabo Seco</span> melhor todos os dias.`, sub: `Acesse serviços digitais com seu CPF Virtual, acompanhe as notícias da cidade e participe ativamente da gestão municipal com total transparência.` },
+                'setembro-amarelo': { s: `Valorizando a vida em <span class="text-pref-yellow block sm:inline">Rabo Seco</span> todos os dias.`, sub: `Mês de prevenção ao suicídio. Você não está sozinho! A Prefeitura apoia esta causa com serviços de saúde mental gratuitos.` },
+                'outubro-rosa': { s: `Prevenção é um ato de <span class="text-pref-yellow block sm:inline">amor à vida</span>.`, sub: `Outubro Rosa em Rabo Seco: Mês de conscientização e combate ao câncer de mama. A rede municipal de saúde está de portas abertas para você cuidar de si.` },
+                'novembro-azul': { s: `Cuidar da saúde também é <span class="text-pref-yellow block sm:inline">coisa de homem</span>.`, sub: `Novembro Azul em Rabo Seco: Mês de combate ao câncer de próstata. Procure nossa rede de atendimento para exames preventivos rápidos e seguros.` },
+                'customizado': { s: `Trabalhando por uma <span class="text-pref-yellow block sm:inline">Rabo Seco</span> melhor todos os dias.`, sub: `Acesse serviços digitais com seu CPF Virtual, acompanhe as notícias da cidade e participe ativamente da gestão municipal com total transparência.` }
+            };
+
+            let sLog, subLog;
+            if (config.tipo === 'padrao' || config.tipo === 'customizado') {
+                sLog = config.slogan || defaultTexts['padrao'].s;
+                subLog = config.subSlogan || defaultTexts['padrao'].sub;
+            } else {
+                sLog = defaultTexts[config.tipo]?.s || defaultTexts['padrao'].s;
+                subLog = defaultTexts[config.tipo]?.sub || defaultTexts['padrao'].sub;
+            }
+
+            if (document.getElementById('hero-title')) {
+                document.getElementById('hero-title').innerHTML = sLog;
+            }
+            if (document.getElementById('hero-subtitle')) {
+                document.getElementById('hero-subtitle').innerText = subLog;
+            }
+
+            if (config.tipo === 'setembro-amarelo' || config.tipo === 'outubro-rosa' || config.tipo === 'novembro-azul') {
+                overlay.classList.remove('hidden');
+                const corLaco = config.tipo === 'setembro-amarelo' ? '#FBBF24' : (config.tipo === 'outubro-rosa' ? '#F472B6' : '#22D3EE');
+                
+                if (heroRibbon) {
+                    heroRibbon.classList.remove('hidden');
+                    heroRibbon.style.color = corLaco;
+                }
+                
+                let htmlLacos = '';
+                for(let i=0; i<8; i++) {
+                    const size = Math.random() * 40 + 30;
+                    const left = Math.random() * 90;
+                    const delay = Math.random() * -10;
+                    const dur = Math.random() * 5 + 5;
+                    const y = Math.random() * 80;
+                    htmlLacos += `
+                        <div class="absolute ribbon-anim opacity-20" style="left: ${left}%; top: ${y}%; font-size: ${size}px; color: ${corLaco}; animation-delay: ${delay}s; animation-duration: ${dur}s">
+                            <i class="fa-solid fa-ribbon"></i>
+                        </div>
+                    `;
+                }
+                overlay.innerHTML = htmlLacos;
+            } else {
+                overlay.classList.add('hidden');
+                overlay.innerHTML = '';
+                if (heroRibbon) {
+                    heroRibbon.classList.add('hidden');
+                }
+            }
+        };
+
+        window.gerarFrasesIA = async function() {
+            const btn = document.getElementById('btn-ia-frases');
+            const original = btn.innerHTML;
+            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gerando...';
+            try {
+                await new Promise(r => setTimeout(r, 1200));
+                const slogans = [
+                    { t: `Acelerando o futuro de <span class="text-pref-yellow block sm:inline">Rabo Seco</span> juntos.`, s: "Mais inovação, saúde e transparência para nossa população. Acesse os serviços na palma da sua mão." },
+                    { t: `Gestão eficiente e <span class="text-pref-yellow block sm:inline">transparente</span> para você.`, s: "Portal do cidadão 100% digital. Rapidez e comodidade para resolver suas demandas." },
+                    { t: `Transformando <span class="text-pref-yellow block sm:inline">Rabo Seco</span> com trabalho sério.`, s: "Inovação tecnológica a serviço da nossa gente. Tudo em um só lugar com o CPF Virtual." }
+                ];
+                const sorteado = slogans[Math.floor(Math.random() * slogans.length)];
+                document.getElementById('admin-tema-slogan').value = sorteado.t;
+                document.getElementById('admin-tema-subslogan').value = sorteado.s;
+                mostrarAlerta("Frases geradas com sucesso!");
+            } catch(e) {
+                mostrarAlerta("Erro ao gerar frases.");
+            } finally {
+                btn.disabled = false; btn.innerHTML = original;
+            }
+        };
+
+        window.salvarTemaAdmin = async function() {
+            const btn = document.getElementById('btn-salvar-tema');
+            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Publicando Tema...';
+            
+            const tipo = document.querySelector('input[name="tema-preset"]:checked').value;
+            const p = document.getElementById('color-primary').value;
+            const s = document.getElementById('color-secondary').value;
+            const sloganVal = document.getElementById('admin-tema-slogan').value;
+            const subSloganVal = document.getElementById('admin-tema-subslogan').value;
+            
+            const novoConfig = { tipo: tipo };
+            if(tipo === 'customizado') { novoConfig.cPrimary = p; novoConfig.cSecondary = s; }
+            if(sloganVal.trim() !== '') novoConfig.slogan = sloganVal;
+            if(subSloganVal.trim() !== '') novoConfig.subSlogan = subSloganVal;
+
+            try {
+                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'config', 'tema_site'), novoConfig);
+                document.getElementById('msg-tema-salvo').classList.remove('hidden');
+                setTimeout(() => document.getElementById('msg-tema-salvo').classList.add('hidden'), 4000);
+            } catch(e) {
+                mostrarAlerta("Erro ao salvar tema.");
+            } finally {
+                btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-check-double mr-2"></i> Publicar Novo Tema';
+            }
+        };
+
+        function ajustarBrilhoCor(hex, percent) {
+            hex = hex.replace(/^\s*#|\s*$/g, '');
+            if(hex.length == 3) hex = hex.replace(/(.)/g, '$1$1');
+            var r = parseInt(hex.substr(0, 2), 16), g = parseInt(hex.substr(2, 2), 16), b = parseInt(hex.substr(4, 2), 16);
+            return '#' + ((0|(1<<8) + r + (256 - r) * percent / 100).toString(16)).substr(1) +
+                ((0|(1<<8) + g + (256 - g) * percent / 100).toString(16)).substr(1) +
+                ((0|(1<<8) + b + (256 - b) * percent / 100).toString(16)).substr(1);
         }
 
         function renderizarServicoAberto() {
@@ -2694,6 +2690,7 @@
             } catch(e) { mostrarAlerta("Erro ao gerar."); } finally { btn.disabled = false; btn.innerHTML = old; }
         };
 
+        // SALVAR EDITORES DO ADMIN (Notícia / Serviço)
         window.salvarNoticiaAdmin = async function() {
             const btn = document.getElementById('btn-salvar-noticia'); const old = btn.innerHTML;
             btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Salvando...';
@@ -2711,8 +2708,12 @@
                 });
                 document.getElementById('admin-form-success-noticias').classList.remove('hidden');
                 setTimeout(() => { document.getElementById('admin-form-success-noticias').classList.add('hidden'); prepararNovoAdmin(); }, 2000);
-            } catch(e) { document.getElementById('admin-form-error-noticias').classList.remove('hidden'); setTimeout(()=>document.getElementById('admin-form-error-noticias').classList.add('hidden'),3000); } 
-            finally { btn.disabled = false; btn.innerHTML = old; }
+            } catch(e) { 
+                document.getElementById('admin-form-error-noticias').classList.remove('hidden'); 
+                setTimeout(()=>document.getElementById('admin-form-error-noticias').classList.add('hidden'),3000); 
+            } finally { 
+                btn.disabled = false; btn.innerHTML = old; 
+            }
         };
 
         window.salvarServicoAdmin = async function() {
@@ -2729,44 +2730,24 @@
                     descricao: document.getElementById('admin-servico-desc').value
                 });
                 document.getElementById('admin-form-success-servicos').classList.remove('hidden');
-                setTimeout(() => { document.getElementById('admin-form-success-servicos').classList.add('hidden'); prepararNovoAdmin(); }, 2000);
-            } catch(e) { document.getElementById('admin-form-error-servicos').classList.remove('hidden'); setTimeout(()=>document.getElementById('admin-form-error-servicos').classList.add('hidden'),3000); } 
-            finally { btn.disabled = false; btn.innerHTML = old; }
-        };
-
-        window.editarAdmin = function(tipo, id) {
-            if (tipo === 'noticias') {
-                const item = bancoDeNoticias[id]; if(!item) return;
-                document.getElementById('admin-noticia-id').value = item.id;
-                document.getElementById('admin-noticia-titulo').value = item.titulo;
-                document.getElementById('admin-noticia-categoria').value = item.categoria;
-                document.getElementById('admin-noticia-data').value = item.data;
-                document.getElementById('admin-noticia-imagem').value = item.imagem;
-                document.getElementById('admin-noticia-conteudo').value = item.conteudo;
-                document.getElementById('admin-titulo-editor-noticias').innerHTML = `<i class="fa-solid fa-arrows-rotate text-pref-blue"></i> Editando Notícia`;
-                mostrarPreview(item.imagem, 'preview-img-admin');
-            } else if (tipo === 'servicos') {
-                const item = bancoDeServicos[id]; if(!item) return;
-                document.getElementById('admin-servico-id').value = item.id;
-                document.getElementById('admin-servico-titulo').value = item.titulo;
-                document.getElementById('admin-servico-icone').value = item.icone;
-                document.getElementById('admin-servico-desc').value = item.descricao;
-                document.getElementById('admin-titulo-editor-servicos').innerHTML = `<i class="fa-solid fa-arrows-rotate text-pref-blue"></i> Editando Serviço`;
-                document.getElementById('preview-icon-admin').className = 'fa-solid fa-' + item.icone.replace('fa-','');
+                setTimeout(() => { 
+                    document.getElementById('admin-form-success-servicos').classList.add('hidden'); 
+                    prepararNovoAdmin(); 
+                }, 2000); 
+            } catch(e) { 
+                document.getElementById('admin-form-error-servicos').classList.remove('hidden'); 
+                setTimeout(()=>document.getElementById('admin-form-error-servicos').classList.add('hidden'),3000); 
+            } finally { 
+                btn.disabled = false; 
+                btn.innerHTML = old; 
             }
         };
 
-        window.mostrarPreview = function(url, imgId) {
-            const img = document.getElementById(imgId);
-            if(url) { img.src = url; img.classList.remove('hidden'); }
-            else { img.classList.add('hidden'); }
-        };
-
-        window.abrirModalDelete = function(tipo, id) {
-            if(!id) return;
-            itemParaExcluir = { tipo, id };
-            document.getElementById('modal-delete').classList.remove('hidden');
-        };
-
-        window.fecharModalDelete = function() {
-            item
+        // Iniciar rotas e hash ao carregar a página
+        window.addEventListener('load', () => {
+            handleHashChange();
+        });
+        window.addEventListener('hashchange', handleHashChange);
+    </script>
+</body>
+</html>
