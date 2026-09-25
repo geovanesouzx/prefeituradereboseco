@@ -1158,10 +1158,10 @@
             setTimeout(() => { modal.style.opacity = '0'; setTimeout(() => modal.remove(), 300); }, 3500);
         };
 
-        // Versões do Firebase corrigidas para a 10.12.2 e adicionado signInWithCustomToken
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, onSnapshot, collection, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        // Versões do Firebase atualizadas e validadas (11.6.1)
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, onSnapshot, collection, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBEYU7Y0QKZCa_fMC5ML-MWMN2IAdCx114",
@@ -1463,15 +1463,24 @@
             if (unsubTransparencia) unsubTransparencia();
             if (unsubTema) unsubTema();
 
-            unsubNoticias = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'noticias'), (snap) => { bancoDeNoticias = {}; snap.forEach(d => bancoDeNoticias[d.id] = { id: d.id, ...d.data() }); renderizarNoticiasHome(); if (window.location.hash === '#todas-noticias') renderizarGradeTodasNoticias(); if (window.location.hash.startsWith('#noticia/')) renderizarNoticiaAberta(); if (isAdminView) renderListaNoticiasAdmin(); });
-            unsubServicos = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'servicos'), (snap) => { bancoDeServicos = {}; snap.forEach(d => bancoDeServicos[d.id] = { id: d.id, ...d.data() }); renderizarServicosHome(); if (window.location.hash === '#cidadao' && isCidadaoLogado) renderizarServicosCidadaoDashboard(); if (isAdminView) renderListaServicosAdmin(); });
-            unsubCidadaos = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'cidadaos'), (snap) => { bancoDeCidadaos = {}; snap.forEach(d => bancoDeCidadaos[d.id] = { id: d.id, ...d.data() }); if (isAdminView && adminAbaAtiva === 'cidadaos') renderListaCidadaosAdmin(); });
-            unsubImpostos = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'impostos'), (snap) => { bancoDeImpostos = {}; snap.forEach(d => bancoDeImpostos[d.id] = { id: d.id, ...d.data() }); if (isAdminView && adminAbaAtiva === 'cidadaos' && currentAdminCidadaoId) renderImpostosCidadaoAdmin(); });
+            const errHandler = (err) => console.error("Firestore DB Error:", err);
+
+            unsubNoticias = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'noticias'), (snap) => { bancoDeNoticias = {}; snap.forEach(d => bancoDeNoticias[d.id] = { id: d.id, ...d.data() }); renderizarNoticiasHome(); if (window.location.hash === '#todas-noticias') renderizarGradeTodasNoticias(); if (window.location.hash.startsWith('#noticia/')) renderizarNoticiaAberta(); if (isAdminView) renderListaNoticiasAdmin(); }, errHandler);
             
-            unsubOuvidoria = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'ouvidoria'), (snap) => { bancoDeOuvidoria = {}; snap.forEach(d => bancoDeOuvidoria[d.id] = { id: d.id, ...d.data() }); if (isAdminView && adminAbaAtiva === 'ouvidoria') renderListaOuvidoriaAdmin(); });
-            unsubLicitacoes = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'licitacoes'), (snap) => { bancoDeLicitacoes = {}; snap.forEach(d => bancoDeLicitacoes[d.id] = { id: d.id, ...d.data() }); if (isAdminView && adminAbaAtiva === 'licitacoes') renderListaLicitacoesAdmin(); });
-            unsubAgendamentos = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'agendamentos'), (snap) => { bancoDeAgendamentos = {}; snap.forEach(d => bancoDeAgendamentos[d.id] = { id: d.id, ...d.data() }); if (isAdminView && adminAbaAtiva === 'saude') renderListaAgendamentosAdmin(); });
-            unsubTransparencia = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'transparencia'), (snap) => { bancoDeTransparencia = {}; snap.forEach(d => bancoDeTransparencia[d.id] = { id: d.id, ...d.data() }); if (isAdminView && adminAbaAtiva === 'transparencia') renderListaTransparenciaAdmin(); });
+            unsubServicos = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'servicos'), (snap) => { bancoDeServicos = {}; snap.forEach(d => bancoDeServicos[d.id] = { id: d.id, ...d.data() }); renderizarServicosHome(); if (window.location.hash === '#cidadao' && isCidadaoLogado) renderizarServicosCidadaoDashboard(); if (isAdminView) renderListaServicosAdmin(); }, errHandler);
+            
+            unsubCidadaos = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'cidadaos'), (snap) => { bancoDeCidadaos = {}; snap.forEach(d => bancoDeCidadaos[d.id] = { id: d.id, ...d.data() }); if (isAdminView && adminAbaAtiva === 'cidadaos') renderListaCidadaosAdmin(); }, errHandler);
+            
+            unsubImpostos = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'impostos'), (snap) => { bancoDeImpostos = {}; snap.forEach(d => bancoDeImpostos[d.id] = { id: d.id, ...d.data() }); if (isAdminView && adminAbaAtiva === 'cidadaos' && currentAdminCidadaoId) renderImpostosCidadaoAdmin(); }, errHandler);
+            
+            unsubOuvidoria = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'ouvidoria'), (snap) => { bancoDeOuvidoria = {}; snap.forEach(d => bancoDeOuvidoria[d.id] = { id: d.id, ...d.data() }); if (isAdminView && adminAbaAtiva === 'ouvidoria') renderListaOuvidoriaAdmin(); }, errHandler);
+            
+            unsubLicitacoes = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'licitacoes'), (snap) => { bancoDeLicitacoes = {}; snap.forEach(d => bancoDeLicitacoes[d.id] = { id: d.id, ...d.data() }); if (isAdminView && adminAbaAtiva === 'licitacoes') renderListaLicitacoesAdmin(); }, errHandler);
+            
+            // Alterado para a coleção 'saude' para respeitar a Regra 4 de segurança
+            unsubAgendamentos = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'saude'), (snap) => { bancoDeAgendamentos = {}; snap.forEach(d => bancoDeAgendamentos[d.id] = { id: d.id, ...d.data() }); if (isAdminView && adminAbaAtiva === 'saude') renderListaAgendamentosAdmin(); }, errHandler);
+            
+            unsubTransparencia = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'transparencia'), (snap) => { bancoDeTransparencia = {}; snap.forEach(d => bancoDeTransparencia[d.id] = { id: d.id, ...d.data() }); if (isAdminView && adminAbaAtiva === 'transparencia') renderListaTransparenciaAdmin(); }, errHandler);
             
             unsubTema = onSnapshot(doc(db, 'artifacts', appId, 'public', 'config', 'tema_site'), (docSnap) => { 
                 if(docSnap.exists()) {
@@ -1489,7 +1498,7 @@
                         document.getElementById('box-cores-custom').style.pointerEvents = 'auto';
                     }
                 }
-            });
+            }, errHandler);
         }
 
         onAuthStateChanged(auth, async (user) => {
@@ -1875,7 +1884,8 @@
             
             const novoId = `agend_${Date.now()}`;
             try {
-                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'agendamentos', novoId), {
+                // Alterado para 'saude' para bater com sua regra Firestore
+                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'saude', novoId), {
                     id: novoId, especialidade: esp, dataSolicitada: data, observacoes: obs || 'Nenhuma',
                     cpfCidadao: cidadaoPerfil.cpfVirtual, status: 'Pendente Análise'
                 });
@@ -2087,7 +2097,10 @@
 
         window.mudarStatusSaude = async function(novoStatus) {
             if(!currentAdminAgendamentoId) return;
-            try { await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'agendamentos', currentAdminAgendamentoId), { ...bancoDeAgendamentos[currentAdminAgendamentoId], status: novoStatus }); } 
+            try { 
+                // Alterado para coleção 'saude'
+                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'saude', currentAdminAgendamentoId), { ...bancoDeAgendamentos[currentAdminAgendamentoId], status: novoStatus }); 
+            } 
             catch(e) { mostrarAlerta("Erro ao mudar status."); }
         };
 
