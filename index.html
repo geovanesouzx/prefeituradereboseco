@@ -141,6 +141,11 @@
                 <div class="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -mr-20 -mt-20 pointer-events-none"></div>
                 <div class="absolute bottom-0 left-0 w-96 h-96 bg-pref-darkblue opacity-50 rounded-full -ml-32 -mb-32 pointer-events-none"></div>
                 
+                <!-- Laço Gigante de Campanha -->
+                <div id="hero-campaign-ribbon" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[24rem] h-[24rem] md:w-[35rem] md:h-[35rem] lg:w-[45rem] lg:h-[45rem] opacity-15 pointer-events-none hidden z-0 transition-colors duration-500">
+                    <svg viewBox="0 0 512 512" fill="currentColor"><path d="M439.4 39.4c-52.5-52.5-137.6-52.5-190.1 0l-37.4 37.4c-5.8 5.8-5.8 15.3 0 21.1 5.8 5.8 15.3 5.8 21.1 0l37.4-37.4c40.9-40.9 107.1-40.9 148 0 40.9 40.9 40.9 107.1 0 148L321 306c-5.8 5.8-5.8 15.3 0 21.1 5.8 5.8 15.3 5.8 21.1 0l97.3-97.3c52.5-52.6 52.5-137.7 0-190.4zm-366.8 0C20 91.9 20 177 72.6 229.6l97.3 97.3c5.8 5.8 15.3 5.8 21.1 0 5.8-5.8 5.8-15.3 0-21.1L93.7 208.5c-40.9-40.9-40.9-107.1 0-148 40.9-40.9 107.1-40.9 148 0l37.4 37.4c5.8 5.8 15.3 5.8 21.1 0 5.8-5.8 5.8-15.3 0-21.1L262.8 39.4C210.3-13.1 125.1-13.1 72.6 39.4zm346.7 346.7c-5.8-5.8-15.3-5.8-21.1 0L249.7 534.6c-5.8 5.8-5.8 15.3 0 21.1 5.8 5.8 15.3 5.8 21.1 0l148.5-148.5c5.9-5.8 5.9-15.3 0-21.1zm-327.4 0c-5.8-5.8-15.3-5.8-21.1 0-5.8 5.8-5.8 15.3 0 21.1l148.5 148.5c5.8 5.8 15.3 5.8 21.1 0 5.8-5.8 5.8-15.3 0-21.1L91.9 386.1z"/></svg>
+                </div>
+                
                 <div class="container mx-auto px-4 lg:px-8 relative z-10 flex flex-col md:flex-row items-center gap-8 md:gap-12">
                     <div class="md:w-3/5 text-center md:text-left mt-2 md:mt-0">
                         <span class="inline-block py-1.5 px-4 rounded-full bg-pref-yellow text-pref-darkblue text-xs sm:text-sm font-black tracking-wider mb-4 sm:mb-6 uppercase shadow-sm">Portal do Cidadão</span>
@@ -1585,11 +1590,19 @@
                         document.getElementById('box-cores-custom').style.opacity = '1';
                         document.getElementById('box-cores-custom').style.pointerEvents = 'auto';
                     }
-                    if(configTemaAtual.slogan) {
-                        document.getElementById('admin-tema-slogan').value = configTemaAtual.slogan;
-                    }
-                    if(configTemaAtual.subSlogan) {
-                        document.getElementById('admin-tema-subslogan').value = configTemaAtual.subSlogan;
+                    
+                    const t = configTemaAtual.tipo || 'padrao';
+                    if (t === 'padrao' || t === 'customizado') {
+                        if(configTemaAtual.slogan) document.getElementById('admin-tema-slogan').value = configTemaAtual.slogan;
+                        if(configTemaAtual.subSlogan) document.getElementById('admin-tema-subslogan').value = configTemaAtual.subSlogan;
+                    } else {
+                        const def = {
+                            'setembro-amarelo': { s: `Valorizando a vida em <span class="text-pref-yellow block sm:inline">Rabo Seco</span> todos os dias.`, sub: `Mês de prevenção ao suicídio. Você não está sozinho! A Prefeitura apoia esta causa com serviços de saúde mental gratuitos.` },
+                            'outubro-rosa': { s: `Prevenção é um ato de <span class="text-pref-yellow block sm:inline">amor à vida</span>.`, sub: `Outubro Rosa em Rabo Seco: Mês de conscientização e combate ao câncer de mama. A rede municipal de saúde está de portas abertas para você cuidar de si.` },
+                            'novembro-azul': { s: `Cuidar da saúde também é <span class="text-pref-yellow block sm:inline">coisa de homem</span>.`, sub: `Novembro Azul em Rabo Seco: Mês de combate ao câncer de próstata. Procure nossa rede de atendimento para exames preventivos rápidos e seguros.` },
+                        };
+                        document.getElementById('admin-tema-slogan').value = def[t].s;
+                        document.getElementById('admin-tema-subslogan').value = def[t].sub;
                     }
                 }
             }, errHandler);
@@ -1726,6 +1739,15 @@
 
         window.previewTema = function(tipo) {
             const boxCustom = document.getElementById('box-cores-custom');
+            const sloganInput = document.getElementById('admin-tema-slogan');
+            const subInput = document.getElementById('admin-tema-subslogan');
+            
+            const defaultTexts = {
+                'padrao': { s: `Trabalhando por uma <span class="text-pref-yellow block sm:inline">Rabo Seco</span> melhor todos os dias.`, sub: `Acesse serviços digitais com seu CPF Virtual, acompanhe as notícias da cidade e participe ativamente da gestão municipal com total transparência.` },
+                'setembro-amarelo': { s: `Valorizando a vida em <span class="text-pref-yellow block sm:inline">Rabo Seco</span> todos os dias.`, sub: `Mês de prevenção ao suicídio. Você não está sozinho! A Prefeitura apoia esta causa com serviços de saúde mental gratuitos.` },
+                'outubro-rosa': { s: `Prevenção é um ato de <span class="text-pref-yellow block sm:inline">amor à vida</span>.`, sub: `Outubro Rosa em Rabo Seco: Mês de conscientização e combate ao câncer de mama. A rede municipal de saúde está de portas abertas para você cuidar de si.` },
+                'novembro-azul': { s: `Cuidar da saúde também é <span class="text-pref-yellow block sm:inline">coisa de homem</span>.`, sub: `Novembro Azul em Rabo Seco: Mês de combate ao câncer de próstata. Procure nossa rede de atendimento para exames preventivos rápidos e seguros.` }
+            };
             
             if (tipo === 'customizado') {
                 boxCustom.style.opacity = '1'; boxCustom.style.pointerEvents = 'auto';
@@ -1733,16 +1755,23 @@
                 const s = document.getElementById('color-secondary').value;
                 document.getElementById('hex-primary').innerText = p;
                 document.getElementById('hex-secondary').innerText = s;
-                aplicarTemaVisual({ tipo: 'customizado', cPrimary: p, cSecondary: s });
+                aplicarTemaVisual({ tipo: 'customizado', cPrimary: p, cSecondary: s, slogan: sloganInput.value, subSlogan: subInput.value });
             } else {
                 boxCustom.style.opacity = '0.5'; boxCustom.style.pointerEvents = 'none';
-                aplicarTemaVisual({ tipo: tipo });
+                
+                if(defaultTexts[tipo]) {
+                    sloganInput.value = defaultTexts[tipo].s;
+                    subInput.value = defaultTexts[tipo].sub;
+                }
+                
+                aplicarTemaVisual({ tipo: tipo, slogan: sloganInput.value, subSlogan: subInput.value });
             }
         };
 
         window.aplicarTemaVisual = function(config) {
             const root = document.documentElement;
             const overlay = document.getElementById('campaign-overlay');
+            const heroRibbon = document.getElementById('hero-campaign-ribbon');
             
             let p, pd, s;
             if (config.tipo === 'customizado') {
@@ -1756,21 +1785,40 @@
             root.style.setProperty('--pref-blue', p);
             root.style.setProperty('--pref-darkblue', pd);
             root.style.setProperty('--pref-yellow', s);
+            
+            const defaultTexts = {
+                'padrao': { s: `Trabalhando por uma <span class="text-pref-yellow block sm:inline">Rabo Seco</span> melhor todos os dias.`, sub: `Acesse serviços digitais com seu CPF Virtual, acompanhe as notícias da cidade e participe ativamente da gestão municipal com total transparência.` },
+                'setembro-amarelo': { s: `Valorizando a vida em <span class="text-pref-yellow block sm:inline">Rabo Seco</span> todos os dias.`, sub: `Mês de prevenção ao suicídio. Você não está sozinho! A Prefeitura apoia esta causa com serviços de saúde mental gratuitos.` },
+                'outubro-rosa': { s: `Prevenção é um ato de <span class="text-pref-yellow block sm:inline">amor à vida</span>.`, sub: `Outubro Rosa em Rabo Seco: Mês de conscientização e combate ao câncer de mama. A rede municipal de saúde está de portas abertas para você cuidar de si.` },
+                'novembro-azul': { s: `Cuidar da saúde também é <span class="text-pref-yellow block sm:inline">coisa de homem</span>.`, sub: `Novembro Azul em Rabo Seco: Mês de combate ao câncer de próstata. Procure nossa rede de atendimento para exames preventivos rápidos e seguros.` },
+                'customizado': { s: `Trabalhando por uma <span class="text-pref-yellow block sm:inline">Rabo Seco</span> melhor todos os dias.`, sub: `Acesse serviços digitais com seu CPF Virtual, acompanhe as notícias da cidade e participe ativamente da gestão municipal com total transparência.` }
+            };
 
-            if(config.slogan && document.getElementById('hero-title')) {
-                document.getElementById('hero-title').innerHTML = config.slogan;
-            } else if (document.getElementById('hero-title')) {
-                document.getElementById('hero-title').innerHTML = `Trabalhando por uma <span class="text-pref-yellow block sm:inline">Rabo Seco</span> melhor todos os dias.`;
+            let sLog, subLog;
+            if (config.tipo === 'padrao' || config.tipo === 'customizado') {
+                sLog = config.slogan || defaultTexts['padrao'].s;
+                subLog = config.subSlogan || defaultTexts['padrao'].sub;
+            } else {
+                // Em caso de campanhas forçamos as frases próprias (ignorando as salvas que não sejam originais)
+                sLog = defaultTexts[config.tipo]?.s || defaultTexts['padrao'].s;
+                subLog = defaultTexts[config.tipo]?.sub || defaultTexts['padrao'].sub;
             }
-            if(config.subSlogan && document.getElementById('hero-subtitle')) {
-                document.getElementById('hero-subtitle').innerText = config.subSlogan;
-            } else if (document.getElementById('hero-subtitle')) {
-                document.getElementById('hero-subtitle').innerText = "Acesse serviços digitais com seu CPF Virtual, acompanhe as notícias da cidade e participe ativamente da gestão municipal com total transparência.";
+
+            if (document.getElementById('hero-title')) {
+                document.getElementById('hero-title').innerHTML = sLog;
+            }
+            if (document.getElementById('hero-subtitle')) {
+                document.getElementById('hero-subtitle').innerText = subLog;
             }
 
             if (config.tipo === 'setembro-amarelo' || config.tipo === 'outubro-rosa' || config.tipo === 'novembro-azul') {
                 overlay.classList.remove('hidden');
                 const corLaco = config.tipo === 'setembro-amarelo' ? '#FBBF24' : (config.tipo === 'outubro-rosa' ? '#F472B6' : '#22D3EE');
+                
+                if (heroRibbon) {
+                    heroRibbon.classList.remove('hidden');
+                    heroRibbon.style.color = corLaco;
+                }
                 
                 let htmlLacos = '';
                 for(let i=0; i<8; i++) {
@@ -1789,6 +1837,9 @@
             } else {
                 overlay.classList.add('hidden');
                 overlay.innerHTML = '';
+                if (heroRibbon) {
+                    heroRibbon.classList.add('hidden');
+                }
             }
         };
 
