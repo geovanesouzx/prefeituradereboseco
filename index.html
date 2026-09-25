@@ -26,10 +26,10 @@
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
                         pref: {
-                            blue: '#0047AB',
-                            darkblue: '#002D6B',
-                            yellow: '#FFC107',
-                            light: '#F8FAFC',
+                            blue: 'var(--pref-blue)',
+                            darkblue: 'var(--pref-darkblue)',
+                            yellow: 'var(--pref-yellow)',
+                            light: 'var(--pref-light)',
                         }
                     }
                 }
@@ -37,21 +37,42 @@
         }
     </script>
     <style>
+        :root {
+            --pref-blue: #0047AB;
+            --pref-darkblue: #002D6B;
+            --pref-yellow: #FFC107;
+            --pref-light: #F8FAFC;
+        }
+        
         html { scroll-behavior: smooth; }
-        * { transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease; }
+        * { transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #F8FAFC; }
-        ::-webkit-scrollbar-thumb { background: #0047AB; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #002D6B; }
+        ::-webkit-scrollbar-track { background: var(--pref-light); }
+        ::-webkit-scrollbar-thumb { background: var(--pref-blue); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--pref-darkblue); }
         
         /* Efeito cartão de crédito para o CPF Virtual */
         .cartao-cidadao {
-            background: linear-gradient(135deg, #002D6B 0%, #0047AB 100%);
-            box-shadow: 0 10px 25px -5px rgba(0, 71, 171, 0.4);
+            background: linear-gradient(135deg, var(--pref-darkblue) 0%, var(--pref-blue) 100%);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
         }
+
+        /* Animação dos laços de campanha */
+        @keyframes float-ribbon {
+            0% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+            100% { transform: translateY(0) rotate(-5deg); }
+        }
+        .ribbon-anim { animation: float-ribbon 6s ease-in-out infinite; }
+        .ribbon-anim:nth-child(even) { animation-delay: -3s; animation-duration: 7s; }
     </style>
 </head>
-<body class="bg-pref-light text-gray-800 font-sans antialiased flex flex-col min-h-screen">
+<body class="bg-pref-light text-gray-800 font-sans antialiased flex flex-col min-h-screen relative">
+    
+    <!-- Camada de Decoração de Campanhas (Mês Temático) -->
+    <div id="campaign-overlay" class="pointer-events-none fixed inset-0 z-0 overflow-hidden hidden">
+        <!-- SVG Laços Injetados via JS -->
+    </div>
 
     <header class="bg-white shadow-md sticky top-0 z-50 border-b-4 border-pref-yellow relative">
         <div class="container mx-auto px-4 lg:px-8 py-3 md:py-4">
@@ -148,75 +169,75 @@
                         <div class="h-1.5 w-24 bg-pref-yellow mx-auto rounded-full"></div>
                         <p class="text-gray-500 mt-5 text-lg max-w-2xl mx-auto font-medium">Acesse os serviços da prefeitura com agilidade. Login com CPF Virtual obrigatório.</p>
                     </div>
-
-                    <!-- Container onde os serviços do Banco de Dados vão aparecer -->
-                    <div id="servicos-grid-home" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <div class="col-span-full text-center text-gray-400 font-bold py-10"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Carregando serviços do banco de dados...</div>
+        <!-- TELA 1: LOGIN/CADASTRO CIDADÃO REDESENHADA -->
+        <div id="view-cidadao-auth" class="hidden flex-col flex-grow bg-white items-center justify-center relative min-h-[80vh]">
+            <div class="flex w-full max-w-6xl mx-auto rounded-[2.5rem] shadow-2xl overflow-hidden bg-white border border-gray-100 min-h-[600px] m-4 relative z-10">
+                
+                <!-- Lado Esquerdo (Branding) -->
+                <div class="hidden lg:flex w-1/2 bg-gradient-to-br from-pref-darkblue to-pref-blue text-white p-12 flex-col justify-between relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-96 h-96 bg-white opacity-5 rounded-full -mr-32 -mt-32"></div>
+                    <div class="absolute bottom-0 left-0 w-80 h-80 bg-pref-yellow opacity-10 rounded-full blur-3xl -ml-20 -mb-20"></div>
+                    
+                    <div class="relative z-10">
+                        <img src="https://i.imgur.com/yv7TJkd.png" alt="Logo Prefeitura" class="h-20 w-auto object-contain drop-shadow-md mb-8">
+                        <h2 class="text-4xl font-black mb-4 leading-tight">Cidadania<br>Digital <span class="text-pref-yellow">Rabo Seco</span></h2>
+                        <p class="text-blue-100 text-lg font-medium max-w-md leading-relaxed">
+                            Acesse todos os serviços do município em um só lugar. Rapidez, segurança e total transparência com o seu CPF Virtual.
+                        </p>
+                    </div>
+                    
+                    <div class="relative z-10 bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/20 mt-8">
+                        <div class="flex items-center gap-4 text-blue-100 font-bold mb-3">
+                            <div class="w-10 h-10 rounded-full bg-pref-yellow/20 text-pref-yellow flex items-center justify-center"><i class="fa-solid fa-shield-check"></i></div>
+                            Portal 100% Seguro
+                        </div>
+                        <p class="text-sm">Seus dados são criptografados e protegidos pela Controladoria Geral do Município.</p>
                     </div>
                 </div>
-            </section>
 
-            <section id="noticias" class="py-12 sm:py-16 md:py-24 bg-white flex-grow border-t border-gray-100">
-                <div class="container mx-auto px-4 lg:px-8">
-                    <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 sm:mb-12 gap-5">
-                        <div>
-                            <h3 class="text-2xl sm:text-3xl md:text-4xl font-black text-pref-darkblue mb-3 sm:mb-4 tracking-tight">Últimas Notícias</h3>
-                            <div class="h-1.5 w-16 sm:w-24 bg-pref-yellow rounded-full"></div>
+                <!-- Lado Direito (Formulário) -->
+                <div class="w-full lg:w-1/2 p-8 md:p-14 flex flex-col justify-center bg-gray-50 relative">
+                    <button onclick="window.history.back()" class="absolute top-6 left-6 text-gray-400 hover:text-pref-blue font-bold flex items-center gap-2 transition-colors lg:hidden">
+                        <i class="fa-solid fa-arrow-left"></i> Voltar
+                    </button>
+
+                    <div class="text-center lg:text-left mb-10">
+                        <div class="w-16 h-16 bg-blue-50 text-pref-blue rounded-2xl flex items-center justify-center text-3xl mx-auto lg:mx-0 mb-6 shadow-inner border border-blue-100">
+                            <i class="fa-solid fa-fingerprint"></i>
                         </div>
-                        <button onclick="window.location.hash='todas-noticias'" class="w-full md:w-auto bg-gray-100 text-gray-700 px-6 py-3.5 md:py-2.5 rounded-xl md:rounded-full font-black hover:bg-gray-200 transition-colors shadow-sm flex items-center justify-center gap-2">
-                            Ver Todas <i class="fa-solid fa-list-ul text-sm"></i>
+                        <h2 id="titulo-auth-cidadao" class="text-3xl font-black text-gray-900 tracking-tight">Acesso Cidadão</h2>
+                        <p id="subtitulo-auth-cidadao" class="text-gray-500 font-medium mt-2">Identifique-se para utilizar os serviços.</p>
+                    </div>
+                    
+                    <div id="cidadao-msg-erro" class="hidden mb-6 text-red-600 text-sm font-bold bg-red-50 p-4 rounded-xl border border-red-100 flex items-start gap-2 shadow-sm animate-pulse">
+                        <i class="fa-solid fa-circle-exclamation mt-0.5"></i> <span id="cidadao-msg-texto">Erro</span>
+                    </div>
+
+                    <form id="form-cidadao" onsubmit="event.preventDefault(); processarAuthCidadao();" class="space-y-5 w-full max-w-md mx-auto lg:mx-0">
+                        <div id="box-nome-cidadao" class="hidden">
+                            <label class="block text-xs font-black text-gray-500 uppercase tracking-widest mb-2">Nome Completo</label>
+                            <input type="text" id="cidadao-nome" placeholder="Digite seu nome completo" class="w-full px-5 py-4 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-bold text-gray-800 bg-white shadow-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-black text-gray-500 uppercase tracking-widest mb-2">E-mail Pessoal</label>
+                            <input type="email" id="cidadao-email" required placeholder="cidadão@email.com" class="w-full px-5 py-4 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-bold text-gray-800 bg-white shadow-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-black text-gray-500 uppercase tracking-widest mb-2">Senha de Acesso</label>
+                            <input type="password" id="cidadao-senha" required placeholder="••••••••" class="w-full px-5 py-4 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-bold text-gray-800 bg-white shadow-sm">
+                        </div>
+                        
+                        <button type="submit" id="btn-submit-cidadao" class="w-full bg-pref-blue text-white font-black py-4 px-6 rounded-xl hover:bg-pref-darkblue shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 text-lg mt-4 flex justify-center items-center gap-2">
+                            <i class="fa-solid fa-right-to-bracket"></i> Entrar no Painel
+                        </button>
+                    </form>
+
+                    <div class="mt-10 text-center lg:text-left border-t border-gray-200 pt-8 w-full max-w-md mx-auto lg:mx-0">
+                        <p class="text-sm text-gray-500 font-medium" id="toggle-auth-text">Ainda não possui seu CPF Virtual?</p>
+                        <button onclick="alternarModoCidadao()" id="toggle-auth-btn" class="mt-2 text-pref-blue font-black hover:text-pref-darkblue transition-colors flex items-center gap-2 justify-center lg:justify-start group">
+                            Criar minha Identidade Digital <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
                         </button>
                     </div>
-
-                    <div id="noticias-grid-home" class="min-h-[400px] flex items-center justify-center">
-                        <div class="text-gray-400 font-bold flex items-center gap-3">
-                            <i class="fa-solid fa-circle-notch fa-spin text-pref-blue text-2xl"></i> Carregando sistema de notícias...
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-
-        <!-- TELA 1: LOGIN/CADASTRO CIDADÃO -->
-        <div id="view-cidadao-auth" class="hidden flex-col flex-grow bg-gray-50 py-12 md:py-20 items-center justify-center px-4">
-            <div class="bg-white p-8 md:p-10 rounded-[2rem] shadow-2xl w-full max-w-md border border-gray-100 relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-full h-3 bg-pref-blue"></div>
-                <div class="text-center mb-8">
-                    <div class="w-20 h-20 bg-blue-50 text-pref-blue rounded-full flex items-center justify-center text-4xl mx-auto mb-4 shadow-inner">
-                        <i class="fa-solid fa-fingerprint"></i>
-                    </div>
-                    <h2 class="text-2xl md:text-3xl font-black text-pref-darkblue tracking-tight">Portal do Cidadão</h2>
-                    <p class="text-gray-500 text-sm mt-2 font-medium">Acesse ou gere seu CPF Virtual de Rabo Seco para utilizar os serviços.</p>
-                </div>
-                
-                <div id="cidadao-msg-erro" class="hidden mb-6 text-red-600 text-sm font-bold bg-red-50 p-4 rounded-xl border border-red-100 flex items-start gap-2">
-                    <i class="fa-solid fa-circle-exclamation mt-0.5"></i> <span id="cidadao-msg-texto">Erro</span>
-                </div>
-
-                <!-- Formulário -->
-                <form id="form-cidadao" onsubmit="event.preventDefault(); processarAuthCidadao();" class="space-y-5">
-                    <div id="box-nome-cidadao" class="hidden">
-                        <label class="block text-sm font-black text-gray-700 mb-1.5">Nome Completo</label>
-                        <input type="text" id="cidadao-nome" placeholder="Digite seu nome..." class="w-full px-4 py-3.5 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-black text-gray-700 mb-1.5">E-mail Pessoal</label>
-                        <input type="email" id="cidadao-email" required placeholder="seuemail@exemplo.com" class="w-full px-4 py-3.5 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-black text-gray-700 mb-1.5">Senha de Acesso</label>
-                        <input type="password" id="cidadao-senha" required placeholder="••••••••" class="w-full px-4 py-3.5 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
-                    </div>
-                    <button type="submit" id="btn-submit-cidadao" class="w-full bg-pref-blue text-white font-black py-4 px-6 rounded-xl hover:bg-pref-darkblue shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 text-lg mt-2 flex justify-center items-center gap-2">
-                        <i class="fa-solid fa-right-to-bracket"></i> Entrar no Sistema
-                    </button>
-                </form>
-
-                <div class="mt-8 text-center border-t border-gray-100 pt-6">
-                    <p class="text-sm text-gray-500 font-medium" id="toggle-auth-text">Primeiro acesso ao portal?</p>
-                    <button onclick="alternarModoCidadao()" id="toggle-auth-btn" class="mt-2 text-pref-blue font-black hover:text-pref-darkblue transition-colors underline decoration-2 underline-offset-4">
-                        Gerar meu CPF Virtual agora
-                    </button>
                 </div>
             </div>
         </div>
@@ -261,90 +282,91 @@
                             </div>
                             
                             <div>
-                                <p class="text-blue-100 text-sm font-medium mb-1">Cidadão Titular</p>
-                                <h3 id="dash-cidadao-nome" class="text-2xl font-black leading-tight mb-4 drop-shadow-md">Carregando...</h3>
+                <!-- Nova Aba: Meu Perfil REDESENHADA -->
+                <div id="aba-cidadao-perfil" class="hidden max-w-5xl mx-auto w-full">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        
+                        <!-- Coluna Identidade -->
+                        <div class="lg:col-span-1 space-y-6">
+                            <div class="bg-white rounded-[2rem] shadow-sm border border-gray-100 p-8 text-center relative overflow-hidden">
+                                <div class="absolute top-0 left-0 w-full h-4 bg-pref-yellow"></div>
+                                <div class="w-24 h-24 bg-gradient-to-tr from-pref-blue to-blue-400 text-white rounded-full flex items-center justify-center text-4xl mx-auto mb-4 shadow-lg border-4 border-white">
+                                    <i class="fa-solid fa-user-astronaut"></i>
+                                </div>
+                                <h3 id="perfil-nome-view" class="text-xl font-black text-gray-900 leading-tight">Nome</h3>
+                                <p id="perfil-email-view" class="text-sm text-gray-500 font-medium mt-1 mb-6">email@exemplo.com</p>
                                 
-                                <p class="text-blue-100 text-sm font-medium mb-1">Número do CPF Virtual</p>
-                                <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-4 py-3 inline-flex items-center gap-3">
-                                    <i class="fa-solid fa-qrcode text-yellow-400"></i>
-                                    <span id="dash-cidadao-cpf" class="font-mono text-xl font-bold tracking-wider">---</span>
+                                <div class="bg-blue-50 p-4 rounded-xl border border-blue-100 mb-2">
+                                    <p class="text-[10px] font-black text-pref-blue uppercase tracking-widest mb-1">CPF Virtual Único</p>
+                                    <p id="perfil-cpf-view" class="font-mono text-lg font-bold text-gray-800">...</p>
                                 </div>
+                                <div class="flex items-center justify-center gap-2 text-xs font-bold text-green-600 bg-green-50 px-3 py-2 rounded-lg mt-3 border border-green-100">
+                                    <i class="fa-solid fa-shield-check"></i> Conta Verificada
+                                </div>
+                            </div>
+
+                            <div class="bg-gradient-to-br from-gray-900 to-gray-800 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
+                                <div class="absolute -right-4 -bottom-4 text-6xl opacity-10"><i class="fa-solid fa-lock"></i></div>
+                                <h4 class="font-black text-lg mb-2 text-pref-yellow"><i class="fa-solid fa-key mr-2"></i> Segurança</h4>
+                                <p class="text-sm text-gray-300 mb-4 font-medium">Seus dados são protegidos e usados apenas para a prestação de serviços públicos.</p>
+                                <button onclick="sairCidadao()" class="w-full bg-white/10 hover:bg-red-500 transition-colors text-white font-bold py-3 rounded-xl text-sm border border-white/20 hover:border-red-500">Encerrar Sessão</button>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Lista Rápida de Serviços -->
-                    <div class="lg:col-span-2 bg-white rounded-[2rem] shadow-sm border border-gray-100 p-8">
-                        <h3 class="text-xl font-black text-gray-800 mb-6 flex items-center gap-2 border-b border-gray-100 pb-4">
-                            <i class="fa-solid fa-layer-group text-pref-blue"></i> Acesso aos Sistemas Internos
-                        </h3>
-                        <p class="text-sm text-gray-500 mb-6 font-medium">Selecione o serviço abaixo. Sua identidade virtual será repassada automaticamente para o sistema.</p>
-                        
-                        <div id="lista-servicos-cidadao" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <!-- Injetado via JS -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Nova Aba: Meu Perfil -->
-                <div id="aba-cidadao-perfil" class="hidden max-w-3xl mx-auto w-full">
-                    <div class="bg-white rounded-[2rem] shadow-sm border border-gray-100 p-8 md:p-10">
-                        <div class="flex items-center gap-5 mb-8 border-b border-gray-100 pb-6">
-                            <div class="w-16 h-16 bg-blue-50 text-pref-blue rounded-full flex items-center justify-center text-3xl shadow-inner">
-                                <i class="fa-solid fa-user-pen"></i>
-                            </div>
-                            <div>
-                                <h3 class="text-2xl font-black text-gray-800 tracking-tight">Meus Dados</h3>
-                                <p class="text-gray-500 font-medium text-sm mt-1">Mantenha suas informações atualizadas no município.</p>
-                            </div>
-                        </div>
-                        
-                        <div id="msg-perfil-cidadao" class="hidden mb-6 text-green-600 text-sm font-bold bg-green-50 p-4 rounded-xl border border-green-100 flex items-center gap-2">
-                            <i class="fa-solid fa-check-circle"></i> Dados atualizados com sucesso!
-                        </div>
-
-                        <form id="form-perfil-cidadao" onsubmit="event.preventDefault(); salvarPerfilCidadao();" class="space-y-5">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                <div>
-                                    <label class="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2">Nome Completo</label>
-                                    <input type="text" id="perfil-nome-edit" required class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-bold text-gray-800 bg-gray-50">
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2">E-mail Cadastrado</label>
-                                    <input type="email" id="perfil-email-edit" disabled class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-gray-100 text-gray-500 font-medium cursor-not-allowed">
-                                </div>
-                            </div>
-                            
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                <div>
-                                    <label class="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2">RG / Documento</label>
-                                    <input type="text" id="perfil-rg-edit" placeholder="Ex: 12.345.678-9" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2">Telefone / WhatsApp</label>
-                                    <input type="text" id="perfil-telefone-edit" placeholder="(00) 00000-0000" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
-                                </div>
-                            </div>
-
-                            <div>
-                                <label class="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2">Endereço Completo</label>
-                                <input type="text" id="perfil-endereco-edit" placeholder="Rua, Número, Bairro, CEP..." class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
-                            </div>
-
-                            <div class="pt-4 border-t border-gray-100 mt-6">
-                                <label class="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2">Seu CPF Virtual Único</label>
-                                <div class="text-xl font-mono font-black text-pref-blue bg-blue-50 px-5 py-4 rounded-xl border border-blue-100 flex items-center justify-between shadow-inner">
-                                    <span id="perfil-cpf-view">...</span>
-                                    <div class="flex items-center gap-2 text-sm font-bold text-green-600 bg-green-100 px-3 py-1.5 rounded-lg">
-                                        <i class="fa-solid fa-shield-check"></i> Verificado
+                        <!-- Coluna Formulário -->
+                        <div class="lg:col-span-2">
+                            <div class="bg-white rounded-[2rem] shadow-sm border border-gray-100 p-8 md:p-10">
+                                <div class="flex justify-between items-center mb-8 border-b border-gray-100 pb-6">
+                                    <div>
+                                        <h3 class="text-2xl font-black text-gray-900 tracking-tight">Atualizar Dados</h3>
+                                        <p class="text-gray-500 font-medium text-sm mt-1">Mantenha seu cadastro municipal em dia.</p>
                                     </div>
+                                    <div class="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center text-gray-400"><i class="fa-solid fa-pen-to-square"></i></div>
                                 </div>
+                                
+                                <div id="msg-perfil-cidadao" class="hidden mb-8 text-green-700 text-sm font-bold bg-green-50 p-4 rounded-xl border border-green-200 flex items-center gap-3 shadow-sm">
+                                    <i class="fa-solid fa-circle-check text-xl"></i> Informações salvas com sucesso no banco de dados!
+                                </div>
+
+                                <form id="form-perfil-cidadao" onsubmit="event.preventDefault(); salvarPerfilCidadao();" class="space-y-6">
+                                    
+                                    <div class="space-y-4">
+                                        <h4 class="text-sm font-black text-gray-800 uppercase tracking-widest flex items-center gap-2"><i class="fa-regular fa-address-book text-pref-blue"></i> Informações Pessoais</h4>
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                            <div>
+                                                <label class="block text-xs font-bold text-gray-500 mb-2">Nome Completo</label>
+                                                <input type="text" id="perfil-nome-edit" required class="w-full px-4 py-3.5 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-bold text-gray-800 bg-gray-50 focus:bg-white">
+                                            </div>
+                                            <div>
+                                                <label class="block text-xs font-bold text-gray-500 mb-2">E-mail Cadastrado</label>
+                                                <input type="email" id="perfil-email-edit" disabled class="w-full px-4 py-3.5 rounded-xl border-2 border-gray-100 bg-gray-100 text-gray-400 font-medium cursor-not-allowed">
+                                            </div>
+                                            <div>
+                                                <label class="block text-xs font-bold text-gray-500 mb-2">RG / Documento</label>
+                                                <input type="text" id="perfil-rg-edit" placeholder="Ex: 12.345.678-9" class="w-full px-4 py-3.5 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-bold text-gray-800 bg-gray-50 focus:bg-white">
+                                            </div>
+                                            <div>
+                                                <label class="block text-xs font-bold text-gray-500 mb-2">Telefone / WhatsApp</label>
+                                                <input type="text" id="perfil-telefone-edit" placeholder="(00) 00000-0000" class="w-full px-4 py-3.5 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-bold text-gray-800 bg-gray-50 focus:bg-white">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="space-y-4 pt-6 border-t border-gray-100">
+                                        <h4 class="text-sm font-black text-gray-800 uppercase tracking-widest flex items-center gap-2"><i class="fa-solid fa-map-location-dot text-pref-blue"></i> Domicílio Fiscal</h4>
+                                        <div>
+                                            <label class="block text-xs font-bold text-gray-500 mb-2">Endereço Completo</label>
+                                            <input type="text" id="perfil-endereco-edit" placeholder="Rua, Número, Bairro, CEP..." class="w-full px-4 py-3.5 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-bold text-gray-800 bg-gray-50 focus:bg-white">
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" id="btn-salvar-perfil" class="w-full md:w-auto md:min-w-[250px] mt-8 bg-pref-blue text-white font-black py-4 px-8 rounded-xl hover:bg-pref-darkblue shadow-lg transition-all transform hover:-translate-y-1 text-lg flex justify-center items-center gap-3 ml-auto">
+                                        <i class="fa-solid fa-floppy-disk"></i> Gravar Alterações
+                                    </button>
+                                </form>
                             </div>
-                            
-                            <button type="submit" id="btn-salvar-perfil" class="w-full mt-6 bg-pref-blue text-white font-black py-4 rounded-xl hover:bg-pref-darkblue shadow-lg transition-all transform hover:-translate-y-0.5 text-lg flex justify-center items-center gap-2">
-                                <i class="fa-solid fa-floppy-disk"></i> Salvar Minhas Informações
-                            </button>
-                        </form>
+                        </div>
+
                     </div>
                 </div>
 
@@ -421,37 +443,35 @@
             <div class="container mx-auto px-4 lg:px-8">
                 <button onclick="window.history.back()" class="flex items-center text-pref-blue font-black hover:text-pref-darkblue mb-8 transition-colors group cursor-pointer bg-white border border-gray-200 shadow-sm py-2.5 px-5 rounded-full w-fit">
                     <i class="fa-solid fa-arrow-left mr-2 group-hover:-translate-x-1 transition-transform"></i> Voltar
-                </button>
-                <div class="mb-10">
-                    <h2 class="text-3xl md:text-4xl font-black text-pref-darkblue mb-4 tracking-tight">Todas as Notícias</h2>
-                    <div class="h-1.5 w-24 bg-pref-yellow rounded-full mb-4"></div>
+        <div id="view-admin-login" class="hidden flex-col flex-grow bg-gray-900 py-12 pb-24 items-center justify-center relative overflow-hidden">
+            <div class="absolute inset-0 bg-cover bg-center opacity-10 mix-blend-overlay" style="background-image: url('https://i.imgur.com/yv7TJkd.png');"></div>
+            <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-pref-blue opacity-20 rounded-full blur-[100px] -mr-64 -mt-64 pointer-events-none"></div>
+            
+            <div class="bg-gray-800/80 backdrop-blur-xl p-8 md:p-12 rounded-[2.5rem] shadow-2xl w-full max-w-md border border-gray-700 mx-4 relative z-10">
+                <div class="text-center mb-10">
+                    <div class="w-20 h-20 bg-gray-900 text-pref-yellow border-2 border-gray-700 rounded-2xl flex items-center justify-center text-4xl mx-auto mb-6 shadow-lg"><i class="fa-solid fa-shield-halved"></i></div>
+                    <h2 class="text-3xl font-black text-white tracking-tight">Painel Gestor</h2>
+                    <p class="text-gray-400 text-sm font-medium mt-2">Acesso restrito. Servidores Autorizados.</p>
                 </div>
-                <div id="grid-todas-noticias" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
-            </div>
-        </div>
-
-        <div id="view-admin-login" class="hidden flex-col flex-grow bg-gray-50 py-12 pb-24 items-center justify-center relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-96 h-96 bg-pref-blue opacity-10 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none"></div>
-            <div class="bg-white p-8 md:p-10 rounded-[2rem] shadow-2xl w-full max-w-md border border-gray-100 mx-4 relative z-10">
-                <div class="text-center mb-8">
-                    <div class="w-16 h-16 bg-blue-50 text-pref-blue rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4"><i class="fa-solid fa-shield-halved"></i></div>
-                    <h2 class="text-2xl font-black text-pref-darkblue tracking-tight">Painel Executivo</h2>
-                    <p class="text-gray-500 text-sm font-medium mt-1">Acesso restrito para funcionários</p>
-                </div>
-                <form id="form-admin-login" onsubmit="event.preventDefault(); fazerLoginAdmin();" class="space-y-5">
+                
+                <form id="form-admin-login" onsubmit="event.preventDefault(); fazerLoginAdmin();" class="space-y-6">
                     <div>
-                        <label class="block text-sm font-black text-gray-700 mb-1.5">E-mail Administrativo</label>
-                        <input type="email" id="admin-email" required placeholder="admin@raboseco.ba.gov.br" class="w-full px-4 py-3.5 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
+                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">E-mail Corporativo</label>
+                        <input type="email" id="admin-email" required placeholder="gestor@raboseco.ba.gov.br" class="w-full px-5 py-4 rounded-xl border-2 border-gray-600 bg-gray-900 text-white focus:ring-0 focus:border-pref-yellow outline-none transition-colors font-medium">
                     </div>
                     <div>
-                        <label class="block text-sm font-black text-gray-700 mb-1.5">Senha</label>
-                        <input type="password" id="admin-senha" required placeholder="••••••••" class="w-full px-4 py-3.5 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
+                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Senha de Segurança</label>
+                        <input type="password" id="admin-senha" required placeholder="••••••••" class="w-full px-5 py-4 rounded-xl border-2 border-gray-600 bg-gray-900 text-white focus:ring-0 focus:border-pref-yellow outline-none transition-colors font-medium">
                     </div>
-                    <div id="admin-login-error" class="hidden text-red-600 text-sm font-bold text-center bg-red-50 p-4 rounded-xl border border-red-100">Acesso negado. Use as credenciais corretas.</div>
-                    <button type="submit" id="btn-login-admin" class="w-full bg-pref-blue text-white font-black py-4 px-6 rounded-xl hover:bg-pref-darkblue shadow-lg hover:shadow-xl transition-all text-lg mt-2 transform hover:-translate-y-0.5">
-                        <i class="fa-solid fa-unlock mr-2"></i> Autenticar
+                    
+                    <div id="admin-login-error" class="hidden text-red-400 text-sm font-bold text-center bg-red-900/30 p-4 rounded-xl border border-red-800/50 backdrop-blur-md">Acesso negado. Credenciais inválidas.</div>
+                    
+                    <button type="submit" id="btn-login-admin" class="w-full bg-pref-blue hover:bg-pref-yellow hover:text-pref-darkblue text-white font-black py-4 px-6 rounded-xl shadow-[0_0_20px_rgba(0,71,171,0.4)] hover:shadow-[0_0_25px_rgba(255,193,7,0.5)] transition-all text-lg mt-4 transform hover:-translate-y-1 flex justify-center items-center gap-2">
+                        <i class="fa-solid fa-lock"></i> Autenticar
                     </button>
                 </form>
+                
+                <p class="text-center text-xs text-gray-500 font-bold mt-8"><i class="fa-solid fa-desktop mr-1"></i> Sistema de Gestão Municipal v2.0</p>
             </div>
         </div>
 
@@ -476,6 +496,8 @@
                     <button onclick="mudarAbaAdmin('saude')" id="btn-aba-saude" class="flex-1 md:flex-none px-4 py-2.5 rounded-lg font-bold text-sm transition-all text-blue-200 hover:text-white whitespace-nowrap"><i class="fa-solid fa-notes-medical mr-1.5"></i> Saúde</button>
                     <button onclick="mudarAbaAdmin('licitacoes')" id="btn-aba-licitacoes" class="flex-1 md:flex-none px-4 py-2.5 rounded-lg font-bold text-sm transition-all text-blue-200 hover:text-white whitespace-nowrap"><i class="fa-solid fa-gavel mr-1.5"></i> Licitações</button>
                     <button onclick="mudarAbaAdmin('transparencia')" id="btn-aba-transparencia" class="flex-1 md:flex-none px-4 py-2.5 rounded-lg font-bold text-sm transition-all text-blue-200 hover:text-white whitespace-nowrap"><i class="fa-solid fa-chart-pie mr-1.5"></i> Contas</button>
+                    <!-- NOVO BOTÃO APARÊNCIA -->
+                    <button onclick="mudarAbaAdmin('aparencia')" id="btn-aba-aparencia" class="flex-1 md:flex-none px-4 py-2.5 rounded-lg font-bold text-sm transition-all text-yellow-300 hover:text-yellow-100 whitespace-nowrap bg-blue-900 border border-blue-800"><i class="fa-solid fa-palette mr-1.5"></i> Aparência</button>
                 </div>
 
                 <div class="flex gap-3 w-full md:w-auto">
@@ -895,20 +917,115 @@
                 </div>
             </div>
 
-        </div>
+            <!-- NOVA SEÇÃO: APARÊNCIA / TEMAS -->
+            <div id="admin-secao-aparencia" class="container mx-auto px-4 py-8 flex-col gap-8 max-w-5xl flex-grow hidden">
+                <div class="bg-white rounded-[2rem] shadow-sm border border-gray-200 p-8 md:p-10">
+                    <div class="flex items-center gap-4 border-b border-gray-100 pb-6 mb-8">
+                        <div class="w-16 h-16 bg-blue-50 text-pref-blue rounded-2xl flex items-center justify-center text-3xl"><i class="fa-solid fa-paintbrush"></i></div>
+                        <div>
+                            <h3 class="text-3xl font-black text-gray-800 tracking-tight">Identidade Visual do Portal</h3>
+                            <p class="text-gray-500 font-medium mt-1">Altere as cores e adicione campanhas temáticas ao site.</p>
+                        </div>
+                    </div>
 
-        <div id="modal-delete" class="hidden fixed inset-0 bg-gray-900/60 z-[100] flex items-center justify-center backdrop-blur-sm px-4">
-            <div class="bg-white p-8 md:p-10 rounded-[2rem] shadow-2xl max-w-sm w-full text-center transform scale-100 transition-transform">
-                <div class="w-20 h-20 bg-red-50 text-red-600 rounded-full flex items-center justify-center text-4xl mx-auto mb-6 shadow-inner">
-                    <i class="fa-solid fa-trash-can"></i>
-                </div>
-                <h3 class="text-2xl font-black text-gray-900 mb-2 tracking-tight">Excluir Arquivo?</h3>
-                <p class="text-gray-500 mb-8 font-medium">Essa ação apagará permanentemente do banco de dados e não pode ser desfeita.</p>
-                <div class="flex flex-col gap-3">
-                    <button id="btn-confirmar-delete" class="w-full bg-red-600 text-white font-black py-4 rounded-xl hover:bg-red-700 transition-colors shadow-lg">Sim, excluir agora</button>
-                    <button onclick="fecharModalDelete()" class="w-full bg-gray-50 text-gray-600 border-2 border-gray-200 font-black py-3.5 rounded-xl hover:bg-gray-100 transition-colors">Cancelar</button>
+                    <div id="msg-tema-salvo" class="hidden mb-8 text-green-700 text-sm font-bold bg-green-50 p-4 rounded-xl border border-green-200 flex items-center gap-3 shadow-sm">
+                        <i class="fa-solid fa-circle-check text-xl"></i> Tema atualizado com sucesso para todos os cidadãos!
+                    </div>
+
+                    <form id="form-admin-tema" onsubmit="event.preventDefault(); salvarTemaAdmin();" class="space-y-8">
+                        
+                        <!-- Temas de Campanha (Presets) -->
+                        <div>
+                            <h4 class="text-sm font-black text-gray-800 uppercase tracking-widest mb-4 flex items-center gap-2"><i class="fa-solid fa-star text-pref-yellow"></i> Campanhas Municipais</h4>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                                
+                                <label class="cursor-pointer group">
+                                    <input type="radio" name="tema-preset" value="padrao" class="peer sr-only" checked onchange="previewTema(this.value)">
+                                    <div class="border-2 border-gray-200 rounded-2xl p-4 peer-checked:border-blue-500 peer-checked:bg-blue-50 transition-all">
+                                        <div class="h-16 rounded-xl mb-3 flex overflow-hidden border border-gray-200">
+                                            <div class="w-2/3 h-full bg-[#0047AB]"></div><div class="w-1/3 h-full bg-[#FFC107]"></div>
+                                        </div>
+                                        <p class="font-black text-gray-800 text-center text-sm">Padrão</p>
+                                        <p class="text-[10px] text-gray-500 text-center font-bold">Azul / Amarelo</p>
+                                    </div>
+                                </label>
+
+                                <label class="cursor-pointer group">
+                                    <input type="radio" name="tema-preset" value="setembro-amarelo" class="peer sr-only" onchange="previewTema(this.value)">
+                                    <div class="border-2 border-gray-200 rounded-2xl p-4 peer-checked:border-yellow-500 peer-checked:bg-yellow-50 transition-all relative overflow-hidden">
+                                        <i class="fa-solid fa-ribbon absolute -right-2 -bottom-2 text-5xl text-yellow-500 opacity-20"></i>
+                                        <div class="h-16 rounded-xl mb-3 flex overflow-hidden border border-gray-200">
+                                            <div class="w-2/3 h-full bg-[#F59E0B]"></div><div class="w-1/3 h-full bg-[#FCD34D]"></div>
+                                        </div>
+                                        <p class="font-black text-gray-800 text-center text-sm">Setembro Amarelo</p>
+                                        <p class="text-[10px] text-gray-500 text-center font-bold">+ Laços decorativos</p>
+                                    </div>
+                                </label>
+
+                                <label class="cursor-pointer group">
+                                    <input type="radio" name="tema-preset" value="outubro-rosa" class="peer sr-only" onchange="previewTema(this.value)">
+                                    <div class="border-2 border-gray-200 rounded-2xl p-4 peer-checked:border-pink-500 peer-checked:bg-pink-50 transition-all relative overflow-hidden">
+                                        <i class="fa-solid fa-ribbon absolute -right-2 -bottom-2 text-5xl text-pink-500 opacity-20"></i>
+                                        <div class="h-16 rounded-xl mb-3 flex overflow-hidden border border-gray-200">
+                                            <div class="w-2/3 h-full bg-[#EC4899]"></div><div class="w-1/3 h-full bg-[#FBCFE8]"></div>
+                                        </div>
+                                        <p class="font-black text-gray-800 text-center text-sm">Outubro Rosa</p>
+                                        <p class="text-[10px] text-gray-500 text-center font-bold">+ Laços decorativos</p>
+                                    </div>
+                                </label>
+
+                                <label class="cursor-pointer group">
+                                    <input type="radio" name="tema-preset" value="novembro-azul" class="peer sr-only" onchange="previewTema(this.value)">
+                                    <div class="border-2 border-gray-200 rounded-2xl p-4 peer-checked:border-cyan-500 peer-checked:bg-cyan-50 transition-all relative overflow-hidden">
+                                        <i class="fa-solid fa-ribbon absolute -right-2 -bottom-2 text-5xl text-cyan-500 opacity-20"></i>
+                                        <div class="h-16 rounded-xl mb-3 flex overflow-hidden border border-gray-200">
+                                            <div class="w-2/3 h-full bg-[#06B6D4]"></div><div class="w-1/3 h-full bg-[#67E8F9]"></div>
+                                        </div>
+                                        <p class="font-black text-gray-800 text-center text-sm">Novembro Azul</p>
+                                        <p class="text-[10px] text-gray-500 text-center font-bold">+ Laços decorativos</p>
+                                    </div>
+                                </label>
+
+                            </div>
+                        </div>
+
+                        <!-- Cores Personalizadas -->
+                        <div class="bg-gray-50 p-6 rounded-2xl border border-gray-200">
+                            <h4 class="text-sm font-black text-gray-800 uppercase tracking-widest mb-4 flex items-center gap-2">
+                                <i class="fa-solid fa-palette text-pref-blue"></i> Cores Personalizadas (Avançado)
+                            </h4>
+                            <p class="text-xs text-gray-500 font-bold mb-4">Ao selecionar um tema personalizado, as campanhas acima são desativadas.</p>
+                            
+                            <div class="flex items-center gap-3 mb-6">
+                                <input type="radio" name="tema-preset" value="customizado" id="radio-custom" class="w-5 h-5 cursor-pointer" onchange="previewTema('customizado')">
+                                <label for="radio-custom" class="font-black text-gray-800 cursor-pointer">Usar Triângulo Cromático Customizado</label>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6" id="box-cores-custom" style="opacity: 0.5; pointer-events: none;">
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Cor Primária (Principal)</label>
+                                    <div class="flex items-center gap-3 bg-white p-2 rounded-xl border border-gray-200">
+                                        <input type="color" id="color-primary" value="#0047AB" class="w-12 h-12 rounded cursor-pointer border-0 bg-transparent" onchange="document.getElementById('radio-custom').checked = true; previewTema('customizado')">
+                                        <span class="font-mono text-sm font-bold text-gray-600" id="hex-primary">#0047AB</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Cor Secundária (Destaques)</label>
+                                    <div class="flex items-center gap-3 bg-white p-2 rounded-xl border border-gray-200">
+                                        <input type="color" id="color-secondary" value="#FFC107" class="w-12 h-12 rounded cursor-pointer border-0 bg-transparent" onchange="document.getElementById('radio-custom').checked = true; previewTema('customizado')">
+                                        <span class="font-mono text-sm font-bold text-gray-600" id="hex-secondary">#FFC107</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" id="btn-salvar-tema" class="w-full bg-pref-blue hover:bg-pref-darkblue text-white font-black py-4 px-6 rounded-xl shadow-lg transition-all text-lg flex items-center justify-center gap-2 transform hover:-translate-y-1">
+                            <i class="fa-solid fa-check-double"></i> Publicar Novo Tema
+                        </button>
+                    </form>
                 </div>
             </div>
+
         </div>
     </div> <!-- FIM APP CONTAINER -->
 
@@ -1001,6 +1118,7 @@
         let bancoDeLicitacoes = {};
         let bancoDeAgendamentos = {};
         let bancoDeTransparencia = {};
+        let configTemaAtual = { tipo: 'padrao' }; // NOVO: Guarda o tema
         
         let isAdminView = false;
         let adminAbaAtiva = 'noticias';
@@ -1033,7 +1151,7 @@
         
         window.mudarAbaAdmin = function(aba) {
             adminAbaAtiva = aba;
-            const secoes = ['noticias', 'servicos', 'cidadaos', 'ouvidoria', 'saude', 'licitacoes', 'transparencia'];
+            const secoes = ['noticias', 'servicos', 'cidadaos', 'ouvidoria', 'saude', 'licitacoes', 'transparencia', 'aparencia']; // Inserido aparencia
             secoes.forEach(s => {
                 const sec = document.getElementById(`admin-secao-${s}`);
                 const btn = document.getElementById(`btn-aba-${s}`);
@@ -1043,8 +1161,13 @@
             const activeSec = document.getElementById(`admin-secao-${aba}`);
             const activeBtn = document.getElementById(`btn-aba-${aba}`);
             if(activeSec) { activeSec.classList.remove('hidden'); activeSec.classList.add('flex'); }
-            if(activeBtn) activeBtn.className = 'flex-1 md:flex-none px-4 py-2.5 rounded-lg font-bold text-sm transition-all bg-white text-pref-blue shadow-sm whitespace-nowrap';
-            renderListasAdmin();
+            
+            // Tratamento especial para o botão aparência ficar com cor diferente no menu
+            if(activeBtn) {
+                if(aba === 'aparencia') activeBtn.className = 'flex-1 md:flex-none px-4 py-2.5 rounded-lg font-bold text-sm transition-all text-pref-darkblue bg-yellow-400 whitespace-nowrap shadow-md';
+                else activeBtn.className = 'flex-1 md:flex-none px-4 py-2.5 rounded-lg font-bold text-sm transition-all bg-white text-pref-blue shadow-sm whitespace-nowrap';
+            }
+            if (aba !== 'aparencia') renderListasAdmin(); // Não renderiza lista na aba aparência
         };
 
         window.mudarAbaCidadao = function(aba) {
@@ -1088,8 +1211,8 @@
             erro.classList.add('hidden');
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Autenticando...';
             try {
-                // Strict check against the email before attempting to login, 
-                // matching the Firestore Security Rule: request.auth.token.email == 'jeosouzazouza@gmail.com'
+                // Strict check mantido conforme exigência das RULES do Firebase.
+                // APENAS este email funcionará para liberar a escrita/leitura como Admin.
                 if(email !== 'jeosouzazouza@gmail.com') {
                     throw new Error("Acesso negado. Usuário não autorizado.");
                 }
@@ -1097,8 +1220,52 @@
                 await signInWithEmailAndPassword(auth, email, senha);
                 // Firebase disparará o onAuthStateChanged e abrirá o painel
             } catch (e) {
-                erro.classList.remove('hidden');
-                btn.innerHTML = '<i class="fa-solid fa-unlock mr-2"></i> Autenticar';
+                // Se o usuário não existir no Auth, vamos criar na hora (apenas se for o email master)
+                if (email === 'jeosouzazouza@gmail.com' && e.code === 'auth/user-not-found') {
+                    try {
+                        await createUserWithEmailAndPassword(auth, email, senha);
+                    } catch(e2) {
+                        erro.classList.remove('hidden');
+                        btn.innerHTML = '<i class="fa-solid fa-lock mr-2"></i> Autenticar';
+                    }
+                } else {
+                    erro.classList.remove('hidden');
+                    btn.innerHTML = '<i class="fa-solid fa-lock mr-2"></i> Autenticar';
+                }
+            }
+        };
+
+        window.processarAuthCidadao = async function() {
+            const email = document.getElementById('cidadao-email').value;
+            const senha = document.getElementById('cidadao-senha').value;
+            const nome = document.getElementById('cidadao-nome').value;
+            const btn = document.getElementById('btn-submit-cidadao');
+            const erroMsg = document.getElementById('cidadao-msg-erro');
+            const erroTexto = document.getElementById('cidadao-msg-texto');
+
+            erroMsg.classList.add('hidden');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Processando...';
+
+            try {
+                if (isModoCadastroCidadao) {
+                    if(!nome) throw new Error("Nome é obrigatório");
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
+                    const user = userCredential.user;
+                    const cpfVirtual = window.gerarCPFVirtual();
+                    const perfilData = { uid: user.uid, nome: nome, email: email, cpfVirtual: cpfVirtual, criadoEm: new Date().toISOString() };
+                    
+                    // Salva no privado (para o cidadão ler) e no público (para o admin ler)
+                    await setDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'perfil', 'dados'), perfilData);
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'cidadaos', cpfVirtual), perfilData);
+                } else {
+                    await signInWithEmailAndPassword(auth, email, senha);
+                }
+            } catch (e) {
+                erroMsg.classList.remove('hidden');
+                erroTexto.innerText = "Erro ao acessar. Verifique seus dados. A senha deve ter 6 ou mais caracteres.";
+                btn.disabled = false;
+                btn.innerHTML = isModoCadastroCidadao ? '<i class="fa-solid fa-fingerprint"></i> Entrar no Painel' : '<i class="fa-solid fa-right-to-bracket"></i> Entrar no Painel';
             }
         };
 
@@ -1156,11 +1323,12 @@
                 
                 cidadaoPerfil = novosDados;
                 document.getElementById('msg-perfil-cidadao').classList.remove('hidden');
+                document.getElementById('perfil-nome-view').innerText = novosDados.nome; // Atualiza a view
                 setTimeout(() => document.getElementById('msg-perfil-cidadao').classList.add('hidden'), 3000);
             } catch(e) {
                 alert("Erro ao salvar perfil.");
             } finally {
-                btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-floppy-disk mr-2"></i> Salvar Minhas Informações';
+                btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-floppy-disk mr-2"></i> Gravar Alterações';
             }
         };
 
@@ -1332,59 +1500,152 @@
                 <article onclick="window.location.hash='noticia/${princ.id}'" class="${sec.length > 0 ? 'lg:col-span-7' : 'lg:col-span-12'} bg-gray-900 rounded-[2rem] overflow-hidden shadow-lg hover:shadow-xl group cursor-pointer relative block flex flex-col min-h-[400px] sm:min-h-[500px] transition-all duration-300 transform hover:-translate-y-1">
                     <img src="${princ.imagem}" alt="${princ.categoria}" class="w-full h-full object-cover absolute inset-0 opacity-80 group-hover:scale-105 transition-transform duration-700">
                     <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/60 to-transparent"></div>
-                    <div class="absolute bottom-0 left-0 p-6 sm:p-8 md:p-10 z-10 w-full flex flex-col justify-end">
-                        <span class="bg-pref-yellow text-pref-darkblue text-[10px] sm:text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-widest mb-4 w-fit shadow-sm">${princ.categoria}</span>
-                        <h4 class="text-2xl sm:text-3xl md:text-4xl font-black text-white mb-4 leading-tight group-hover:text-pref-yellow transition-colors tracking-tight line-clamp-3">${princ.titulo}</h4>
-                        <p class="text-gray-300 text-xs sm:text-sm font-bold flex items-center"><i class="fa-regular fa-calendar mr-2"></i> ${princ.data}</p>
-                    </div>
-                </article>`;
+        let unsubNoticias, unsubServicos, unsubCidadaos, unsubImpostos, unsubOuvidoria, unsubLicitacoes, unsubAgendamentos, unsubTransparencia, unsubTema;
 
-            if (sec.length > 0) {
-                html += `<div class="lg:col-span-5 flex flex-col gap-4 sm:gap-6">`;
-                sec.forEach(n => {
-                    html += `
-                        <article onclick="window.location.hash='noticia/${n.id}'" class="flex flex-row gap-4 sm:gap-5 group cursor-pointer bg-white rounded-[1.5rem] p-3 hover:bg-blue-50/50 transition-all border border-gray-100 hover:border-pref-blue/30 shadow-sm hover:shadow-md transform hover:-translate-y-1">
-                            <div class="w-28 h-28 sm:w-36 sm:h-36 rounded-2xl overflow-hidden flex-shrink-0 relative bg-gray-100">
-                                <img src="${n.imagem}" alt="${n.categoria}" class="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-500">
-                            </div>
-                            <div class="flex flex-col justify-center flex-grow py-2 pr-2">
-                                <span class="text-pref-blue text-[10px] font-black uppercase mb-2 tracking-widest">${n.categoria}</span>
-                                <h4 class="text-gray-800 font-black leading-snug group-hover:text-pref-blue transition-colors text-sm sm:text-base line-clamp-3">${n.titulo}</h4>
-                                <p class="text-gray-400 text-[10px] sm:text-xs mt-auto pt-2 font-bold flex items-center"><i class="fa-regular fa-calendar mr-1.5"></i> ${n.data}</p>
-                            </div>
-                        </article>`;
-                });
-                html += `</div>`;
-            }
-            html += `</div>`;
-            container.innerHTML = html;
-        }
+        function iniciarBancoDeDados() {
+            if (!auth.currentUser) return; 
+            
+            if (unsubNoticias) unsubNoticias();
+            if (unsubServicos) unsubServicos();
+            if (unsubCidadaos) unsubCidadaos();
+            if (unsubImpostos) unsubImpostos();
+            if (unsubOuvidoria) unsubOuvidoria();
+            if (unsubLicitacoes) unsubLicitacoes();
+            if (unsubAgendamentos) unsubAgendamentos();
+            if (unsubTransparencia) unsubTransparencia();
+            if (unsubTema) unsubTema();
 
-        function renderizarGradeTodasNoticias() {
-            const grid = document.getElementById('grid-todas-noticias'); grid.innerHTML = '';
-            Object.values(bancoDeNoticias).sort((a, b) => b.ordem - a.ordem).forEach(n => {
-                grid.innerHTML += `
-                    <article onclick="window.location.hash='noticia/${n.id}'" class="bg-white rounded-[2rem] overflow-hidden shadow-sm hover:shadow-xl transition-all cursor-pointer border border-gray-100 flex flex-col h-full group transform hover:-translate-y-2">
-                        <div class="h-48 sm:h-56 w-full relative bg-gray-100 overflow-hidden">
-                            <img src="${n.imagem}" alt="${n.categoria}" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700">
-                            <div class="absolute top-4 left-4 bg-pref-yellow text-pref-darkblue text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest shadow-md">${n.categoria}</div>
-                        </div>
-                        <div class="p-6 sm:p-8 flex flex-col flex-grow">
-                            <h4 class="text-lg sm:text-xl font-black text-gray-800 mb-4 leading-snug group-hover:text-pref-blue transition-colors line-clamp-3">${n.titulo}</h4>
-                            <p class="text-gray-500 text-xs sm:text-sm font-bold mt-auto border-t border-gray-100 pt-4 flex items-center"><i class="fa-regular fa-calendar mr-2 text-pref-blue"></i> ${n.data}</p>
-                        </div>
-                    </article>
-                `;
+            unsubNoticias = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'noticias'), (snap) => { bancoDeNoticias = {}; snap.forEach(d => bancoDeNoticias[d.id] = { id: d.id, ...d.data() }); renderizarNoticiasHome(); if (window.location.hash === '#todas-noticias') renderizarGradeTodasNoticias(); if (window.location.hash.startsWith('#noticia/')) renderizarNoticiaAberta(); if (isAdminView) renderListaNoticiasAdmin(); });
+            unsubServicos = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'servicos'), (snap) => { bancoDeServicos = {}; snap.forEach(d => bancoDeServicos[d.id] = { id: d.id, ...d.data() }); renderizarServicosHome(); if (window.location.hash === '#cidadao' && isCidadaoLogado) renderizarServicosCidadaoDashboard(); if (isAdminView) renderListaServicosAdmin(); });
+            unsubCidadaos = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'cidadaos'), (snap) => { bancoDeCidadaos = {}; snap.forEach(d => bancoDeCidadaos[d.id] = { id: d.id, ...d.data() }); if (isAdminView && adminAbaAtiva === 'cidadaos') renderListaCidadaosAdmin(); });
+            unsubImpostos = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'impostos'), (snap) => { bancoDeImpostos = {}; snap.forEach(d => bancoDeImpostos[d.id] = { id: d.id, ...d.data() }); if (isAdminView && adminAbaAtiva === 'cidadaos' && currentAdminCidadaoId) renderImpostosCidadaoAdmin(); });
+            
+            unsubOuvidoria = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'ouvidoria'), (snap) => { bancoDeOuvidoria = {}; snap.forEach(d => bancoDeOuvidoria[d.id] = { id: d.id, ...d.data() }); if (isAdminView && adminAbaAtiva === 'ouvidoria') renderListaOuvidoriaAdmin(); });
+            unsubLicitacoes = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'licitacoes'), (snap) => { bancoDeLicitacoes = {}; snap.forEach(d => bancoDeLicitacoes[d.id] = { id: d.id, ...d.data() }); if (isAdminView && adminAbaAtiva === 'licitacoes') renderListaLicitacoesAdmin(); });
+            unsubAgendamentos = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'agendamentos'), (snap) => { bancoDeAgendamentos = {}; snap.forEach(d => bancoDeAgendamentos[d.id] = { id: d.id, ...d.data() }); if (isAdminView && adminAbaAtiva === 'saude') renderListaAgendamentosAdmin(); });
+            unsubTransparencia = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'transparencia'), (snap) => { bancoDeTransparencia = {}; snap.forEach(d => bancoDeTransparencia[d.id] = { id: d.id, ...d.data() }); if (isAdminView && adminAbaAtiva === 'transparencia') renderListaTransparenciaAdmin(); });
+            
+            // NOVO: Ouvinte do Tema
+            unsubTema = onSnapshot(doc(db, 'artifacts', appId, 'public', 'config', 'tema_site'), (docSnap) => { 
+                if(docSnap.exists()) {
+                    configTemaAtual = docSnap.data();
+                    aplicarTemaVisual(configTemaAtual);
+                    // Atualiza o form admin se tiver na aba
+                    if(document.querySelector(`input[name="tema-preset"][value="${configTemaAtual.tipo}"]`)) {
+                        document.querySelector(`input[name="tema-preset"][value="${configTemaAtual.tipo}"]`).checked = true;
+                    }
+                    if(configTemaAtual.tipo === 'customizado') {
+                        document.getElementById('color-primary').value = configTemaAtual.cPrimary;
+                        document.getElementById('color-secondary').value = configTemaAtual.cSecondary;
+                        document.getElementById('hex-primary').innerText = configTemaAtual.cPrimary;
+                        document.getElementById('hex-secondary').innerText = configTemaAtual.cSecondary;
+                        document.getElementById('box-cores-custom').style.opacity = '1';
+                        document.getElementById('box-cores-custom').style.pointerEvents = 'auto';
+                    }
+                }
             });
         }
+        // ==========================================
+        // SISTEMA DE TEMAS E APARÊNCIA (NOVO)
+        // ==========================================
+        const CORES_TEMA = {
+            'padrao': { p: '#0047AB', pd: '#002D6B', s: '#FFC107' },
+            'setembro-amarelo': { p: '#F59E0B', pd: '#B45309', s: '#FCD34D' },
+            'outubro-rosa': { p: '#EC4899', pd: '#BE185D', s: '#FBCFE8' },
+            'novembro-azul': { p: '#06B6D4', pd: '#0E7490', s: '#67E8F9' }
+        };
 
-        function renderizarNoticiaAberta() {
-            if(!currentArticleId) return; const n = bancoDeNoticias[currentArticleId]; if(!n) return;
-            document.getElementById('noticia-imagem').src = n.imagem;
-            document.getElementById('noticia-categoria').innerText = n.categoria;
-            document.getElementById('noticia-titulo').innerText = n.titulo;
-            document.getElementById('noticia-data').innerText = n.data;
-            document.getElementById('noticia-conteudo').innerHTML = formatarTextoParaHTML(n.conteudo);
+        window.previewTema = function(tipo) {
+            const boxCustom = document.getElementById('box-cores-custom');
+            
+            if (tipo === 'customizado') {
+                boxCustom.style.opacity = '1'; boxCustom.style.pointerEvents = 'auto';
+                const p = document.getElementById('color-primary').value;
+                const s = document.getElementById('color-secondary').value;
+                document.getElementById('hex-primary').innerText = p;
+                document.getElementById('hex-secondary').innerText = s;
+                aplicarTemaVisual({ tipo: 'customizado', cPrimary: p, cSecondary: s });
+            } else {
+                boxCustom.style.opacity = '0.5'; boxCustom.style.pointerEvents = 'none';
+                aplicarTemaVisual({ tipo: tipo });
+            }
+        };
+
+        window.aplicarTemaVisual = function(config) {
+            const root = document.documentElement;
+            const overlay = document.getElementById('campaign-overlay');
+            
+            let p, pd, s;
+            if (config.tipo === 'customizado') {
+                p = config.cPrimary; s = config.cSecondary; 
+                pd = ajustarBrilhoCor(p, -30); // Função simulada para escurecer
+            } else {
+                const t = CORES_TEMA[config.tipo] || CORES_TEMA['padrao'];
+                p = t.p; pd = t.pd; s = t.s;
+            }
+
+            // Injeta nas variáveis CSS raízes (O tailwind já está configurado para ler elas no style lá no topo)
+            root.style.setProperty('--pref-blue', p);
+            root.style.setProperty('--pref-darkblue', pd);
+            root.style.setProperty('--pref-yellow', s);
+
+            // Gerencia Camada de Campanha (Laços)
+            if (config.tipo === 'setembro-amarelo' || config.tipo === 'outubro-rosa' || config.tipo === 'novembro-azul') {
+                overlay.classList.remove('hidden');
+                const corLaco = config.tipo === 'setembro-amarelo' ? '#FBBF24' : (config.tipo === 'outubro-rosa' ? '#F472B6' : '#22D3EE');
+                
+                // Gera laços SVG dinamicamente
+                let htmlLacos = '';
+                for(let i=0; i<8; i++) {
+                    const size = Math.random() * 40 + 30;
+                    const left = Math.random() * 90;
+                    const delay = Math.random() * -10;
+                    const dur = Math.random() * 5 + 5;
+                    const y = Math.random() * 80;
+                    htmlLacos += `
+                        <div class="absolute ribbon-anim opacity-20" style="left: ${left}%; top: ${y}%; width: ${size}px; animation-delay: ${delay}s; animation-duration: ${dur}s">
+                            <svg viewBox="0 0 512 512" fill="${corLaco}"><path d="M439.4 39.4c-52.5-52.5-137.6-52.5-190.1 0l-37.4 37.4c-5.8 5.8-5.8 15.3 0 21.1 5.8 5.8 15.3 5.8 21.1 0l37.4-37.4c40.9-40.9 107.1-40.9 148 0 40.9 40.9 40.9 107.1 0 148L321 306c-5.8 5.8-5.8 15.3 0 21.1 5.8 5.8 15.3 5.8 21.1 0l97.3-97.3c52.5-52.6 52.5-137.7 0-190.4zm-366.8 0C20 91.9 20 177 72.6 229.6l97.3 97.3c5.8 5.8 15.3 5.8 21.1 0 5.8-5.8 5.8-15.3 0-21.1L93.7 208.5c-40.9-40.9-40.9-107.1 0-148 40.9-40.9 107.1-40.9 148 0l37.4 37.4c5.8 5.8 15.3 5.8 21.1 0 5.8-5.8 5.8-15.3 0-21.1L262.8 39.4C210.3-13.1 125.1-13.1 72.6 39.4zm346.7 346.7c-5.8-5.8-15.3-5.8-21.1 0L249.7 534.6c-5.8 5.8-5.8 15.3 0 21.1 5.8 5.8 15.3 5.8 21.1 0l148.5-148.5c5.9-5.8 5.9-15.3 0-21.1zm-327.4 0c-5.8-5.8-15.3-5.8-21.1 0-5.8 5.8-5.8 15.3 0 21.1l148.5 148.5c5.8 5.8 15.3 5.8 21.1 0 5.8-5.8 5.8-15.3 0-21.1L91.9 386.1z"/></svg>
+                        </div>
+                    `;
+                }
+                overlay.innerHTML = htmlLacos;
+            } else {
+                overlay.classList.add('hidden');
+                overlay.innerHTML = '';
+            }
+        };
+
+        window.salvarTemaAdmin = async function() {
+            const btn = document.getElementById('btn-salvar-tema');
+            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Publicando Tema...';
+            
+            const tipo = document.querySelector('input[name="tema-preset"]:checked').value;
+            const p = document.getElementById('color-primary').value;
+            const s = document.getElementById('color-secondary').value;
+            
+            const novoConfig = { tipo: tipo };
+            if(tipo === 'customizado') { novoConfig.cPrimary = p; novoConfig.cSecondary = s; }
+
+            try {
+                // Salva no Firestore
+                await setDoc(doc(db, 'artifacts', appId, 'public', 'config', 'tema_site'), novoConfig);
+                document.getElementById('msg-tema-salvo').classList.remove('hidden');
+                setTimeout(() => document.getElementById('msg-tema-salvo').classList.add('hidden'), 4000);
+            } catch(e) {
+                alert("Erro ao salvar tema.");
+            } finally {
+                btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-check-double mr-2"></i> Publicar Novo Tema';
+            }
+        };
+
+        // Helper para escurecer cor HEX (para gerar o darkblue)
+        function ajustarBrilhoCor(hex, percent) {
+            hex = hex.replace(/^\s*#|\s*$/g, '');
+            if(hex.length == 3) hex = hex.replace(/(.)/g, '$1$1');
+            var r = parseInt(hex.substr(0, 2), 16), g = parseInt(hex.substr(2, 2), 16), b = parseInt(hex.substr(4, 2), 16);
+            return '#' + ((0|(1<<8) + r + (256 - r) * percent / 100).toString(16)).substr(1) +
+                ((0|(1<<8) + g + (256 - g) * percent / 100).toString(16)).substr(1) +
+                ((0|(1<<8) + b + (256 - b) * percent / 100).toString(16)).substr(1);
         }
 
         function renderizarServicoAberto() {
