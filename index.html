@@ -105,7 +105,7 @@
                     </a>
                     
                     <a href="javascript:void(0)" onclick="goHomeAndScroll('contato'); closeMenu();" class="bg-pref-blue text-white text-center font-black py-3.5 mt-3 rounded-xl hover:bg-pref-darkblue shadow-md transition-colors">
-                        Fale Conosco
+                        <i class="fa-regular fa-envelope"></i> Fale Conosco
                     </a>
                 </div>
             </div>
@@ -903,12 +903,17 @@
         window.addEventListener('hashchange', handleHashChange);
 
         // INICIALIZAÇÃO FIREBASE (Banco de Dados Tempo Real)
-        let isDBIniciado = false;
         let unsubNoticias, unsubServicos, unsubCidadaos, unsubImpostos;
 
         function iniciarBancoDeDados() {
             if (!auth.currentUser) return; // Segurança dupla
             
+            // Limpa ouvintes antigos caso existam para forçar uma nova chamada com as permissões atualizadas
+            if (unsubNoticias) unsubNoticias();
+            if (unsubServicos) unsubServicos();
+            if (unsubCidadaos) unsubCidadaos();
+            if (unsubImpostos) unsubImpostos();
+
             const noticiasRef = collection(db, 'artifacts', appId, 'public', 'data', 'noticias');
             const servicosRef = collection(db, 'artifacts', appId, 'public', 'data', 'servicos');
             const cidadaosRef = collection(db, 'artifacts', appId, 'public', 'data', 'cidadaos');
@@ -960,11 +965,8 @@
 
             currentUser = user;
             
-            // Inicia o DB apenas quando tivermos certeza da autenticação estabelecida
-            if (!isDBIniciado) {
-                isDBIniciado = true;
-                iniciarBancoDeDados();
-            }
+            // Sempre reiniciamos o banco de dados quando ocorre alteração no usuário (logins, logouts, etc)
+            iniciarBancoDeDados();
 
             if (user && !user.isAnonymous) {
                 if (user.email === 'jeosouzazouza@gmail.com') {
