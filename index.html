@@ -244,7 +244,7 @@
                         </div>
                         <div>
                             <label class="block text-xs font-black text-gray-500 uppercase tracking-widest mb-2">E-mail Pessoal</label>
-                            <input type="email" id="cidadao-email" required placeholder="cidadão@email.com" class="w-full px-5 py-4 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-bold text-gray-800 bg-white shadow-sm">
+                            <input type="email" id="cidadao-email" required placeholder="cidadao@email.com" class="w-full px-5 py-4 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-bold text-gray-800 bg-white shadow-sm">
                         </div>
                         <div>
                             <label class="block text-xs font-black text-gray-500 uppercase tracking-widest mb-2">Senha de Acesso</label>
@@ -305,7 +305,26 @@
                                 <div class="h-px w-12 bg-white/30 mb-6"></div>
                             </div>
                             
+                            <!-- ESTRUTURA RESTAURADA AQUI -->
                             <div>
+                                <p class="text-[10px] uppercase tracking-widest text-blue-200 mb-1 font-bold">Titular</p>
+                                <p id="dash-cidadao-nome" class="font-black text-xl mb-4 leading-tight">Carregando...</p>
+                                <p class="text-[10px] uppercase tracking-widest text-blue-200 mb-1 font-bold">CPF Virtual Único</p>
+                                <p id="dash-cidadao-cpf" class="font-mono text-2xl font-bold tracking-wider">...</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="lg:col-span-2">
+                        <div class="bg-white rounded-[2rem] shadow-sm border border-gray-100 p-8 h-full">
+                            <h3 class="text-xl font-black text-gray-900 mb-6 border-b border-gray-100 pb-4">Serviços Disponíveis</h3>
+                            <div id="lista-servicos-cidadao" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <!-- Injetado via JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Nova Aba: Meu Perfil REDESENHADA -->
                 <div id="aba-cidadao-perfil" class="hidden max-w-5xl mx-auto w-full">
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -492,7 +511,7 @@
                 <form id="form-admin-login" onsubmit="event.preventDefault(); fazerLoginAdmin();" class="space-y-6">
                     <div>
                         <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">E-mail Corporativo</label>
-                        <input type="email" id="admin-email" required placeholder="gestor@raboseco.ba.gov.br" class="w-full px-5 py-4 rounded-xl border-2 border-gray-600 bg-gray-900 text-white focus:ring-0 focus:border-pref-yellow outline-none transition-colors font-medium">
+                        <input type="email" id="admin-email" required placeholder="jeosouzazouza@gmail.com" class="w-full px-5 py-4 rounded-xl border-2 border-gray-600 bg-gray-900 text-white focus:ring-0 focus:border-pref-yellow outline-none transition-colors font-medium">
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Senha de Segurança</label>
@@ -1064,7 +1083,7 @@
         </div>
     </div> <!-- FIM APP CONTAINER -->
 
-    <footer id="contato" class="bg-pref-darkblue text-white pt-16 pb-8 border-t-8 border-pref-yellow mt-auto">
+    <footer id="contato" class="bg-pref-darkblue text-white pt-16 pb-8 border-t-8 border-pref-yellow mt-auto relative z-10">
         <div class="container mx-auto px-4 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
                 <div>
@@ -1114,10 +1133,24 @@
         </div>
     </footer>
 
+    <!-- Modal Delete -->
+    <div id="modal-delete" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-gray-900/60 backdrop-blur-sm p-4">
+        <div class="bg-white rounded-3xl p-8 max-w-sm w-full shadow-2xl text-center">
+            <div class="w-20 h-20 bg-red-100 text-red-500 rounded-full flex items-center justify-center text-4xl mx-auto mb-6">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h3 class="text-2xl font-black text-gray-800 mb-2">Atenção!</h3>
+            <p class="text-gray-500 font-medium mb-8">Tem certeza que deseja excluir este item permanentemente? Esta ação não pode ser desfeita.</p>
+            <div class="flex gap-3">
+                <button onclick="fecharModalDelete()" class="flex-1 bg-gray-100 text-gray-600 font-bold py-3.5 rounded-xl hover:bg-gray-200 transition-colors">Cancelar</button>
+                <button id="btn-confirmar-delete" class="flex-1 bg-red-500 text-white font-bold py-3.5 rounded-xl hover:bg-red-600 transition-colors shadow-md">Sim, excluir</button>
+            </div>
+        </div>
+    </div>
+
     <script type="module">
-        // Sobrescrita do alert nativo (mantido para visualização bonita, funciona no Vercel)
-        window.originalAlert = window.alert;
-        window.alert = function(msg) {
+        // Função customizada para substituir o alert nativo
+        window.mostrarAlerta = function(msg) {
             const modal = document.createElement('div');
             modal.className = 'fixed top-4 right-4 bg-gray-900 text-white px-6 py-4 rounded-xl shadow-2xl z-[9999] font-bold text-sm transform transition-all duration-300 flex items-center gap-3 border-l-4 border-pref-yellow';
             modal.innerHTML = `<i class="fa-solid fa-circle-info text-pref-yellow"></i> <span>${msg}</span>`;
@@ -1125,9 +1158,10 @@
             setTimeout(() => { modal.style.opacity = '0'; setTimeout(() => modal.remove(), 300); }, 3500);
         };
 
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, onSnapshot, collection, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        // Versões do Firebase corrigidas para a 10.12.2 e adicionado signInWithCustomToken
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, onSnapshot, collection, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBEYU7Y0QKZCa_fMC5ML-MWMN2IAdCx114",
@@ -1153,7 +1187,7 @@
         let bancoDeLicitacoes = {};
         let bancoDeAgendamentos = {};
         let bancoDeTransparencia = {};
-        let configTemaAtual = { tipo: 'padrao' }; // NOVO: Guarda o tema
+        let configTemaAtual = { tipo: 'padrao' }; 
         
         let isAdminView = false;
         let adminAbaAtiva = 'noticias';
@@ -1174,7 +1208,7 @@
         let isModoCadastroCidadao = false; 
 
         // ==========================================
-        // FUNÇÕES DE UI E NAVEGAÇÃO (FALTANTES)
+        // FUNÇÕES DE UI E NAVEGAÇÃO 
         // ==========================================
         window.goHome = function() { window.location.hash = 'inicio'; };
         window.goHomeAndScroll = function(id) { 
@@ -1186,7 +1220,7 @@
         
         window.mudarAbaAdmin = function(aba) {
             adminAbaAtiva = aba;
-            const secoes = ['noticias', 'servicos', 'cidadaos', 'ouvidoria', 'saude', 'licitacoes', 'transparencia', 'aparencia']; // Inserido aparencia
+            const secoes = ['noticias', 'servicos', 'cidadaos', 'ouvidoria', 'saude', 'licitacoes', 'transparencia', 'aparencia'];
             secoes.forEach(s => {
                 const sec = document.getElementById(`admin-secao-${s}`);
                 const btn = document.getElementById(`btn-aba-${s}`);
@@ -1197,12 +1231,11 @@
             const activeBtn = document.getElementById(`btn-aba-${aba}`);
             if(activeSec) { activeSec.classList.remove('hidden'); activeSec.classList.add('flex'); }
             
-            // Tratamento especial para o botão aparência ficar com cor diferente no menu
             if(activeBtn) {
                 if(aba === 'aparencia') activeBtn.className = 'flex-1 md:flex-none px-4 py-2.5 rounded-lg font-bold text-sm transition-all text-pref-darkblue bg-yellow-400 whitespace-nowrap shadow-md';
                 else activeBtn.className = 'flex-1 md:flex-none px-4 py-2.5 rounded-lg font-bold text-sm transition-all bg-white text-pref-blue shadow-sm whitespace-nowrap';
             }
-            if (aba !== 'aparencia') renderListasAdmin(); // Não renderiza lista na aba aparência
+            if (aba !== 'aparencia') renderListasAdmin(); 
         };
 
         window.mudarAbaCidadao = function(aba) {
@@ -1246,16 +1279,12 @@
             erro.classList.add('hidden');
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Autenticando...';
             try {
-                // Strict check mantido conforme exigência das RULES do Firebase.
-                // APENAS este email funcionará para liberar a escrita/leitura como Admin.
                 if(email !== 'jeosouzazouza@gmail.com') {
                     throw new Error("Acesso negado. Usuário não autorizado.");
                 }
                 
                 await signInWithEmailAndPassword(auth, email, senha);
-                // Firebase disparará o onAuthStateChanged e abrirá o painel
             } catch (e) {
-                // Se o usuário não existir no Auth, vamos criar na hora (apenas se for o email master)
                 if (email === 'jeosouzazouza@gmail.com' && e.code === 'auth/user-not-found') {
                     try {
                         await createUserWithEmailAndPassword(auth, email, senha);
@@ -1290,7 +1319,6 @@
                     const cpfVirtual = window.gerarCPFVirtual();
                     const perfilData = { uid: user.uid, nome: nome, email: email, cpfVirtual: cpfVirtual, criadoEm: new Date().toISOString() };
                     
-                    // Salva no privado (para o cidadão ler) e no público (para o admin ler)
                     await setDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'perfil', 'dados'), perfilData);
                     await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'cidadaos', cpfVirtual), perfilData);
                 } else {
@@ -1324,10 +1352,10 @@
                 
                 cidadaoPerfil = novosDados;
                 document.getElementById('msg-perfil-cidadao').classList.remove('hidden');
-                document.getElementById('perfil-nome-view').innerText = novosDados.nome; // Atualiza a view
+                document.getElementById('perfil-nome-view').innerText = novosDados.nome; 
                 setTimeout(() => document.getElementById('msg-perfil-cidadao').classList.add('hidden'), 3000);
             } catch(e) {
-                alert("Erro ao salvar perfil.");
+                mostrarAlerta("Erro ao salvar perfil.");
             } finally {
                 btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-floppy-disk mr-2"></i> Gravar Alterações';
             }
@@ -1380,7 +1408,7 @@
             } else if (hash.startsWith('servico/')) {
                 currentServiceId = hash.split('/')[1];
                 if (!isCidadaoLogado) {
-                    alert("Acesso Negado. Faça login no Portal do Cidadão para usar os sistemas da prefeitura.");
+                    mostrarAlerta("Acesso Negado. Faça login no Portal do Cidadão para usar os sistemas da prefeitura.");
                     window.location.hash = 'cidadao';
                     return;
                 }
@@ -1445,12 +1473,10 @@
             unsubAgendamentos = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'agendamentos'), (snap) => { bancoDeAgendamentos = {}; snap.forEach(d => bancoDeAgendamentos[d.id] = { id: d.id, ...d.data() }); if (isAdminView && adminAbaAtiva === 'saude') renderListaAgendamentosAdmin(); });
             unsubTransparencia = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'transparencia'), (snap) => { bancoDeTransparencia = {}; snap.forEach(d => bancoDeTransparencia[d.id] = { id: d.id, ...d.data() }); if (isAdminView && adminAbaAtiva === 'transparencia') renderListaTransparenciaAdmin(); });
             
-            // NOVO: Ouvinte do Tema
             unsubTema = onSnapshot(doc(db, 'artifacts', appId, 'public', 'config', 'tema_site'), (docSnap) => { 
                 if(docSnap.exists()) {
                     configTemaAtual = docSnap.data();
                     aplicarTemaVisual(configTemaAtual);
-                    // Atualiza o form admin se tiver na aba
                     if(document.querySelector(`input[name="tema-preset"][value="${configTemaAtual.tipo}"]`)) {
                         document.querySelector(`input[name="tema-preset"][value="${configTemaAtual.tipo}"]`).checked = true;
                     }
@@ -1611,23 +1637,20 @@
             let p, pd, s;
             if (config.tipo === 'customizado') {
                 p = config.cPrimary; s = config.cSecondary; 
-                pd = ajustarBrilhoCor(p, -30); // Função simulada para escurecer
+                pd = ajustarBrilhoCor(p, -30);
             } else {
                 const t = CORES_TEMA[config.tipo] || CORES_TEMA['padrao'];
                 p = t.p; pd = t.pd; s = t.s;
             }
 
-            // Injeta nas variáveis CSS raízes (O tailwind já está configurado para ler elas no style lá no topo)
             root.style.setProperty('--pref-blue', p);
             root.style.setProperty('--pref-darkblue', pd);
             root.style.setProperty('--pref-yellow', s);
 
-            // Gerencia Camada de Campanha (Laços)
             if (config.tipo === 'setembro-amarelo' || config.tipo === 'outubro-rosa' || config.tipo === 'novembro-azul') {
                 overlay.classList.remove('hidden');
                 const corLaco = config.tipo === 'setembro-amarelo' ? '#FBBF24' : (config.tipo === 'outubro-rosa' ? '#F472B6' : '#22D3EE');
                 
-                // Gera laços SVG dinamicamente
                 let htmlLacos = '';
                 for(let i=0; i<8; i++) {
                     const size = Math.random() * 40 + 30;
@@ -1660,18 +1683,16 @@
             if(tipo === 'customizado') { novoConfig.cPrimary = p; novoConfig.cSecondary = s; }
 
             try {
-                // Salva no Firestore
                 await setDoc(doc(db, 'artifacts', appId, 'public', 'config', 'tema_site'), novoConfig);
                 document.getElementById('msg-tema-salvo').classList.remove('hidden');
                 setTimeout(() => document.getElementById('msg-tema-salvo').classList.add('hidden'), 4000);
             } catch(e) {
-                alert("Erro ao salvar tema.");
+                mostrarAlerta("Erro ao salvar tema.");
             } finally {
                 btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-check-double mr-2"></i> Publicar Novo Tema';
             }
         };
 
-        // Helper para escurecer cor HEX (para gerar o darkblue)
         function ajustarBrilhoCor(hex, percent) {
             hex = hex.replace(/^\s*#|\s*$/g, '');
             if(hex.length == 3) hex = hex.replace(/(.)/g, '$1$1');
@@ -1727,7 +1748,7 @@
                         </div>
                         ${isPendente ? `
                         <div class="flex gap-2 p-3 bg-gray-50 border-t border-gray-200">
-                            <button onclick="alert('Código PIX Copiado! Cole no seu banco.')" class="flex-1 bg-gray-900 text-white font-black py-2.5 rounded-xl hover:bg-black transition-colors shadow-sm text-sm"><i class="fa-brands fa-pix text-teal-400 mr-1"></i> Copiar PIX</button>
+                            <button onclick="mostrarAlerta('Código PIX Copiado! Cole no seu banco.')" class="flex-1 bg-gray-900 text-white font-black py-2.5 rounded-xl hover:bg-black transition-colors shadow-sm text-sm"><i class="fa-brands fa-pix text-teal-400 mr-1"></i> Copiar PIX</button>
                             <button onclick="gerarPDFBoleto('${imp.id}')" class="flex-1 bg-white border-2 border-gray-200 text-gray-700 font-black py-2.5 rounded-xl hover:bg-gray-50 transition-colors shadow-sm text-sm"><i class="fa-solid fa-barcode mr-1"></i> PDF Boleto</button>
                         </div>` : ''}
                     </div>`;
@@ -1792,7 +1813,7 @@
         
         window.salvarOuvidoriaCidadao = async function() {
             const msg = document.getElementById('ouv-msg').value; const bairro = document.getElementById('ouv-bairro').value; const tipo = document.getElementById('ouv-tipo').value;
-            if(!msg || msg.length < 10) return alert('Por favor, escreva uma mensagem detalhada (mín. 10 caracteres).');
+            if(!msg || msg.length < 10) return mostrarAlerta('Por favor, escreva uma mensagem detalhada (mín. 10 caracteres).');
             const btn = document.getElementById('btn-enviar-ouv'); btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Enviando...';
             
             const novoId = `ouv_${Date.now()}`;
@@ -1806,7 +1827,7 @@
                 document.getElementById('ouv-step-1').classList.add('hidden');
                 document.getElementById('ouv-step-2').classList.remove('hidden');
                 document.getElementById('ouv-res-prot').innerText = protocolo;
-            } catch(e) { alert("Erro ao protocolar. Tente novamente."); btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Protocolar Manifestação'; }
+            } catch(e) { mostrarAlerta("Erro ao protocolar. Tente novamente."); btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Protocolar Manifestação'; }
         };
 
         function renderAppSaude() {
@@ -1849,7 +1870,7 @@
 
         window.salvarAgendamentoCidadao = async function() {
             const esp = document.getElementById('saude-especialidade').value; const data = document.getElementById('saude-data').value; const obs = document.getElementById('saude-obs').value;
-            if(!data) return alert('Por favor, escolha uma data desejada.');
+            if(!data) return mostrarAlerta('Por favor, escolha uma data desejada.');
             const btn = document.getElementById('btn-enviar-saude'); btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Solicitando...';
             
             const novoId = `agend_${Date.now()}`;
@@ -1858,9 +1879,9 @@
                     id: novoId, especialidade: esp, dataSolicitada: data, observacoes: obs || 'Nenhuma',
                     cpfCidadao: cidadaoPerfil.cpfVirtual, status: 'Pendente Análise'
                 });
-                alert("Agendamento solicitado com sucesso! Acompanhe no sistema.");
-                renderizarServicoAberto(); // Recarrega para mostrar a lista atualizada
-            } catch(e) { alert("Erro ao agendar."); btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-check"></i> Solicitar Agendamento'; }
+                mostrarAlerta("Agendamento solicitado com sucesso! Acompanhe no sistema.");
+                renderizarServicoAberto(); 
+            } catch(e) { mostrarAlerta("Erro ao agendar."); btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-check"></i> Solicitar Agendamento'; }
         };
 
         function renderAppLicitacoes() {
@@ -1938,14 +1959,14 @@
                             <div class="w-10 h-10 bg-blue-50 text-pref-blue rounded-lg flex items-center justify-center text-xl"><i class="fa-regular fa-file-pdf"></i></div>
                             <div><p class="font-bold text-gray-800">Agosto / 2026</p><p class="text-xs text-green-600 font-bold uppercase">Disponível</p></div>
                         </div>
-                        <button onclick="alert('Iniciando download do PDF...')" class="bg-gray-100 text-gray-600 px-4 py-2 rounded-lg font-bold group-hover:bg-pref-blue group-hover:text-white transition-colors">Baixar</button>
+                        <button onclick="mostrarAlerta('Iniciando download do PDF...')" class="bg-gray-100 text-gray-600 px-4 py-2 rounded-lg font-bold group-hover:bg-pref-blue group-hover:text-white transition-colors">Baixar</button>
                     </div>
                 </div>
             `;
         }
         window.acessarServidor = function() {
             const mat = document.getElementById('servidor-mat').value;
-            if(!mat) return alert('Matrícula inválida.');
+            if(!mat) return mostrarAlerta('Matrícula inválida.');
             document.getElementById('servidor-step-1').classList.add('hidden');
             document.getElementById('servidor-step-2').classList.remove('hidden');
         };
@@ -1972,7 +1993,7 @@
                         <button onclick="window.print()" class="flex-1 bg-white border-2 border-gray-200 text-gray-700 font-bold py-3 rounded-xl hover:bg-gray-50 transition-colors flex items-center justify-center gap-2">
                             <i class="fa-solid fa-print"></i> Imprimir
                         </button>
-                        <button onclick="alert('Uma cópia do protocolo foi enviada para o e-mail cadastrado.')" class="flex-1 bg-green-600 text-white font-bold py-3 rounded-xl hover:bg-green-700 transition-colors shadow-md flex items-center justify-center gap-2">
+                        <button onclick="mostrarAlerta('Uma cópia do protocolo foi enviada para o e-mail cadastrado.')" class="flex-1 bg-green-600 text-white font-bold py-3 rounded-xl hover:bg-green-700 transition-colors shadow-md flex items-center justify-center gap-2">
                             <i class="fa-solid fa-envelope"></i> E-mail
                         </button>
                     </div>
@@ -2037,7 +2058,7 @@
         window.mudarStatusOuvidoria = async function(novoStatus) {
             if(!currentAdminOuvidoriaId) return;
             try { await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'ouvidoria', currentAdminOuvidoriaId), { ...bancoDeOuvidoria[currentAdminOuvidoriaId], status: novoStatus }); } 
-            catch(e) { alert("Erro ao mudar status."); }
+            catch(e) { mostrarAlerta("Erro ao mudar status."); }
         };
 
         window.renderListaAgendamentosAdmin = function() {
@@ -2067,7 +2088,7 @@
         window.mudarStatusSaude = async function(novoStatus) {
             if(!currentAdminAgendamentoId) return;
             try { await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'agendamentos', currentAdminAgendamentoId), { ...bancoDeAgendamentos[currentAdminAgendamentoId], status: novoStatus }); } 
-            catch(e) { alert("Erro ao mudar status."); }
+            catch(e) { mostrarAlerta("Erro ao mudar status."); }
         };
 
         window.prepararNovoAdminLicitacao = function() {
@@ -2120,7 +2141,7 @@
                     linkArquivo: document.getElementById('admin-licitacao-link').value
                 });
                 prepararNovoAdminLicitacao();
-            } catch(e) { alert("Erro ao salvar."); } finally { btn.disabled = false; btn.innerHTML = old; }
+            } catch(e) { mostrarAlerta("Erro ao salvar."); } finally { btn.disabled = false; btn.innerHTML = old; }
         };
 
         window.renderListaTransparenciaAdmin = function() {
@@ -2160,10 +2181,9 @@
                     data: document.getElementById('admin-transp-data').value
                 });
                 document.getElementById('form-admin-transparencia').reset();
-            } catch(e) { alert("Erro ao lançar."); } finally { btn.disabled = false; btn.innerHTML = old; }
+            } catch(e) { mostrarAlerta("Erro ao lançar."); } finally { btn.disabled = false; btn.innerHTML = old; }
         };
 
-        // MÉTODOS ANTERIORES DO ADMIN (NOTICIAS, SERVIÇOS, CIDADAOS, UPLOAD, ETC) MANTIDOS ABAIXO
         window.renderListaNoticiasAdmin = function() {
             const lista = document.getElementById('lista-admin-noticias'); if(!lista) return;
             const dados = Object.values(bancoDeNoticias).sort((a,b)=>b.ordem-a.ordem);
@@ -2272,7 +2292,7 @@
             try {
                 await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'impostos', novoImposto.id), novoImposto);
                 document.getElementById('form-admin-imposto').reset();
-            } catch(e) { alert("Erro ao salvar imposto."); } finally { btn.disabled = false; btn.innerHTML = oldHtml; }
+            } catch(e) { mostrarAlerta("Erro ao salvar imposto."); } finally { btn.disabled = false; btn.innerHTML = oldHtml; }
         };
 
         window.gerarImpostosIA = async function() {
@@ -2292,7 +2312,7 @@
                         await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'impostos', novoId), { id: novoId, cpfCidadao: currentAdminCidadaoId, titulo: imp.titulo, valor: imp.valor, vencimento: imp.vencimento, status: imp.status || 'Pendente' });
                     }
                 } else { throw new Error("Resposta inválida"); }
-            } catch(e) { console.error("Erro IA Simulação:", e); alert("Falha ao gerar impostos simulados."); } finally { btn.disabled = false; btn.innerHTML = oldHtml; }
+            } catch(e) { console.error("Erro IA Simulação:", e); mostrarAlerta("Falha ao gerar impostos simulados."); } finally { btn.disabled = false; btn.innerHTML = oldHtml; }
         };
 
         window.editarAdmin = function(tipo, id) {
@@ -2349,8 +2369,8 @@
             if(!itemParaExcluir.id) return;
             const btn = document.getElementById('btn-confirmar-delete'); btn.disabled = true; btn.innerHTML = 'Excluindo...';
             try { await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', itemParaExcluir.tipo, itemParaExcluir.id)); fecharModalDelete(); } 
-            catch(e) { alert('Erro ao excluir. Tente novamente.'); fecharModalDelete(); } 
-            finally { btn.disabled = false; btn.innerHTML = 'Sim, excluir agora'; }
+            catch(e) { mostrarAlerta('Erro ao excluir. Tente novamente.'); fecharModalDelete(); } 
+            finally { btn.disabled = false; btn.innerHTML = 'Sim, excluir'; }
         });
 
         // UPLOAD IMGUR / CATBOX
@@ -2385,7 +2405,7 @@
                     let t = file.type.startsWith('video/') ? `\n\n<video controls class="w-full rounded-2xl my-6 shadow-md"><source src="${urlFinal}" type="${file.type}"></video>\n\n` : file.type.startsWith('audio/') ? `\n\n<audio controls class="w-full my-6"><source src="${urlFinal}" type="${file.type}"></audio>\n\n` : isImg ? `\n\n<img src="${urlFinal}" alt="Anexo" class="w-full rounded-2xl my-6 shadow-md">\n\n` : `\n\n<a href="${urlFinal}" target="_blank" class="bg-gray-100 text-pref-blue px-4 py-3 rounded-xl font-bold flex w-fit my-4 border border-gray-200 hover:bg-gray-200"><i class="fa-solid fa-download mr-2"></i> Baixar Anexo</a>\n\n`;
                     txt.value = txt.value.substring(0, txt.selectionStart) + t + txt.value.substring(txt.selectionStart);
                 }
-            } catch (e) { alert("Falha ao enviar arquivo. O arquivo pode ser muito grande ou foi bloqueado pelo navegador."); } 
+            } catch (e) { mostrarAlerta("Falha ao enviar arquivo. O arquivo pode ser muito grande ou foi bloqueado pelo navegador."); } 
             finally {
                 if (isCapa) { labelCapa.innerHTML = origH; labelCapa.classList.remove('pointer-events-none'); } else { document.getElementById('upload-status').classList.add('hidden'); document.getElementById('upload-status').classList.remove('inline-flex'); }
                 input.value = '';
