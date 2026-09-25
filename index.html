@@ -1700,24 +1700,23 @@
             btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Gerando com IA...';
             
             try {
-                // Chama a nossa API Serverless do Vercel (que usa o Groq em background)
-                const response = await fetch('/api/gerar-impostos', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        nome: cidadao.nome,
-                        cpf: cidadao.cpfVirtual
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error(`Erro na API do Vercel: ${response.status}`);
+                // SIMULAÇÃO: Como não temos um backend Node/Vercel rodando neste ambiente, 
+                // vamos simular a resposta que a IA daria gerando dados automáticos realistas.
+                await new Promise(resolve => setTimeout(resolve, 1800)); // Simula o tempo de "pensamento"
+                
+                const anoAtual = new Date().getFullYear();
+                
+                // Gera 1 a 3 impostos aleatórios para simular a IA
+                const impostosGerados = [
+                    { titulo: `IPTU ${anoAtual}`, valor: (Math.random() * 800 + 300).toFixed(2), vencimento: `10/12/${anoAtual}` },
+                    { titulo: `Taxa de Coleta de Lixo ${anoAtual}`, valor: (Math.random() * 100 + 40).toFixed(2), vencimento: `15/12/${anoAtual}` }
+                ];
+                
+                // 30% de chance de gerar uma taxa extra
+                if(Math.random() > 0.7) {
+                    impostosGerados.push({ titulo: `Contribuição de Melhoria Asfáltica`, valor: (Math.random() * 200 + 100).toFixed(2), vencimento: `20/11/${anoAtual}` });
                 }
 
-                const impostosGerados = await response.json();
-                
                 if (impostosGerados && Array.isArray(impostosGerados) && impostosGerados.length > 0) {
                     // Salvar no banco de dados do Firebase
                     for (let imp of impostosGerados) {
@@ -1735,8 +1734,8 @@
                     throw new Error("Resposta inválida ou vazia da IA");
                 }
             } catch(e) {
-                console.error("Erro IA Backend:", e);
-                alert("Falha ao conectar com o gerador de IA. Verifique os logs do Vercel.");
+                console.error("Erro IA Simulação:", e);
+                alert("Falha ao gerar impostos simulados.");
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = oldHtml;
