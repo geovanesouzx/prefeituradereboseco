@@ -18,7 +18,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
     
-    <!-- Configuração Tailwind -->
+    <!-- Configuração Tailwind e Estilos Personalizados -->
     <script>
         tailwind.config = {
             theme: {
@@ -44,11 +44,14 @@
         ::-webkit-scrollbar-thumb { background: #0047AB; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #002D6B; }
         
-        /* Efeito cartão de crédito para o CPF Virtual */
         .cartao-cidadao {
             background: linear-gradient(135deg, #002D6B 0%, #0047AB 100%);
             box-shadow: 0 10px 25px -5px rgba(0, 71, 171, 0.4);
         }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; height: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
     </style>
 </head>
 <body class="bg-pref-light text-gray-800 font-sans antialiased flex flex-col min-h-screen">
@@ -99,7 +102,6 @@
                         <span class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-blue-50 transition-colors"><i class="fa-solid fa-newspaper text-gray-400 group-hover:text-pref-blue"></i></div> Últimas Notícias</span> <i class="fa-solid fa-chevron-right text-xs text-gray-300"></i>
                     </a>
                     
-                    <!-- Destaque para Acesso Cidadão no Mobile -->
                     <a href="#cidadao" onclick="closeMenu();" class="mt-4 border-2 border-pref-blue text-pref-blue text-center font-black py-3.5 rounded-xl hover:bg-blue-50 shadow-sm transition-colors flex items-center justify-center gap-2">
                         <i class="fa-regular fa-id-card text-lg"></i> Meu CPF Virtual
                     </a>
@@ -149,7 +151,6 @@
                         <p class="text-gray-500 mt-5 text-lg max-w-2xl mx-auto font-medium">Acesse os serviços da prefeitura com agilidade. Login com CPF Virtual obrigatório.</p>
                     </div>
 
-                    <!-- Container onde os serviços do Banco de Dados vão aparecer -->
                     <div id="servicos-grid-home" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                         <div class="col-span-full text-center text-gray-400 font-bold py-10"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Carregando serviços do banco de dados...</div>
                     </div>
@@ -193,7 +194,6 @@
                     <i class="fa-solid fa-circle-exclamation mt-0.5"></i> <span id="cidadao-msg-texto">Erro</span>
                 </div>
 
-                <!-- Formulário -->
                 <form id="form-cidadao" onsubmit="event.preventDefault(); processarAuthCidadao();" class="space-y-5">
                     <div id="box-nome-cidadao" class="hidden">
                         <label class="block text-sm font-black text-gray-700 mb-1.5">Nome Completo</label>
@@ -232,7 +232,6 @@
                     </div>
                     
                     <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
-                        <!-- Abas Cidadão -->
                         <div class="flex bg-white p-1 rounded-xl shadow-sm border border-gray-100">
                             <button onclick="mudarAbaCidadao('servicos')" id="btn-cidadao-servicos" class="px-5 py-2.5 rounded-lg font-bold text-sm transition-all bg-pref-blue text-white shadow-sm">Início</button>
                             <button onclick="mudarAbaCidadao('perfil')" id="btn-cidadao-perfil" class="px-5 py-2.5 rounded-lg font-bold text-sm transition-all text-gray-600 hover:text-pref-blue">Meu Perfil</button>
@@ -347,7 +346,6 @@
                         </form>
                     </div>
                 </div>
-
             </div>
         </div>
 
@@ -375,8 +373,9 @@
             </div>
         </div>
 
+        <!-- VIEW DE SERVIÇO ABERTO (ONDE RODAM OS MINI-APPS) -->
         <div id="view-servico" class="hidden flex-col flex-grow bg-gray-50 py-12 pb-24">
-            <div class="container mx-auto px-4 lg:px-8 max-w-3xl">
+            <div class="container mx-auto px-4 lg:px-8 max-w-4xl">
                 <button onclick="window.history.back()" class="flex items-center text-pref-blue font-black hover:text-pref-darkblue mb-8 transition-colors group cursor-pointer bg-white border border-gray-200 shadow-sm py-2.5 px-5 rounded-full w-fit">
                     <i class="fa-solid fa-arrow-left mr-2 group-hover:-translate-x-1 transition-transform"></i> Voltar ao Início
                 </button>
@@ -472,6 +471,8 @@
                     <button onclick="mudarAbaAdmin('noticias')" id="btn-aba-noticias" class="flex-1 md:flex-none px-5 py-2.5 rounded-lg font-bold text-sm transition-all bg-white text-pref-blue shadow-sm whitespace-nowrap"><i class="fa-solid fa-newspaper mr-2"></i> Notícias</button>
                     <button onclick="mudarAbaAdmin('servicos')" id="btn-aba-servicos" class="flex-1 md:flex-none px-5 py-2.5 rounded-lg font-bold text-sm transition-all text-blue-200 hover:text-white whitespace-nowrap"><i class="fa-solid fa-laptop-file mr-2"></i> Serviços</button>
                     <button onclick="mudarAbaAdmin('cidadaos')" id="btn-aba-cidadaos" class="flex-1 md:flex-none px-5 py-2.5 rounded-lg font-bold text-sm transition-all text-blue-200 hover:text-white whitespace-nowrap"><i class="fa-solid fa-users mr-2"></i> Cidadãos e Impostos</button>
+                    <!-- NOVA ABA: OUVIDORIA -->
+                    <button onclick="mudarAbaAdmin('ouvidoria')" id="btn-aba-ouvidoria" class="flex-1 md:flex-none px-5 py-2.5 rounded-lg font-bold text-sm transition-all text-blue-200 hover:text-white whitespace-nowrap"><i class="fa-solid fa-bullhorn mr-2"></i> Ouvidoria</button>
                 </div>
 
                 <div class="flex gap-3 w-full md:w-auto">
@@ -480,9 +481,8 @@
                 </div>
             </div>
             
-            <!-- SEÇÃO DE NOTÍCIAS SEPARADA -->
+            <!-- SEÇÃO DE NOTÍCIAS -->
             <div id="admin-secao-noticias" class="container mx-auto px-4 py-8 flex flex-col lg:flex-row gap-8 max-w-7xl flex-grow">
-                <!-- Coluna da Lista de Notícias -->
                 <div class="w-full lg:w-5/12 bg-white rounded-[2rem] shadow-sm border border-gray-200 p-6 md:p-8 flex flex-col h-[750px]">
                     <div class="flex justify-between items-center mb-8 border-b border-gray-100 pb-4">
                         <h3 class="text-2xl font-black text-gray-800 tracking-tight">Publicações</h3>
@@ -490,17 +490,13 @@
                             <i class="fa-solid fa-plus"></i> Nova
                         </button>
                     </div>
-                    <div id="lista-admin-noticias" class="overflow-y-auto pr-3 space-y-3 flex-grow custom-scrollbar">
-                        <!-- Injetado via JS -->
-                    </div>
+                    <div id="lista-admin-noticias" class="overflow-y-auto pr-3 space-y-3 flex-grow custom-scrollbar"></div>
                 </div>
 
-                <!-- Coluna do Formulário de Notícias -->
                 <div class="w-full lg:w-7/12 bg-white rounded-[2rem] shadow-sm border border-gray-200 p-6 md:p-8 flex flex-col h-[750px]">
                     <h3 id="admin-titulo-editor-noticias" class="text-2xl font-black text-gray-800 mb-8 border-b border-gray-100 pb-4 tracking-tight text-pref-blue">
                         <i class="fa-solid fa-pen-to-square"></i> Editar Notícia
                     </h3>
-                    
                     <div id="admin-form-error-noticias" class="hidden mb-6 text-red-600 text-sm font-bold bg-red-50 p-4 rounded-xl border border-red-100"><i class="fa-solid fa-triangle-exclamation mr-2"></i> Erro ao salvar. Verifique sua conexão.</div>
                     <div id="admin-form-success-noticias" class="hidden mb-6 text-green-600 text-sm font-bold bg-green-50 p-4 rounded-xl border border-green-100"><i class="fa-solid fa-check-circle mr-2"></i> Notícia salva com sucesso!</div>
 
@@ -561,9 +557,8 @@
                 </div>
             </div>
 
-            <!-- SEÇÃO DE SERVIÇOS SEPARADA -->
+            <!-- SEÇÃO DE SERVIÇOS -->
             <div id="admin-secao-servicos" class="container mx-auto px-4 py-8 flex-col lg:flex-row gap-8 max-w-7xl flex-grow hidden">
-                <!-- Coluna da Lista de Serviços -->
                 <div class="w-full lg:w-5/12 bg-white rounded-[2rem] shadow-sm border border-gray-200 p-6 md:p-8 flex flex-col h-[750px]">
                     <div class="flex justify-between items-center mb-8 border-b border-gray-100 pb-4">
                         <h3 class="text-2xl font-black text-gray-800 tracking-tight">Serviços Ativos</h3>
@@ -571,17 +566,13 @@
                             <i class="fa-solid fa-plus"></i> Novo
                         </button>
                     </div>
-                    <div id="lista-admin-servicos" class="overflow-y-auto pr-3 space-y-3 flex-grow custom-scrollbar">
-                        <!-- Injetado via JS -->
-                    </div>
+                    <div id="lista-admin-servicos" class="overflow-y-auto pr-3 space-y-3 flex-grow custom-scrollbar"></div>
                 </div>
 
-                <!-- Coluna do Formulário de Serviços -->
                 <div class="w-full lg:w-7/12 bg-white rounded-[2rem] shadow-sm border border-gray-200 p-6 md:p-8 flex flex-col h-[750px]">
                     <h3 id="admin-titulo-editor-servicos" class="text-2xl font-black text-gray-800 mb-8 border-b border-gray-100 pb-4 tracking-tight text-pref-blue">
                         <i class="fa-solid fa-pen-to-square"></i> Editar Serviço
                     </h3>
-                    
                     <div id="admin-form-error-servicos" class="hidden mb-6 text-red-600 text-sm font-bold bg-red-50 p-4 rounded-xl border border-red-100"><i class="fa-solid fa-triangle-exclamation mr-2"></i> Erro ao salvar serviço.</div>
                     <div id="admin-form-success-servicos" class="hidden mb-6 text-green-600 text-sm font-bold bg-green-50 p-4 rounded-xl border border-green-100"><i class="fa-solid fa-check-circle mr-2"></i> Serviço salvo com sucesso!</div>
 
@@ -589,8 +580,8 @@
                         <input type="hidden" id="admin-servico-id">
                         <div>
                             <label class="block text-sm font-black text-gray-700 mb-1.5">Título do Serviço</label>
-                            <input type="text" id="admin-servico-titulo" required placeholder="Ex: Emissão de IPTU" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
-                            <p class="text-[11px] mt-1.5 text-pref-blue font-bold"><i class="fa-solid fa-circle-info mr-1"></i> Dica: O sistema ativa as funções exclusivas (Boleto, Tabela, etc) se o título contiver palavras-chave como "IPTU", "Ouvidoria", "Servidor" ou "Licitações".</p>
+                            <input type="text" id="admin-servico-titulo" required placeholder="Ex: Impostos Municipais" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
+                            <p class="text-[11px] mt-1.5 text-pref-blue font-bold"><i class="fa-solid fa-circle-info mr-1"></i> Dica: O sistema ativa as funções exclusivas (Boleto, Tabela, etc) se o título contiver palavras-chave como "Imposto", "IPTU", "Ouvidoria", "Saúde", "Transparência", "Licitações".</p>
                         </div>
                         <div>
                             <label class="block text-sm font-black text-gray-700 mb-1.5">Ícone FontAwesome (Sem o fa-solid)</label>
@@ -613,9 +604,8 @@
                 </div>
             </div>
             
-            <!-- SEÇÃO DE CIDADÃOS E IMPOSTOS SEPARADA -->
+            <!-- SEÇÃO DE CIDADÃOS E IMPOSTOS -->
             <div id="admin-secao-cidadaos" class="container mx-auto px-4 py-8 flex-col lg:flex-row gap-8 max-w-7xl flex-grow hidden">
-                <!-- Coluna da Lista de Cidadãos -->
                 <div class="w-full lg:w-4/12 bg-white rounded-[2rem] shadow-sm border border-gray-200 p-6 md:p-8 flex flex-col h-[750px]">
                     <div class="flex justify-between items-center mb-6 border-b border-gray-100 pb-4">
                         <h3 class="text-2xl font-black text-gray-800 tracking-tight">Moradores</h3>
@@ -624,12 +614,9 @@
                         <input type="text" id="busca-cidadao" onkeyup="filtrarCidadaosAdmin()" placeholder="Buscar por nome ou CPF..." class="w-full px-4 py-2.5 pl-10 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium text-sm">
                         <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-gray-400"></i>
                     </div>
-                    <div id="lista-admin-cidadaos" class="overflow-y-auto pr-3 space-y-3 flex-grow custom-scrollbar">
-                        <!-- Injetado via JS -->
-                    </div>
+                    <div id="lista-admin-cidadaos" class="overflow-y-auto pr-3 space-y-3 flex-grow custom-scrollbar"></div>
                 </div>
 
-                <!-- Coluna do Perfil e Impostos do Cidadão -->
                 <div class="w-full lg:w-8/12 bg-white rounded-[2rem] shadow-sm border border-gray-200 p-6 md:p-8 flex flex-col h-[750px] overflow-hidden relative">
                     <div id="admin-aviso-selecione-cidadao" class="absolute inset-0 z-10 bg-white/90 backdrop-blur-sm flex flex-col items-center justify-center text-center p-8">
                         <div class="w-24 h-24 bg-blue-50 text-pref-blue rounded-full flex items-center justify-center text-4xl mb-4"><i class="fa-solid fa-hand-pointer"></i></div>
@@ -648,7 +635,6 @@
                     </div>
                     
                     <div class="flex-grow overflow-y-auto pr-3 custom-scrollbar space-y-8">
-                        <!-- Informações Cadastrais -->
                         <div>
                             <h4 class="font-black text-gray-700 text-sm uppercase tracking-widest mb-4 flex items-center gap-2"><i class="fa-solid fa-address-card text-pref-blue"></i> Dados Cadastrais</h4>
                             <div class="bg-gray-50 p-5 rounded-2xl border border-gray-100 grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm font-medium">
@@ -659,7 +645,6 @@
                             </div>
                         </div>
 
-                        <!-- Gestão de Impostos -->
                         <div>
                             <div class="flex justify-between items-center mb-4">
                                 <h4 class="font-black text-gray-700 text-sm uppercase tracking-widest flex items-center gap-2"><i class="fa-solid fa-file-invoice-dollar text-pref-blue"></i> Impostos e Taxas</h4>
@@ -668,12 +653,8 @@
                                 </button>
                             </div>
                             
-                            <!-- Lista de impostos do morador -->
-                            <div id="admin-lista-impostos-cidadao" class="space-y-3 mb-6">
-                                <!-- Injetado via JS -->
-                            </div>
+                            <div id="admin-lista-impostos-cidadao" class="space-y-3 mb-6"></div>
 
-                            <!-- Formulário para adicionar novo imposto -->
                             <div class="bg-blue-50/50 p-5 rounded-2xl border border-blue-100">
                                 <h5 class="font-bold text-pref-blue mb-4 text-sm"><i class="fa-solid fa-plus-circle mr-1"></i> Adicionar Lançamento Manual</h5>
                                 <form id="form-admin-imposto" onsubmit="event.preventDefault(); salvarImpostoAdmin();" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -694,6 +675,19 @@
                                 </form>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NOVA SEÇÃO: OUVIDORIA DO ADMIN -->
+            <div id="admin-secao-ouvidoria" class="container mx-auto px-4 py-8 flex-col max-w-7xl flex-grow hidden">
+                <div class="bg-white rounded-[2rem] shadow-sm border border-gray-200 p-6 md:p-8 flex flex-col h-[750px] w-full">
+                    <div class="flex justify-between items-center mb-8 border-b border-gray-100 pb-4">
+                        <h3 class="text-2xl font-black text-gray-800 tracking-tight">Caixa de Entrada da Ouvidoria</h3>
+                    </div>
+                    
+                    <div class="flex-grow overflow-y-auto pr-3 space-y-4 custom-scrollbar" id="lista-admin-ouvidoria">
+                        <!-- Carregado via JS -->
                     </div>
                 </div>
             </div>
@@ -787,15 +781,17 @@
         // ESTADOS GLOBAIS
         let bancoDeNoticias = {};
         let bancoDeServicos = {};
-        let bancoDeCidadaos = {}; // Novo banco para gerenciar os cidadãos
-        let bancoDeImpostos = {}; // Novo banco para gerenciar impostos
+        let bancoDeCidadaos = {}; 
+        let bancoDeImpostos = {}; 
+        let bancoDeOuvidoria = {}; 
+        let bancoDeSaude = {}; 
         
         let isAdminView = false;
         let adminAbaAtiva = 'noticias';
         let itemParaExcluir = { id: null, tipo: null };
         let currentArticleId = null;
         let currentServiceId = null;
-        let currentAdminCidadaoId = null; // Cidadão selecionado no painel admin
+        let currentAdminCidadaoId = null; 
 
         // ESTADOS DE AUTENTICAÇÃO
         let currentUser = null;
@@ -804,7 +800,6 @@
         let cidadaoPerfil = null;
         let isModoCadastroCidadao = false; 
 
-        // UTILITÁRIO: Formatação estilo WhatsApp
         window.formatarTextoParaHTML = function(texto) {
             if (!texto) return '';
             if (texto.includes('<p>') || texto.includes('<b>') || texto.includes('<br>')) return texto;
@@ -853,35 +848,27 @@
             
             } else if (hash.startsWith('servico/')) {
                 currentServiceId = hash.split('/')[1];
-                
-                // SISTEMA DE TRAVA DE SERVIÇOS
                 if (!isCidadaoLogado) {
                     alert("Acesso Negado. Faça login no Portal do Cidadão para usar os sistemas da prefeitura.");
                     window.location.hash = 'cidadao';
                     return;
                 }
-                
                 document.getElementById('view-servico').classList.remove('hidden'); document.getElementById('view-servico').classList.add('flex');
                 renderizarServicoAberto();
 
             } else if (hash === 'cidadao') {
                 if (isCidadaoLogado && cidadaoPerfil) {
                     document.getElementById('view-cidadao-dashboard').classList.remove('hidden'); document.getElementById('view-cidadao-dashboard').classList.add('flex');
-                    
                     document.getElementById('dash-cidadao-nome').innerText = cidadaoPerfil.nome;
                     document.getElementById('dash-cidadao-cpf').innerText = cidadaoPerfil.cpfVirtual;
-                    
                     if(document.getElementById('perfil-nome-view')) document.getElementById('perfil-nome-view').innerText = cidadaoPerfil.nome;
                     if(document.getElementById('perfil-email-view')) document.getElementById('perfil-email-view').innerText = cidadaoPerfil.email;
                     if(document.getElementById('perfil-cpf-view')) document.getElementById('perfil-cpf-view').innerText = cidadaoPerfil.cpfVirtual;
-                    
-                    // Preenche o formulário de edição do perfil
                     if(document.getElementById('perfil-nome-edit')) document.getElementById('perfil-nome-edit').value = cidadaoPerfil.nome || '';
                     if(document.getElementById('perfil-email-edit')) document.getElementById('perfil-email-edit').value = cidadaoPerfil.email || '';
                     if(document.getElementById('perfil-rg-edit')) document.getElementById('perfil-rg-edit').value = cidadaoPerfil.rg || '';
                     if(document.getElementById('perfil-telefone-edit')) document.getElementById('perfil-telefone-edit').value = cidadaoPerfil.telefone || '';
                     if(document.getElementById('perfil-endereco-edit')) document.getElementById('perfil-endereco-edit').value = cidadaoPerfil.endereco || '';
-
                     if(typeof mudarAbaCidadao === 'function') mudarAbaCidadao('servicos'); 
                     renderizarServicosCidadaoDashboard();
                 } else {
@@ -892,7 +879,7 @@
                 isAdminView = true;
                 if (isGestorAdmin) {
                     document.getElementById('view-admin-dashboard').classList.remove('hidden'); document.getElementById('view-admin-dashboard').classList.add('flex');
-                    renderizarListasAdmin(); // Atualizado para nova separação
+                    renderizarListasAdmin();
                 } else {
                     document.getElementById('view-admin-login').classList.remove('hidden'); document.getElementById('view-admin-login').classList.add('flex');
                 }
@@ -902,102 +889,89 @@
         }
         window.addEventListener('hashchange', handleHashChange);
 
-        // INICIALIZAÇÃO FIREBASE (Banco de Dados Tempo Real)
-        let unsubNoticias, unsubServicos, unsubCidadaos, unsubImpostos;
+        let unsubNoticias, unsubServicos, unsubCidadaos, unsubImpostos, unsubOuvidoria, unsubSaude;
 
         function iniciarBancoDeDados() {
-            if (!auth.currentUser) return; // Segurança dupla
+            if (!auth.currentUser) return; 
             
-            // Limpa ouvintes antigos caso existam para forçar uma nova chamada com as permissões atualizadas
-            if (unsubNoticias) unsubNoticias();
-            if (unsubServicos) unsubServicos();
-            if (unsubCidadaos) unsubCidadaos();
-            if (unsubImpostos) unsubImpostos();
+            if (unsubNoticias) unsubNoticias(); if (unsubServicos) unsubServicos();
+            if (unsubCidadaos) unsubCidadaos(); if (unsubImpostos) unsubImpostos();
+            if (unsubOuvidoria) unsubOuvidoria(); if (unsubSaude) unsubSaude();
 
             const noticiasRef = collection(db, 'artifacts', appId, 'public', 'data', 'noticias');
             const servicosRef = collection(db, 'artifacts', appId, 'public', 'data', 'servicos');
             const cidadaosRef = collection(db, 'artifacts', appId, 'public', 'data', 'cidadaos');
             const impostosRef = collection(db, 'artifacts', appId, 'public', 'data', 'impostos');
+            const ouvidoriaRef = collection(db, 'artifacts', appId, 'public', 'data', 'ouvidoria');
+            const saudeRef = collection(db, 'artifacts', appId, 'public', 'data', 'saude');
 
             unsubNoticias = onSnapshot(noticiasRef, (snap) => {
-                bancoDeNoticias = {};
-                snap.forEach(d => bancoDeNoticias[d.id] = { id: d.id, ...d.data() });
+                bancoDeNoticias = {}; snap.forEach(d => bancoDeNoticias[d.id] = { id: d.id, ...d.data() });
                 renderizarNoticiasHome(); 
                 if (window.location.hash === '#todas-noticias') renderizarGradeTodasNoticias(); 
                 if (window.location.hash.startsWith('#noticia/')) renderizarNoticiaAberta(); 
                 if (isAdminView) renderListaNoticiasAdmin();
-            }, (error) => console.error("Erro Notícias:", error));
+            });
 
             unsubServicos = onSnapshot(servicosRef, (snap) => {
-                bancoDeServicos = {};
-                snap.forEach(d => bancoDeServicos[d.id] = { id: d.id, ...d.data() });
+                bancoDeServicos = {}; snap.forEach(d => bancoDeServicos[d.id] = { id: d.id, ...d.data() });
                 renderizarServicosHome(); 
                 if (window.location.hash === '#cidadao' && isCidadaoLogado) renderizarServicosCidadaoDashboard(); 
                 if (isAdminView) renderListaServicosAdmin();
-            }, (error) => console.error("Erro Serviços:", error));
+            });
             
             unsubCidadaos = onSnapshot(cidadaosRef, (snap) => {
-                bancoDeCidadaos = {};
-                snap.forEach(d => bancoDeCidadaos[d.id] = { id: d.id, ...d.data() });
+                bancoDeCidadaos = {}; snap.forEach(d => bancoDeCidadaos[d.id] = { id: d.id, ...d.data() });
                 if (isAdminView && adminAbaAtiva === 'cidadaos') renderListaCidadaosAdmin();
-            }, (error) => console.error("Erro Cidadãos:", error));
+            });
 
             unsubImpostos = onSnapshot(impostosRef, (snap) => {
-                bancoDeImpostos = {};
-                snap.forEach(d => bancoDeImpostos[d.id] = { id: d.id, ...d.data() });
+                bancoDeImpostos = {}; snap.forEach(d => bancoDeImpostos[d.id] = { id: d.id, ...d.data() });
                 if (isAdminView && adminAbaAtiva === 'cidadaos' && currentAdminCidadaoId) renderImpostosCidadaoAdmin();
-            }, (error) => console.error("Erro Impostos:", error));
+            });
+
+            unsubOuvidoria = onSnapshot(ouvidoriaRef, (snap) => {
+                bancoDeOuvidoria = {}; snap.forEach(d => bancoDeOuvidoria[d.id] = { id: d.id, ...d.data() });
+                if (isAdminView && adminAbaAtiva === 'ouvidoria') renderListaOuvidoriaAdmin();
+            });
+            
+            unsubSaude = onSnapshot(saudeRef, (snap) => {
+                bancoDeSaude = {}; snap.forEach(d => bancoDeSaude[d.id] = { id: d.id, ...d.data() });
+            });
         }
 
-        // MONITORES DE AUTENTICAÇÃO
         onAuthStateChanged(auth, async (user) => {
             if (!user) {
                 try {
-                    // Resolve token silencioso primeiro para evitar falha de permissão no onSnapshot
-                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                        await signInWithCustomToken(auth, __initial_auth_token);
-                    } else {
-                        await signInAnonymously(auth);
-                    }
+                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) { await signInWithCustomToken(auth, __initial_auth_token); } 
+                    else { await signInAnonymously(auth); }
                 } catch (e) { console.error("Erro auth inicial:", e); }
-                return; // O próximo evento onAuthStateChanged trará o usuário logado
+                return;
             }
 
             currentUser = user;
-            
-            // Sempre reiniciamos o banco de dados quando ocorre alteração no usuário (logins, logouts, etc)
             iniciarBancoDeDados();
 
             if (user && !user.isAnonymous) {
                 if (user.email === 'jeosouzazouza@gmail.com') {
-                    isGestorAdmin = true;
-                    isCidadaoLogado = false;
-                    cidadaoPerfil = null;
+                    isGestorAdmin = true; isCidadaoLogado = false; cidadaoPerfil = null;
                 } else {
-                    isGestorAdmin = false;
-                    isCidadaoLogado = true;
+                    isGestorAdmin = false; isCidadaoLogado = true;
                     try {
                         const docSnap = await getDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'perfil', 'dados'));
-                        if (docSnap.exists()) cidadaoPerfil = docSnap.data();
-                        else if (!cidadaoPerfil) isCidadaoLogado = false;
-                    } catch(e) { console.error("Erro perfil:", e); }
+                        if (docSnap.exists()) cidadaoPerfil = docSnap.data(); else if (!cidadaoPerfil) isCidadaoLogado = false;
+                    } catch(e) {}
                 }
-                
                 document.getElementById('btn-header-cidadao').innerHTML = isCidadaoLogado ? `<i class="fa-solid fa-circle-user text-lg text-green-500"></i> <span>Meu Painel</span>` : `<i class="fa-regular fa-id-card text-lg"></i> <span>Acesso Cidadão</span>`;
             } else {
-                isGestorAdmin = false;
-                isCidadaoLogado = false;
-                cidadaoPerfil = null;
+                isGestorAdmin = false; isCidadaoLogado = false; cidadaoPerfil = null;
                 document.getElementById('btn-header-cidadao').innerHTML = `<i class="fa-regular fa-id-card text-lg"></i> <span>Acesso Cidadão</span>`;
             }
-            
             handleHashChange();
         });
 
-        // RENDERIZADORES PÚBLICOS BÁSICOS
         function renderizarServicosHome() {
-            const container = document.getElementById('servicos-grid-home');
-            if (!container) return;
+            const container = document.getElementById('servicos-grid-home'); if (!container) return;
             const arr = Object.values(bancoDeServicos).sort((a,b) => b.ordem - a.ordem);
             if(arr.length === 0) { container.innerHTML = '<div class="col-span-full text-center text-gray-500">Nenhum serviço disponível no momento.</div>'; return; }
             
@@ -1011,16 +985,13 @@
         }
 
         function renderizarNoticiasHome() {
-            const container = document.getElementById('noticias-grid-home');
-            if (!container) return;
+            const container = document.getElementById('noticias-grid-home'); if (!container) return;
             const arr = Object.values(bancoDeNoticias).sort((a, b) => b.ordem - a.ordem);
             if (arr.length === 0) { container.innerHTML = '<div class="text-gray-500 py-12">Nenhuma notícia.</div>'; return; }
 
-            const princ = arr[0];
-            const sec = arr.slice(1, 4);
+            const princ = arr[0]; const sec = arr.slice(1, 4);
             
-            let html = `<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 w-full">`;
-            html += `
+            let html = `<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 w-full">
                 <article onclick="window.location.hash='noticia/${princ.id}'" class="${sec.length > 0 ? 'lg:col-span-7' : 'lg:col-span-12'} bg-gray-900 rounded-[2rem] overflow-hidden shadow-lg hover:shadow-xl group cursor-pointer relative block flex flex-col min-h-[400px] sm:min-h-[500px] transition-all duration-300 transform hover:-translate-y-1">
                     <img src="${princ.imagem}" alt="${princ.categoria}" class="w-full h-full object-cover absolute inset-0 opacity-80 group-hover:scale-105 transition-transform duration-700">
                     <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/60 to-transparent"></div>
@@ -1053,71 +1024,62 @@
         }
 
         function renderizarGradeTodasNoticias() {
-            const grid = document.getElementById('grid-todas-noticias');
-            grid.innerHTML = '';
+            const grid = document.getElementById('grid-todas-noticias'); grid.innerHTML = '';
             Object.values(bancoDeNoticias).sort((a, b) => b.ordem - a.ordem).forEach(n => {
                 grid.innerHTML += `
                     <article onclick="window.location.hash='noticia/${n.id}'" class="bg-white rounded-[2rem] overflow-hidden shadow-sm hover:shadow-xl transition-all cursor-pointer border border-gray-100 flex flex-col h-full group transform hover:-translate-y-2">
-                        <div class="h-48 sm:h-56 w-full relative bg-gray-100 overflow-hidden">
-                            <img src="${n.imagem}" alt="${n.categoria}" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700">
-                            <div class="absolute top-4 left-4 bg-pref-yellow text-pref-darkblue text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest shadow-md">${n.categoria}</div>
-                        </div>
-                        <div class="p-6 sm:p-8 flex flex-col flex-grow">
-                            <h4 class="text-lg sm:text-xl font-black text-gray-800 mb-4 leading-snug group-hover:text-pref-blue transition-colors line-clamp-3">${n.titulo}</h4>
-                            <p class="text-gray-500 text-xs sm:text-sm font-bold mt-auto border-t border-gray-100 pt-4 flex items-center"><i class="fa-regular fa-calendar mr-2 text-pref-blue"></i> ${n.data}</p>
-                        </div>
-                    </article>
-                `;
+                        <div class="h-48 sm:h-56 w-full relative bg-gray-100 overflow-hidden"><img src="${n.imagem}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"><div class="absolute top-4 left-4 bg-pref-yellow text-pref-darkblue text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest shadow-md">${n.categoria}</div></div>
+                        <div class="p-6 sm:p-8 flex flex-col flex-grow"><h4 class="text-lg sm:text-xl font-black text-gray-800 mb-4 line-clamp-3 group-hover:text-pref-blue transition-colors">${n.titulo}</h4><p class="text-gray-500 text-xs sm:text-sm font-bold mt-auto border-t border-gray-100 pt-4"><i class="fa-regular fa-calendar mr-2 text-pref-blue"></i> ${n.data}</p></div>
+                    </article>`;
             });
         }
 
         function renderizarNoticiaAberta() {
-            if(!currentArticleId) return;
-            const n = bancoDeNoticias[currentArticleId];
-            if(!n) return;
-            document.getElementById('noticia-imagem').src = n.imagem;
-            document.getElementById('noticia-categoria').innerText = n.categoria;
-            document.getElementById('noticia-titulo').innerText = n.titulo;
-            document.getElementById('noticia-data').innerText = n.data;
-            document.getElementById('noticia-conteudo').innerHTML = formatarTextoParaHTML(n.conteudo);
+            if(!currentArticleId) return; const n = bancoDeNoticias[currentArticleId]; if(!n) return;
+            document.getElementById('noticia-imagem').src = n.imagem; document.getElementById('noticia-categoria').innerText = n.categoria; document.getElementById('noticia-titulo').innerText = n.titulo; document.getElementById('noticia-data').innerText = n.data; document.getElementById('noticia-conteudo').innerHTML = formatarTextoParaHTML(n.conteudo);
         }
 
         function renderizarServicoAberto() {
-            if(!currentServiceId) return;
-            const s = bancoDeServicos[currentServiceId];
-            if(!s) return;
+            if(!currentServiceId) return; const s = bancoDeServicos[currentServiceId]; if(!s) return;
+            document.getElementById('servico-icone-render').className = 'fa-solid fa-' + s.icone.replace('fa-',''); document.getElementById('servico-titulo').innerText = s.titulo; document.getElementById('servico-desc').innerText = s.descricao;
+            document.getElementById('servico-usuario-nome').innerText = cidadaoPerfil ? cidadaoPerfil.nome : "Desconhecido"; document.getElementById('servico-usuario-cpf').innerText = cidadaoPerfil ? cidadaoPerfil.cpfVirtual : "---";
             
-            document.getElementById('servico-icone-render').className = 'fa-solid fa-' + s.icone.replace('fa-','');
-            document.getElementById('servico-titulo').innerText = s.titulo;
-            document.getElementById('servico-desc').innerText = s.descricao;
-            
-            document.getElementById('servico-usuario-nome').innerText = cidadaoPerfil ? cidadaoPerfil.nome : "Desconhecido";
-            document.getElementById('servico-usuario-cpf').innerText = cidadaoPerfil ? cidadaoPerfil.cpfVirtual : "---";
-            
-            const area = document.getElementById('servico-conteudo-dinamico');
-            const tituloLower = s.titulo.toLowerCase();
+            const area = document.getElementById('servico-conteudo-dinamico'); const tituloLower = s.titulo.toLowerCase();
 
-            // Identifica qual o tipo do serviço para carregar o aplicativo HTML correto
-            if (tituloLower.includes('iptu')) {
-                area.innerHTML = renderAppIPTU();
-            } else if (tituloLower.includes('ouvidoria') || tituloLower.includes('denúncia')) {
+            if (tituloLower.includes('imposto') || tituloLower.includes('iptu') || tituloLower.includes('taxa')) {
+                area.innerHTML = renderAppImpostos();
+            } else if (tituloLower.includes('ouvidoria') || tituloLower.includes('denúncia') || tituloLower.includes('reclamação')) {
                 area.innerHTML = renderAppOuvidoria();
+            } else if (tituloLower.includes('saúde') || tituloLower.includes('agendamento') || tituloLower.includes('consulta')) {
+                area.innerHTML = renderAppSaude();
+            } else if (tituloLower.includes('transparência') || tituloLower.includes('portal') || tituloLower.includes('contas')) {
+                area.innerHTML = renderAppTransparencia();
+            } else if (tituloLower.includes('licitaç') || tituloLower.includes('edital') || tituloLower.includes('pregão')) {
+                area.innerHTML = renderAppLicitacoes();
             } else if (tituloLower.includes('servidor') || tituloLower.includes('contracheque')) {
                 area.innerHTML = renderAppServidor();
-            } else if (tituloLower.includes('licitaç') || tituloLower.includes('edital')) {
-                area.innerHTML = renderAppLicitacoes();
             } else {
                 area.innerHTML = renderAppProtocoloGenerico();
             }
         }
 
-        // APPS DE SERVIÇOS PÚBLICOS
-        function renderAppIPTU() {
-            // Em vez de perguntar a inscrição, vamos buscar os impostos reais do cidadão logado no banco de dados!
+        // 1. APP: IMPOSTOS (Renomeado e Expandido)
+        function renderAppImpostos() {
             const impostosDoCidadao = Object.values(bancoDeImpostos).filter(i => i.cpfCidadao === cidadaoPerfil.cpfVirtual);
             
+            let headerExtra = `
+                <div class="flex gap-3 mb-6 bg-blue-50 p-2 rounded-xl">
+                    <button onclick="alert('Gerando Certidão Negativa de Débitos...')" class="flex-1 bg-white text-pref-blue font-bold py-2.5 rounded-lg border border-blue-200 hover:bg-pref-blue hover:text-white transition-colors text-sm shadow-sm flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-file-certificate"></i> Emitir CND
+                    </button>
+                    <button onclick="alert('Redirecionando para formulário de Isenção...')" class="flex-1 bg-white text-pref-blue font-bold py-2.5 rounded-lg border border-blue-200 hover:bg-pref-blue hover:text-white transition-colors text-sm shadow-sm flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-hand-holding-heart"></i> Solicitar Isenção
+                    </button>
+                </div>
+            `;
+
             if (impostosDoCidadao.length === 0) {
-                return `
+                return headerExtra + `
                     <div class="text-center py-10">
                         <div class="w-16 h-16 bg-green-50 text-green-500 rounded-full flex items-center justify-center text-3xl mx-auto mb-4"><i class="fa-solid fa-face-smile"></i></div>
                         <h4 class="font-black text-xl text-gray-800 mb-2">Tudo em dia!</h4>
@@ -1158,7 +1120,7 @@
                 `;
             }).join('');
 
-            return `
+            return headerExtra + `
                 <div class="space-y-4">
                     <p class="text-sm text-gray-600 font-medium mb-4">Abaixo estão listados os impostos e taxas vinculados ao seu cadastro municipal.</p>
                     ${htmlImpostos}
@@ -1167,72 +1129,28 @@
         }
         
         window.gerarPDFBoleto = function(idImposto) {
-            const imposto = bancoDeImpostos[idImposto];
-            if(!imposto || !cidadaoPerfil) return;
+            const imposto = bancoDeImpostos[idImposto]; if(!imposto || !cidadaoPerfil) return;
+            const { jsPDF } = window.jspdf; const doc = new jsPDF();
             
-            // Instanciar jsPDF
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
+            doc.setFillColor(0, 45, 107); doc.rect(0, 0, 210, 30, 'F');
+            doc.setTextColor(255, 255, 255); doc.setFontSize(16); doc.setFont('helvetica', 'bold'); doc.text("PREFEITURA MUNICIPAL DE RABO SECO", 105, 15, { align: 'center' });
+            doc.setFontSize(10); doc.text("Documento de Arrecadação Municipal - DAM", 105, 22, { align: 'center' });
+            doc.setTextColor(50, 50, 50); doc.setFontSize(12); doc.text("DADOS DO CONTRIBUINTE", 15, 45); doc.line(15, 47, 195, 47);
+            doc.setFontSize(10); doc.setFont('helvetica', 'normal');
+            doc.text(`Nome: ${cidadaoPerfil.nome}`, 15, 55); doc.text(`CPF Virtual: ${cidadaoPerfil.cpfVirtual}`, 15, 62); doc.text(`Endereço: ${cidadaoPerfil.endereco || 'Não informado no cadastro'}`, 15, 69);
+            doc.setFontSize(12); doc.setFont('helvetica', 'bold'); doc.text("DADOS DA COBRANÇA", 15, 85); doc.line(15, 87, 195, 87);
             
-            // Layout do Boleto/DAM
-            doc.setFillColor(0, 45, 107); // pref-darkblue
-            doc.rect(0, 0, 210, 30, 'F');
-            
-            doc.setTextColor(255, 255, 255);
-            doc.setFontSize(16);
-            doc.setFont('helvetica', 'bold');
-            doc.text("PREFEITURA MUNICIPAL DE RABO SECO", 105, 15, { align: 'center' });
-            doc.setFontSize(10);
-            doc.text("Documento de Arrecadação Municipal - DAM", 105, 22, { align: 'center' });
-            
-            doc.setTextColor(50, 50, 50);
-            doc.setFontSize(12);
-            doc.text("DADOS DO CONTRIBUINTE", 15, 45);
-            doc.line(15, 47, 195, 47); // Linha divisória
-            
-            doc.setFontSize(10);
-            doc.setFont('helvetica', 'normal');
-            doc.text(`Nome: ${cidadaoPerfil.nome}`, 15, 55);
-            doc.text(`CPF Virtual: ${cidadaoPerfil.cpfVirtual}`, 15, 62);
-            doc.text(`Endereço: ${cidadaoPerfil.endereco || 'Não informado no cadastro'}`, 15, 69);
-            
-            doc.setFontSize(12);
-            doc.setFont('helvetica', 'bold');
-            doc.text("DADOS DA COBRANÇA", 15, 85);
-            doc.line(15, 87, 195, 87);
-            
-            // Tabela com autoTable
-            doc.autoTable({
-                startY: 95,
-                head: [['Descrição do Imposto/Taxa', 'Vencimento', 'Valor (R$)']],
-                body: [
-                    [imposto.titulo, imposto.vencimento, parseFloat(imposto.valor).toFixed(2).replace('.', ',')]
-                ],
-                theme: 'grid',
-                headStyles: { fillColor: [0, 71, 171] } // pref-blue
-            });
-            
+            doc.autoTable({ startY: 95, head: [['Descrição do Imposto/Taxa', 'Vencimento', 'Valor (R$)']], body: [[imposto.titulo, imposto.vencimento, parseFloat(imposto.valor).toFixed(2).replace('.', ',')]], theme: 'grid', headStyles: { fillColor: [0, 71, 171] } });
             const finalY = doc.lastAutoTable.finalY || 120;
             
-            doc.setFontSize(10);
-            doc.setFont('helvetica', 'bold');
-            doc.text("CÓDIGO DE BARRAS PARA PAGAMENTO:", 15, finalY + 15);
-            
-            // Simulando um código de barras visualmente com linhas
-            doc.setLineWidth(0.8);
-            for(let i = 0; i < 50; i++) {
-                if(Math.random() > 0.3) doc.line(15 + (i * 2), finalY + 20, 15 + (i * 2), finalY + 35);
-            }
-            doc.setFontSize(9);
-            doc.setFont('helvetica', 'normal');
-            doc.text("81630000000 45050012345 67890123456 78901234567", 15, finalY + 42);
-            
+            doc.setFontSize(10); doc.setFont('helvetica', 'bold'); doc.text("CÓDIGO DE BARRAS PARA PAGAMENTO:", 15, finalY + 15);
+            doc.setLineWidth(0.8); for(let i = 0; i < 50; i++) { if(Math.random() > 0.3) doc.line(15 + (i * 2), finalY + 20, 15 + (i * 2), finalY + 35); }
+            doc.setFontSize(9); doc.setFont('helvetica', 'normal'); doc.text("81630000000 45050012345 67890123456 78901234567", 15, finalY + 42);
             doc.text("Este é um documento gerado eletronicamente pelo Portal do Cidadão.", 105, 280, { align: 'center' });
-            
-            // Salva o PDF
             doc.save(`Boleto_${imposto.titulo.replace(/\s+/g, '_')}.pdf`);
         };
 
+        // 2. APP: OUVIDORIA
         function renderAppOuvidoria() {
             return `
                 <div id="ouv-step-1" class="space-y-5">
@@ -1246,14 +1164,14 @@
                         </div>
                         <div class="w-full sm:w-1/2">
                             <label class="block text-sm font-black text-gray-700 mb-1.5">Bairro / Localidade</label>
-                            <input type="text" placeholder="Ex: Centro" class="w-full px-4 py-3.5 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
+                            <input type="text" id="ouv-local" placeholder="Ex: Centro" class="w-full px-4 py-3.5 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium">
                         </div>
                     </div>
                     <div>
                         <label class="block text-sm font-black text-gray-700 mb-1.5">Descreva a situação</label>
                         <textarea id="ouv-msg" placeholder="Detalhe sua manifestação com o máximo de informações possíveis..." class="w-full px-4 py-3.5 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors resize-none h-32 font-medium"></textarea>
                     </div>
-                    <button onclick="window.enviarOuvidoria()" class="w-full bg-pref-blue text-white font-black py-4 px-6 rounded-xl hover:bg-pref-darkblue shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 text-lg flex items-center justify-center gap-2">
+                    <button onclick="window.enviarOuvidoria()" id="btn-enviar-ouvidoria" class="w-full bg-pref-blue text-white font-black py-4 px-6 rounded-xl hover:bg-pref-darkblue shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 text-lg flex items-center justify-center gap-2">
                         <i class="fa-solid fa-paper-plane"></i> Protocolar Manifestação
                     </button>
                 </div>
@@ -1268,14 +1186,223 @@
                 </div>
             `;
         }
-        window.enviarOuvidoria = function() {
+        window.enviarOuvidoria = async function() {
+            const tipo = document.getElementById('ouv-tipo').value;
+            const local = document.getElementById('ouv-local').value;
             const msg = document.getElementById('ouv-msg').value;
-            if(!msg || msg.length < 10) return alert('Por favor, escreva uma mensagem detalhada.');
-            document.getElementById('ouv-step-1').classList.add('hidden');
-            document.getElementById('ouv-step-2').classList.remove('hidden');
-            document.getElementById('ouv-res-prot').innerText = 'OUV-' + Math.floor(10000 + Math.random() * 90000);
+            if(!msg || msg.length < 10) return alert('Por favor, escreva uma mensagem detalhada (mínimo 10 caracteres).');
+            
+            const btn = document.getElementById('btn-enviar-ouvidoria');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Enviando...'; btn.disabled = true;
+
+            const protNum = 'OUV-' + Math.floor(10000 + Math.random() * 90000);
+            const docId = `ouv_${Date.now()}`;
+            const isAnonima = tipo === 'Denúncia (Anônima)';
+
+            const data = {
+                id: docId,
+                protocolo: protNum,
+                tipo: tipo,
+                local: local || 'Não informado',
+                mensagem: msg,
+                remetenteNome: isAnonima ? 'Anônimo' : cidadaoPerfil.nome,
+                remetenteCpf: isAnonima ? '***.***.***-**' : cidadaoPerfil.cpfVirtual,
+                dataEnvio: new Date().toLocaleDateString('pt-BR') + ' ' + new Date().toLocaleTimeString('pt-BR'),
+                lida: false
+            };
+
+            try {
+                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'ouvidoria', docId), data);
+                document.getElementById('ouv-step-1').classList.add('hidden');
+                document.getElementById('ouv-step-2').classList.remove('hidden');
+                document.getElementById('ouv-res-prot').innerText = protNum;
+            } catch(e) {
+                alert("Erro ao enviar manifestação. Verifique sua conexão.");
+                btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Protocolar Manifestação'; btn.disabled = false;
+            }
         };
 
+        // 3. APP: SAÚDE (Agendamento Funcional)
+        function renderAppSaude() {
+            return `
+                <div id="saude-step-1" class="space-y-5">
+                    <p class="text-sm text-gray-600 font-medium">Agende sua consulta ou exame na rede municipal de saúde. O comprovante será emitido instantaneamente.</p>
+                    
+                    <div>
+                        <label class="block text-sm font-black text-gray-700 mb-1.5">Unidade de Saúde (Posto)</label>
+                        <select id="saude-unidade" class="w-full px-4 py-3.5 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-bold text-gray-700 bg-white">
+                            <option>UBS Centro</option><option>UBS Bairro Novo</option><option>Hospital Municipal</option><option>Policlínica Regional</option>
+                        </select>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row gap-5">
+                        <div class="w-full sm:w-1/2">
+                            <label class="block text-sm font-black text-gray-700 mb-1.5">Especialidade / Serviço</label>
+                            <select id="saude-esp" class="w-full px-4 py-3.5 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-bold text-gray-700 bg-white">
+                                <option>Clínico Geral</option><option>Pediatria</option><option>Ginecologia</option><option>Odontologia</option><option>Vacinação</option><option>Exame de Sangue</option>
+                            </select>
+                        </div>
+                        <div class="w-full sm:w-1/2">
+                            <label class="block text-sm font-black text-gray-700 mb-1.5">Previsão / Turno</label>
+                            <select id="saude-turno" class="w-full px-4 py-3.5 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-bold text-gray-700 bg-white">
+                                <option>Mais Rápido Possível (Manhã)</option><option>Mais Rápido Possível (Tarde)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button onclick="window.agendarSaude()" id="btn-agendar-saude" class="w-full bg-pref-blue text-white font-black py-4 px-6 rounded-xl hover:bg-pref-darkblue shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 text-lg flex items-center justify-center gap-2 mt-4">
+                        <i class="fa-solid fa-stethoscope"></i> Confirmar Agendamento
+                    </button>
+                </div>
+                
+                <div id="saude-step-2" class="hidden text-left bg-white border border-gray-200 p-6 rounded-2xl shadow-sm mt-4">
+                    <div class="flex items-center gap-3 mb-6 border-b border-gray-100 pb-4">
+                        <div class="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-xl"><i class="fa-solid fa-calendar-check"></i></div>
+                        <div>
+                            <h4 class="text-xl font-black text-gray-800">Agendamento Realizado!</h4>
+                            <p class="text-green-600 font-bold text-xs uppercase">Vaga Garantida</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4 text-sm font-medium mb-6">
+                        <div><span class="text-gray-400 block text-[10px] uppercase font-bold tracking-widest">Paciente</span><span id="saude-res-nome" class="font-bold text-gray-800">...</span></div>
+                        <div><span class="text-gray-400 block text-[10px] uppercase font-bold tracking-widest">Local</span><span id="saude-res-local" class="font-bold text-gray-800">...</span></div>
+                        <div><span class="text-gray-400 block text-[10px] uppercase font-bold tracking-widest">Especialidade</span><span id="saude-res-esp" class="font-bold text-gray-800">...</span></div>
+                        <div><span class="text-gray-400 block text-[10px] uppercase font-bold tracking-widest">Data Sugerida</span><span id="saude-res-data" class="font-bold text-pref-blue bg-blue-50 px-2 py-0.5 rounded">...</span></div>
+                    </div>
+                    
+                    <button onclick="window.print()" class="w-full bg-gray-100 text-gray-700 font-black py-3 rounded-xl hover:bg-gray-200 transition-colors flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-print"></i> Imprimir Guia
+                    </button>
+                </div>
+            `;
+        }
+        window.agendarSaude = async function() {
+            const unidade = document.getElementById('saude-unidade').value;
+            const esp = document.getElementById('saude-esp').value;
+            const turno = document.getElementById('saude-turno').value;
+            const btn = document.getElementById('btn-agendar-saude');
+            
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processando Vaga...'; btn.disabled = true;
+
+            // Gera uma data simulada nos próximos 7 dias
+            const dataConsulta = new Date();
+            dataConsulta.setDate(dataConsulta.getDate() + Math.floor(Math.random() * 7) + 1);
+            const dataStr = dataConsulta.toLocaleDateString('pt-BR') + (turno.includes('Manhã') ? ' às 08:30' : ' às 14:00');
+
+            const docId = `saude_${Date.now()}`;
+            const data = {
+                id: docId, paciente: cidadaoPerfil.nome, cpf: cidadaoPerfil.cpfVirtual, 
+                unidade: unidade, especialidade: esp, dataAgendada: dataStr
+            };
+
+            try {
+                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'saude', docId), data);
+                document.getElementById('saude-step-1').classList.add('hidden');
+                document.getElementById('saude-step-2').classList.remove('hidden');
+                document.getElementById('saude-res-nome').innerText = cidadaoPerfil.nome;
+                document.getElementById('saude-res-local').innerText = unidade;
+                document.getElementById('saude-res-esp').innerText = esp;
+                document.getElementById('saude-res-data').innerText = dataStr;
+            } catch(e) {
+                alert("Erro ao agendar."); btn.innerHTML = '<i class="fa-solid fa-stethoscope"></i> Confirmar Agendamento'; btn.disabled = false;
+            }
+        };
+
+        // 4. APP: PORTAL DA TRANSPARÊNCIA
+        function renderAppTransparencia() {
+            return `
+                <div class="space-y-6">
+                    <p class="text-sm text-gray-600 font-medium text-center mb-6">Acompanhe em tempo real a arrecadação e os gastos da prefeitura. Transparência total com o dinheiro público.</p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="bg-green-50 rounded-2xl p-5 border border-green-200">
+                            <p class="text-xs text-green-700 font-bold uppercase tracking-widest mb-1"><i class="fa-solid fa-arrow-trend-up mr-1"></i> Receitas Acumuladas</p>
+                            <h4 class="text-2xl font-black text-green-800">R$ 14.502.340,00</h4>
+                            <p class="text-[10px] text-green-600 mt-2 font-medium">Referente ao ano atual</p>
+                        </div>
+                        <div class="bg-red-50 rounded-2xl p-5 border border-red-200">
+                            <p class="text-xs text-red-700 font-bold uppercase tracking-widest mb-1"><i class="fa-solid fa-arrow-trend-down mr-1"></i> Despesas Liquidadas</p>
+                            <h4 class="text-2xl font-black text-red-800">R$ 11.230.150,00</h4>
+                            <p class="text-[10px] text-red-600 mt-2 font-medium">Referente ao ano atual</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden mt-6 shadow-sm">
+                        <div class="bg-gray-100 p-4 border-b border-gray-200 flex justify-between items-center">
+                            <h4 class="font-black text-gray-700 text-sm"><i class="fa-solid fa-receipt text-pref-blue mr-2"></i> Últimos Empenhos Pagos</h4>
+                        </div>
+                        <div class="divide-y divide-gray-100">
+                            <div class="p-4 hover:bg-gray-50 flex justify-between items-center">
+                                <div><p class="font-bold text-sm text-gray-800">Construtora Rabo Seco LTDA</p><p class="text-[11px] text-gray-500">Obras de pavimentação asfáltica</p></div>
+                                <span class="font-black text-red-600 text-sm">- R$ 150.000,00</span>
+                            </div>
+                            <div class="p-4 hover:bg-gray-50 flex justify-between items-center">
+                                <div><p class="font-bold text-sm text-gray-800">Distribuidora Médica Sul</p><p class="text-[11px] text-gray-500">Medicamentos para o Hospital Municipal</p></div>
+                                <span class="font-black text-red-600 text-sm">- R$ 45.320,00</span>
+                            </div>
+                            <div class="p-4 hover:bg-gray-50 flex justify-between items-center">
+                                <div><p class="font-bold text-sm text-gray-800">Folha de Pagamento - Servidores</p><p class="text-[11px] text-gray-500">Salários referentes ao mês anterior</p></div>
+                                <span class="font-black text-red-600 text-sm">- R$ 1.200.000,00</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button onclick="alert('Redirecionando para o Portal da Transparência Completo (Portal do TCE)...')" class="w-full bg-white text-pref-blue border-2 border-pref-blue font-black py-3 rounded-xl hover:bg-blue-50 transition-colors flex items-center justify-center gap-2">
+                        Acessar Portal Completo <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </button>
+                </div>
+            `;
+        }
+
+        // 5. APP: LICITAÇÕES
+        function renderAppLicitacoes() {
+            return `
+                <div class="space-y-4">
+                    <p class="text-sm text-gray-600 font-medium mb-4">Acompanhe os processos de compras e contratações do município, garantindo lisura nos processos licitatórios.</p>
+                    
+                    <div class="relative mb-6">
+                        <input type="text" placeholder="Buscar por número do edital ou objeto..." class="w-full px-4 py-3 pl-10 rounded-xl border border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium text-sm bg-gray-50">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-gray-400"></i>
+                    </div>
+
+                    <div class="border border-gray-200 rounded-2xl overflow-hidden bg-white shadow-sm">
+                        <div class="p-5 border-b border-gray-100 hover:bg-blue-50 transition-colors flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+                            <div>
+                                <span class="bg-green-100 text-green-700 text-[10px] font-black uppercase px-2 py-1 rounded tracking-wider border border-green-200">Aberto (Recebendo Propostas)</span>
+                                <h4 class="font-black text-gray-800 mt-2 text-lg">Pregão Eletrônico 05/2026</h4>
+                                <p class="text-xs text-gray-500 mt-1 font-medium max-w-sm">Aquisição de Merenda Escolar para a Rede Municipal de Ensino (Ano Letivo 2026).</p>
+                            </div>
+                            <button onclick="alert('Baixando arquivo ZIP contendo: Edital, Termo de Referência e Anexos.')" class="whitespace-nowrap text-sm bg-pref-blue border border-transparent text-white font-black px-5 py-2.5 rounded-lg hover:bg-pref-darkblue transition-colors shadow-md flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-download"></i> Baixar Edital
+                            </button>
+                        </div>
+                        <div class="p-5 border-b border-gray-100 hover:bg-yellow-50 transition-colors flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+                            <div>
+                                <span class="bg-yellow-100 text-yellow-700 text-[10px] font-black uppercase px-2 py-1 rounded tracking-wider border border-yellow-200">Em Julgamento</span>
+                                <h4 class="font-black text-gray-800 mt-2 text-lg">Tomada de Preços 01/2026</h4>
+                                <p class="text-xs text-gray-500 mt-1 font-medium max-w-sm">Contratação de empresa de engenharia para reforma da Praça Matriz.</p>
+                            </div>
+                            <button onclick="alert('Este processo está em fase de análise de propostas.')" class="whitespace-nowrap text-sm bg-white border border-gray-200 text-gray-500 font-black px-5 py-2.5 rounded-lg hover:bg-gray-100 transition-colors shadow-sm flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-eye"></i> Detalhes
+                            </button>
+                        </div>
+                        <div class="p-5 hover:bg-gray-50 transition-colors flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+                            <div>
+                                <span class="bg-gray-200 text-gray-600 text-[10px] font-black uppercase px-2 py-1 rounded tracking-wider border border-gray-300">Homologado</span>
+                                <h4 class="font-black text-gray-800 mt-2 text-lg">Concorrência Pública 02/2025</h4>
+                                <p class="text-xs text-gray-500 mt-1 font-medium max-w-sm">Pavimentação asfáltica das ruas do Bairro Novo e Centro.</p>
+                            </div>
+                            <button onclick="alert('Baixando Ata de Homologação e Contrato Firmado.')" class="whitespace-nowrap text-sm bg-white border border-gray-200 text-gray-700 font-black px-5 py-2.5 rounded-lg hover:bg-gray-100 transition-colors shadow-sm flex items-center justify-center gap-2">
+                                <i class="fa-regular fa-file-lines"></i> Ver Ata / Contrato
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 6. APP: SERVIDOR E PROTOCOLO GENÉRICO
         function renderAppServidor() {
             return `
                 <div id="servidor-step-1" class="space-y-5">
@@ -1311,38 +1438,9 @@
             `;
         }
         window.acessarServidor = function() {
-            const mat = document.getElementById('servidor-mat').value;
-            if(!mat) return alert('Matrícula inválida.');
-            document.getElementById('servidor-step-1').classList.add('hidden');
-            document.getElementById('servidor-step-2').classList.remove('hidden');
+            const mat = document.getElementById('servidor-mat').value; if(!mat) return alert('Matrícula inválida.');
+            document.getElementById('servidor-step-1').classList.add('hidden'); document.getElementById('servidor-step-2').classList.remove('hidden');
         };
-
-        function renderAppLicitacoes() {
-            return `
-                <div class="space-y-4">
-                    <p class="text-sm text-gray-600 font-medium mb-6">Acompanhe os processos de compras e contratações do município em tempo real, garantindo total transparência com o dinheiro público.</p>
-                    
-                    <div class="border border-gray-200 rounded-2xl overflow-hidden bg-white">
-                        <div class="p-4 border-b border-gray-100 hover:bg-gray-50 flex flex-col sm:flex-row justify-between sm:items-center gap-3">
-                            <div>
-                                <span class="bg-green-100 text-green-700 text-[10px] font-black uppercase px-2 py-1 rounded tracking-wider">Edital Aberto</span>
-                                <h4 class="font-bold text-gray-800 mt-1">Pregão Eletrônico 05/2026</h4>
-                                <p class="text-xs text-gray-500 mt-1">Aquisição de Merenda Escolar para a Rede Municipal.</p>
-                            </div>
-                            <button onclick="alert('Baixando ZIP com o Edital e anexos...')" class="whitespace-nowrap text-sm bg-white border border-gray-200 text-pref-blue font-bold px-4 py-2 rounded-lg hover:bg-blue-50 transition-colors shadow-sm"><i class="fa-solid fa-download mr-1"></i> Baixar Edital</button>
-                        </div>
-                        <div class="p-4 hover:bg-gray-50 flex flex-col sm:flex-row justify-between sm:items-center gap-3">
-                            <div>
-                                <span class="bg-gray-100 text-gray-600 text-[10px] font-black uppercase px-2 py-1 rounded tracking-wider">Homologado</span>
-                                <h4 class="font-bold text-gray-800 mt-1">Concorrência Pública 02/2026</h4>
-                                <p class="text-xs text-gray-500 mt-1">Pavimentação asfáltica do Bairro Novo.</p>
-                            </div>
-                            <button onclick="alert('Baixando Ata de Homologação...')" class="whitespace-nowrap text-sm bg-white border border-gray-200 text-gray-600 font-bold px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors shadow-sm"><i class="fa-regular fa-file-lines mr-1"></i> Ver Ata</button>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
 
         function renderAppProtocoloGenerico() {
             return `
@@ -1354,199 +1452,89 @@
                 </div>
                 
                 <div id="box-servico-resultado" class="hidden mt-6 bg-green-50 p-6 rounded-2xl border border-green-200">
-                    <div class="flex items-center gap-3 mb-4 text-green-700">
-                        <i class="fa-solid fa-circle-check text-2xl"></i>
-                        <h4 class="font-black text-lg">Protocolo Gerado com Sucesso!</h4>
-                    </div>
+                    <div class="flex items-center gap-3 mb-4 text-green-700"><i class="fa-solid fa-circle-check text-2xl"></i><h4 class="font-black text-lg">Protocolo Gerado com Sucesso!</h4></div>
                     <p class="text-sm text-green-800 mb-4 font-medium">Sua solicitação foi registrada no banco de dados da prefeitura e enviada ao setor responsável.</p>
-                    <div class="bg-white p-4 rounded-xl border border-green-100 mb-5 font-mono text-center font-bold text-lg tracking-wider text-gray-800 shadow-sm">
-                        PTR-<span id="num-protocolo">...</span>
-                    </div>
+                    <div class="bg-white p-4 rounded-xl border border-green-100 mb-5 font-mono text-center font-bold text-lg tracking-wider text-gray-800 shadow-sm">PTR-<span id="num-protocolo">...</span></div>
                     <div class="flex gap-3">
-                        <button onclick="window.print()" class="flex-1 bg-white border-2 border-gray-200 text-gray-700 font-bold py-3 rounded-xl hover:bg-gray-50 transition-colors flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-print"></i> Imprimir
-                        </button>
-                        <button onclick="alert('Uma cópia do protocolo foi enviada para o e-mail cadastrado.')" class="flex-1 bg-green-600 text-white font-bold py-3 rounded-xl hover:bg-green-700 transition-colors shadow-md flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-envelope"></i> E-mail
-                        </button>
+                        <button onclick="window.print()" class="flex-1 bg-white border-2 border-gray-200 text-gray-700 font-bold py-3 rounded-xl hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"><i class="fa-solid fa-print"></i> Imprimir</button>
+                        <button onclick="alert('Uma cópia do protocolo foi enviada para o e-mail cadastrado.')" class="flex-1 bg-green-600 text-white font-bold py-3 rounded-xl hover:bg-green-700 transition-colors shadow-md flex items-center justify-center gap-2"><i class="fa-solid fa-envelope"></i> E-mail</button>
                     </div>
                 </div>
             `;
         }
-
         window.gerarProtocoloServico = function() {
-            const btnBox = document.getElementById('box-servico-acao');
-            const resBox = document.getElementById('box-servico-resultado');
+            const btnBox = document.getElementById('box-servico-acao'); const resBox = document.getElementById('box-servico-resultado');
             btnBox.innerHTML = '<button disabled class="w-full bg-pref-blue text-white font-black py-4 px-6 rounded-xl text-lg flex items-center justify-center gap-2 opacity-70"><i class="fa-solid fa-spinner fa-spin"></i> Processando Requisição...</button>';
-            setTimeout(() => {
-                btnBox.classList.add('hidden');
-                resBox.classList.remove('hidden');
-                document.getElementById('num-protocolo').innerText = Math.floor(10000000 + Math.random() * 90000000);
-            }, 1500);
+            setTimeout(() => { btnBox.classList.add('hidden'); resBox.classList.remove('hidden'); document.getElementById('num-protocolo').innerText = Math.floor(10000000 + Math.random() * 90000000); }, 1500);
         };
-
-        function renderizarServicosCidadaoDashboard() {
-            const list = document.getElementById('lista-servicos-cidadao');
-            if(!list) return;
-            list.innerHTML = Object.values(bancoDeServicos).sort((a,b)=>b.ordem-a.ordem).map(s => `
-                <a href="#servico/${s.id}" class="p-4 rounded-xl border border-gray-200 hover:border-pref-blue hover:bg-blue-50 transition-colors flex items-center gap-4 group">
-                    <div class="w-10 h-10 bg-gray-100 group-hover:bg-pref-blue group-hover:text-white text-gray-500 rounded-lg flex items-center justify-center transition-colors"><i class="fa-solid fa-${s.icone.replace('fa-','')}"></i></div>
-                    <span class="font-bold text-gray-700 group-hover:text-pref-blue">${s.titulo}</span>
-                </a>
-            `).join('');
-        }
-
-        // FUNÇÕES GLOBAIS DE NAVEGAÇÃO UI
-        window.goHome = function() { window.location.hash = 'inicio'; };
-        window.goHomeAndScroll = function(sectionId) {
-            if (window.location.hash.replace('#', '') !== 'inicio') {
-                window.location.hash = 'inicio';
-                setTimeout(() => { const el = document.getElementById(sectionId); if(el) window.scrollTo({top: el.offsetTop - 85, behavior: 'smooth'}); }, 100);
-            } else { const el = document.getElementById(sectionId); if(el) window.scrollTo({top: el.offsetTop - 85, behavior: 'smooth'}); }
-        };
-
-        const btnMobile = document.getElementById('mobile-menu-btn');
-        const menuMobile = document.getElementById('mobile-menu');
-        const icon = btnMobile.querySelector('i');
-        btnMobile.addEventListener('click', () => {
-            menuMobile.classList.toggle('hidden');
-            if (menuMobile.classList.contains('hidden')) { icon.classList.remove('fa-xmark'); icon.classList.add('fa-bars'); } else { icon.classList.remove('fa-bars'); icon.classList.add('fa-xmark'); }
-        });
-        window.closeMenu = function() { menuMobile.classList.add('hidden'); icon.classList.remove('fa-xmark'); icon.classList.add('fa-bars'); };
-
-        window.mudarAbaCidadao = function(aba) {
-            document.getElementById('aba-cidadao-servicos').classList.add('hidden');
-            document.getElementById('aba-cidadao-perfil').classList.add('hidden');
-            document.getElementById('btn-cidadao-servicos').className = aba === 'servicos' ? 'px-5 py-2.5 rounded-lg font-bold text-sm transition-all bg-pref-blue text-white shadow-sm' : 'px-5 py-2.5 rounded-lg font-bold text-sm transition-all text-gray-600 hover:text-pref-blue';
-            document.getElementById('btn-cidadao-perfil').className = aba === 'perfil' ? 'px-5 py-2.5 rounded-lg font-bold text-sm transition-all bg-pref-blue text-white shadow-sm' : 'px-5 py-2.5 rounded-lg font-bold text-sm transition-all text-gray-600 hover:text-pref-blue';
-            document.getElementById('aba-cidadao-' + aba).classList.remove('hidden');
-        };
-
-        window.alternarModoCidadao = function() {
-            isModoCadastroCidadao = !isModoCadastroCidadao;
-            document.getElementById('box-nome-cidadao').style.display = isModoCadastroCidadao ? 'block' : 'none';
-            document.getElementById('btn-submit-cidadao').innerHTML = isModoCadastroCidadao ? '<i class="fa-solid fa-fingerprint"></i> Criar CPF Virtual' : '<i class="fa-solid fa-right-to-bracket"></i> Entrar no Sistema';
-            document.getElementById('toggle-auth-text').innerText = isModoCadastroCidadao ? 'Já possui um CPF Virtual?' : 'Primeiro acesso ao portal?';
-            document.getElementById('toggle-auth-btn').innerText = isModoCadastroCidadao ? 'Fazer login' : 'Gerar meu CPF Virtual agora';
-            document.getElementById('cidadao-msg-erro').classList.add('hidden');
-        }
-
-        function gerarCPFVirtual() { return `RBS-${Math.floor(100000 + Math.random() * 900000)}`; }
-
-        window.processarAuthCidadao = async function() {
-            const email = document.getElementById('cidadao-email').value; const senha = document.getElementById('cidadao-senha').value; const nome = document.getElementById('cidadao-nome').value;
-            const btn = document.getElementById('btn-submit-cidadao'); const msgErro = document.getElementById('cidadao-msg-erro'); const msgTexto = document.getElementById('cidadao-msg-texto');
-            btn.disabled = true; msgErro.classList.add('hidden'); btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processando...';
-
-            try {
-                if (isModoCadastroCidadao) {
-                    if(!nome) throw new Error("Preencha seu nome completo.");
-                    const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
-                    const user = userCredential.user;
-                    const cpfVirtual = gerarCPFVirtual();
-                    const novoPerfil = { 
-                        nome: nome, email: email, cpfVirtual: cpfVirtual, 
-                        criadoEm: new Date().toISOString(), endereco: '', telefone: '', rg: '' 
-                    };
-                    // Salva no privado do usuário
-                    await setDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'perfil', 'dados'), novoPerfil);
-                    // Espelha no público para o painel admin poder ler e gerenciar
-                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'cidadaos', cpfVirtual), novoPerfil);
-                    
-                    cidadaoPerfil = novoPerfil; isCidadaoLogado = true;
-                } else {
-                    await signInWithEmailAndPassword(auth, email, senha);
-                }
-                btn.disabled = false; btn.innerHTML = isModoCadastroCidadao ? '<i class="fa-solid fa-fingerprint"></i> Criar CPF Virtual' : '<i class="fa-solid fa-right-to-bracket"></i> Entrar no Sistema';
-                window.location.hash = 'cidadao';
-            } catch (error) {
-                console.error(error); msgErro.classList.remove('hidden');
-                msgTexto.innerText = error.code === 'auth/email-already-in-use' ? 'E-mail já possui cadastro.' : error.code === 'auth/invalid-credential' ? 'E-mail ou senha incorretos.' : error.message || 'Erro ao autenticar.';
-                btn.disabled = false; btn.innerHTML = isModoCadastroCidadao ? '<i class="fa-solid fa-fingerprint"></i> Criar CPF Virtual' : '<i class="fa-solid fa-right-to-bracket"></i> Entrar no Sistema';
-            }
-        };
-
-        window.sairCidadao = async function() { await signOut(auth); await signInAnonymously(auth); window.location.hash = 'inicio'; }
-        
-        window.salvarPerfilCidadao = async function() {
-            if(!currentUser || !cidadaoPerfil) return;
-            const btn = document.getElementById('btn-salvar-perfil');
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Salvando...';
-            
-            const novoPerfil = {
-                ...cidadaoPerfil,
-                nome: document.getElementById('perfil-nome-edit').value,
-                rg: document.getElementById('perfil-rg-edit').value,
-                telefone: document.getElementById('perfil-telefone-edit').value,
-                endereco: document.getElementById('perfil-endereco-edit').value,
-            };
-
-            try {
-                // Atualiza privado
-                await setDoc(doc(db, 'artifacts', appId, 'users', currentUser.uid, 'perfil', 'dados'), novoPerfil);
-                // Atualiza público pro admin ver as alterações
-                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'cidadaos', cidadaoPerfil.cpfVirtual), novoPerfil);
-                
-                cidadaoPerfil = novoPerfil;
-                document.getElementById('dash-cidadao-nome').innerText = cidadaoPerfil.nome;
-                
-                const msg = document.getElementById('msg-perfil-cidadao');
-                msg.classList.remove('hidden');
-                setTimeout(() => msg.classList.add('hidden'), 4000);
-            } catch(e) {
-                alert("Erro ao salvar perfil.");
-            } finally {
-                btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Salvar Minhas Informações';
-            }
-        };
-
-        window.fazerLoginAdmin = async function() {
-            const e = document.getElementById('admin-email').value; const s = document.getElementById('admin-senha').value;
-            const btn = document.getElementById('btn-login-admin'); const errorBox = document.getElementById('admin-login-error');
-            errorBox.classList.add('hidden');
-            if (e !== 'jeosouzazouza@gmail.com') { errorBox.innerText = 'Acesso Negado: Seu e-mail não tem permissão de administrador.'; errorBox.classList.remove('hidden'); return; }
-
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Autenticando...';
-            try { await signInWithEmailAndPassword(auth, e, s); } 
-            catch (err) { errorBox.innerText = 'Acesso negado. Senha incorreta ou conta inexistente.'; errorBox.classList.remove('hidden'); btn.innerHTML = '<i class="fa-solid fa-unlock mr-2"></i> Autenticar'; }
-        };
-
-        window.sairAuth = async function() { await signOut(auth); await signInAnonymously(auth); window.location.hash = 'inicio'; };
 
         window.mudarAbaAdmin = function(aba) {
             adminAbaAtiva = aba;
             
-            // Ocultar as seções principais completas
-            document.getElementById('admin-secao-noticias').classList.add('hidden');
-            document.getElementById('admin-secao-noticias').classList.remove('flex');
-            document.getElementById('admin-secao-servicos').classList.add('hidden');
-            document.getElementById('admin-secao-servicos').classList.remove('flex');
-            document.getElementById('admin-secao-cidadaos').classList.add('hidden');
-            document.getElementById('admin-secao-cidadaos').classList.remove('flex');
+            ['noticias', 'servicos', 'cidadaos', 'ouvidoria'].forEach(a => {
+                document.getElementById(`admin-secao-${a}`).classList.add('hidden');
+                document.getElementById(`admin-secao-${a}`).classList.remove('flex');
+                document.getElementById(`btn-aba-${a}`).className = 'flex-1 md:flex-none px-5 py-2.5 rounded-lg font-bold text-sm transition-all text-blue-200 hover:text-white whitespace-nowrap';
+            });
             
-            // Estilização das abas
-            document.getElementById('btn-aba-noticias').className = aba === 'noticias' ? 'flex-1 md:flex-none px-5 py-2.5 rounded-lg font-bold text-sm transition-all bg-white text-pref-blue shadow-sm whitespace-nowrap' : 'flex-1 md:flex-none px-5 py-2.5 rounded-lg font-bold text-sm transition-all text-blue-200 hover:text-white whitespace-nowrap';
-            document.getElementById('btn-aba-servicos').className = aba === 'servicos' ? 'flex-1 md:flex-none px-5 py-2.5 rounded-lg font-bold text-sm transition-all bg-white text-pref-blue shadow-sm whitespace-nowrap' : 'flex-1 md:flex-none px-5 py-2.5 rounded-lg font-bold text-sm transition-all text-blue-200 hover:text-white whitespace-nowrap';
-            document.getElementById('btn-aba-cidadaos').className = aba === 'cidadaos' ? 'flex-1 md:flex-none px-5 py-2.5 rounded-lg font-bold text-sm transition-all bg-white text-pref-blue shadow-sm whitespace-nowrap' : 'flex-1 md:flex-none px-5 py-2.5 rounded-lg font-bold text-sm transition-all text-blue-200 hover:text-white whitespace-nowrap';
-            
-            // Mostrar a seção ativa
+            document.getElementById(`btn-aba-${aba}`).className = 'flex-1 md:flex-none px-5 py-2.5 rounded-lg font-bold text-sm transition-all bg-white text-pref-blue shadow-sm whitespace-nowrap';
             document.getElementById(`admin-secao-${aba}`).classList.remove('hidden');
             document.getElementById(`admin-secao-${aba}`).classList.add('flex');
             
-            if(aba !== 'cidadaos') prepararNovoAdmin();
+            if(aba === 'noticias' || aba === 'servicos') prepararNovoAdmin();
             if(aba === 'cidadaos') { renderListaCidadaosAdmin(); currentAdminCidadaoId = null; document.getElementById('admin-aviso-selecione-cidadao').classList.remove('hidden'); }
+            if(aba === 'ouvidoria') renderListaOuvidoriaAdmin();
         };
 
         window.renderListasAdmin = function() {
             renderListaNoticiasAdmin();
             renderListaServicosAdmin();
             if(adminAbaAtiva === 'cidadaos') renderListaCidadaosAdmin();
+            if(adminAbaAtiva === 'ouvidoria') renderListaOuvidoriaAdmin();
         }
+
+        window.renderListaOuvidoriaAdmin = function() {
+            const lista = document.getElementById('lista-admin-ouvidoria'); if(!lista) return;
+            const dados = Object.values(bancoDeOuvidoria).sort((a,b)=> new Date(b.dataEnvio.replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$2-$1')) - new Date(a.dataEnvio.replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$2-$1')));
+            
+            if (dados.length === 0) { lista.innerHTML = '<div class="text-center p-8 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 text-gray-400 font-bold"><i class="fa-solid fa-inbox text-3xl mb-3 block"></i>Caixa de entrada vazia.</div>'; return; }
+
+            lista.innerHTML = dados.map(item => `
+                <div class="bg-gray-50 p-5 rounded-2xl border ${item.lida ? 'border-gray-200 opacity-70' : 'border-pref-blue shadow-md'} relative group transition-all">
+                    ${!item.lida ? `<div class="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full -mt-1 -mr-1 animate-pulse"></div>` : ''}
+                    <div class="flex justify-between items-start mb-3">
+                        <div class="flex gap-2 items-center">
+                            <span class="bg-pref-darkblue text-white text-[10px] font-black uppercase px-2 py-1 rounded tracking-widest shadow-sm">${item.protocolo}</span>
+                            <span class="bg-gray-200 text-gray-700 text-[10px] font-black uppercase px-2 py-1 rounded tracking-widest">${item.tipo}</span>
+                        </div>
+                        <span class="text-xs text-gray-500 font-bold flex items-center"><i class="fa-regular fa-clock mr-1"></i> ${item.dataEnvio}</span>
+                    </div>
+                    
+                    <p class="text-gray-800 font-medium text-sm leading-relaxed mb-4 bg-white p-4 rounded-xl border border-gray-200">"${item.mensagem}"</p>
+                    
+                    <div class="flex justify-between items-end">
+                        <div>
+                            <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-0.5">Remetente</p>
+                            <p class="text-sm font-bold text-gray-800 flex items-center gap-1"><i class="fa-solid fa-user-circle text-pref-blue"></i> ${item.remetenteNome}</p>
+                            <p class="text-[11px] font-mono text-gray-500">CPF: ${item.remetenteCpf} | Local: ${item.local}</p>
+                        </div>
+                        <div class="flex gap-2">
+                            ${!item.lida ? `<button onclick="marcarOuvidoriaLida('${item.id}')" class="bg-white border border-gray-200 text-green-600 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-green-50 transition-colors"><i class="fa-solid fa-check-double mr-1"></i> Marcar Lida</button>` : ''}
+                            <button onclick="abrirModalDelete('ouvidoria', '${item.id}')" class="bg-white border border-gray-200 text-red-500 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-red-50 transition-colors"><i class="fa-solid fa-trash mr-1"></i> Apagar</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        };
+
+        window.marcarOuvidoriaLida = async function(id) {
+            try { await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'ouvidoria', id), { lida: true }, { merge: true }); }
+            catch(e) { alert("Erro ao atualizar o status."); }
+        };
 
         window.renderListaNoticiasAdmin = function() {
             const lista = document.getElementById('lista-admin-noticias'); if(!lista) return;
             const dados = Object.values(bancoDeNoticias).sort((a,b)=>b.ordem-a.ordem);
-            
             if (dados.length === 0) { lista.innerHTML = '<div class="text-center p-8 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 text-gray-400 font-bold">Vazio.</div>'; return; }
 
             lista.innerHTML = dados.map(item => `
@@ -1566,16 +1554,12 @@
         window.renderListaServicosAdmin = function() {
             const lista = document.getElementById('lista-admin-servicos'); if(!lista) return;
             const dados = Object.values(bancoDeServicos).sort((a,b)=>b.ordem-a.ordem);
-            
             if (dados.length === 0) { lista.innerHTML = '<div class="text-center p-8 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 text-gray-400 font-bold">Nenhum serviço.</div>'; return; }
 
             lista.innerHTML = dados.map(item => `
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 bg-gray-50 rounded-2xl hover:bg-blue-50 transition-colors border border-gray-100 gap-4 group">
                     <div class="flex-grow overflow-hidden w-full">
-                        <div class="flex items-center gap-2 mb-1">
-                            <i class="fa-solid fa-${item.icone.replace('fa-','')} text-pref-blue"></i>
-                            <h4 class="font-black text-gray-800 text-sm truncate">${item.titulo}</h4>
-                        </div>
+                        <div class="flex items-center gap-2 mb-1"><i class="fa-solid fa-${item.icone.replace('fa-','')} text-pref-blue"></i><h4 class="font-black text-gray-800 text-sm truncate">${item.titulo}</h4></div>
                         <p class="text-[11px] text-gray-500 truncate w-full">${item.descricao}</p>
                     </div>
                     <div class="flex gap-2 w-full sm:w-auto justify-end">
@@ -1591,23 +1575,17 @@
         window.renderListaCidadaosAdmin = function() {
             const lista = document.getElementById('lista-admin-cidadaos'); if(!lista) return;
             const busca = (document.getElementById('busca-cidadao')?.value || '').toLowerCase();
-            
             const todosOsCidadaos = Object.values(bancoDeCidadaos);
             
             if (todosOsCidadaos.length === 0) { 
-                lista.innerHTML = '<div class="text-center p-8 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 text-gray-400 font-bold"><i class="fa-solid fa-users-slash text-2xl mb-2 block"></i>Nenhum cidadão cadastrado no sistema ainda.</div>'; 
-                return; 
+                lista.innerHTML = '<div class="text-center p-8 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 text-gray-400 font-bold"><i class="fa-solid fa-users-slash text-2xl mb-2 block"></i>Nenhum cidadão cadastrado.</div>'; return; 
             }
 
-            // Adicionado fallback (|| '') para evitar erros com cadastros incompletos ou antigos
             const dados = todosOsCidadaos
                 .filter(c => (c.nome || '').toLowerCase().includes(busca) || (c.cpfVirtual || '').toLowerCase().includes(busca))
                 .sort((a,b)=> (a.nome || '').localeCompare(b.nome || ''));
             
-            if (dados.length === 0) { 
-                lista.innerHTML = '<div class="text-center p-8 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 text-gray-400 font-bold"><i class="fa-solid fa-magnifying-glass text-2xl mb-2 block"></i>Nenhum cidadão corresponde à busca.</div>'; 
-                return; 
-            }
+            if (dados.length === 0) { lista.innerHTML = '<div class="text-center p-8 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 text-gray-400 font-bold">Nenhum resultado.</div>'; return; }
 
             lista.innerHTML = dados.map(item => `
                 <div onclick="selecionarCidadaoAdmin('${item.cpfVirtual}')" class="cursor-pointer flex items-center p-4 rounded-2xl transition-colors border ${currentAdminCidadaoId === item.cpfVirtual ? 'bg-blue-50 border-pref-blue shadow-sm' : 'bg-gray-50 border-gray-100 hover:bg-gray-100'} gap-3">
@@ -1622,14 +1600,9 @@
         };
 
         window.selecionarCidadaoAdmin = function(cpf) {
-            currentAdminCidadaoId = cpf;
-            const cidadao = bancoDeCidadaos[cpf];
-            if(!cidadao) return;
+            currentAdminCidadaoId = cpf; const cidadao = bancoDeCidadaos[cpf]; if(!cidadao) return;
+            document.getElementById('admin-aviso-selecione-cidadao').classList.add('hidden'); renderListaCidadaosAdmin(); 
             
-            document.getElementById('admin-aviso-selecione-cidadao').classList.add('hidden');
-            renderListaCidadaosAdmin(); // Re-render to update active styling
-            
-            // Popula view
             document.getElementById('admin-cidadao-nome').innerText = cidadao.nome;
             document.getElementById('admin-cidadao-cpf').innerText = cidadao.cpfVirtual;
             document.getElementById('admin-cidadao-email').innerText = cidadao.email;
@@ -1641,15 +1614,10 @@
         };
 
         window.renderImpostosCidadaoAdmin = function() {
-            if(!currentAdminCidadaoId) return;
-            const lista = document.getElementById('admin-lista-impostos-cidadao');
-            
+            if(!currentAdminCidadaoId) return; const lista = document.getElementById('admin-lista-impostos-cidadao');
             const impostos = Object.values(bancoDeImpostos).filter(i => i.cpfCidadao === currentAdminCidadaoId);
             
-            if (impostos.length === 0) {
-                lista.innerHTML = '<p class="text-sm text-gray-400 font-medium italic">Nenhum imposto lançado para este cidadão.</p>';
-                return;
-            }
+            if (impostos.length === 0) { lista.innerHTML = '<p class="text-sm text-gray-400 font-medium italic">Nenhum imposto lançado para este cidadão.</p>'; return; }
             
             lista.innerHTML = impostos.map(imp => `
                 <div class="flex justify-between items-center bg-white border border-gray-200 p-3 rounded-xl shadow-sm">
@@ -1676,123 +1644,66 @@
                 titulo: document.getElementById('admin-imposto-titulo').value,
                 valor: document.getElementById('admin-imposto-valor').value,
                 vencimento: document.getElementById('admin-imposto-vencimento').value,
-                status: 'Pendente',
-                criadoEm: new Date().toISOString()
+                status: 'Pendente', criadoEm: new Date().toISOString()
             };
             
             try {
                 await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'impostos', novoImposto.id), novoImposto);
                 document.getElementById('form-admin-imposto').reset();
-            } catch(e) {
-                alert("Erro ao salvar imposto.");
-            } finally {
-                btn.disabled = false; btn.innerHTML = oldHtml;
-            }
+            } catch(e) { alert("Erro ao salvar imposto."); } finally { btn.disabled = false; btn.innerHTML = oldHtml; }
         };
 
         window.gerarImpostosIA = async function() {
             if(!currentAdminCidadaoId) return;
-            const cidadao = bancoDeCidadaos[currentAdminCidadaoId];
-            const btn = document.getElementById('btn-ia-impostos');
-            const oldHtml = btn.innerHTML;
-            
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Gerando com IA...';
+            const cidadao = bancoDeCidadaos[currentAdminCidadaoId]; const btn = document.getElementById('btn-ia-impostos'); const oldHtml = btn.innerHTML;
+            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Gerando com IA...';
             
             try {
-                // SIMULAÇÃO: Como não temos um backend Node/Vercel rodando neste ambiente, 
-                // vamos simular a resposta que a IA daria gerando dados automáticos realistas.
-                await new Promise(resolve => setTimeout(resolve, 1800)); // Simula o tempo de "pensamento"
-                
+                await new Promise(resolve => setTimeout(resolve, 1800)); 
                 const anoAtual = new Date().getFullYear();
                 
-                // Gera 1 a 3 impostos aleatórios para simular a IA
                 const impostosGerados = [
                     { titulo: `IPTU ${anoAtual}`, valor: (Math.random() * 800 + 300).toFixed(2), vencimento: `10/12/${anoAtual}` },
                     { titulo: `Taxa de Coleta de Lixo ${anoAtual}`, valor: (Math.random() * 100 + 40).toFixed(2), vencimento: `15/12/${anoAtual}` }
                 ];
-                
-                // 30% de chance de gerar uma taxa extra
-                if(Math.random() > 0.7) {
-                    impostosGerados.push({ titulo: `Contribuição de Melhoria Asfáltica`, valor: (Math.random() * 200 + 100).toFixed(2), vencimento: `20/11/${anoAtual}` });
-                }
+                if(Math.random() > 0.7) { impostosGerados.push({ titulo: `Contribuição de Melhoria Asfáltica`, valor: (Math.random() * 200 + 100).toFixed(2), vencimento: `20/11/${anoAtual}` }); }
 
-                if (impostosGerados && Array.isArray(impostosGerados) && impostosGerados.length > 0) {
-                    // Salvar no banco de dados do Firebase
-                    for (let imp of impostosGerados) {
-                        const novoId = `imp_${Date.now()}_${Math.floor(Math.random()*1000)}`;
-                        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'impostos', novoId), {
-                            id: novoId, 
-                            cpfCidadao: currentAdminCidadaoId, 
-                            titulo: imp.titulo,
-                            valor: imp.valor, 
-                            vencimento: imp.vencimento, 
-                            status: imp.status || 'Pendente'
-                        });
-                    }
-                } else {
-                    throw new Error("Resposta inválida ou vazia da IA");
+                for (let imp of impostosGerados) {
+                    const novoId = `imp_${Date.now()}_${Math.floor(Math.random()*1000)}`;
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'impostos', novoId), { id: novoId, cpfCidadao: currentAdminCidadaoId, titulo: imp.titulo, valor: imp.valor, vencimento: imp.vencimento, status: imp.status || 'Pendente' });
                 }
-            } catch(e) {
-                console.error("Erro IA Simulação:", e);
-                alert("Falha ao gerar impostos simulados.");
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = oldHtml;
-            }
+            } catch(e) { alert("Falha ao gerar impostos simulados."); } finally { btn.disabled = false; btn.innerHTML = oldHtml; }
         };
 
         window.prepararNovoAdmin = function() {
             document.getElementById(`form-admin-${adminAbaAtiva === 'noticias' ? 'noticia' : 'servico'}`).reset();
             document.getElementById(`admin-${adminAbaAtiva === 'noticias' ? 'noticia' : 'servico'}-id`).value = '';
             document.getElementById(`admin-titulo-editor-${adminAbaAtiva}`).innerHTML = `<i class="fa-solid fa-plus-circle"></i> Novo Registro`;
-            
-            document.getElementById(`admin-form-error-${adminAbaAtiva}`).classList.add('hidden'); 
-            document.getElementById(`admin-form-success-${adminAbaAtiva}`).classList.add('hidden');
-            
+            document.getElementById(`admin-form-error-${adminAbaAtiva}`).classList.add('hidden'); document.getElementById(`admin-form-success-${adminAbaAtiva}`).classList.add('hidden');
             if(adminAbaAtiva === 'noticias') document.getElementById('preview-img-admin').classList.add('hidden');
             if(adminAbaAtiva === 'servicos') document.getElementById('preview-icon-admin').className = 'fa-solid fa-laptop-file';
         };
 
         window.editarAdmin = function(tipo, id) {
-            const isNoticia = tipo === 'noticias';
-            const item = isNoticia ? bancoDeNoticias[id] : bancoDeServicos[id];
-            if(!item) return;
-            
+            const isNoticia = tipo === 'noticias'; const item = isNoticia ? bancoDeNoticias[id] : bancoDeServicos[id]; if(!item) return;
             const pfx = isNoticia ? 'noticia' : 'servico';
-            document.getElementById(`admin-${pfx}-id`).value = item.id;
-            document.getElementById(`admin-${pfx}-titulo`).value = item.titulo;
+            document.getElementById(`admin-${pfx}-id`).value = item.id; document.getElementById(`admin-${pfx}-titulo`).value = item.titulo;
             
             if(isNoticia) {
-                document.getElementById('admin-noticia-categoria').value = item.categoria;
-                document.getElementById('admin-noticia-data').value = item.data;
-                document.getElementById('admin-noticia-imagem').value = item.imagem;
-                document.getElementById('admin-noticia-conteudo').value = item.conteudo;
-                mostrarPreview(item.imagem, 'preview-img-admin');
+                document.getElementById('admin-noticia-categoria').value = item.categoria; document.getElementById('admin-noticia-data').value = item.data; document.getElementById('admin-noticia-imagem').value = item.imagem; document.getElementById('admin-noticia-conteudo').value = item.conteudo; mostrarPreview(item.imagem, 'preview-img-admin');
             } else {
-                const iconRaw = item.icone.replace('fa-solid ','').replace('fa-regular ','').replace('fa-','');
-                document.getElementById('admin-servico-icone').value = iconRaw;
-                document.getElementById('preview-icon-admin').className = 'fa-solid fa-' + iconRaw;
-                document.getElementById('admin-servico-desc').value = item.descricao;
+                const iconRaw = item.icone.replace('fa-solid ','').replace('fa-regular ','').replace('fa-',''); document.getElementById('admin-servico-icone').value = iconRaw; document.getElementById('preview-icon-admin').className = 'fa-solid fa-' + iconRaw; document.getElementById('admin-servico-desc').value = item.descricao;
             }
             document.getElementById(`admin-titulo-editor-${tipo}`).innerHTML = `<i class="fa-solid fa-arrows-rotate text-pref-blue"></i> Editando Cadastro`;
         };
 
-        window.salvarNoticiaAdmin = async function() { salvarItemGen(bancoDeNoticias, 'noticias', 'btn-salvar-noticia', {
-            titulo: document.getElementById('admin-noticia-titulo').value, categoria: document.getElementById('admin-noticia-categoria').value,
-            data: document.getElementById('admin-noticia-data').value, imagem: document.getElementById('admin-noticia-imagem').value, conteudo: document.getElementById('admin-noticia-conteudo').value
-        }); };
-
-        window.salvarServicoAdmin = async function() { salvarItemGen(bancoDeServicos, 'servicos', 'btn-salvar-servico', {
-            titulo: document.getElementById('admin-servico-titulo').value, icone: document.getElementById('admin-servico-icone').value.replace('fa-solid ','').replace('fa-regular ',''), descricao: document.getElementById('admin-servico-desc').value
-        }); };
+        window.salvarNoticiaAdmin = async function() { salvarItemGen(bancoDeNoticias, 'noticias', 'btn-salvar-noticia', { titulo: document.getElementById('admin-noticia-titulo').value, categoria: document.getElementById('admin-noticia-categoria').value, data: document.getElementById('admin-noticia-data').value, imagem: document.getElementById('admin-noticia-imagem').value, conteudo: document.getElementById('admin-noticia-conteudo').value }); };
+        window.salvarServicoAdmin = async function() { salvarItemGen(bancoDeServicos, 'servicos', 'btn-salvar-servico', { titulo: document.getElementById('admin-servico-titulo').value, icone: document.getElementById('admin-servico-icone').value.replace('fa-solid ','').replace('fa-regular ',''), descricao: document.getElementById('admin-servico-desc').value }); };
 
         async function salvarItemGen(banco, colecao, btnId, extraDados) {
             const btn = document.getElementById(btnId); const oldHtml = btn.innerHTML;
             btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Salvando...';
-            
-            document.getElementById(`admin-form-error-${colecao}`).classList.add('hidden'); 
-            document.getElementById(`admin-form-success-${colecao}`).classList.add('hidden');
+            document.getElementById(`admin-form-error-${colecao}`).classList.add('hidden'); document.getElementById(`admin-form-success-${colecao}`).classList.add('hidden');
 
             const pfx = colecao === 'noticias' ? 'noticia' : 'servico';
             const idAtual = document.getElementById(`admin-${pfx}-id`).value;
@@ -1803,13 +1714,12 @@
                 await setDoc(doc(db, 'artifacts', appId, 'public', 'data', colecao, novoId), { id: novoId, ordem: ordem, ...extraDados });
                 document.getElementById(`admin-form-success-${colecao}`).classList.remove('hidden'); setTimeout(()=>document.getElementById(`admin-form-success-${colecao}`).classList.add('hidden'), 3000);
                 if(!idAtual) prepararNovoAdmin();
-            } catch(e) { document.getElementById(`admin-form-error-${colecao}`).classList.remove('hidden'); } 
-            finally { btn.disabled = false; btn.innerHTML = oldHtml; }
+            } catch(e) { document.getElementById(`admin-form-error-${colecao}`).classList.remove('hidden'); } finally { btn.disabled = false; btn.innerHTML = oldHtml; }
         }
 
         window.abrirModalDelete = function(tipo, id) { itemParaExcluir = { id, tipo }; document.getElementById('modal-delete').classList.remove('hidden'); };
         window.fecharModalDelete = function() { itemParaExcluir = {id:null, tipo:null}; document.getElementById('modal-delete').classList.add('hidden'); };
-
+        
         document.getElementById('btn-confirmar-delete').addEventListener('click', async () => {
             if(!itemParaExcluir.id) return;
             const btn = document.getElementById('btn-confirmar-delete'); btn.disabled = true; btn.innerHTML = 'Excluindo...';
@@ -1830,42 +1740,23 @@
 
             try {
                 let urlFinal = ''; const isImg = file.type.startsWith('image/');
-                
                 if (isImg) {
-                    try {
-                        let fd = new FormData(); fd.append("image", file);
-                        let res = await fetch("https://api.imgur.com/3/image", { method: "POST", headers: { "Authorization": "Client-ID 513bb727cecf9ac" }, body: fd });
-                        let data = await res.json(); if (data.success) urlFinal = data.data.link;
-                    } catch (e) { console.warn("Imgur falhou, tentando Catbox..."); }
+                    try { let fd = new FormData(); fd.append("image", file); let res = await fetch("https://api.imgur.com/3/image", { method: "POST", headers: { "Authorization": "Client-ID 513bb727cecf9ac" }, body: fd }); let data = await res.json(); if (data.success) urlFinal = data.data.link; } catch (e) { }
                 }
-                
                 if (!urlFinal) {
                     let cdata = new FormData(); cdata.append("reqtype", "fileupload"); cdata.append("userhash", "c56d69d2549d77aa3919140d3"); cdata.append("fileToUpload", file);
-                    try {
-                        let cres = await fetch("https://catbox.moe/user/api.php", { method: "POST", body: cdata });
-                        if(cres.ok) { urlFinal = await cres.text(); } else { throw new Error("Catbox"); }
-                    } catch (err) {
-                        let proxyRes = await fetch("https://corsproxy.io/?https://catbox.moe/user/api.php", { method: "POST", body: cdata });
-                        if(proxyRes.ok) urlFinal = await proxyRes.text(); else throw new Error("Proxy");
-                    }
+                    try { let cres = await fetch("https://catbox.moe/user/api.php", { method: "POST", body: cdata }); if(cres.ok) { urlFinal = await cres.text(); } else { throw new Error("Catbox"); } } catch (err) { let proxyRes = await fetch("https://corsproxy.io/?https://catbox.moe/user/api.php", { method: "POST", body: cdata }); if(proxyRes.ok) urlFinal = await proxyRes.text(); else throw new Error("Proxy"); }
                 }
-
                 if (!urlFinal || !urlFinal.startsWith('http')) throw new Error("URL Inválida");
 
-                if (isCapa) {
-                    document.getElementById('admin-noticia-imagem').value = urlFinal; mostrarPreview(urlFinal, 'preview-img-admin');
-                } else {
+                if (isCapa) { document.getElementById('admin-noticia-imagem').value = urlFinal; mostrarPreview(urlFinal, 'preview-img-admin'); } else {
                     const txt = document.getElementById('admin-noticia-conteudo');
-                    let t = file.type.startsWith('video/') ? `\n\n<video controls class="w-full rounded-2xl my-6 shadow-md"><source src="${urlFinal}" type="${file.type}"></video>\n\n` :
-                            file.type.startsWith('audio/') ? `\n\n<audio controls class="w-full my-6"><source src="${urlFinal}" type="${file.type}"></audio>\n\n` :
-                            isImg ? `\n\n<img src="${urlFinal}" alt="Anexo" class="w-full rounded-2xl my-6 shadow-md">\n\n` :
-                            `\n\n<a href="${urlFinal}" target="_blank" class="bg-gray-100 text-pref-blue px-4 py-3 rounded-xl font-bold flex w-fit my-4 border border-gray-200 hover:bg-gray-200"><i class="fa-solid fa-download mr-2"></i> Baixar Anexo</a>\n\n`;
+                    let t = file.type.startsWith('video/') ? `\n\n<video controls class="w-full rounded-2xl my-6 shadow-md"><source src="${urlFinal}" type="${file.type}"></video>\n\n` : file.type.startsWith('audio/') ? `\n\n<audio controls class="w-full my-6"><source src="${urlFinal}" type="${file.type}"></audio>\n\n` : isImg ? `\n\n<img src="${urlFinal}" alt="Anexo" class="w-full rounded-2xl my-6 shadow-md">\n\n` : `\n\n<a href="${urlFinal}" target="_blank" class="bg-gray-100 text-pref-blue px-4 py-3 rounded-xl font-bold flex w-fit my-4 border border-gray-200 hover:bg-gray-200"><i class="fa-solid fa-download mr-2"></i> Baixar Anexo</a>\n\n`;
                     txt.value = txt.value.substring(0, txt.selectionStart) + t + txt.value.substring(txt.selectionStart);
                 }
             } catch (e) { alert("Falha ao enviar arquivo. O arquivo pode ser muito grande ou foi bloqueado pelo navegador."); } 
             finally {
-                if (isCapa) { labelCapa.innerHTML = origH; labelCapa.classList.remove('pointer-events-none'); } 
-                else { document.getElementById('upload-status').classList.add('hidden'); document.getElementById('upload-status').classList.remove('inline-flex'); }
+                if (isCapa) { labelCapa.innerHTML = origH; labelCapa.classList.remove('pointer-events-none'); } else { document.getElementById('upload-status').classList.add('hidden'); document.getElementById('upload-status').classList.remove('inline-flex'); }
                 input.value = '';
             }
         };
