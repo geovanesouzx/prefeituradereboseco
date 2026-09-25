@@ -1033,52 +1033,160 @@
                         <!-- Temas de Campanha (Presets) -->
                         <div>
                             <h4 class="text-sm font-black text-gray-800 uppercase tracking-widest mb-4 flex items-center gap-2"><i class="fa-solid fa-star text-pref-yellow"></i> Campanhas Municipais</h4>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                                 
                                 <label class="cursor-pointer group">
                                     <input type="radio" name="tema-preset" value="padrao" class="peer sr-only" checked onchange="previewTema(this.value)">
-                                    <div class="border-2 border-gray-200 rounded-2xl p-4 peer-checked:border-blue-500 peer-checked:bg-blue-50 transition-all">
-                                        <div class="h-16 rounded-xl mb-3 flex overflow-hidden border border-gray-200">
+                                    <div class="border-2 border-gray-200 rounded-2xl p-4 peer-checked:border-blue-500 peer-checked:bg-blue-50 transition-all h-full">
+                                        <div class="h-10 rounded-lg mb-2 flex overflow-hidden border border-gray-200">
                                             <div class="w-2/3 h-full bg-[#0047AB]"></div><div class="w-1/3 h-full bg-[#FFC107]"></div>
                                         </div>
-                                        <p class="font-black text-gray-800 text-center text-sm">Padrão</p>
-                                        <p class="text-[10px] text-gray-500 text-center font-bold">Azul / Amarelo</p>
+                                        <p class="font-black text-gray-800 text-center text-xs">Padrão</p>
+                                        <p class="text-[9px] text-gray-500 text-center font-bold">Azul e Amarelo</p>
+                                    </div>
+                                </label>
+
+                                <label class="cursor-pointer group">
+                                    <input type="radio" name="tema-preset" value="janeiro-branco" class="peer sr-only" onchange="previewTema(this.value)">
+                                    <div class="border-2 border-gray-200 rounded-2xl p-4 peer-checked:border-gray-500 peer-checked:bg-gray-100 transition-all relative overflow-hidden h-full">
+                                        <i class="fa-solid fa-ribbon absolute -right-2 -bottom-2 text-4xl text-gray-400 opacity-20"></i>
+                                        <div class="h-10 rounded-lg mb-2 flex overflow-hidden border border-gray-200">
+                                            <div class="w-2/3 h-full bg-[#4B5563]"></div><div class="w-1/3 h-full bg-[#FFFFFF]"></div>
+                                        </div>
+                                        <p class="font-black text-gray-800 text-center text-xs">Janeiro Branco</p>
+                                        <p class="text-[9px] text-gray-500 text-center font-bold">Saúde Mental</p>
+                                    </div>
+                                </label>
+
+                                <label class="cursor-pointer group">
+                                    <input type="radio" name="tema-preset" value="fevereiro-roxo" class="peer sr-only" onchange="previewTema(this.value)">
+                                    <div class="border-2 border-gray-200 rounded-2xl p-4 peer-checked:border-purple-500 peer-checked:bg-purple-50 transition-all relative overflow-hidden h-full">
+                                        <i class="fa-solid fa-ribbon absolute -right-2 -bottom-2 text-4xl text-purple-500 opacity-20"></i>
+                                        <div class="h-10 rounded-lg mb-2 flex overflow-hidden border border-gray-200">
+                                            <div class="w-2/3 h-full bg-[#7E22CE]"></div><div class="w-1/3 h-full bg-[#F97316]"></div>
+                                        </div>
+                                        <p class="font-black text-gray-800 text-center text-xs">Fevereiro</p>
+                                        <p class="text-[9px] text-gray-500 text-center font-bold">Roxo e Laranja</p>
+                                    </div>
+                                </label>
+
+                                <label class="cursor-pointer group">
+                                    <input type="radio" name="tema-preset" value="marco-azul" class="peer sr-only" onchange="previewTema(this.value)">
+                                    <div class="border-2 border-gray-200 rounded-2xl p-4 peer-checked:border-blue-800 peer-checked:bg-blue-50 transition-all relative overflow-hidden h-full">
+                                        <i class="fa-solid fa-ribbon absolute -right-2 -bottom-2 text-4xl text-blue-800 opacity-20"></i>
+                                        <div class="h-10 rounded-lg mb-2 flex overflow-hidden border border-gray-200">
+                                            <div class="w-2/3 h-full bg-[#1E3A8A]"></div><div class="w-1/3 h-full bg-[#D8B4FE]"></div>
+                                        </div>
+                                        <p class="font-black text-gray-800 text-center text-xs">Março Azul</p>
+                                        <p class="text-[9px] text-gray-500 text-center font-bold">Marinho e Lilás</p>
+                                    </div>
+                                </label>
+
+                                <label class="cursor-pointer group">
+                                    <input type="radio" name="tema-preset" value="abril-azul" class="peer sr-only" onchange="previewTema(this.value)">
+                                    <div class="border-2 border-gray-200 rounded-2xl p-4 peer-checked:border-blue-500 peer-checked:bg-blue-50 transition-all relative overflow-hidden h-full">
+                                        <i class="fa-solid fa-ribbon absolute -right-2 -bottom-2 text-4xl text-blue-500 opacity-20"></i>
+                                        <div class="h-10 rounded-lg mb-2 flex overflow-hidden border border-gray-200">
+                                            <div class="w-2/3 h-full bg-[#2563EB]"></div><div class="w-1/3 h-full bg-[#22C55E]"></div>
+                                        </div>
+                                        <p class="font-black text-gray-800 text-center text-xs">Abril Azul</p>
+                                        <p class="text-[9px] text-gray-500 text-center font-bold">Autismo e Segurança</p>
+                                    </div>
+                                </label>
+
+                                <label class="cursor-pointer group">
+                                    <input type="radio" name="tema-preset" value="maio-amarelo" class="peer sr-only" onchange="previewTema(this.value)">
+                                    <div class="border-2 border-gray-200 rounded-2xl p-4 peer-checked:border-yellow-600 peer-checked:bg-yellow-50 transition-all relative overflow-hidden h-full">
+                                        <i class="fa-solid fa-ribbon absolute -right-2 -bottom-2 text-4xl text-yellow-600 opacity-20"></i>
+                                        <div class="h-10 rounded-lg mb-2 flex overflow-hidden border border-gray-200">
+                                            <div class="w-2/3 h-full bg-[#D97706]"></div><div class="w-1/3 h-full bg-[#FDE047]"></div>
+                                        </div>
+                                        <p class="font-black text-gray-800 text-center text-xs">Maio Amarelo</p>
+                                        <p class="text-[9px] text-gray-500 text-center font-bold">Segurança no Trânsito</p>
+                                    </div>
+                                </label>
+
+                                <label class="cursor-pointer group">
+                                    <input type="radio" name="tema-preset" value="junho-vermelho" class="peer sr-only" onchange="previewTema(this.value)">
+                                    <div class="border-2 border-gray-200 rounded-2xl p-4 peer-checked:border-red-500 peer-checked:bg-red-50 transition-all relative overflow-hidden h-full">
+                                        <i class="fa-solid fa-ribbon absolute -right-2 -bottom-2 text-4xl text-red-500 opacity-20"></i>
+                                        <div class="h-10 rounded-lg mb-2 flex overflow-hidden border border-gray-200">
+                                            <div class="w-2/3 h-full bg-[#DC2626]"></div><div class="w-1/3 h-full bg-[#FCA5A5]"></div>
+                                        </div>
+                                        <p class="font-black text-gray-800 text-center text-xs">Junho Vermelho</p>
+                                        <p class="text-[9px] text-gray-500 text-center font-bold">Doação de Sangue</p>
+                                    </div>
+                                </label>
+
+                                <label class="cursor-pointer group">
+                                    <input type="radio" name="tema-preset" value="julho-amarelo" class="peer sr-only" onchange="previewTema(this.value)">
+                                    <div class="border-2 border-gray-200 rounded-2xl p-4 peer-checked:border-emerald-500 peer-checked:bg-emerald-50 transition-all relative overflow-hidden h-full">
+                                        <i class="fa-solid fa-ribbon absolute -right-2 -bottom-2 text-4xl text-emerald-500 opacity-20"></i>
+                                        <div class="h-10 rounded-lg mb-2 flex overflow-hidden border border-gray-200">
+                                            <div class="w-2/3 h-full bg-[#059669]"></div><div class="w-1/3 h-full bg-[#FDE047]"></div>
+                                        </div>
+                                        <p class="font-black text-gray-800 text-center text-xs">Julho Verde</p>
+                                        <p class="text-[9px] text-gray-500 text-center font-bold">Hepatites e Câncer</p>
+                                    </div>
+                                </label>
+
+                                <label class="cursor-pointer group">
+                                    <input type="radio" name="tema-preset" value="agosto-dourado" class="peer sr-only" onchange="previewTema(this.value)">
+                                    <div class="border-2 border-gray-200 rounded-2xl p-4 peer-checked:border-amber-600 peer-checked:bg-amber-50 transition-all relative overflow-hidden h-full">
+                                        <i class="fa-solid fa-ribbon absolute -right-2 -bottom-2 text-4xl text-amber-600 opacity-20"></i>
+                                        <div class="h-10 rounded-lg mb-2 flex overflow-hidden border border-gray-200">
+                                            <div class="w-2/3 h-full bg-[#B45309]"></div><div class="w-1/3 h-full bg-[#FCD34D]"></div>
+                                        </div>
+                                        <p class="font-black text-gray-800 text-center text-xs">Agosto Dourado</p>
+                                        <p class="text-[9px] text-gray-500 text-center font-bold">Aleitamento Materno</p>
                                     </div>
                                 </label>
 
                                 <label class="cursor-pointer group">
                                     <input type="radio" name="tema-preset" value="setembro-amarelo" class="peer sr-only" onchange="previewTema(this.value)">
-                                    <div class="border-2 border-gray-200 rounded-2xl p-4 peer-checked:border-yellow-500 peer-checked:bg-yellow-50 transition-all relative overflow-hidden">
-                                        <i class="fa-solid fa-ribbon absolute -right-2 -bottom-2 text-5xl text-yellow-500 opacity-20"></i>
-                                        <div class="h-16 rounded-xl mb-3 flex overflow-hidden border border-gray-200">
+                                    <div class="border-2 border-gray-200 rounded-2xl p-4 peer-checked:border-yellow-500 peer-checked:bg-yellow-50 transition-all relative overflow-hidden h-full">
+                                        <i class="fa-solid fa-ribbon absolute -right-2 -bottom-2 text-4xl text-yellow-500 opacity-20"></i>
+                                        <div class="h-10 rounded-lg mb-2 flex overflow-hidden border border-gray-200">
                                             <div class="w-2/3 h-full bg-[#F59E0B]"></div><div class="w-1/3 h-full bg-[#FCD34D]"></div>
                                         </div>
-                                        <p class="font-black text-gray-800 text-center text-sm">Setembro Amarelo</p>
-                                        <p class="text-[10px] text-gray-500 text-center font-bold">+ Laços decorativos</p>
+                                        <p class="font-black text-gray-800 text-center text-xs">Setembro Amarelo</p>
+                                        <p class="text-[9px] text-gray-500 text-center font-bold">Prevenção ao Suicídio</p>
                                     </div>
                                 </label>
 
                                 <label class="cursor-pointer group">
                                     <input type="radio" name="tema-preset" value="outubro-rosa" class="peer sr-only" onchange="previewTema(this.value)">
-                                    <div class="border-2 border-gray-200 rounded-2xl p-4 peer-checked:border-pink-500 peer-checked:bg-pink-50 transition-all relative overflow-hidden">
-                                        <i class="fa-solid fa-ribbon absolute -right-2 -bottom-2 text-5xl text-pink-500 opacity-20"></i>
-                                        <div class="h-16 rounded-xl mb-3 flex overflow-hidden border border-gray-200">
+                                    <div class="border-2 border-gray-200 rounded-2xl p-4 peer-checked:border-pink-500 peer-checked:bg-pink-50 transition-all relative overflow-hidden h-full">
+                                        <i class="fa-solid fa-ribbon absolute -right-2 -bottom-2 text-4xl text-pink-500 opacity-20"></i>
+                                        <div class="h-10 rounded-lg mb-2 flex overflow-hidden border border-gray-200">
                                             <div class="w-2/3 h-full bg-[#EC4899]"></div><div class="w-1/3 h-full bg-[#FBCFE8]"></div>
                                         </div>
-                                        <p class="font-black text-gray-800 text-center text-sm">Outubro Rosa</p>
-                                        <p class="text-[10px] text-gray-500 text-center font-bold">+ Laços decorativos</p>
+                                        <p class="font-black text-gray-800 text-center text-xs">Outubro Rosa</p>
+                                        <p class="text-[9px] text-gray-500 text-center font-bold">Câncer de Mama</p>
                                     </div>
                                 </label>
 
                                 <label class="cursor-pointer group">
                                     <input type="radio" name="tema-preset" value="novembro-azul" class="peer sr-only" onchange="previewTema(this.value)">
-                                    <div class="border-2 border-gray-200 rounded-2xl p-4 peer-checked:border-cyan-500 peer-checked:bg-cyan-50 transition-all relative overflow-hidden">
-                                        <i class="fa-solid fa-ribbon absolute -right-2 -bottom-2 text-5xl text-cyan-500 opacity-20"></i>
-                                        <div class="h-16 rounded-xl mb-3 flex overflow-hidden border border-gray-200">
+                                    <div class="border-2 border-gray-200 rounded-2xl p-4 peer-checked:border-cyan-500 peer-checked:bg-cyan-50 transition-all relative overflow-hidden h-full">
+                                        <i class="fa-solid fa-ribbon absolute -right-2 -bottom-2 text-4xl text-cyan-500 opacity-20"></i>
+                                        <div class="h-10 rounded-lg mb-2 flex overflow-hidden border border-gray-200">
                                             <div class="w-2/3 h-full bg-[#06B6D4]"></div><div class="w-1/3 h-full bg-[#67E8F9]"></div>
                                         </div>
-                                        <p class="font-black text-gray-800 text-center text-sm">Novembro Azul</p>
-                                        <p class="text-[10px] text-gray-500 text-center font-bold">+ Laços decorativos</p>
+                                        <p class="font-black text-gray-800 text-center text-xs">Novembro Azul</p>
+                                        <p class="text-[9px] text-gray-500 text-center font-bold">Câncer de Próstata</p>
+                                    </div>
+                                </label>
+
+                                <label class="cursor-pointer group">
+                                    <input type="radio" name="tema-preset" value="dezembro-vermelho" class="peer sr-only" onchange="previewTema(this.value)">
+                                    <div class="border-2 border-gray-200 rounded-2xl p-4 peer-checked:border-red-600 peer-checked:bg-red-50 transition-all relative overflow-hidden h-full">
+                                        <i class="fa-solid fa-ribbon absolute -right-2 -bottom-2 text-4xl text-red-600 opacity-20"></i>
+                                        <div class="h-10 rounded-lg mb-2 flex overflow-hidden border border-gray-200">
+                                            <div class="w-2/3 h-full bg-[#EF4444]"></div><div class="w-1/3 h-full bg-[#F97316]"></div>
+                                        </div>
+                                        <p class="font-black text-gray-800 text-center text-xs">Dezembro</p>
+                                        <p class="text-[9px] text-gray-500 text-center font-bold">Vermelho e Laranja</p>
                                     </div>
                                 </label>
 
@@ -1780,9 +1888,18 @@
 
         const CORES_TEMA = {
             'padrao': { p: '#0047AB', pd: '#002D6B', s: '#FFC107' },
+            'janeiro-branco': { p: '#4B5563', pd: '#374151', s: '#FFFFFF' },
+            'fevereiro-roxo': { p: '#7E22CE', pd: '#581C87', s: '#F97316' },
+            'marco-azul': { p: '#1E3A8A', pd: '#172554', s: '#D8B4FE' },
+            'abril-azul': { p: '#2563EB', pd: '#1D4ED8', s: '#22C55E' },
+            'maio-amarelo': { p: '#D97706', pd: '#92400E', s: '#FDE047' },
+            'junho-vermelho': { p: '#DC2626', pd: '#991B1B', s: '#FCA5A5' },
+            'julho-amarelo': { p: '#059669', pd: '#047857', s: '#FDE047' },
+            'agosto-dourado': { p: '#B45309', pd: '#78350F', s: '#FCD34D' },
             'setembro-amarelo': { p: '#F59E0B', pd: '#B45309', s: '#FCD34D' },
             'outubro-rosa': { p: '#EC4899', pd: '#BE185D', s: '#FBCFE8' },
-            'novembro-azul': { p: '#06B6D4', pd: '#0E7490', s: '#67E8F9' }
+            'novembro-azul': { p: '#06B6D4', pd: '#0E7490', s: '#67E8F9' },
+            'dezembro-vermelho': { p: '#EF4444', pd: '#B91C1C', s: '#F97316' }
         };
 
         window.previewTema = function(tipo) {
@@ -1792,9 +1909,18 @@
             
             const defaultTexts = {
                 'padrao': { s: `Trabalhando por uma <span class="text-pref-yellow block sm:inline">Rabo Seco</span> melhor todos os dias.`, sub: `Acesse serviços digitais com seu CPF Virtual, acompanhe as notícias da cidade e participe ativamente da gestão municipal com total transparência.` },
+                'janeiro-branco': { s: `Cuidando da <span class="text-pref-yellow block sm:inline">saúde mental</span> e emocional.`, sub: `Janeiro Branco: Quem cuida da mente, cuida da vida. A Prefeitura de Rabo Seco oferece apoio psicológico gratuito à população.` },
+                'fevereiro-roxo': { s: `Conscientização e <span class="text-pref-yellow block sm:inline">solidariedade</span> em foco.`, sub: `Fevereiro Roxo e Laranja: Juntos no combate ao Alzheimer, Lúpus, Fibromialgia e Leucemia. Doe medula óssea, salve vidas!` },
+                'marco-azul': { s: `Prevenção é o nosso <span class="text-pref-yellow block sm:inline">maior cuidado</span>.`, sub: `Março Azul-Marinho e Lilás: Conscientização e combate ao câncer colorretal e do colo do útero. Procure o posto de saúde mais próximo.` },
+                'abril-azul': { s: `Inclusão, <span class="text-pref-yellow block sm:inline">respeito</span> e segurança.`, sub: `Abril Azul e Verde: Mês de conscientização sobre o Autismo e da segurança no ambiente de trabalho. Uma cidade inclusiva e segura para todos.` },
+                'maio-amarelo': { s: `No trânsito, escolha a <span class="text-pref-yellow block sm:inline">vida</span>.`, sub: `Maio Amarelo: Atenção pela vida nas vias da nossa cidade. Reduza a velocidade e respeite a sinalização.` },
+                'junho-vermelho': { s: `Doar sangue é <span class="text-pref-yellow block sm:inline">doar vida</span>.`, sub: `Junho Vermelho: Aqueça o coração de quem precisa. Faça sua doação de sangue no hemocentro municipal e ajude a salvar vidas.` },
+                'julho-amarelo': { s: `Cuidando da sua <span class="text-pref-yellow block sm:inline">saúde por inteiro</span>.`, sub: `Julho Amarelo e Verde: Prevenção contra as hepatites virais e câncer de cabeça e pescoço. A saúde começa com a informação.` },
+                'agosto-dourado': { s: `Aleitamento materno: um <span class="text-pref-yellow block sm:inline">laço de ouro</span>.`, sub: `Agosto Dourado: O leite materno é o padrão ouro de alimentação infantil. Apoiamos e incentivamos a amamentação em Rabo Seco.` },
                 'setembro-amarelo': { s: `Valorizando a vida em <span class="text-pref-yellow block sm:inline">Rabo Seco</span> todos os dias.`, sub: `Mês de prevenção ao suicídio. Você não está sozinho! A Prefeitura apoia esta causa com serviços de saúde mental gratuitos.` },
                 'outubro-rosa': { s: `Prevenção é um ato de <span class="text-pref-yellow block sm:inline">amor à vida</span>.`, sub: `Outubro Rosa em Rabo Seco: Mês de conscientização e combate ao câncer de mama. A rede municipal de saúde está de portas abertas para você cuidar de si.` },
-                'novembro-azul': { s: `Cuidar da saúde também é <span class="text-pref-yellow block sm:inline">coisa de homem</span>.`, sub: `Novembro Azul em Rabo Seco: Mês de combate ao câncer de próstata. Procure nossa rede de atendimento para exames preventivos rápidos e seguros.` }
+                'novembro-azul': { s: `Cuidar da saúde também é <span class="text-pref-yellow block sm:inline">coisa de homem</span>.`, sub: `Novembro Azul em Rabo Seco: Mês de combate ao câncer de próstata. Procure nossa rede de atendimento para exames preventivos rápidos e seguros.` },
+                'dezembro-vermelho': { s: `Prevenção, <span class="text-pref-yellow block sm:inline">cuidado</span> e informação.`, sub: `Dezembro Vermelho e Laranja: Luta contra o HIV/AIDS e prevenção ao câncer de pele. Proteja-se e cuide de quem você ama.` }
             };
             
             if (tipo === 'customizado') {
@@ -1836,9 +1962,18 @@
             
             const defaultTexts = {
                 'padrao': { s: `Trabalhando por uma <span class="text-pref-yellow block sm:inline">Rabo Seco</span> melhor todos os dias.`, sub: `Acesse serviços digitais com seu CPF Virtual, acompanhe as notícias da cidade e participe ativamente da gestão municipal com total transparência.` },
+                'janeiro-branco': { s: `Cuidando da <span class="text-pref-yellow block sm:inline">saúde mental</span> e emocional.`, sub: `Janeiro Branco: Quem cuida da mente, cuida da vida. A Prefeitura de Rabo Seco oferece apoio psicológico gratuito à população.` },
+                'fevereiro-roxo': { s: `Conscientização e <span class="text-pref-yellow block sm:inline">solidariedade</span> em foco.`, sub: `Fevereiro Roxo e Laranja: Juntos no combate ao Alzheimer, Lúpus, Fibromialgia e Leucemia. Doe medula óssea, salve vidas!` },
+                'marco-azul': { s: `Prevenção é o nosso <span class="text-pref-yellow block sm:inline">maior cuidado</span>.`, sub: `Março Azul-Marinho e Lilás: Conscientização e combate ao câncer colorretal e do colo do útero. Procure o posto de saúde mais próximo.` },
+                'abril-azul': { s: `Inclusão, <span class="text-pref-yellow block sm:inline">respeito</span> e segurança.`, sub: `Abril Azul e Verde: Mês de conscientização sobre o Autismo e da segurança no ambiente de trabalho. Uma cidade inclusiva e segura para todos.` },
+                'maio-amarelo': { s: `No trânsito, escolha a <span class="text-pref-yellow block sm:inline">vida</span>.`, sub: `Maio Amarelo: Atenção pela vida nas vias da nossa cidade. Reduza a velocidade e respeite a sinalização.` },
+                'junho-vermelho': { s: `Doar sangue é <span class="text-pref-yellow block sm:inline">doar vida</span>.`, sub: `Junho Vermelho: Aqueça o coração de quem precisa. Faça sua doação de sangue no hemocentro municipal e ajude a salvar vidas.` },
+                'julho-amarelo': { s: `Cuidando da sua <span class="text-pref-yellow block sm:inline">saúde por inteiro</span>.`, sub: `Julho Amarelo e Verde: Prevenção contra as hepatites virais e câncer de cabeça e pescoço. A saúde começa com a informação.` },
+                'agosto-dourado': { s: `Aleitamento materno: um <span class="text-pref-yellow block sm:inline">laço de ouro</span>.`, sub: `Agosto Dourado: O leite materno é o padrão ouro de alimentação infantil. Apoiamos e incentivamos a amamentação em Rabo Seco.` },
                 'setembro-amarelo': { s: `Valorizando a vida em <span class="text-pref-yellow block sm:inline">Rabo Seco</span> todos os dias.`, sub: `Mês de prevenção ao suicídio. Você não está sozinho! A Prefeitura apoia esta causa com serviços de saúde mental gratuitos.` },
                 'outubro-rosa': { s: `Prevenção é um ato de <span class="text-pref-yellow block sm:inline">amor à vida</span>.`, sub: `Outubro Rosa em Rabo Seco: Mês de conscientização e combate ao câncer de mama. A rede municipal de saúde está de portas abertas para você cuidar de si.` },
                 'novembro-azul': { s: `Cuidar da saúde também é <span class="text-pref-yellow block sm:inline">coisa de homem</span>.`, sub: `Novembro Azul em Rabo Seco: Mês de combate ao câncer de próstata. Procure nossa rede de atendimento para exames preventivos rápidos e seguros.` },
+                'dezembro-vermelho': { s: `Prevenção, <span class="text-pref-yellow block sm:inline">cuidado</span> e informação.`, sub: `Dezembro Vermelho e Laranja: Luta contra o HIV/AIDS e prevenção ao câncer de pele. Proteja-se e cuide de quem você ama.` },
                 'customizado': { s: `Trabalhando por uma <span class="text-pref-yellow block sm:inline">Rabo Seco</span> melhor todos os dias.`, sub: `Acesse serviços digitais com seu CPF Virtual, acompanhe as notícias da cidade e participe ativamente da gestão municipal com total transparência.` }
             };
 
@@ -1858,9 +1993,24 @@
                 document.getElementById('hero-subtitle').innerText = subLog;
             }
 
-            if (config.tipo === 'setembro-amarelo' || config.tipo === 'outubro-rosa' || config.tipo === 'novembro-azul') {
+            if (config.tipo !== 'padrao' && config.tipo !== 'customizado') {
                 overlay.classList.remove('hidden');
-                const corLaco = config.tipo === 'setembro-amarelo' ? '#FBBF24' : (config.tipo === 'outubro-rosa' ? '#F472B6' : '#22D3EE');
+                
+                const coresLaco = {
+                    'janeiro-branco': '#E5E7EB',
+                    'fevereiro-roxo': '#A855F7',
+                    'marco-azul': '#D8B4FE',
+                    'abril-azul': '#3B82F6',
+                    'maio-amarelo': '#FDE047',
+                    'junho-vermelho': '#EF4444',
+                    'julho-amarelo': '#10B981',
+                    'agosto-dourado': '#F59E0B',
+                    'setembro-amarelo': '#FBBF24',
+                    'outubro-rosa': '#F472B6',
+                    'novembro-azul': '#22D3EE',
+                    'dezembro-vermelho': '#EF4444'
+                };
+                const corLaco = coresLaco[config.tipo] || '#FFFFFF';
                 
                 if (heroRibbon) {
                     heroRibbon.classList.remove('hidden');
