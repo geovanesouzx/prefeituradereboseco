@@ -1259,6 +1259,7 @@
             
             // Mostrar a seção ativa
             document.getElementById(`admin-secao-${aba}`).classList.remove('hidden');
+            // Como as seções usam flex-col no mobile e flex-row no desktop, a classe 'flex' genérica reativa o display do Tailwind
             document.getElementById(`admin-secao-${aba}`).classList.add('flex');
             
             prepararNovoAdmin();
