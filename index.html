@@ -70,7 +70,7 @@
 <body class="bg-pref-light text-gray-800 font-sans antialiased flex flex-col min-h-screen relative">
     
     <!-- Camada de Decoração de Campanhas (Mês Temático) -->
-    <div id="campaign-overlay" class="pointer-events-none fixed inset-0 z-0 overflow-hidden hidden">
+    <div id="campaign-overlay" class="pointer-events-none fixed inset-0 z-40 overflow-hidden hidden">
         <!-- SVG Laços Injetados via JS -->
     </div>
 
@@ -144,10 +144,10 @@
                 <div class="container mx-auto px-4 lg:px-8 relative z-10 flex flex-col md:flex-row items-center gap-8 md:gap-12">
                     <div class="md:w-3/5 text-center md:text-left mt-2 md:mt-0">
                         <span class="inline-block py-1.5 px-4 rounded-full bg-pref-yellow text-pref-darkblue text-xs sm:text-sm font-black tracking-wider mb-4 sm:mb-6 uppercase shadow-sm">Portal do Cidadão</span>
-                        <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 sm:mb-6 leading-tight">
+                        <h2 id="hero-title" class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 sm:mb-6 leading-tight">
                             Trabalhando por uma <span class="text-pref-yellow block sm:inline">Rabo Seco</span> melhor todos os dias.
                         </h2>
-                        <p class="text-base sm:text-lg text-blue-100 mb-6 sm:mb-8 md:pr-10 leading-relaxed font-medium">
+                        <p id="hero-subtitle" class="text-base sm:text-lg text-blue-100 mb-6 sm:mb-8 md:pr-10 leading-relaxed font-medium">
                             Acesse serviços digitais com seu CPF Virtual, acompanhe as notícias da cidade e participe ativamente da gestão municipal com total transparência.
                         </p>
                         <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center md:justify-start">
@@ -538,36 +538,36 @@
         </div>
 
         <!-- PAINEL ADMIN COM SEPARAÇÃO COMPLETA -->
-        <div id="view-admin-dashboard" class="hidden flex-col flex-grow bg-gray-50">
-            <!-- Barra Superior do Admin -->
-            <div class="bg-pref-blue text-white py-4 px-4 md:px-8 flex flex-col md:flex-row justify-between items-center shadow-lg gap-4 z-10 sticky top-0">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center text-pref-blue text-xl"><i class="fa-solid fa-bolt"></i></div>
+        <div id="view-admin-dashboard" class="hidden flex-col md:flex-row flex-grow bg-gray-50 items-stretch">
+            <!-- Sidebar Lateral do Admin -->
+            <aside class="w-full md:w-64 bg-pref-darkblue text-white flex flex-col flex-shrink-0 z-20 sticky top-[76px] md:h-[calc(100vh-76px)] overflow-y-auto custom-scrollbar shadow-2xl">
+                <div class="p-6 border-b border-white/10 flex items-center gap-3 hidden md:flex">
+                    <div class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center text-pref-yellow text-xl"><i class="fa-solid fa-bolt"></i></div>
                     <div>
-                        <span class="font-black text-lg md:text-xl block leading-none">Painel de Controle</span>
-                        <span class="text-xs text-blue-200 font-medium tracking-widest uppercase">Modo Editor</span>
+                        <span class="font-black text-lg block leading-none">Painel Gestor</span>
+                        <span class="text-[10px] text-blue-300 font-bold tracking-widest uppercase">Modo Editor</span>
                     </div>
                 </div>
                 
-                <!-- Abas de Navegação Admin Expandidas -->
-                <div class="flex bg-pref-darkblue p-1 rounded-xl w-full md:w-auto overflow-x-auto custom-scrollbar gap-1">
-                    <button onclick="mudarAbaAdmin('noticias')" id="btn-aba-noticias" class="flex-1 md:flex-none px-4 py-2.5 rounded-lg font-bold text-sm transition-all bg-white text-pref-blue shadow-sm whitespace-nowrap"><i class="fa-solid fa-newspaper mr-1.5"></i> Notícias</button>
-                    <button onclick="mudarAbaAdmin('servicos')" id="btn-aba-servicos" class="flex-1 md:flex-none px-4 py-2.5 rounded-lg font-bold text-sm transition-all text-blue-200 hover:text-white whitespace-nowrap"><i class="fa-solid fa-laptop-file mr-1.5"></i> Serviços</button>
-                    <button onclick="mudarAbaAdmin('cidadaos')" id="btn-aba-cidadaos" class="flex-1 md:flex-none px-4 py-2.5 rounded-lg font-bold text-sm transition-all text-blue-200 hover:text-white whitespace-nowrap"><i class="fa-solid fa-users mr-1.5"></i> Cidadãos & Impostos</button>
-                    <button onclick="mudarAbaAdmin('ouvidoria')" id="btn-aba-ouvidoria" class="flex-1 md:flex-none px-4 py-2.5 rounded-lg font-bold text-sm transition-all text-blue-200 hover:text-white whitespace-nowrap"><i class="fa-solid fa-bullhorn mr-1.5"></i> Ouvidoria</button>
-                    <button onclick="mudarAbaAdmin('saude')" id="btn-aba-saude" class="flex-1 md:flex-none px-4 py-2.5 rounded-lg font-bold text-sm transition-all text-blue-200 hover:text-white whitespace-nowrap"><i class="fa-solid fa-notes-medical mr-1.5"></i> Saúde</button>
-                    <button onclick="mudarAbaAdmin('licitacoes')" id="btn-aba-licitacoes" class="flex-1 md:flex-none px-4 py-2.5 rounded-lg font-bold text-sm transition-all text-blue-200 hover:text-white whitespace-nowrap"><i class="fa-solid fa-gavel mr-1.5"></i> Licitações</button>
-                    <button onclick="mudarAbaAdmin('transparencia')" id="btn-aba-transparencia" class="flex-1 md:flex-none px-4 py-2.5 rounded-lg font-bold text-sm transition-all text-blue-200 hover:text-white whitespace-nowrap"><i class="fa-solid fa-chart-pie mr-1.5"></i> Contas</button>
-                    <!-- NOVO BOTÃO APARÊNCIA -->
-                    <button onclick="mudarAbaAdmin('aparencia')" id="btn-aba-aparencia" class="flex-1 md:flex-none px-4 py-2.5 rounded-lg font-bold text-sm transition-all text-yellow-300 hover:text-yellow-100 whitespace-nowrap bg-blue-900 border border-blue-800"><i class="fa-solid fa-palette mr-1.5"></i> Aparência</button>
-                </div>
+                <!-- Abas de Navegação Sidebar -->
+                <nav class="flex md:flex-col gap-1 p-2 md:p-4 overflow-x-auto md:overflow-visible flex-row custom-scrollbar border-b md:border-b-0 border-white/10">
+                    <button onclick="mudarAbaAdmin('noticias')" id="btn-aba-noticias" class="flex-shrink-0 md:w-full px-4 py-3 rounded-xl font-bold text-sm transition-all bg-white/10 text-white border-l-4 border-pref-yellow text-left flex items-center gap-3"><i class="fa-solid fa-newspaper w-5 text-center"></i> Notícias</button>
+                    <button onclick="mudarAbaAdmin('servicos')" id="btn-aba-servicos" class="flex-shrink-0 md:w-full px-4 py-3 rounded-xl font-bold text-sm transition-all text-blue-200 hover:text-white hover:bg-white/10 text-left flex items-center gap-3 border-l-4 border-transparent"><i class="fa-solid fa-laptop-file w-5 text-center"></i> Serviços</button>
+                    <button onclick="mudarAbaAdmin('cidadaos')" id="btn-aba-cidadaos" class="flex-shrink-0 md:w-full px-4 py-3 rounded-xl font-bold text-sm transition-all text-blue-200 hover:text-white hover:bg-white/10 text-left flex items-center gap-3 border-l-4 border-transparent"><i class="fa-solid fa-users w-5 text-center"></i> Cidadãos</button>
+                    <button onclick="mudarAbaAdmin('ouvidoria')" id="btn-aba-ouvidoria" class="flex-shrink-0 md:w-full px-4 py-3 rounded-xl font-bold text-sm transition-all text-blue-200 hover:text-white hover:bg-white/10 text-left flex items-center gap-3 border-l-4 border-transparent"><i class="fa-solid fa-bullhorn w-5 text-center"></i> Ouvidoria</button>
+                    <button onclick="mudarAbaAdmin('saude')" id="btn-aba-saude" class="flex-shrink-0 md:w-full px-4 py-3 rounded-xl font-bold text-sm transition-all text-blue-200 hover:text-white hover:bg-white/10 text-left flex items-center gap-3 border-l-4 border-transparent"><i class="fa-solid fa-notes-medical w-5 text-center"></i> Saúde</button>
+                    <button onclick="mudarAbaAdmin('licitacoes')" id="btn-aba-licitacoes" class="flex-shrink-0 md:w-full px-4 py-3 rounded-xl font-bold text-sm transition-all text-blue-200 hover:text-white hover:bg-white/10 text-left flex items-center gap-3 border-l-4 border-transparent"><i class="fa-solid fa-gavel w-5 text-center"></i> Licitações</button>
+                    <button onclick="mudarAbaAdmin('transparencia')" id="btn-aba-transparencia" class="flex-shrink-0 md:w-full px-4 py-3 rounded-xl font-bold text-sm transition-all text-blue-200 hover:text-white hover:bg-white/10 text-left flex items-center gap-3 border-l-4 border-transparent"><i class="fa-solid fa-chart-pie w-5 text-center"></i> Contas</button>
+                    <button onclick="mudarAbaAdmin('aparencia')" id="btn-aba-aparencia" class="flex-shrink-0 md:w-full px-4 py-3 rounded-xl font-bold text-sm transition-all text-yellow-300 hover:text-white hover:bg-white/10 text-left flex items-center gap-3 border-l-4 border-transparent mt-0 md:mt-2 bg-blue-900/50"><i class="fa-solid fa-palette w-5 text-center"></i> Aparência</button>
+                </nav>
 
-                <div class="flex gap-3 w-full md:w-auto">
-                    <button onclick="goHome()" class="flex-1 md:flex-none text-sm bg-pref-darkblue hover:bg-blue-900 px-4 py-2.5 rounded-lg transition-colors font-bold"><i class="fa-solid fa-eye mr-1"></i> Ver Site</button>
-                    <button onclick="sairAuth()" class="flex-1 md:flex-none text-sm bg-red-500 hover:bg-red-400 px-4 py-2.5 rounded-lg transition-colors font-bold shadow-md"><i class="fa-solid fa-power-off mr-1"></i> Sair</button>
+                <div class="hidden md:flex flex-col gap-2 p-4 mt-auto border-t border-white/10">
+                    <button onclick="goHome()" class="text-sm bg-white/5 hover:bg-white/10 px-4 py-3 rounded-xl transition-colors font-bold flex items-center gap-3 text-blue-100"><i class="fa-solid fa-eye w-5 text-center"></i> Ver Site</button>
+                    <button onclick="sairAuth()" class="text-sm bg-red-500/20 hover:bg-red-500 text-red-300 hover:text-white px-4 py-3 rounded-xl transition-colors font-bold shadow-md flex items-center gap-3"><i class="fa-solid fa-power-off w-5 text-center"></i> Sair</button>
                 </div>
-            </div>
+            </aside>
             
+            <main class="flex-grow flex flex-col min-w-0">
             <!-- SEÇÃO DE NOTÍCIAS SEPARADA -->
             <div id="admin-secao-noticias" class="container mx-auto px-4 py-8 flex flex-col lg:flex-row gap-8 max-w-7xl flex-grow">
                 <!-- Coluna da Lista de Notícias -->
@@ -1108,6 +1108,28 @@
                             </div>
                         </div>
 
+                        <!-- Textos Iniciais (IA) -->
+                        <div class="bg-gray-50 p-6 rounded-2xl border border-gray-200 mt-6">
+                            <div class="flex justify-between items-center mb-4 border-b border-gray-200 pb-4">
+                                <h4 class="text-sm font-black text-gray-800 uppercase tracking-widest flex items-center gap-2">
+                                    <i class="fa-solid fa-message text-pref-blue"></i> Mensagens da Tela Inicial
+                                </h4>
+                                <button type="button" onclick="gerarFrasesIA()" id="btn-ia-frases" class="bg-gradient-to-r from-purple-600 to-blue-600 text-white text-xs font-black px-3 py-1.5 rounded-lg hover:shadow-lg transition-all flex items-center gap-1.5 shadow-md">
+                                    <i class="fa-solid fa-wand-magic-sparkles"></i> Gerar IA
+                                </button>
+                            </div>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Slogan Principal</label>
+                                    <textarea id="admin-tema-slogan" rows="2" placeholder="Ex: Trabalhando por uma Rabo Seco melhor..." class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-black text-gray-800 resize-none"></textarea>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Subtítulo Explicativo</label>
+                                    <textarea id="admin-tema-subslogan" rows="3" placeholder="Pequeno texto complementar da entrada..." class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium text-gray-600 resize-none"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
                         <button type="submit" id="btn-salvar-tema" class="w-full bg-pref-blue hover:bg-pref-darkblue text-white font-black py-4 px-6 rounded-xl shadow-lg transition-all text-lg flex items-center justify-center gap-2 transform hover:-translate-y-1">
                             <i class="fa-solid fa-check-double"></i> Publicar Novo Tema
                         </button>
@@ -1115,6 +1137,7 @@
                 </div>
             </div>
 
+            </main>
         </div>
     </div> <!-- FIM APP CONTAINER -->
 
@@ -1256,15 +1279,21 @@
                 const sec = document.getElementById(`admin-secao-${s}`);
                 const btn = document.getElementById(`btn-aba-${s}`);
                 if(sec) { sec.classList.add('hidden'); sec.classList.remove('flex'); }
-                if(btn) btn.className = 'flex-1 md:flex-none px-4 py-2.5 rounded-lg font-bold text-sm transition-all text-blue-200 hover:text-white whitespace-nowrap';
+                if(btn) {
+                    btn.classList.remove('bg-white/10', 'text-white', 'border-pref-yellow');
+                    btn.classList.add('text-blue-200', 'border-transparent');
+                    if (s === 'aparencia') {
+                        btn.classList.remove('text-yellow-300');
+                    }
+                }
             });
             const activeSec = document.getElementById(`admin-secao-${aba}`);
             const activeBtn = document.getElementById(`btn-aba-${aba}`);
             if(activeSec) { activeSec.classList.remove('hidden'); activeSec.classList.add('flex'); }
             
             if(activeBtn) {
-                if(aba === 'aparencia') activeBtn.className = 'flex-1 md:flex-none px-4 py-2.5 rounded-lg font-bold text-sm transition-all text-pref-darkblue bg-yellow-400 whitespace-nowrap shadow-md';
-                else activeBtn.className = 'flex-1 md:flex-none px-4 py-2.5 rounded-lg font-bold text-sm transition-all bg-white text-pref-blue shadow-sm whitespace-nowrap';
+                activeBtn.classList.remove('text-blue-200', 'border-transparent');
+                activeBtn.classList.add('bg-white/10', 'text-white', 'border-pref-yellow');
             }
             if (aba !== 'aparencia') renderListasAdmin(); 
         };
@@ -1556,6 +1585,12 @@
                         document.getElementById('box-cores-custom').style.opacity = '1';
                         document.getElementById('box-cores-custom').style.pointerEvents = 'auto';
                     }
+                    if(configTemaAtual.slogan) {
+                        document.getElementById('admin-tema-slogan').value = configTemaAtual.slogan;
+                    }
+                    if(configTemaAtual.subSlogan) {
+                        document.getElementById('admin-tema-subslogan').value = configTemaAtual.subSlogan;
+                    }
                 }
             }, errHandler);
         }
@@ -1722,6 +1757,17 @@
             root.style.setProperty('--pref-darkblue', pd);
             root.style.setProperty('--pref-yellow', s);
 
+            if(config.slogan && document.getElementById('hero-title')) {
+                document.getElementById('hero-title').innerHTML = config.slogan;
+            } else if (document.getElementById('hero-title')) {
+                document.getElementById('hero-title').innerHTML = `Trabalhando por uma <span class="text-pref-yellow block sm:inline">Rabo Seco</span> melhor todos os dias.`;
+            }
+            if(config.subSlogan && document.getElementById('hero-subtitle')) {
+                document.getElementById('hero-subtitle').innerText = config.subSlogan;
+            } else if (document.getElementById('hero-subtitle')) {
+                document.getElementById('hero-subtitle').innerText = "Acesse serviços digitais com seu CPF Virtual, acompanhe as notícias da cidade e participe ativamente da gestão municipal com total transparência.";
+            }
+
             if (config.tipo === 'setembro-amarelo' || config.tipo === 'outubro-rosa' || config.tipo === 'novembro-azul') {
                 overlay.classList.remove('hidden');
                 const corLaco = config.tipo === 'setembro-amarelo' ? '#FBBF24' : (config.tipo === 'outubro-rosa' ? '#F472B6' : '#22D3EE');
@@ -1746,6 +1792,28 @@
             }
         };
 
+        window.gerarFrasesIA = async function() {
+            const btn = document.getElementById('btn-ia-frases');
+            const original = btn.innerHTML;
+            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gerando...';
+            try {
+                await new Promise(r => setTimeout(r, 1200));
+                const slogans = [
+                    { t: `Acelerando o futuro de <span class="text-pref-yellow block sm:inline">Rabo Seco</span> juntos.`, s: "Mais inovação, saúde e transparência para nossa população. Acesse os serviços na palma da sua mão." },
+                    { t: `Gestão eficiente e <span class="text-pref-yellow block sm:inline">transparente</span> para você.`, s: "Portal do cidadão 100% digital. Rapidez e comodidade para resolver suas demandas." },
+                    { t: `Transformando <span class="text-pref-yellow block sm:inline">Rabo Seco</span> com trabalho sério.`, s: "Inovação tecnológica a serviço da nossa gente. Tudo em um só lugar com o CPF Virtual." }
+                ];
+                const sorteado = slogans[Math.floor(Math.random() * slogans.length)];
+                document.getElementById('admin-tema-slogan').value = sorteado.t;
+                document.getElementById('admin-tema-subslogan').value = sorteado.s;
+                mostrarAlerta("Frases geradas com sucesso!");
+            } catch(e) {
+                mostrarAlerta("Erro ao gerar frases.");
+            } finally {
+                btn.disabled = false; btn.innerHTML = original;
+            }
+        };
+
         window.salvarTemaAdmin = async function() {
             const btn = document.getElementById('btn-salvar-tema');
             btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Publicando Tema...';
@@ -1753,9 +1821,13 @@
             const tipo = document.querySelector('input[name="tema-preset"]:checked').value;
             const p = document.getElementById('color-primary').value;
             const s = document.getElementById('color-secondary').value;
+            const sloganVal = document.getElementById('admin-tema-slogan').value;
+            const subSloganVal = document.getElementById('admin-tema-subslogan').value;
             
             const novoConfig = { tipo: tipo };
             if(tipo === 'customizado') { novoConfig.cPrimary = p; novoConfig.cSecondary = s; }
+            if(sloganVal.trim() !== '') novoConfig.slogan = sloganVal;
+            if(subSloganVal.trim() !== '') novoConfig.subSlogan = subSloganVal;
 
             try {
                 await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'config', 'tema_site'), novoConfig);
