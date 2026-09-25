@@ -497,35 +497,43 @@
             </div>
         </div>
 
-        <div id="view-admin-login" class="hidden flex-col flex-grow bg-gray-900 py-12 pb-24 items-center justify-center relative overflow-hidden">
-            <div class="absolute inset-0 bg-cover bg-center opacity-10 mix-blend-overlay" style="background-image: url('https://i.imgur.com/yv7TJkd.png');"></div>
-            <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-pref-blue opacity-20 rounded-full blur-[100px] -mr-64 -mt-64 pointer-events-none"></div>
+        <div id="view-admin-login" class="hidden flex-col flex-grow bg-gray-50 items-center justify-center relative overflow-hidden">
+            <div class="absolute inset-0 bg-pref-blue opacity-[0.03]"></div>
+            <div class="absolute top-0 left-0 w-full h-72 bg-gradient-to-b from-pref-darkblue to-pref-blue rounded-b-[4rem] shadow-lg"></div>
             
-            <div class="bg-gray-800/80 backdrop-blur-xl p-8 md:p-12 rounded-[2.5rem] shadow-2xl w-full max-w-md border border-gray-700 mx-4 relative z-10">
-                <div class="text-center mb-10">
-                    <div class="w-20 h-20 bg-gray-900 text-pref-yellow border-2 border-gray-700 rounded-2xl flex items-center justify-center text-4xl mx-auto mb-6 shadow-lg"><i class="fa-solid fa-shield-halved"></i></div>
-                    <h2 class="text-3xl font-black text-white tracking-tight">Painel Gestor</h2>
-                    <p class="text-gray-400 text-sm font-medium mt-2">Acesso restrito. Servidores Autorizados.</p>
+            <div class="bg-white p-8 md:p-12 rounded-[2.5rem] shadow-2xl w-full max-w-md mx-4 relative z-10 border border-gray-100 mt-10">
+                <div class="text-center mb-8">
+                    <div class="w-20 h-20 bg-blue-50 text-pref-blue rounded-2xl flex items-center justify-center text-4xl mx-auto mb-6 shadow-inner border border-blue-100">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h2 class="text-2xl font-black text-gray-900 tracking-tight">Portal do Servidor</h2>
+                    <p class="text-gray-500 text-sm font-medium mt-1">Acesso exclusivo para gestão municipal</p>
                 </div>
                 
-                <form id="form-admin-login" onsubmit="event.preventDefault(); fazerLoginAdmin();" class="space-y-6">
+                <form id="form-admin-login" onsubmit="event.preventDefault(); fazerLoginAdmin();" class="space-y-5">
                     <div>
-                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">E-mail Corporativo</label>
-                        <input type="email" id="admin-email" required placeholder="jeosouzazouza@gmail.com" class="w-full px-5 py-4 rounded-xl border-2 border-gray-600 bg-gray-900 text-white focus:ring-0 focus:border-pref-yellow outline-none transition-colors font-medium">
+                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">E-mail Corporativo</label>
+                        <div class="relative">
+                            <i class="fa-solid fa-envelope absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            <input type="email" id="admin-email" required placeholder="admin@raboseco.ba.gov.br" class="w-full pl-11 pr-5 py-4 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-bold text-gray-800 bg-gray-50 focus:bg-white shadow-sm">
+                        </div>
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Senha de Segurança</label>
-                        <input type="password" id="admin-senha" required placeholder="••••••••" class="w-full px-5 py-4 rounded-xl border-2 border-gray-600 bg-gray-900 text-white focus:ring-0 focus:border-pref-yellow outline-none transition-colors font-medium">
+                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Senha de Segurança</label>
+                        <div class="relative">
+                            <i class="fa-solid fa-lock absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            <input type="password" id="admin-senha" required placeholder="••••••••" class="w-full pl-11 pr-5 py-4 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-bold text-gray-800 bg-gray-50 focus:bg-white shadow-sm">
+                        </div>
                     </div>
                     
-                    <div id="admin-login-error" class="hidden text-red-400 text-sm font-bold text-center bg-red-900/30 p-4 rounded-xl border border-red-800/50 backdrop-blur-md">Acesso negado. Credenciais inválidas.</div>
+                    <div id="admin-login-error" class="hidden text-red-600 text-sm font-bold text-center bg-red-50 p-4 rounded-xl border border-red-100">Acesso negado. Credenciais inválidas.</div>
                     
-                    <button type="submit" id="btn-login-admin" class="w-full bg-pref-blue hover:bg-pref-yellow hover:text-pref-darkblue text-white font-black py-4 px-6 rounded-xl shadow-[0_0_20px_rgba(0,71,171,0.4)] hover:shadow-[0_0_25px_rgba(255,193,7,0.5)] transition-all text-lg mt-4 transform hover:-translate-y-1 flex justify-center items-center gap-2">
-                        <i class="fa-solid fa-lock"></i> Autenticar
+                    <button type="submit" id="btn-login-admin" class="w-full bg-pref-blue hover:bg-pref-darkblue text-white font-black py-4 px-6 rounded-xl shadow-lg transition-all text-lg mt-2 transform hover:-translate-y-1 flex justify-center items-center gap-2">
+                        <i class="fa-solid fa-right-to-bracket"></i> Acessar Painel
                     </button>
                 </form>
                 
-                <p class="text-center text-xs text-gray-500 font-bold mt-8"><i class="fa-solid fa-desktop mr-1"></i> Sistema de Gestão Municipal v2.0</p>
+                <p class="text-center text-xs text-gray-400 font-bold mt-8"><i class="fa-solid fa-desktop mr-1"></i> Sistema de Gestão Municipal v2.0</p>
             </div>
         </div>
 
@@ -566,9 +574,14 @@
                 <div class="w-full lg:w-5/12 bg-white rounded-[2rem] shadow-sm border border-gray-200 p-6 md:p-8 flex flex-col h-[750px]">
                     <div class="flex justify-between items-center mb-8 border-b border-gray-100 pb-4">
                         <h3 class="text-2xl font-black text-gray-800 tracking-tight">Publicações</h3>
-                        <button onclick="prepararNovoAdmin()" class="bg-pref-blue text-white px-5 py-2.5 rounded-xl text-sm font-black hover:bg-pref-darkblue shadow-md transition-all transform hover:-translate-y-0.5 flex items-center gap-2">
-                            <i class="fa-solid fa-plus"></i> Nova
-                        </button>
+                        <div class="flex gap-2">
+                            <button onclick="gerarNoticiasIA()" id="btn-ia-noticias" class="bg-gradient-to-r from-purple-600 to-blue-600 text-white text-xs font-black px-3 py-1.5 rounded-lg hover:shadow-lg transition-all flex items-center gap-1.5">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i> Gerar via IA
+                            </button>
+                            <button onclick="prepararNovoAdmin()" class="bg-pref-blue text-white px-5 py-2.5 rounded-xl text-sm font-black hover:bg-pref-darkblue shadow-md transition-all transform hover:-translate-y-0.5 flex items-center gap-2">
+                                <i class="fa-solid fa-plus"></i> Nova
+                            </button>
+                        </div>
                     </div>
                     <div id="lista-admin-noticias" class="overflow-y-auto pr-3 space-y-3 flex-grow custom-scrollbar">
                         <!-- Injetado via JS -->
@@ -647,9 +660,14 @@
                 <div class="w-full lg:w-5/12 bg-white rounded-[2rem] shadow-sm border border-gray-200 p-6 md:p-8 flex flex-col h-[750px]">
                     <div class="flex justify-between items-center mb-8 border-b border-gray-100 pb-4">
                         <h3 class="text-2xl font-black text-gray-800 tracking-tight">Serviços Ativos</h3>
-                        <button onclick="prepararNovoAdmin()" class="bg-pref-blue text-white px-5 py-2.5 rounded-xl text-sm font-black hover:bg-pref-darkblue shadow-md transition-all transform hover:-translate-y-0.5 flex items-center gap-2">
-                            <i class="fa-solid fa-plus"></i> Novo
-                        </button>
+                        <div class="flex gap-2">
+                            <button onclick="gerarServicosIA()" id="btn-ia-servicos" class="bg-gradient-to-r from-purple-600 to-blue-600 text-white text-xs font-black px-3 py-1.5 rounded-lg hover:shadow-lg transition-all flex items-center gap-1.5">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i> Gerar via IA
+                            </button>
+                            <button onclick="prepararNovoAdmin()" class="bg-pref-blue text-white px-5 py-2.5 rounded-xl text-sm font-black hover:bg-pref-darkblue shadow-md transition-all transform hover:-translate-y-0.5 flex items-center gap-2">
+                                <i class="fa-solid fa-plus"></i> Novo
+                            </button>
+                        </div>
                     </div>
                     <div id="lista-admin-servicos" class="overflow-y-auto pr-3 space-y-3 flex-grow custom-scrollbar">
                         <!-- Injetado via JS -->
@@ -699,6 +717,9 @@
                 <div class="w-full lg:w-4/12 bg-white rounded-[2rem] shadow-sm border border-gray-200 p-6 md:p-8 flex flex-col h-[750px]">
                     <div class="flex justify-between items-center mb-6 border-b border-gray-100 pb-4">
                         <h3 class="text-2xl font-black text-gray-800 tracking-tight">Moradores</h3>
+                        <button onclick="gerarCidadaosIA()" id="btn-ia-cidadaos" class="bg-gradient-to-r from-purple-600 to-blue-600 text-white text-xs font-black px-3 py-1.5 rounded-lg hover:shadow-lg transition-all flex items-center gap-1.5">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> Gerar via IA
+                        </button>
                     </div>
                     <div class="relative mb-4">
                         <input type="text" id="busca-cidadao" onkeyup="filtrarCidadaosAdmin()" placeholder="Buscar por nome ou CPF..." class="w-full px-4 py-2.5 pl-10 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-pref-blue outline-none transition-colors font-medium text-sm">
@@ -783,6 +804,9 @@
                 <div class="w-full lg:w-5/12 bg-white rounded-[2rem] shadow-sm border border-gray-200 p-6 md:p-8 flex flex-col h-[750px]">
                     <div class="flex justify-between items-center mb-6 border-b border-gray-100 pb-4">
                         <h3 class="text-2xl font-black text-gray-800 tracking-tight">Manifestações</h3>
+                        <button onclick="gerarOuvidoriaIA()" id="btn-ia-ouvidoria" class="bg-gradient-to-r from-purple-600 to-blue-600 text-white text-xs font-black px-3 py-1.5 rounded-lg hover:shadow-lg transition-all flex items-center gap-1.5">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> Gerar via IA
+                        </button>
                     </div>
                     <div id="lista-admin-ouvidoria" class="overflow-y-auto pr-3 space-y-3 flex-grow custom-scrollbar">
                         <!-- Injetado via JS -->
@@ -825,6 +849,9 @@
                 <div class="w-full lg:w-5/12 bg-white rounded-[2rem] shadow-sm border border-gray-200 p-6 md:p-8 flex flex-col h-[750px]">
                     <div class="flex justify-between items-center mb-6 border-b border-gray-100 pb-4">
                         <h3 class="text-2xl font-black text-gray-800 tracking-tight">Agendamentos Clínicos</h3>
+                        <button onclick="gerarSaudeIA()" id="btn-ia-saude" class="bg-gradient-to-r from-purple-600 to-blue-600 text-white text-xs font-black px-3 py-1.5 rounded-lg hover:shadow-lg transition-all flex items-center gap-1.5">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> Gerar via IA
+                        </button>
                     </div>
                     <div id="lista-admin-saude" class="overflow-y-auto pr-3 space-y-3 flex-grow custom-scrollbar">
                         <!-- Injetado via JS -->
@@ -880,7 +907,12 @@
                 <div class="w-full lg:w-5/12 bg-white rounded-[2rem] shadow-sm border border-gray-200 p-6 md:p-8 flex flex-col h-[750px]">
                     <div class="flex justify-between items-center mb-6 border-b border-gray-100 pb-4">
                         <h3 class="text-2xl font-black text-gray-800 tracking-tight">Editais</h3>
-                        <button onclick="prepararNovoAdminLicitacao()" class="bg-pref-blue text-white px-4 py-2.5 rounded-xl text-sm font-black hover:bg-pref-darkblue shadow-sm transition-all flex items-center gap-2"><i class="fa-solid fa-plus"></i> Novo</button>
+                        <div class="flex gap-2">
+                            <button onclick="gerarLicitacoesIA()" id="btn-ia-licitacoes" class="bg-gradient-to-r from-purple-600 to-blue-600 text-white text-xs font-black px-3 py-1.5 rounded-lg hover:shadow-lg transition-all flex items-center gap-1.5">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i> Gerar via IA
+                            </button>
+                            <button onclick="prepararNovoAdminLicitacao()" class="bg-pref-blue text-white px-4 py-2.5 rounded-xl text-sm font-black hover:bg-pref-darkblue shadow-sm transition-all flex items-center gap-2"><i class="fa-solid fa-plus"></i> Novo</button>
+                        </div>
                     </div>
                     <div id="lista-admin-licitacoes" class="overflow-y-auto pr-3 space-y-3 flex-grow custom-scrollbar"></div>
                 </div>
@@ -921,6 +953,9 @@
                 <div class="w-full lg:w-6/12 bg-white rounded-[2rem] shadow-sm border border-gray-200 p-6 md:p-8 flex flex-col h-[750px]">
                     <div class="flex justify-between items-center mb-6 border-b border-gray-100 pb-4">
                         <h3 class="text-2xl font-black text-gray-800 tracking-tight">Livro de Caixa</h3>
+                        <button onclick="gerarTransparenciaIA()" id="btn-ia-transparencia" class="bg-gradient-to-r from-purple-600 to-blue-600 text-white text-xs font-black px-3 py-1.5 rounded-lg hover:shadow-lg transition-all flex items-center gap-1.5">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> Gerar via IA
+                        </button>
                     </div>
                     
                     <div class="grid grid-cols-2 gap-4 mb-6">
@@ -1506,7 +1541,7 @@
             
             unsubTransparencia = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'transparencia'), (snap) => { bancoDeTransparencia = {}; snap.forEach(d => bancoDeTransparencia[d.id] = { id: d.id, ...d.data() }); if (isAdminView && adminAbaAtiva === 'transparencia') renderListaTransparenciaAdmin(); }, errHandler);
             
-            unsubTema = onSnapshot(doc(db, 'artifacts', appId, 'public', 'config', 'tema_site'), (docSnap) => { 
+            unsubTema = onSnapshot(doc(db, 'artifacts', appId, 'public', 'data', 'config', 'tema_site'), (docSnap) => { 
                 if(docSnap.exists()) {
                     configTemaAtual = docSnap.data();
                     aplicarTemaVisual(configTemaAtual);
@@ -1723,7 +1758,7 @@
             if(tipo === 'customizado') { novoConfig.cPrimary = p; novoConfig.cSecondary = s; }
 
             try {
-                await setDoc(doc(db, 'artifacts', appId, 'public', 'config', 'tema_site'), novoConfig);
+                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'config', 'tema_site'), novoConfig);
                 document.getElementById('msg-tema-salvo').classList.remove('hidden');
                 setTimeout(() => document.getElementById('msg-tema-salvo').classList.add('hidden'), 4000);
             } catch(e) {
@@ -2356,6 +2391,152 @@
                 } else { throw new Error("Resposta inválida"); }
             } catch(e) { console.error("Erro IA Simulação:", e); mostrarAlerta("Falha ao gerar impostos simulados."); } finally { btn.disabled = false; btn.innerHTML = oldHtml; }
         };
+
+        // --- NOVAS FUNÇÕES DE GERAÇÃO POR IA ---
+
+        window.gerarNoticiasIA = async function() {
+            const btn = document.getElementById('btn-ia-noticias'); const old = btn.innerHTML;
+            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gerando...';
+            try {
+                await new Promise(r => setTimeout(r, 1200));
+                const mock = [
+                    { titulo: "Prefeitura inaugura nova praça central", categoria: "Obras", data: new Date().toLocaleDateString('pt-BR'), imagem: "https://i.imgur.com/yv7TJkd.png", conteudo: "A população da nossa amada cidade agora conta com um novo espaço de lazer de alta qualidade, garantindo conforto para as famílias e parquinhos novinhos em folha para as crianças." },
+                    { titulo: "Campanha de vacinação atinge 90% da meta", categoria: "Saúde", data: new Date().toLocaleDateString('pt-BR'), imagem: "https://i.imgur.com/yv7TJkd.png", conteudo: "A secretaria de saúde informou hoje pela manhã que a campanha superou as expectativas, agradecendo a dedicação de todos os profissionais de saúde e o compromisso da nossa população." }
+                ];
+                for (let i of mock) {
+                    const novoId = `noticia_${Date.now()}_${Math.floor(Math.random()*100)}`;
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'noticias', novoId), { id: novoId, ordem: Date.now(), ...i });
+                }
+                mostrarAlerta("Notícias geradas!");
+            } catch(e) { mostrarAlerta("Erro."); } finally { btn.disabled = false; btn.innerHTML = old; }
+        };
+
+        window.gerarServicosIA = async function() {
+            const btn = document.getElementById('btn-ia-servicos'); const old = btn.innerHTML;
+            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gerando...';
+            try {
+                await new Promise(r => setTimeout(r, 1200));
+                const mock = [
+                    { titulo: "IPTU e Taxas", icone: "file-invoice-dollar", descricao: "Acesse seus boletos de impostos municipais." },
+                    { titulo: "Ouvidoria Municipal", icone: "bullhorn", descricao: "Envie críticas, denúncias e sugestões para a prefeitura." },
+                    { titulo: "Saúde Digital", icone: "notes-medical", descricao: "Agende consultas nos postos de saúde da cidade." },
+                    { titulo: "Transparência", icone: "chart-pie", descricao: "Acompanhe as receitas e despesas da prefeitura." },
+                    { titulo: "Licitações", icone: "gavel", descricao: "Consulte os editais e processos de compras públicas." },
+                    { titulo: "Portal do Servidor", icone: "id-card-clip", descricao: "Acesse seu contracheque e informações funcionais." }
+                ];
+                for (let i of mock) {
+                    const novoId = `servico_${Date.now()}_${Math.floor(Math.random()*100)}`;
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'servicos', novoId), { id: novoId, ordem: Date.now(), ...i });
+                }
+                mostrarAlerta("Serviços gerados!");
+            } catch(e) { mostrarAlerta("Erro."); } finally { btn.disabled = false; btn.innerHTML = old; }
+        };
+
+        window.gerarCidadaosIA = async function() {
+            const btn = document.getElementById('btn-ia-cidadaos'); const old = btn.innerHTML;
+            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gerando...';
+            try {
+                await new Promise(r => setTimeout(r, 1200));
+                const mockNomes = ["João da Silva", "Maria Oliveira", "José Santos", "Ana Souza", "Pedro Costa", "Carlos Moura"];
+                for (let nome of mockNomes) {
+                    const cpfVirtual = window.gerarCPFVirtual();
+                    const cid = { uid: "fake_" + Date.now() + Math.random(), nome: nome, email: nome.toLowerCase().split(' ')[0] + "@email.com", cpfVirtual: cpfVirtual, criadoEm: new Date().toISOString(), endereco: "Rua das Flores, " + Math.floor(Math.random()*1000) };
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'cidadaos', cpfVirtual), cid);
+                }
+                mostrarAlerta("Cidadãos gerados!");
+            } catch(e) { mostrarAlerta("Erro."); } finally { btn.disabled = false; btn.innerHTML = old; }
+        };
+
+        window.gerarOuvidoriaIA = async function() {
+            const btn = document.getElementById('btn-ia-ouvidoria'); const old = btn.innerHTML;
+            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gerando...';
+            try {
+                await new Promise(r => setTimeout(r, 1200));
+                const mock = [
+                    { tipo: "Reclamação", bairro: "Centro", msg: "Buraco na rua principal próximo à padaria da esquina." },
+                    { tipo: "Sugestão", bairro: "Vila Nova", msg: "Poderiam colocar mais lixeiras recicláveis na pracinha principal." },
+                    { tipo: "Solicitação de Serviço", bairro: "Bela Vista", msg: "Poste da rua João Alves com lâmpada queimada desde segunda." }
+                ];
+                const keys = Object.keys(bancoDeCidadaos);
+                
+                for (let i of mock) {
+                    const cpfRef = keys.length > 0 ? keys[Math.floor(Math.random() * keys.length)] : window.gerarCPFVirtual();
+                    const novoId = `ouv_${Date.now()}_${Math.floor(Math.random()*100)}`;
+                    const protocolo = 'OUV-' + Math.floor(10000 + Math.random() * 90000);
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'ouvidoria', novoId), {
+                        id: novoId, protocolo: protocolo, tipo: i.tipo, bairro: i.bairro, mensagem: i.msg,
+                        cpfCidadao: cpfRef, status: 'Pendente', data: new Date().toLocaleDateString('pt-BR')
+                    });
+                }
+                mostrarAlerta("Manifestações geradas!");
+            } catch(e) { mostrarAlerta("Erro."); } finally { btn.disabled = false; btn.innerHTML = old; }
+        };
+
+        window.gerarSaudeIA = async function() {
+            const btn = document.getElementById('btn-ia-saude'); const old = btn.innerHTML;
+            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gerando...';
+            try {
+                await new Promise(r => setTimeout(r, 1200));
+                const keys = Object.keys(bancoDeCidadaos);
+                
+                const mock = [
+                    { esp: "Clínico Geral", data: "2026-10-15", obs: "Exames de rotina anual." },
+                    { esp: "Odontologia", data: "2026-11-20", obs: "Dor constante no siso." },
+                    { esp: "Pediatria", data: "2026-12-05", obs: "Acompanhamento mensal infantil." }
+                ];
+                for (let i of mock) {
+                    const cpfRef = keys.length > 0 ? keys[Math.floor(Math.random() * keys.length)] : window.gerarCPFVirtual();
+                    const novoId = `agend_${Date.now()}_${Math.floor(Math.random()*100)}`;
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'saude', novoId), {
+                        id: novoId, especialidade: i.esp, dataSolicitada: i.data, observacoes: i.obs,
+                        cpfCidadao: cpfRef, status: 'Pendente Análise'
+                    });
+                }
+                mostrarAlerta("Agendamentos gerados!");
+            } catch(e) { mostrarAlerta("Erro."); } finally { btn.disabled = false; btn.innerHTML = old; }
+        };
+
+        window.gerarLicitacoesIA = async function() {
+            const btn = document.getElementById('btn-ia-licitacoes'); const old = btn.innerHTML;
+            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gerando...';
+            try {
+                await new Promise(r => setTimeout(r, 1200));
+                const mock = [
+                    { titulo: "Pregão Eletrônico 01/2026", desc: "Aquisição de merenda escolar, materiais e insumos.", status: "Edital Aberto" },
+                    { titulo: "Tomada de Preços 02/2026", desc: "Reforma geral do posto de saúde central e pintura.", status: "Em Andamento" },
+                    { titulo: "Concorrência Pública 03/2026", desc: "Obras de pavimentação asfáltica no bairro Vila Nova.", status: "Homologado" }
+                ];
+                for (let i of mock) {
+                    const novoId = `lic_${Date.now()}_${Math.floor(Math.random()*100)}`;
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'licitacoes', novoId), {
+                        id: novoId, titulo: i.titulo, descricao: i.desc, status: i.status, linkArquivo: "https://example.com/edital.pdf"
+                    });
+                }
+                mostrarAlerta("Licitações geradas!");
+            } catch(e) { mostrarAlerta("Erro."); } finally { btn.disabled = false; btn.innerHTML = old; }
+        };
+
+        window.gerarTransparenciaIA = async function() {
+            const btn = document.getElementById('btn-ia-transparencia'); const old = btn.innerHTML;
+            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gerando...';
+            try {
+                await new Promise(r => setTimeout(r, 1200));
+                const mock = [
+                    { tipo: "Receita", desc: "Repasse do FPM - Governo Federal", valor: (Math.random() * 50000 + 100000).toFixed(2) },
+                    { tipo: "Despesa", desc: "Folha de Pagamento Servidores (Mês atual)", valor: (Math.random() * 30000 + 50000).toFixed(2) },
+                    { tipo: "Receita", desc: "Arrecadação IPTU cota única", valor: (Math.random() * 20000 + 10000).toFixed(2) },
+                    { tipo: "Despesa", desc: "Manutenção Frota e Combustível", valor: (Math.random() * 5000 + 2000).toFixed(2) }
+                ];
+                for (let i of mock) {
+                    const novoId = `transp_${Date.now()}_${Math.floor(Math.random()*100)}`;
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'transparencia', novoId), {
+                        id: novoId, tipo: i.tipo, descricao: i.desc, valor: i.valor, data: new Date().toISOString().split('T')[0]
+                    });
+                }
+                mostrarAlerta("Lançamentos gerados!");
+            } catch(e) { mostrarAlerta("Erro."); } finally { btn.disabled = false; btn.innerHTML = old; }
+        };
+
 
         window.editarAdmin = function(tipo, id) {
             const isNoticia = tipo === 'noticias'; const item = isNoticia ? bancoDeNoticias[id] : bancoDeServicos[id]; if(!item) return;
